@@ -13,5 +13,5 @@ datasource db {
 model Products{
   id String @id @default(cuid())
   name String
-  description String
+  price Int
 }
