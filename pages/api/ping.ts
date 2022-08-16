@@ -1,12 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-type Data = {
-  name: string
+type PingResponse = {
+  response: string
 }
 
 export default function handler (
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse<PingResponse>
 ) {
-  res.status(200).json({ name: 'John Doe' })
+  res.status(200).json({ response: 'Ping!' })
 }
