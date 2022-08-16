@@ -58,7 +58,7 @@ const updateProductById = async (id: string, name: string, price: number) => {
   }
 }
 
-const deleteUserById = async (id: string) => {
+const deleteProductById = async (id: string) => {
   try {
     const deletedUser = await prisma.products.delete({
       where: { id }
@@ -74,5 +74,5 @@ export {
   createProduct,
   getProductById,
   updateProductById,
-  deleteUserById
+  deleteProductById
 }
