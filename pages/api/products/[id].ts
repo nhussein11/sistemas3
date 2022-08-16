@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import {
   getProductById,
   updateProductById,
-  deleteUserById
+  deleteProductById
 } from '../../../server/controllers/products/products.controller'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
@@ -37,7 +37,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     case 'DELETE':
       try {
-        const deletedUser = await deleteUserById(id)
+        const deletedUser = await deleteProductById(id)
         return res.status(200).send({ deletedUser })
       } catch (error) {
         return res.status(500).send({ error })
