@@ -1,5 +1,5 @@
 /* eslint-disable no-useless-catch */
-import prisma from '../../prisma-client/prisma-client'
+import { prisma } from '../../../server/prisma-client/prisma-client'
 
 const getProducts = async () => {
   try {
