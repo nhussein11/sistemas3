@@ -7,6 +7,7 @@ const axiosConfig: AxiosRequestConfig = {
     Accept: 'application/json'
   }
 }
+
 const publicAxiosInstance = axios.create(axiosConfig)
 
 export default publicAxiosInstance

@@ -1,5 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { getProducts, createProduct } from '../../../server/controllers/products/products.controller'
+import {
+  getProducts,
+  createProduct
+} from '../../../server/controllers/products/products.controller'
 
 export default async function products (
   req: NextApiRequest,
@@ -24,6 +27,7 @@ export default async function products (
       } catch (error) {
         return res.status(500).send({ error })
       }
+
     default:
       return res.status(400).send('Invalid request')
   }

@@ -15,7 +15,6 @@ const createProduct = async (name: string, price: number) => {
     const productCreated = await prisma.products.create({
       data: { name, price }
     })
-
     return productCreated
   } catch (error) {
     throw error

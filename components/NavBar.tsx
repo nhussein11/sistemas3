@@ -1,4 +1,5 @@
 import { Menubar } from 'primereact/menubar'
+
 const NavBar = () => {
   const items = [
     {
@@ -52,7 +53,6 @@ const NavBar = () => {
         {
           label: 'Borrar',
           icon: 'pi pi-fw pi-plus'
-
         },
         {
           label: 'Buscar',
@@ -65,6 +65,8 @@ const NavBar = () => {
       icon: 'pi pi-fw pi-power-off'
     }
   ]
-  return (<Menubar model={items}/>)
+
+  return <Menubar model={items} />
 }
+
 export default NavBar

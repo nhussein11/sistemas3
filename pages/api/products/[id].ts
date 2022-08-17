@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import { NextApiRequest, NextApiResponse } from 'next'
 import {
   getProductById,
@@ -25,7 +26,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         return res.status(500).send({ error })
       }
     case 'PUT':
-      // eslint-disable-next-line no-case-declarations
       const { name, price } = body
 
       try {
@@ -42,6 +42,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       } catch (error) {
         return res.status(500).send({ error })
       }
+
     default:
       return res.status(400).send('Invalid method')
   }
