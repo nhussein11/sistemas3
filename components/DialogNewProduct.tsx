@@ -5,7 +5,8 @@ import DialogFooter from './DialogFooter'
 
 const DialogNewProduct = ({ displayBasic, closeDialog }) => {
   const [nombreProducto, setNombreProducto] = useState('')
-
+  const [precioProducto, setPrecioProducto] = useState(0)
+  // description and other when backend is ready
   return (
     <Dialog
       visible={displayBasic}
@@ -24,17 +25,13 @@ const DialogNewProduct = ({ displayBasic, closeDialog }) => {
         </span>
         <span className="p-float-label">
           <InputText
-            value={nombreProducto}
-            onChange={(e) => setNombreProducto(e.target.value)}
+            value={precioProducto}
+            type="number"
+            onChange={(e) =>
+              setPrecioProducto(Number(e.target.value).valueOf())
+            }
           />
           <label htmlFor="in">Descripcion</label>
-        </span>
-        <span className="p-float-label">
-          <InputText
-            value={nombreProducto}
-            onChange={(e) => setNombreProducto(e.target.value)}
-          />
-          <label htmlFor="in">Precio</label>
         </span>
       </div>
     </Dialog>
