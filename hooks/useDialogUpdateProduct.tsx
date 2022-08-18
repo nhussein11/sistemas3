@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useRecoilState } from 'recoil'
 import { Product } from '../@types/frontend.types'
 import { selectedProductState } from '../atoms/selectedProductAtom'

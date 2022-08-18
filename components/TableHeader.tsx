@@ -1,16 +1,19 @@
 import { Button } from 'primereact/button'
 import { InputText } from 'primereact/inputtext'
 import React from 'react'
+import { useRecoilState } from 'recoil'
 import { TableHeaderProps } from '../@types/frontend.types'
+import { showUpdateDialogState } from '../atoms/showUpdateDialogAtom'
 
 const TableHeader = ({
   setGlobalFilterValue,
   globalFilterValue,
   onGlobalFilterChange,
   setDisplayBasic,
-  handleDeleteProduct,
-  setShowUpdateDialog
-}) => {
+  handleDeleteProduct
+}:TableHeaderProps) => {
+  // eslint-disable-next-line no-unused-vars
+  const [_, setShowUpdateDialog] = useRecoilState(showUpdateDialogState)
   const deleleteProduct = () => {
     handleDeleteProduct()
     setDisplayBasic(false)
