@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
-import { InputText } from 'primereact/inputtext'
-import { Button } from 'primereact/button'
 import DialogNewProduct from './DialogNewProduct'
 import SelectBodyTemplate from './SelectBodyTemplate'
+import TableHeader from './TableHeader'
 const Table = () => {
   const [globalFilterValue, setGlobalFilterValue] = useState('')
   const [displayBasic, setDisplayBasic] = useState(false)
@@ -12,46 +11,6 @@ const Table = () => {
   const onGlobalFilterChange = (e: { target: { value: any } }) => {
     const value = e.target.value
     setGlobalFilterValue(value)
-  }
-  const renderHeader = () => {
-    return (
-      <div className="header-table">
-        <div className="flex justify-content-between">
-          <Button
-            type="button"
-            icon="pi pi-filter-slash"
-            label="Limpiar"
-            className="p-button-outlined"
-            onClick={() => setGlobalFilterValue('')}
-          />
-          <span className="p-input-icon-left">
-            <i className="pi pi-search" />
-            <InputText
-              value={globalFilterValue}
-              onChange={onGlobalFilterChange}
-              placeholder="Buscar"
-            />
-          </span>
-        </div>
-        <div className="actionsButtonsTable">
-          <Button
-            label="Nuevo"
-            className="p-button-raised p-button-success"
-            onClick={() => setDisplayBasic(true)}
-          />
-          <Button
-            label="Borrar"
-            className="p-button-raised p-button-danger"
-            onClick={() => setDisplayBasic(true)}
-          />
-          <Button
-            label="Modificar"
-            className="p-button-raised p-button-secondary"
-            onClick={() => setDisplayBasic(true)}
-          />
-        </div>
-      </div>
-    )
   }
   const prodsExample = [
     {
@@ -67,7 +26,6 @@ const Table = () => {
       precio: '200'
     }
   ]
-  const header = renderHeader()
   return (
     <div className="datatable-filter">
       <div className="card">
@@ -79,10 +37,17 @@ const Table = () => {
           rows={10}
           dataKey="id"
           responsiveLayout="scroll"
-          header={header}
+          header={
+            <TableHeader
+              setGlobalFilterValue={setGlobalFilterValue}
+              globalFilterValue={globalFilterValue}
+              onGlobalFilterChange={onGlobalFilterChange}
+              setDisplayBasic={setDisplayBasic}
+            />
+          }
           emptyMessage="No se encontraron Productos"
         >
-        <Column
+          <Column
             field="select"
             header="Select"
             body={SelectBodyTemplate}
