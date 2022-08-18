@@ -2,12 +2,13 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Dialog } from 'primereact/dialog'
 import { InputText } from 'primereact/inputtext'
 import React, { useState } from 'react'
+import { DialogNewProductProps } from '../@types/frontend.types'
 import { createNewProduct } from '../services/createNewProduct'
 import DialogFooter from './DialogFooter'
 
-const DialogNewProduct = ({ displayBasic, closeDialog }) => {
+const DialogNewProduct = ({ displayBasic, closeDialog }:DialogNewProductProps) => {
   const queryClient = useQueryClient()
-  const { mutate, isError, isSuccess } = useMutation(createNewProduct, {
+  const { mutate } = useMutation(createNewProduct, {
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries(['products'])

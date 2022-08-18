@@ -6,13 +6,14 @@ import SelectBodyTemplate from './SelectBodyTemplate'
 import TableHeader from './TableHeader'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { deleteProduct } from '../services/deleteProducts'
-const Table = ({ products }) => {
-  const [globalFilterValue, setGlobalFilterValue] = useState('')
+import { TableProps } from '../@types/frontend.types'
+
+const Table = ({ products }: TableProps) => {
+  const queryClient = useQueryClient()
   const [displayBasic, setDisplayBasic] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState('')
-  const onGlobalFilterChange = (e) => setGlobalFilterValue(e.target.value)
-  const queryClient = useQueryClient()
-  const { mutate, isError, isSuccess } = useMutation(
+  const [globalFilterValue, setGlobalFilterValue] = useState('')
+  const { mutate } = useMutation(
     (productId: string) => deleteProduct(productId),
     {
       onSuccess: () => {
@@ -38,10 +39,10 @@ const Table = ({ products }) => {
           responsiveLayout="scroll"
           header={
             <TableHeader
-            handleDeleteProduct={handleDeleteProduct}
+              handleDeleteProduct={handleDeleteProduct}
               setGlobalFilterValue={setGlobalFilterValue}
               globalFilterValue={globalFilterValue}
-              onGlobalFilterChange={onGlobalFilterChange}
+              onGlobalFilterChange={(e) => setGlobalFilterValue(e.target.value)}
               setDisplayBasic={setDisplayBasic}
             />
           }

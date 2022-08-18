@@ -1,6 +1,7 @@
 import { Button } from 'primereact/button'
 import { InputText } from 'primereact/inputtext'
 import React from 'react'
+import { TableHeaderProps } from '../@types/frontend.types'
 
 const TableHeader = ({
   setGlobalFilterValue,
@@ -8,7 +9,7 @@ const TableHeader = ({
   onGlobalFilterChange,
   setDisplayBasic,
   handleDeleteProduct
-}) => {
+}:TableHeaderProps) => {
   const deleleteProduct = () => {
     handleDeleteProduct()
     setDisplayBasic(false)
