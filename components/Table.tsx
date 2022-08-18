@@ -6,13 +6,10 @@ import SelectBodyTemplate from './SelectBodyTemplate'
 import TableHeader from './TableHeader'
 import { TableProps } from '../@types/frontend.types'
 import useTableMutations from '../hooks/useTableMutations'
-
+import DialogUpdateProduct from './DialogUpdateProduct'
 const Table = ({ products }: TableProps) => {
-  // Estado del dialg
   const [displayBasic, setDisplayBasic] = useState(false)
-  const [globalFilterValue, setGlobalFilterValue] = useState('')
-  const { selectedProduct, setSelectedProduct, handleDeleteProduct } =
-    useTableMutations()
+  const { handleDeleteProduct } = useTableMutations()
   return (
     <div className="datatable-filter">
       <div className="card">
@@ -27,9 +24,6 @@ const Table = ({ products }: TableProps) => {
           header={
             <TableHeader
               handleDeleteProduct={handleDeleteProduct}
-              setGlobalFilterValue={setGlobalFilterValue}
-              globalFilterValue={globalFilterValue}
-              onGlobalFilterChange={(e) => setGlobalFilterValue(e.target.value)}
               setDisplayBasic={setDisplayBasic}
             />
           }
@@ -40,9 +34,7 @@ const Table = ({ products }: TableProps) => {
             header="Select"
             body={(rowData) =>
               SelectBodyTemplate({
-                rowData,
-                setSelectedProduct,
-                selectedProduct
+                rowData
               })
             }
             style={{ minWidth: '5rem' }}
@@ -77,6 +69,7 @@ const Table = ({ products }: TableProps) => {
         displayBasic={displayBasic}
         closeDialog={() => setDisplayBasic(false)}
       />
+      <DialogUpdateProduct />
     </div>
   )
 }

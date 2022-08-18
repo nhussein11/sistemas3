@@ -1,15 +1,20 @@
 import { Button } from 'primereact/button'
 import { InputText } from 'primereact/inputtext'
 import React from 'react'
+import { useRecoilState } from 'recoil'
 import { TableHeaderProps } from '../@types/frontend.types'
+import { globalFilterValueState } from '../atoms/globalFilterValueAtom'
+import { showUpdateDialogState } from '../atoms/showUpdateDialogAtom'
 
 const TableHeader = ({
-  setGlobalFilterValue,
-  globalFilterValue,
-  onGlobalFilterChange,
   setDisplayBasic,
   handleDeleteProduct
-}:TableHeaderProps) => {
+}: TableHeaderProps) => {
+  // eslint-disable-next-line no-unused-vars
+  const [_, setShowUpdateDialog] = useRecoilState(showUpdateDialogState)
+  const [globalFilterValue, setGlobalFilterValue] = useRecoilState(
+    globalFilterValueState
+  )
   const deleleteProduct = () => {
     handleDeleteProduct()
     setDisplayBasic(false)
@@ -22,13 +27,12 @@ const TableHeader = ({
           icon="pi pi-filter-slash"
           label="Limpiar"
           className="p-button-outlined"
-          onClick={() => setGlobalFilterValue('')}
         />
         <span className="p-input-icon-left">
           <i className="pi pi-search" />
           <InputText
             value={globalFilterValue}
-            onChange={onGlobalFilterChange}
+            onChange={(e) => setGlobalFilterValue(e.target.value)}
             placeholder="Buscar"
           />
         </span>
@@ -47,7 +51,7 @@ const TableHeader = ({
         <Button
           label="Modificar"
           className="p-button-raised p-button-secondary"
-          onClick={() => setDisplayBasic(true)}
+          onClick={() => setShowUpdateDialog(true)}
         />
       </div>
     </div>

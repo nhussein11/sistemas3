@@ -1,4 +1,4 @@
-import React, { Dispatch } from 'react'
+import { Dispatch } from 'react'
 
 export type Product = {
   id: string
@@ -11,14 +11,9 @@ export type TableProps = {
 
 export type SelectBodyTemplateProps = {
   rowData: Product
-  setSelectedProduct: Dispatch<string>
-  selectedProduct: string
 }
 
 export type TableHeaderProps = {
-  setGlobalFilterValue: Dispatch<string>
-  globalFilterValue: string
-  onGlobalFilterChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   setDisplayBasic: Dispatch<boolean>
   handleDeleteProduct: () => void
 }

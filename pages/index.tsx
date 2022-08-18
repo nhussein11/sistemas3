@@ -1,18 +1,12 @@
-import 'primereact/resources/themes/lara-light-indigo/theme.css'
-import 'primereact/resources/primereact.min.css'
-import 'primeicons/primeicons.css'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import NavBar from '../components/NavBar'
 import Summary from '../components/Summary'
 import Table from '../components/Table'
-import { useQuery } from '@tanstack/react-query'
-import { getProducts } from '../services/getProducts'
+import useProductsQuery from '../hooks/useProductsQuery'
 
 const Home: NextPage = () => {
-  const query = useQuery(['products'], () =>
-    getProducts().then((res) => res.data)
-  )
+  const query = useProductsQuery('products')
   return (
     <div>
       <Head>
