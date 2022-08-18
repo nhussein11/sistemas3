@@ -21,4 +21,50 @@
     margin-left: 1rem;
 }
 
-/*SECTION BODY*/
+/*SECTION TABLE*/
+/* DataTableDemo.css */
+.datatable-filter{
+    margin-bottom: 40px;
+  }
+  .datatable-filter .p-paginator .p-paginator-current {
+    margin-left: auto;
+  }
+  .datatable-filter .p-progressbar {
+    height: 0.5rem;
+    background-color: #d8dadc;
+  }
+  .datatable-filter .p-progressbar .p-progressbar-value {
+    background-color: #607d8b;
+  }
+  .datatable-filter .p-datepicker {
+    min-width: 25rem;
+  }
+  .datatable-filter .p-datepicker td {
+    font-weight: 400;
+  }
+  .datatable-filter .p-datatable.p-datatable-customers .p-datatable-header {
+    padding: 1rem;
+    text-align: left;
+    font-size: 1.5rem;
+  }
+  .datatable-filter .p-datatable.p-datatable-customers .p-paginator {
+    padding: 1rem;
+  }
+  .datatable-filter .p-datatable.p-datatable-customers .p-datatable-thead > tr > th {
+    text-align: left;
+  }
+  .datatable-filter .p-datatable.p-datatable-customers .p-datatable-tbody > tr > td {
+    cursor: auto;
+  }
+  .datatable-filter .p-datatable.p-datatable-customers .p-dropdown-label:not(.p-placeholder) {
+    text-transform: uppercase;
+  }
+  .header-table{
+    display: flex;
+    justify-content: space-around;
+  }
+  .field-form-container{
+    display: flex;
+    justify-content: space-around;
+  }
+  

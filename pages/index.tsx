@@ -5,6 +5,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import NavBar from '../components/NavBar'
 import Summary from '../components/Summary'
+import Table from '../components/Table'
 
 const Home: NextPage = () => {
   return (
@@ -17,6 +18,7 @@ const Home: NextPage = () => {
       <NavBar/>
       <div className='main-container'>
         <Summary/>
+        <Table/>
       </div>
     </div>
   )
