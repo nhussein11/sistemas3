@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import { InputText } from 'primereact/inputtext'
@@ -9,19 +9,9 @@ const Table = () => {
   const [globalFilterValue, setGlobalFilterValue] = useState('')
   const [displayBasic, setDisplayBasic] = useState(false)
 
-  const clearFilter = () => {
-    initFilters()
-  }
-  useEffect(() => {
-    initFilters()
-  }, [])
   const onGlobalFilterChange = (e: { target: { value: any } }) => {
     const value = e.target.value
     setGlobalFilterValue(value)
-  }
-
-  const initFilters = () => {
-    setGlobalFilterValue('')
   }
   const renderHeader = () => {
     return (
@@ -32,7 +22,7 @@ const Table = () => {
             icon="pi pi-filter-slash"
             label="Limpiar"
             className="p-button-outlined"
-            onClick={clearFilter}
+            onClick={() => setGlobalFilterValue('')}
           />
           <span className="p-input-icon-left">
             <i className="pi pi-search" />
