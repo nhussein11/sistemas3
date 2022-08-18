@@ -8,15 +8,6 @@ import SelectBodyTemplate from './SelectBodyTemplate'
 const Table = () => {
   const [globalFilterValue, setGlobalFilterValue] = useState('')
   const [displayBasic, setDisplayBasic] = useState(false)
-  const dialogFuncMap = {
-    displayBasic: setDisplayBasic
-  }
-  const openDialog = () => {
-    dialogFuncMap.displayBasic(true)
-  }
-  const closeDialog = () => {
-    dialogFuncMap.displayBasic(false)
-  }
 
   const clearFilter = () => {
     initFilters()
@@ -56,37 +47,19 @@ const Table = () => {
           <Button
             label="Nuevo"
             className="p-button-raised p-button-success"
-            onClick={() => openDialog()}
+            onClick={() => setDisplayBasic(true)}
           />
           <Button
             label="Borrar"
             className="p-button-raised p-button-danger"
-            onClick={() => openDialog()}
+            onClick={() => setDisplayBasic(true)}
           />
           <Button
             label="Modificar"
             className="p-button-raised p-button-secondary"
-            onClick={() => openDialog()}
+            onClick={() => setDisplayBasic(true)}
           />
         </div>
-      </div>
-    )
-  }
-  const renderFooter = (name: string) => {
-    return (
-      <div>
-        <Button
-          label="Cancelar"
-          icon="pi pi-times"
-          onClick={() => closeDialog()}
-          className="p-button-text"
-        />
-        <Button
-          label="Guardar"
-          icon="pi pi-check"
-          onClick={() => closeDialog()}
-          autoFocus
-        />
       </div>
     )
   }
@@ -153,8 +126,7 @@ const Table = () => {
       </div>
       <DialogNewProduct
         displayBasic={displayBasic}
-        closeDialog={closeDialog}
-        renderFooter={renderFooter}
+        closeDialog={() => setDisplayBasic(false)}
       />
     </div>
   )
