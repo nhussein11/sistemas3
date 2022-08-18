@@ -1,12 +1,27 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Dialog } from 'primereact/dialog'
 import { InputText } from 'primereact/inputtext'
 import React, { useState } from 'react'
+import { createNewProduct } from '../services/createNewProduct'
 import DialogFooter from './DialogFooter'
 
 const DialogNewProduct = ({ displayBasic, closeDialog }) => {
-  const [nombreProducto, setNombreProducto] = useState('')
-  const [precioProducto, setPrecioProducto] = useState(0)
+  const queryClient = useQueryClient()
+  const { mutate, isError, isSuccess } = useMutation(createNewProduct, {
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries(['products'])
+    }
+  })
+  const [productName, setProductName] = useState('')
+  const [productPrice, setProductPrice] = useState(0)
   // description and other when backend is ready
+  const handleCreateNewProduct = () => {
+    mutate({
+      name: productName,
+      price: productPrice
+    })
+  }
   return (
     <Dialog
       visible={displayBasic}
@@ -18,17 +33,17 @@ const DialogNewProduct = ({ displayBasic, closeDialog }) => {
       <div className="field-form-container">
         <span className="p-float-label">
           <InputText
-            value={nombreProducto}
-            onChange={(e) => setNombreProducto(e.target.value)}
+            value={productName}
+            onChange={(e) => setProductName(e.target.value)}
           />
           <label htmlFor="in">Nombre</label>
         </span>
         <span className="p-float-label">
           <InputText
-            value={precioProducto}
+            value={productPrice}
             type="number"
             onChange={(e) =>
-              setPrecioProducto(Number(e.target.value).valueOf())
+              setProductPrice(Number(e.target.value).valueOf())
             }
           />
           <label htmlFor="in">Descripcion</label>
