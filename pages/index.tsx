@@ -1,6 +1,3 @@
-import 'primereact/resources/themes/lara-light-indigo/theme.css'
-import 'primereact/resources/primereact.min.css'
-import 'primeicons/primeicons.css'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import NavBar from '../components/NavBar'
