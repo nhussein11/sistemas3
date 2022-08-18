@@ -29,8 +29,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       const { name, price } = body
 
       try {
-        const updatedUser = await updateProductById(id, name, price)
-        return res.status(200).send({ updatedUser })
+        const updatedProduct = await updateProductById(id, name, price)
+        return res.status(200).send({ updatedProduct })
       } catch (error) {
         return res.status(500).send({ error })
       }
