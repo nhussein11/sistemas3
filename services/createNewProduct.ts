@@ -1,10 +1,10 @@
 import publicAxiosInstance from '../api/axios'
-type Product = {
+type ProductData = {
   name: string
   price: number
-  id: string
+
 }
-export const createNewProduct = async (product: Product) => {
+export const createNewProduct = async (product: ProductData) => {
   const response = await publicAxiosInstance.post('/products', product)
   return response
 }
