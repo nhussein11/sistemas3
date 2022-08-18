@@ -27,7 +27,7 @@ const DialogNewProduct = ({ displayBasic, closeDialog }) => {
       visible={displayBasic}
       header="Nuevo Producto"
       style={{ width: '50vw' }}
-      footer={() => DialogFooter({ closeDialog })}
+      footer={() => DialogFooter({ closeDialog, handleCreateNewProduct })}
       onHide={() => closeDialog()}
     >
       <div className="field-form-container">
@@ -42,9 +42,7 @@ const DialogNewProduct = ({ displayBasic, closeDialog }) => {
           <InputText
             value={productPrice}
             type="number"
-            onChange={(e) =>
-              setProductPrice(Number(e.target.value).valueOf())
-            }
+            onChange={(e) => setProductPrice(Number(e.target.value).valueOf())}
           />
           <label htmlFor="in">Descripcion</label>
         </span>

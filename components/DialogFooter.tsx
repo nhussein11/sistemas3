@@ -1,7 +1,11 @@
 import { Button } from 'primereact/button'
 import React from 'react'
 
-const DialogFooter = ({ closeDialog }) => {
+const DialogFooter = ({ closeDialog, handleCreateNewProduct }) => {
+  const createProduct = () => {
+    handleCreateNewProduct()
+    closeDialog()
+  }
   return (
     <div>
       <Button
@@ -13,7 +17,7 @@ const DialogFooter = ({ closeDialog }) => {
       <Button
         label="Guardar"
         icon="pi pi-check"
-        onClick={closeDialog}
+        onClick={createProduct}
         autoFocus
       />
     </div>
