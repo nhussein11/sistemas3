@@ -11,8 +11,6 @@ export type TableProps = {
 
 export type SelectBodyTemplateProps = {
   rowData: Product
-  setSelectedProduct: Dispatch<string>
-  selectedProduct: string
 }
 
 export type TableHeaderProps = {

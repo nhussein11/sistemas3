@@ -8,8 +8,9 @@ const TableHeader = ({
   globalFilterValue,
   onGlobalFilterChange,
   setDisplayBasic,
-  handleDeleteProduct
-}:TableHeaderProps) => {
+  handleDeleteProduct,
+  setShowUpdateDialog
+}) => {
   const deleleteProduct = () => {
     handleDeleteProduct()
     setDisplayBasic(false)
@@ -47,7 +48,7 @@ const TableHeader = ({
         <Button
           label="Modificar"
           className="p-button-raised p-button-secondary"
-          onClick={() => setDisplayBasic(true)}
+          onClick={() => setShowUpdateDialog(true)}
         />
       </div>
     </div>

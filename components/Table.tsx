@@ -14,7 +14,7 @@ const Table = ({ products }: TableProps) => {
   const [showUpdateDialog, setShowUpdateDialog] = useState(false)
 
   const [globalFilterValue, setGlobalFilterValue] = useState('')
-  const { selectedProduct, setSelectedProduct, handleDeleteProduct } =
+  const { handleDeleteProduct } =
     useTableMutations()
   return (
     <div className="datatable-filter">
@@ -34,6 +34,7 @@ const Table = ({ products }: TableProps) => {
               globalFilterValue={globalFilterValue}
               onGlobalFilterChange={(e) => setGlobalFilterValue(e.target.value)}
               setDisplayBasic={setDisplayBasic}
+              setShowUpdateDialog={setShowUpdateDialog}
             />
           }
           emptyMessage="No se encontraron Productos"
@@ -43,9 +44,7 @@ const Table = ({ products }: TableProps) => {
             header="Select"
             body={(rowData) =>
               SelectBodyTemplate({
-                rowData,
-                setSelectedProduct,
-                selectedProduct
+                rowData
               })
             }
             style={{ minWidth: '5rem' }}

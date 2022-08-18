@@ -25,8 +25,6 @@ const useTableMutations = () => {
     mutate(selectedProduct.id)
   }
   return {
-    selectedProduct,
-    setSelectedProduct,
     handleDeleteProduct
   }
 }
