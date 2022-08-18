@@ -4,7 +4,7 @@ import { Column } from 'primereact/column'
 import DialogNewProduct from './DialogNewProduct'
 import SelectBodyTemplate from './SelectBodyTemplate'
 import TableHeader from './TableHeader'
-const Table = () => {
+const Table = ({ products }) => {
   const [globalFilterValue, setGlobalFilterValue] = useState('')
   const [displayBasic, setDisplayBasic] = useState(false)
 
@@ -12,25 +12,11 @@ const Table = () => {
     const value = e.target.value
     setGlobalFilterValue(value)
   }
-  const prodsExample = [
-    {
-      id: 1,
-      nombre: 'Producto 1',
-      descripcion: 'Descripcion del producto 1',
-      precio: '100'
-    },
-    {
-      id: 2,
-      nombre: 'Producto 2',
-      descripcion: 'Descripcion del producto 2',
-      precio: '200'
-    }
-  ]
   return (
     <div className="datatable-filter">
       <div className="card">
         <DataTable
-          value={prodsExample}
+          value={products}
           paginator
           className="p-datatable-customers"
           showGridlines
@@ -62,7 +48,7 @@ const Table = () => {
           <Column
             field="nombre"
             header="nombre"
-            body={(rowData) => rowData.nombre}
+            body={(rowData) => rowData.name}
             style={{ minWidth: '5rem' }}
           />
           <Column
@@ -74,7 +60,7 @@ const Table = () => {
           <Column
             field="precio"
             header="precio"
-            body={(rowData) => rowData.precio}
+            body={(rowData) => rowData.price}
             style={{ minWidth: '5rem' }}
           />
         </DataTable>
