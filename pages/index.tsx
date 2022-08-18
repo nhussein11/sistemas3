@@ -6,8 +6,13 @@ import Head from 'next/head'
 import NavBar from '../components/NavBar'
 import Summary from '../components/Summary'
 import Table from '../components/Table'
+import { useQuery } from 'react-query'
 
 const Home: NextPage = () => {
+  const query = useQuery(['products'], () => {
+    return fetch('http://localhost:3000/api/products')
+      .then(res => res.json())
+  })
   return (
     <div >
       <Head>
@@ -18,7 +23,7 @@ const Home: NextPage = () => {
       <NavBar/>
       <div className='main-container'>
         <Summary/>
-        <Table/>
+        <Table products={query?.data?.products}/>
       </div>
     </div>
   )
