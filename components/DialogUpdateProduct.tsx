@@ -1,10 +1,35 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Dialog } from 'primereact/dialog'
 import { InputText } from 'primereact/inputtext'
 import React, { useState } from 'react'
+import { useRecoilState } from 'recoil'
+import { Product } from '../@types/frontend.types'
+import { selectedProductState } from '../atoms/selectedProductAtom'
+import { updateProduct } from '../services/updateProduct'
 
-const DialogUpdateProduct = ({showUpdateDialog,setShowUpdateDialog}) => {
+const DialogUpdateProduct = ({ showUpdateDialog, setShowUpdateDialog }) => {
+  const [selectedProduct, setSelectedProduct] =
+    useRecoilState(selectedProductState)
   const [productName, setProductName] = useState('')
   const [productPrice, setProductPrice] = useState(0)
+  const queryClient = useQueryClient()
+  const updateQuery = ({ id, name, price }: Product) =>
+    updateProduct({ id, name, price })
+  const { mutate } = useMutation(updateQuery, {
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries(['products'])
+      setShowUpdateDialog(false)
+      setSelectedProduct({
+        id: '',
+        name: '',
+        price: 0
+      })
+    }
+  })
+  const handleUpdateProduct = () => {
+    mutate({ id: selectedProduct.id, name: productName, price: productPrice })
+  }
   return (
     <Dialog
       visible={showUpdateDialog}
@@ -29,7 +54,7 @@ const DialogUpdateProduct = ({showUpdateDialog,setShowUpdateDialog}) => {
           <label htmlFor="in">Descripcion</label>
         </span>
       </div>
-      <button>Update</button>
+      <button onClick={handleUpdateProduct}>Update</button>
     </Dialog>
   )
 }
