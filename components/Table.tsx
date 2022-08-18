@@ -3,10 +3,9 @@ import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import { InputText } from 'primereact/inputtext'
 import { Button } from 'primereact/button'
-import { Dialog } from 'primereact/dialog'
 import { Checkbox } from 'primereact/checkbox'
+import DialogNewProduct from './DialogNewProduct'
 const Table = () => {
-  const [nombreProducto, setNombreProducto] = useState('')
   const [checked, setChecked] = useState(true)
   const [globalFilterValue, setGlobalFilterValue] = useState('')
   const [displayBasic, setDisplayBasic] = useState(false)
@@ -78,22 +77,11 @@ const Table = () => {
           <Column field='siteA' header="Sucursal A" filterField="date" dataType="date" style={{ minWidth: '10rem' }} />
       </DataTable>
   </div>
-  <Dialog visible={displayBasic} header="Nuevo Producto" style={{ width: '50vw' }} footer={renderFooter('displayBasic')} onHide={() => closeDialog()}>
-      <div className='field-form-container'>
-          <span className="p-float-label">
-              <InputText value={nombreProducto} onChange={(e) => setNombreProducto(e.target.value)} />
-              <label htmlFor="in">Nombre</label>
-          </span>
-          <span className="p-float-label">
-              <InputText value={nombreProducto} onChange={(e) => setNombreProducto(e.target.value)} />
-              <label htmlFor="in">Descripcion</label>
-          </span>
-          <span className="p-float-label">
-              <InputText value={nombreProducto} onChange={(e) => setNombreProducto(e.target.value)} />
-              <label htmlFor="in">Precio</label>
-          </span>
-      </div>
-  </Dialog>
+  <DialogNewProduct
+    displayBasic={displayBasic}
+    closeDialog={closeDialog}
+    renderFooter={renderFooter}
+  />
 </div>)
 }
 export default Table
