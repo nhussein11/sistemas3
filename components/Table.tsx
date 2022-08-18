@@ -4,27 +4,15 @@ import { Column } from 'primereact/column'
 import DialogNewProduct from './DialogNewProduct'
 import SelectBodyTemplate from './SelectBodyTemplate'
 import TableHeader from './TableHeader'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { deleteProduct } from '../services/deleteProducts'
-const Table = ({ products }) => {
-  const [globalFilterValue, setGlobalFilterValue] = useState('')
+import { TableProps } from '../@types/frontend.types'
+import useTableMutations from '../hooks/useTableMutations'
+
+const Table = ({ products }: TableProps) => {
+  // Estado del dialg
   const [displayBasic, setDisplayBasic] = useState(false)
-  const [selectedProduct, setSelectedProduct] = useState('')
-  const onGlobalFilterChange = (e) => setGlobalFilterValue(e.target.value)
-  const queryClient = useQueryClient()
-  const { mutate, isError, isSuccess } = useMutation(
-    (productId: string) => deleteProduct(productId),
-    {
-      onSuccess: () => {
-        // Invalidate and refetch
-        queryClient.invalidateQueries(['products'])
-        setSelectedProduct('')
-      }
-    }
-  )
-  const handleDeleteProduct = () => {
-    mutate(selectedProduct)
-  }
+  const [globalFilterValue, setGlobalFilterValue] = useState('')
+  const { selectedProduct, setSelectedProduct, handleDeleteProduct } =
+    useTableMutations()
   return (
     <div className="datatable-filter">
       <div className="card">
@@ -38,10 +26,10 @@ const Table = ({ products }) => {
           responsiveLayout="scroll"
           header={
             <TableHeader
-            handleDeleteProduct={handleDeleteProduct}
+              handleDeleteProduct={handleDeleteProduct}
               setGlobalFilterValue={setGlobalFilterValue}
               globalFilterValue={globalFilterValue}
-              onGlobalFilterChange={onGlobalFilterChange}
+              onGlobalFilterChange={(e) => setGlobalFilterValue(e.target.value)}
               setDisplayBasic={setDisplayBasic}
             />
           }

@@ -1,11 +1,12 @@
 import { Checkbox } from 'primereact/checkbox'
 import React, { useState } from 'react'
+import { SelectBodyTemplateProps } from '../@types/frontend.types'
 
 const SelectBodyTemplate = ({
   rowData,
   setSelectedProduct,
   selectedProduct
-}) => {
+}:SelectBodyTemplateProps) => {
   const handleCheck = () => {
     if (selectedProduct === rowData.id) {
       setSelectedProduct('')
