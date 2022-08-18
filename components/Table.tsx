@@ -8,10 +8,7 @@ const Table = ({ products }) => {
   const [globalFilterValue, setGlobalFilterValue] = useState('')
   const [displayBasic, setDisplayBasic] = useState(false)
 
-  const onGlobalFilterChange = (e: { target: { value: any } }) => {
-    const value = e.target.value
-    setGlobalFilterValue(value)
-  }
+  const onGlobalFilterChange = (e) => setGlobalFilterValue(e.target.value)
   return (
     <div className="datatable-filter">
       <div className="card">
