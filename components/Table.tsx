@@ -7,12 +7,13 @@ import TableHeader from './TableHeader'
 import { TableProps } from '../@types/frontend.types'
 import useTableMutations from '../hooks/useTableMutations'
 import DialogUpdateProduct from './DialogUpdateProduct'
+import { useRecoilState } from 'recoil'
+import { showUpdateDialogState } from '../atoms/showUpdateDialogAtom'
 
 const Table = ({ products }: TableProps) => {
   // Estado del dialg
   const [displayBasic, setDisplayBasic] = useState(false)
-  const [showUpdateDialog, setShowUpdateDialog] = useState(false)
-
+  const [showUpdateDialog, setShowUpdateDialog] = useRecoilState(showUpdateDialogState)
   const [globalFilterValue, setGlobalFilterValue] = useState('')
   const { handleDeleteProduct } =
     useTableMutations()
@@ -79,10 +80,7 @@ const Table = ({ products }: TableProps) => {
         displayBasic={displayBasic}
         closeDialog={() => setDisplayBasic(false)}
       />
-      <DialogUpdateProduct
-      showUpdateDialog={showUpdateDialog}
-      setShowUpdateDialog={setShowUpdateDialog}
-      />
+      <DialogUpdateProduct/>
     </div>
   )
 }
