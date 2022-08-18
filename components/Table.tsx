@@ -6,10 +6,13 @@ import SelectBodyTemplate from './SelectBodyTemplate'
 import TableHeader from './TableHeader'
 import { TableProps } from '../@types/frontend.types'
 import useTableMutations from '../hooks/useTableMutations'
+import DialogUpdateProduct from './DialogUpdateProduct'
 
 const Table = ({ products }: TableProps) => {
   // Estado del dialg
   const [displayBasic, setDisplayBasic] = useState(false)
+  const [showUpdateDialog, setShowUpdateDialog] = useState(false)
+
   const [globalFilterValue, setGlobalFilterValue] = useState('')
   const { selectedProduct, setSelectedProduct, handleDeleteProduct } =
     useTableMutations()
@@ -76,6 +79,10 @@ const Table = ({ products }: TableProps) => {
       <DialogNewProduct
         displayBasic={displayBasic}
         closeDialog={() => setDisplayBasic(false)}
+      />
+      <DialogUpdateProduct
+      showUpdateDialog={showUpdateDialog}
+      setShowUpdateDialog={setShowUpdateDialog}
       />
     </div>
   )
