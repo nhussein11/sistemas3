@@ -4,28 +4,15 @@ import { Column } from 'primereact/column'
 import DialogNewProduct from './DialogNewProduct'
 import SelectBodyTemplate from './SelectBodyTemplate'
 import TableHeader from './TableHeader'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { deleteProduct } from '../services/deleteProducts'
 import { TableProps } from '../@types/frontend.types'
+import useTableMutations from '../hooks/useTableMutations'
 
 const Table = ({ products }: TableProps) => {
-  const queryClient = useQueryClient()
+  // Estado del dialg
   const [displayBasic, setDisplayBasic] = useState(false)
-  const [selectedProduct, setSelectedProduct] = useState('')
   const [globalFilterValue, setGlobalFilterValue] = useState('')
-  const { mutate } = useMutation(
-    (productId: string) => deleteProduct(productId),
-    {
-      onSuccess: () => {
-        // Invalidate and refetch
-        queryClient.invalidateQueries(['products'])
-        setSelectedProduct('')
-      }
-    }
-  )
-  const handleDeleteProduct = () => {
-    mutate(selectedProduct)
-  }
+  const { selectedProduct, setSelectedProduct, handleDeleteProduct } =
+    useTableMutations()
   return (
     <div className="datatable-filter">
       <div className="card">

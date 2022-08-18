@@ -1,28 +1,21 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Dialog } from 'primereact/dialog'
 import { InputText } from 'primereact/inputtext'
-import React, { useState } from 'react'
+import React from 'react'
 import { DialogNewProductProps } from '../@types/frontend.types'
-import { createNewProduct } from '../services/createNewProduct'
+import useDialogNewProductMutations from '../hooks/useDialogNewProductMutations'
 import DialogFooter from './DialogFooter'
 
-const DialogNewProduct = ({ displayBasic, closeDialog }:DialogNewProductProps) => {
-  const queryClient = useQueryClient()
-  const { mutate } = useMutation(createNewProduct, {
-    onSuccess: () => {
-      // Invalidate and refetch
-      queryClient.invalidateQueries(['products'])
-    }
-  })
-  const [productName, setProductName] = useState('')
-  const [productPrice, setProductPrice] = useState(0)
-  // description and other when backend is ready
-  const handleCreateNewProduct = () => {
-    mutate({
-      name: productName,
-      price: productPrice
-    })
-  }
+const DialogNewProduct = ({
+  displayBasic,
+  closeDialog
+}: DialogNewProductProps) => {
+  const {
+    handleCreateNewProduct,
+    productName,
+    productPrice,
+    setProductName,
+    setProductPrice
+  } = useDialogNewProductMutations()
   return (
     <Dialog
       visible={displayBasic}
