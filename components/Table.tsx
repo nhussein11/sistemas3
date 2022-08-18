@@ -7,13 +7,8 @@ import TableHeader from './TableHeader'
 import { TableProps } from '../@types/frontend.types'
 import useTableMutations from '../hooks/useTableMutations'
 import DialogUpdateProduct from './DialogUpdateProduct'
-import { useRecoilState } from 'recoil'
-import { showUpdateDialogState } from '../atoms/showUpdateDialogAtom'
-
 const Table = ({ products }: TableProps) => {
-  // Estado del dialg
   const [displayBasic, setDisplayBasic] = useState(false)
-  const [showUpdateDialog, setShowUpdateDialog] = useRecoilState(showUpdateDialogState)
   const [globalFilterValue, setGlobalFilterValue] = useState('')
   const { handleDeleteProduct } =
     useTableMutations()
@@ -35,7 +30,6 @@ const Table = ({ products }: TableProps) => {
               globalFilterValue={globalFilterValue}
               onGlobalFilterChange={(e) => setGlobalFilterValue(e.target.value)}
               setDisplayBasic={setDisplayBasic}
-              setShowUpdateDialog={setShowUpdateDialog}
             />
           }
           emptyMessage="No se encontraron Productos"
