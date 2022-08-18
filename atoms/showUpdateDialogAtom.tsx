@@ -1,6 +1,6 @@
 import { atom } from 'recoil'
 
 export const showUpdateDialogState = atom({
-  key: 'showUpdateDialogStateshowUpdateDialogState',
+  key: 'showUpdateDialogState',
   default: false
 })
