@@ -6,8 +6,13 @@ const TableHeader = ({
   setGlobalFilterValue,
   globalFilterValue,
   onGlobalFilterChange,
-  setDisplayBasic
+  setDisplayBasic,
+  handleDeleteProduct
 }) => {
+  const deleleteProduct = () => {
+    handleDeleteProduct()
+    setDisplayBasic(false)
+  }
   return (
     <div className="header-table">
       <div className="flex justify-content-between">
@@ -36,7 +41,7 @@ const TableHeader = ({
         <Button
           label="Borrar"
           className="p-button-raised p-button-danger"
-          onClick={() => setDisplayBasic(true)}
+          onClick={deleleteProduct}
         />
         <Button
           label="Modificar"
