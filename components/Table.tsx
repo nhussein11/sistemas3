@@ -9,9 +9,7 @@ import useTableMutations from '../hooks/useTableMutations'
 import DialogUpdateProduct from './DialogUpdateProduct'
 const Table = ({ products }: TableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
-  const [globalFilterValue, setGlobalFilterValue] = useState('')
-  const { handleDeleteProduct } =
-    useTableMutations()
+  const { handleDeleteProduct } = useTableMutations()
   return (
     <div className="datatable-filter">
       <div className="card">
@@ -26,9 +24,6 @@ const Table = ({ products }: TableProps) => {
           header={
             <TableHeader
               handleDeleteProduct={handleDeleteProduct}
-              setGlobalFilterValue={setGlobalFilterValue}
-              globalFilterValue={globalFilterValue}
-              onGlobalFilterChange={(e) => setGlobalFilterValue(e.target.value)}
               setDisplayBasic={setDisplayBasic}
             />
           }
@@ -74,7 +69,7 @@ const Table = ({ products }: TableProps) => {
         displayBasic={displayBasic}
         closeDialog={() => setDisplayBasic(false)}
       />
-      <DialogUpdateProduct/>
+      <DialogUpdateProduct />
     </div>
   )
 }
