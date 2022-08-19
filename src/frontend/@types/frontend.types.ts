@@ -24,3 +24,9 @@ export type DialogFooterProps = {
   closeDialog: () => void
   handleCreateNewProduct: () => void
 }
+
+export type SummaryProps = {
+  inStock: number
+  noStock: string
+  available: number
+}

@@ -16,7 +16,11 @@ const Home: NextPage = () => {
       </Head>
       <NavBar />
       <div className="main-container">
-        <Summary />
+        <Summary
+          inStock={query?.data?.products?.length}
+          noStock={'0'}
+          available={query?.data?.products?.length}
+        />
         <Table products={query?.data?.products} />
       </div>
     </div>
