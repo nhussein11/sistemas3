@@ -1,7 +1,6 @@
 import { Dispatch } from 'react'
 import { Product } from '../../shared/schemas/product.type'
 
-
 export type TableProps = {
   products: Product[]
 }
