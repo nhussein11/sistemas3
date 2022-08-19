@@ -1,8 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { PingResponse } from '../../shared/schemas/ping.type'
 
-type PingResponse = {
-  response: string
-}
 
 export default function handler (
   req: NextApiRequest,

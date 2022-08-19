@@ -4,7 +4,7 @@ import {
   getProductById,
   updateProductById,
   deleteProductById
-} from '../../../server/controllers/products/products.controller'
+} from '../../../backend/server/controllers/products/products.controller'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const {

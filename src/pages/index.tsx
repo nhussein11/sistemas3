@@ -1,9 +1,9 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import NavBar from '../components/NavBar'
-import Summary from '../components/Summary'
-import Table from '../components/Table'
-import useProductsQuery from '../hooks/useProductsQuery'
+import NavBar from '../frontend/components/NavBar'
+import Summary from '../frontend/components/Summary'
+import Table from '../frontend/components/Table'
+import useProductsQuery from '../frontend/hooks/useProductsQuery'
 
 const Home: NextPage = () => {
   const query = useProductsQuery('products')

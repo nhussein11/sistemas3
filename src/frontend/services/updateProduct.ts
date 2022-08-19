@@ -1,5 +1,5 @@
-import { Product } from '../@types/frontend.types'
-import publicAxiosInstance from '../api/axios'
+import { Product } from '../../shared/schemas/product.type'
+import publicAxiosInstance from '../axios-api/axios-api'
 
 export const updateProduct = async ({ id, name, price }: Product) => {
   const response = await publicAxiosInstance.put(`/products/${id}`, {

@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useRecoilState } from 'recoil'
-import { Product } from '../@types/frontend.types'
+import { Product } from '../../shared/schemas/product.type'
 import { selectedProductState } from '../atoms/selectedProductAtom'
 import { showUpdateDialogState } from '../atoms/showUpdateDialogAtom'
 import { updateProduct } from '../services/updateProduct'

@@ -1,4 +1,4 @@
-import publicAxiosInstance from '../api/axios'
+import publicAxiosInstance from '../axios-api/axios-api'
 type ProductData = {
   name: string
   price: number

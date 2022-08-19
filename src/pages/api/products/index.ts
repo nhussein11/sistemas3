@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import {
   getProducts,
   createProduct
-} from '../../../server/controllers/products/products.controller'
+} from '../../../backend/server/controllers/products/products.controller'
 
 export default async function products (
   req: NextApiRequest,
