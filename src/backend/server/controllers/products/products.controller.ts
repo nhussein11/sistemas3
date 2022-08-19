@@ -1,9 +1,10 @@
 /* eslint-disable no-useless-catch */
+import { Product } from '../../../../shared/schemas/product.type'
 import { prisma } from '../../../server/prisma-client/prisma-client'
 
 const getProducts = async () => {
   try {
-    const products = await prisma.products.findMany()
+    const products: Product[] = await prisma.products.findMany()
     return products
   } catch (error) {
     throw error
@@ -12,7 +13,7 @@ const getProducts = async () => {
 
 const createProduct = async (name: string, price: number) => {
   try {
-    const productCreated = await prisma.products.create({
+    const productCreated: Product = await prisma.products.create({
       data: { name, price }
     })
     return productCreated
@@ -23,7 +24,7 @@ const createProduct = async (name: string, price: number) => {
 
 const getProductById = async (id: string) => {
   try {
-    const product = await prisma.products.findUniqueOrThrow({
+    const product: Product = await prisma.products.findUniqueOrThrow({
       where: {
         id
       }
@@ -42,7 +43,7 @@ const updateProductById = async (id: string, name: string, price: number) => {
       throw new Error('Name or price must be provided!')
     }
 
-    const updatedUser = await prisma.products.update({
+    const updatedProduct: Product = await prisma.products.update({
       where: { id },
       data: {
         name,
@@ -50,7 +51,7 @@ const updateProductById = async (id: string, name: string, price: number) => {
       }
     })
 
-    return updatedUser
+    return updatedProduct
   } catch (error) {
     throw error
   }
@@ -58,10 +59,10 @@ const updateProductById = async (id: string, name: string, price: number) => {
 
 const deleteProductById = async (id: string) => {
   try {
-    const deletedUser = await prisma.products.delete({
+    const deletedProduct: Product = await prisma.products.delete({
       where: { id }
     })
-    return deletedUser
+    return deletedProduct
   } catch (error) {
     throw error
   }
