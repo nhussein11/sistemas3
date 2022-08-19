@@ -8,6 +8,8 @@ const useDialogNewProductMutations = () => {
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries(['products'])
+      setProductName('')
+      setProductPrice(0)
     }
   })
   const [productName, setProductName] = useState('')
