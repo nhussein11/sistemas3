@@ -1,6 +1,6 @@
+import React from 'react'
 import { Button } from 'primereact/button'
 import { InputText } from 'primereact/inputtext'
-import React from 'react'
 import { useRecoilState } from 'recoil'
 import { TableHeaderProps } from '../@types/frontend.types'
 import { globalFilterValueState } from '../atoms/globalFilterValueAtom'

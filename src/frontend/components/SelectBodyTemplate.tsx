@@ -1,5 +1,5 @@
-import { Checkbox } from 'primereact/checkbox'
 import React from 'react'
+import { Checkbox } from 'primereact/checkbox'
 import { useRecoilState } from 'recoil'
 import { SelectBodyTemplateProps } from '../@types/frontend.types'
 import { isProductCheckedState } from '../atoms/isProductCheckedAtom'
