@@ -1,6 +1,6 @@
+import React from 'react'
 import { Dialog } from 'primereact/dialog'
 import { InputText } from 'primereact/inputtext'
-import React from 'react'
 
 import useDialogUpdateProduct from '../hooks/useDialogUpdateProduct'
 
