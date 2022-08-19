@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client'
+import { EnvService } from '../../../shared/services/env.service'
 declare global {
   // allow global `var` declarations
   // eslint-disable-next-line no-var, no-unused-vars
@@ -7,4 +8,4 @@ declare global {
 
 export const prisma = global.prisma || new PrismaClient({})
 
-if (process.env.NODE_ENV !== 'production') global.prisma = prisma
+if (EnvService.isProd()) global.prisma = prisma
