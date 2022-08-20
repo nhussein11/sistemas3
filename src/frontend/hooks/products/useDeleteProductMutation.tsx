@@ -1,10 +1,16 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRecoilState } from 'recoil'
-import { defaultProductChecked, isProductCheckedState } from '../atoms/isProductCheckedAtom'
-import { defaultProduct, selectedProductState } from '../atoms/selectedProductAtom'
-import { deleteProduct } from '../services/deleteProducts'
+import {
+  defaultProductChecked,
+  isProductCheckedState
+} from '../../atoms/isProductCheckedAtom'
+import {
+  defaultProduct,
+  selectedProductState
+} from '../../atoms/selectedProductAtom'
+import { deleteProduct } from '../../services/deleteProducts'
 
-const useDeleteProductMutation = (queryId:string) => {
+const useDeleteProductMutation = (queryId: string) => {
   // eslint-disable-next-line no-unused-vars
   const [_, setIsProductChecked] = useRecoilState(isProductCheckedState)
   const [selectedProduct, setSelectedProduct] =

@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
-import { createNewProduct } from '../services/createNewProduct'
+import { createNewProduct } from '../../services/createNewProduct'
 
-const useDialogNewProductMutation = (queryId:string) => {
+const useDialogNewProductMutation = (queryId: string) => {
   const queryClient = useQueryClient()
   const { mutate } = useMutation(createNewProduct, {
     onSuccess: () => {

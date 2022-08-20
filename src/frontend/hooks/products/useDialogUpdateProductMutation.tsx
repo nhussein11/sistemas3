@@ -1,17 +1,17 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
-import { Product } from '../../shared/schemas/product.type'
+import { Product } from '../../../shared/schemas/product.type'
 import {
   defaultProductChecked,
   isProductCheckedState
-} from '../atoms/isProductCheckedAtom'
+} from '../../atoms/isProductCheckedAtom'
 import {
   defaultProduct,
   selectedProductState
-} from '../atoms/selectedProductAtom'
-import { showUpdateDialogState } from '../atoms/showUpdateDialogAtom'
-import { updateProduct } from '../services/updateProduct'
+} from '../../atoms/selectedProductAtom'
+import { showUpdateDialogState } from '../../atoms/showUpdateDialogAtom'
+import { updateProduct } from '../../services/updateProduct'
 
 const useDialogUpdateProductMutation = (queryId: string) => {
   const [selectedProduct, setSelectedProduct] =
