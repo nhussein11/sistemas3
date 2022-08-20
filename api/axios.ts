@@ -1,10 +1,9 @@
 import axios, { AxiosRequestConfig } from 'axios'
-
+import { EnvService } from '../src/shared/services/env.service'
 const axiosConfig: AxiosRequestConfig = {
-  baseURL:
-    process.env.NODE_ENV === 'development'
-      ? 'http://localhost:3000/api'
-      : 'https://sistemas3.vercel.app/',
+  baseURL: EnvService.isProd()
+    ? 'https://sistemas3.vercel.app/'
+    : 'http://localhost:3000/api',
   headers: {
     'Content-type': 'application/json',
     Accept: 'application/json'
