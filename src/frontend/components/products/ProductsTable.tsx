@@ -3,11 +3,11 @@ import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 
 import { TableProps } from '../../@types/frontend.types'
-import useDeleteProductMutation from '../../hooks/useDeleteProductMutation'
 import TableHeader from './TableHeader'
 import SelectBodyTemplate from './SelectBodyTemplate'
 import DialogNewProduct from './DialogNewProduct'
 import DialogUpdateProduct from './DialogUpdateProduct'
+import useDeleteProductMutation from '../../hooks/products/useDeleteProductMutation'
 
 const ProductsTable = ({ products }: TableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)

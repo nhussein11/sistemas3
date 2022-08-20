@@ -2,7 +2,8 @@ import { Dialog } from 'primereact/dialog'
 import { InputText } from 'primereact/inputtext'
 import React from 'react'
 import { DialogNewProductProps } from '../../@types/frontend.types'
-import useDialogNewProductMutation from '../../hooks/useDialogNewProductMutation'
+import useDialogNewProductMutation from '../../hooks/products/useDialogNewProductMutation'
+
 import DialogFooter from './DialogFooter'
 
 const DialogNewProduct = ({

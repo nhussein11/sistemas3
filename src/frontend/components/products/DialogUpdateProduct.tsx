@@ -1,7 +1,7 @@
 import React from 'react'
 import { Dialog } from 'primereact/dialog'
 import { InputText } from 'primereact/inputtext'
-import useDialogUpdateProductMutation from '../../hooks/useDialogUpdateProductMutation'
+import useDialogUpdateProductMutation from '../../hooks/products/useDialogUpdateProductMutation'
 
 const DialogUpdateProduct = () => {
   const {
