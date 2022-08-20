@@ -1,28 +1,25 @@
+import React from 'react'
 import { Dialog } from 'primereact/dialog'
 import { InputText } from 'primereact/inputtext'
-import React from 'react'
-import { DialogNewProductProps } from '../@types/frontend.types'
-import useDialogNewProductMutations from '../hooks/useDialogNewProductMutations'
-import DialogFooter from './DialogFooter'
+import useDialogUpdateProduct from '../../hooks/useDialogUpdateProduct'
 
-const DialogNewProduct = ({
-  displayBasic,
-  closeDialog
-}: DialogNewProductProps) => {
+const DialogUpdateProduct = () => {
   const {
-    handleCreateNewProduct,
+    handleUpdateProduct,
     productName,
     productPrice,
     setProductName,
-    setProductPrice
-  } = useDialogNewProductMutations()
+    setProductPrice,
+    showUpdateDialog,
+    setShowUpdateDialog
+  } = useDialogUpdateProduct()
+
   return (
     <Dialog
-      visible={displayBasic}
+      visible={showUpdateDialog}
       header="Nuevo Producto"
       style={{ width: '50vw' }}
-      footer={() => DialogFooter({ closeDialog, handleCreateNewProduct })}
-      onHide={() => closeDialog()}
+      onHide={() => setShowUpdateDialog(false)}
     >
       <div className="field-form-container">
         <span className="p-float-label">
@@ -41,8 +38,9 @@ const DialogNewProduct = ({
           <label htmlFor="in">Descripcion</label>
         </span>
       </div>
-    </Dialog>
+      <button onClick={handleUpdateProduct}>Update</button>
+    </Dialog> // comentario
   )
 }
 
-export default DialogNewProduct
+export default DialogUpdateProduct

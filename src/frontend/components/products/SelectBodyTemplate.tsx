@@ -1,12 +1,12 @@
 import React from 'react'
 import { Checkbox } from 'primereact/checkbox'
 import { useRecoilState } from 'recoil'
-import { SelectBodyTemplateProps } from '../@types/frontend.types'
-import { isProductCheckedState } from '../atoms/isProductCheckedAtom'
+import { SelectBodyTemplateProps } from '../../@types/frontend.types'
 import {
   defaultProduct,
   selectedProductState
-} from '../atoms/selectedProductAtom'
+} from '../../atoms/selectedProductAtom'
+import { isProductCheckedState } from '../../atoms/isProductCheckedAtom'
 
 const SelectBodyTemplate = ({ rowData }: SelectBodyTemplateProps) => {
   const [selectedProduct, setSelectedProduct] =

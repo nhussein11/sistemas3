@@ -2,9 +2,9 @@ import React from 'react'
 import { Button } from 'primereact/button'
 import { InputText } from 'primereact/inputtext'
 import { useRecoilState } from 'recoil'
-import { TableHeaderProps } from '../@types/frontend.types'
-import { globalFilterValueState } from '../atoms/globalFilterValueAtom'
-import { showUpdateDialogState } from '../atoms/showUpdateDialogAtom'
+import { TableHeaderProps } from '../../@types/frontend.types'
+import { globalFilterValueState } from '../../atoms/globalFilterValueAtom'
+import { showUpdateDialogState } from '../../atoms/showUpdateDialogAtom'
 
 const TableHeader = ({
   setDisplayBasic,

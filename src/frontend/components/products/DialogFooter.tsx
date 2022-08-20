@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from 'primereact/button'
-import { DialogFooterProps } from '../@types/frontend.types'
+import { DialogFooterProps } from '../../@types/frontend.types'
 
 const DialogFooter = ({ closeDialog, handleCreateNewProduct }:DialogFooterProps) => {
   const createProduct = () => {

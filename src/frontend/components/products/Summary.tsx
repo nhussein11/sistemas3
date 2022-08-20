@@ -1,5 +1,5 @@
 import { Card } from 'primereact/card'
-import { SummaryProps } from '../@types/frontend.types'
+import { SummaryProps } from '../../@types/frontend.types'
 
 const Summary = ({ inStock, available, noStock }: SummaryProps) => {
   return (
