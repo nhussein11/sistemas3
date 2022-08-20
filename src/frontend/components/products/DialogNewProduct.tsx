@@ -2,7 +2,7 @@ import { Dialog } from 'primereact/dialog'
 import { InputText } from 'primereact/inputtext'
 import React from 'react'
 import { DialogNewProductProps } from '../../@types/frontend.types'
-import useDialogNewProductMutations from '../../hooks/useDialogNewProductMutations'
+import useDialogNewProductMutation from '../../hooks/useDialogNewProductMutation'
 import DialogFooter from './DialogFooter'
 
 const DialogNewProduct = ({
@@ -15,7 +15,7 @@ const DialogNewProduct = ({
     productPrice,
     setProductName,
     setProductPrice
-  } = useDialogNewProductMutations()
+  } = useDialogNewProductMutation('products')
   return (
     <Dialog
       visible={displayBasic}
