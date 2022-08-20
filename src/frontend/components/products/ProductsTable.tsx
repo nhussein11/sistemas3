@@ -1,15 +1,17 @@
 import React, { useState } from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
-import DialogNewProduct from './DialogNewProduct'
-import SelectBodyTemplate from './SelectBodyTemplate'
+
+import { TableProps } from '../../@types/frontend.types'
 import TableHeader from './TableHeader'
-import { TableProps } from '../@types/frontend.types'
-import useTableMutations from '../hooks/useTableMutations'
+import SelectBodyTemplate from './SelectBodyTemplate'
+import DialogNewProduct from './DialogNewProduct'
 import DialogUpdateProduct from './DialogUpdateProduct'
-const Table = ({ products }: TableProps) => {
+import useDeleteProductMutation from '../../hooks/products/useDeleteProductMutation'
+
+const ProductsTable = ({ products }: TableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
-  const { handleDeleteProduct } = useTableMutations()
+  const { handleDeleteProduct } = useDeleteProductMutation('products')
   return (
     <div className="datatable-filter">
       <div className="card">
@@ -73,4 +75,4 @@ const Table = ({ products }: TableProps) => {
     </div>
   )
 }
-export default Table
+export default ProductsTable

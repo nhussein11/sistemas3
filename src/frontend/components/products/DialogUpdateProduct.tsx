@@ -1,8 +1,7 @@
 import React from 'react'
 import { Dialog } from 'primereact/dialog'
 import { InputText } from 'primereact/inputtext'
-
-import useDialogUpdateProduct from '../hooks/useDialogUpdateProduct'
+import useDialogUpdateProductMutation from '../../hooks/products/useDialogUpdateProductMutation'
 
 const DialogUpdateProduct = () => {
   const {
@@ -13,7 +12,7 @@ const DialogUpdateProduct = () => {
     setProductPrice,
     showUpdateDialog,
     setShowUpdateDialog
-  } = useDialogUpdateProduct()
+  } = useDialogUpdateProductMutation('products')
 
   return (
     <Dialog

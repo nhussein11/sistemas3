@@ -1,13 +1,19 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
-import { Product } from '../../shared/schemas/product.type'
-import { isProductCheckedState } from '../atoms/isProductCheckedAtom'
-import { selectedProductState } from '../atoms/selectedProductAtom'
-import { showUpdateDialogState } from '../atoms/showUpdateDialogAtom'
-import { updateProduct } from '../services/updateProduct'
+import { Product } from '../../../shared/schemas/product.type'
+import {
+  defaultProductChecked,
+  isProductCheckedState
+} from '../../atoms/isProductCheckedAtom'
+import {
+  defaultProduct,
+  selectedProductState
+} from '../../atoms/selectedProductAtom'
+import { showUpdateDialogState } from '../../atoms/showUpdateDialogAtom'
+import { updateProduct } from '../../services/updateProduct'
 
-const useDialogUpdateProduct = () => {
+const useDialogUpdateProductMutation = (queryId: string) => {
   const [selectedProduct, setSelectedProduct] =
     useRecoilState(selectedProductState)
   const [showUpdateDialog, setShowUpdateDialog] = useRecoilState(
@@ -23,16 +29,12 @@ const useDialogUpdateProduct = () => {
   const { mutate } = useMutation(updateQuery, {
     onSuccess: () => {
       // Invalidate and refetch
-      queryClient.invalidateQueries(['products'])
+      queryClient.invalidateQueries([queryId])
       setShowUpdateDialog(false)
-      setSelectedProduct({
-        id: '',
-        name: '',
-        price: 0
-      })
+      setSelectedProduct(defaultProduct)
       setProductName('')
       setProductPrice(0)
-      setIsProductChecked({ id: '', checked: false })
+      setIsProductChecked(defaultProductChecked)
     }
   })
   const handleUpdateProduct = () => {
@@ -54,4 +56,4 @@ const useDialogUpdateProduct = () => {
   }
 }
 
-export default useDialogUpdateProduct
+export default useDialogUpdateProductMutation

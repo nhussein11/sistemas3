@@ -1,13 +1,13 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
-import { createNewProduct } from '../services/createNewProduct'
+import { createNewProduct } from '../../services/createNewProduct'
 
-const useDialogNewProductMutations = () => {
+const useDialogNewProductMutation = (queryId: string) => {
   const queryClient = useQueryClient()
   const { mutate } = useMutation(createNewProduct, {
     onSuccess: () => {
       // Invalidate and refetch
-      queryClient.invalidateQueries(['products'])
+      queryClient.invalidateQueries([queryId])
       setProductName('')
       setProductPrice(0)
     }
@@ -30,4 +30,4 @@ const useDialogNewProductMutations = () => {
   }
 }
 
-export default useDialogNewProductMutations
+export default useDialogNewProductMutation
