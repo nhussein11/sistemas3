@@ -9,7 +9,7 @@ import {
 import { isProductCheckedState } from '../../atoms/isProductCheckedAtom'
 
 const SelectBodyTemplate = ({ rowData }: SelectBodyTemplateProps) => {
-  const [selectedProduct, setSelectedProduct] =
+  const [, setSelectedProduct] =
     useRecoilState(selectedProductState)
   const [isProductChecked, setIsProductChecked] = useRecoilState(
     isProductCheckedState
@@ -17,14 +17,12 @@ const SelectBodyTemplate = ({ rowData }: SelectBodyTemplateProps) => {
   const handleCheck = () => {
     if (isProductChecked.id === rowData.id) {
       setIsProductChecked({ id: '', checked: false })
-
       setSelectedProduct(defaultProduct)
       return
     }
     setIsProductChecked({ id: rowData.id, checked: true })
     setSelectedProduct(rowData)
   }
-  console.log(selectedProduct)
   return (
     <Checkbox
       onChange={() => handleCheck()}
