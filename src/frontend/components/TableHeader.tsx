@@ -27,6 +27,7 @@ const TableHeader = ({
           icon="pi pi-filter-slash"
           label="Limpiar"
           className="p-button-outlined"
+          onClick={() => setGlobalFilterValue('')}
         />
         <span className="p-input-icon-left">
           <i className="pi pi-search" />

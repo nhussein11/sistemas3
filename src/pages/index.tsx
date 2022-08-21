@@ -1,12 +1,16 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import { useRecoilState } from 'recoil'
+import { globalFilterValueState } from '../frontend/atoms/globalFilterValueAtom'
 import NavBar from '../frontend/components/NavBar'
 import Summary from '../frontend/components/Summary'
 import Table from '../frontend/components/Table'
 import useProductsQuery from '../frontend/hooks/useProductsQuery'
+import { filterProducts } from '../frontend/services/filterProducts'
 
 const Home: NextPage = () => {
   const query = useProductsQuery('products')
+  const [globalFilterValue] = useRecoilState(globalFilterValueState)
   return (
     <div>
       <Head>
@@ -21,7 +25,9 @@ const Home: NextPage = () => {
           noStock={'0'}
           available={query?.data?.products?.length}
         />
-        <Table products={query?.data?.products} />
+        <Table
+          products={filterProducts(query?.data?.products, globalFilterValue)}
+        />
       </div>
     </div>
   )
