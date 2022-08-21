@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
+import NumberFormat from 'react-number-format'
 
 import { TableProps } from '../../@types/frontend.types'
 import TableHeader from './TableHeader'
@@ -62,7 +63,16 @@ const ProductsTable = ({ products }: TableProps) => {
           <Column
             field="Precio"
             header="Precio"
-            body={(rowData) => rowData.price}
+            body={(rowData) => {
+              return (
+                <NumberFormat
+                  value={rowData.price}
+                  displayType={'text'}
+                  thousandSeparator={true}
+                  prefix={'$'}
+                ></NumberFormat>
+              )
+            }}
             alignHeader={'center'}
           />
         </DataTable>
