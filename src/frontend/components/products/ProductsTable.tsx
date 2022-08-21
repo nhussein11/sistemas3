@@ -68,7 +68,8 @@ const ProductsTable = ({ products }: TableProps) => {
                 <NumberFormat
                   value={rowData.price}
                   displayType={'text'}
-                  thousandSeparator={true}
+                  thousandSeparator={'.'}
+                  decimalSeparator={','}
                   prefix={'$'}
                 ></NumberFormat>
               )
