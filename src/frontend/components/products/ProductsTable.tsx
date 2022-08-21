@@ -39,31 +39,31 @@ const ProductsTable = ({ products }: TableProps) => {
                 rowData
               })
             }
-            style={{ minWidth: '5rem' }}
+            alignHeader={'center'}
           />
           <Column
-            field="id"
-            header="id"
+            field="Id"
+            header="Id"
             body={(rowData) => rowData.id}
-            style={{ minWidth: '5rem' }}
+            alignHeader={'center'}
           />
           <Column
-            field="nombre"
-            header="nombre"
+            field="Nombre"
+            header="Nombre"
             body={(rowData) => rowData.name}
-            style={{ minWidth: '5rem' }}
+            alignHeader={'center'}
           />
           <Column
-            field="descripcion"
-            header="descripcion"
+            field="Descripcion"
+            header="Descripcion"
             body={(rowData) => rowData.descripcion}
-            style={{ minWidth: '5rem' }}
+            alignHeader={'center'}
           />
           <Column
-            field="precio"
-            header="precio"
+            field="Precio"
+            header="Precio"
             body={(rowData) => rowData.price}
-            style={{ minWidth: '5rem' }}
+            alignHeader={'center'}
           />
         </DataTable>
       </div>
