@@ -8,6 +8,7 @@ import {
   defaultProduct,
   selectedProductState
 } from '../../atoms/selectedProductAtom'
+import { showErrorDialogState } from '../../atoms/showErrorDialog'
 import { deleteProduct } from '../../services/deleteProduct'
 
 const useDeleteProductMutation = (queryId: string) => {
@@ -15,6 +16,9 @@ const useDeleteProductMutation = (queryId: string) => {
   const [_, setIsProductChecked] = useRecoilState(isProductCheckedState)
   const [selectedProduct, setSelectedProduct] =
     useRecoilState(selectedProductState)
+  const [, setShowErrorDialog] =
+    useRecoilState(showErrorDialogState)
+
   const queryClient = useQueryClient()
   const { mutate } = useMutation(
     (productId: string) => deleteProduct(productId),
@@ -24,6 +28,9 @@ const useDeleteProductMutation = (queryId: string) => {
         queryClient.invalidateQueries([queryId])
         setSelectedProduct(defaultProduct)
         setIsProductChecked(defaultProductChecked)
+      },
+      onError: () => {
+        setShowErrorDialog(true)
       }
     }
   )

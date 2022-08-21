@@ -8,7 +8,8 @@ import { showUpdateDialogState } from '../../atoms/showUpdateDialogAtom'
 
 const TableHeader = ({
   setDisplayBasic,
-  handleDeleteProduct
+  handleDeleteProduct,
+  handleUpdateProduct
 }: TableHeaderProps) => {
   // eslint-disable-next-line no-unused-vars
   const [_, setShowUpdateDialog] = useRecoilState(showUpdateDialogState)
@@ -19,6 +20,11 @@ const TableHeader = ({
     handleDeleteProduct()
     setDisplayBasic(false)
   }
+  const updateProduct = () => {
+    handleUpdateProduct()
+    setDisplayBasic(false)
+  }
+
   return (
     <div className="header-table">
       <div className="flex justify-content-between">
@@ -52,7 +58,7 @@ const TableHeader = ({
         <Button
           label="Modificar"
           className="p-button-raised p-button-secondary"
-          onClick={() => setShowUpdateDialog(true)}
+          onClick={updateProduct}
         />
       </div>
     </div>
