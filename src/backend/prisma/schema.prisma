@@ -13,5 +13,5 @@ datasource db {
 model Products{
   id String @id @default(cuid())
   name String
-  price Int
+  price Decimal @db.Decimal(12,2)
 }
