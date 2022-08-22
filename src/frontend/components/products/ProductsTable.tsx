@@ -9,8 +9,6 @@ import SelectBodyTemplate from './SelectBodyTemplate'
 import DialogNewProduct from './DialogNewProduct'
 import DialogUpdateProduct from './DialogUpdateProduct'
 import DialogError from './DialogError'
-// import useDialogUpdateProductMutation from '../../hooks/products/useDialogUpdateProductMutation'
-
 const ProductsTable = ({ products }: TableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
   return (
@@ -24,11 +22,7 @@ const ProductsTable = ({ products }: TableProps) => {
           rows={10}
           dataKey="id"
           responsiveLayout="scroll"
-          header={
-            <TableHeader
-              setDisplayBasic={setDisplayBasic}
-            />
-          }
+          header={<TableHeader setDisplayBasic={setDisplayBasic} />}
           emptyMessage="No se encontraron Productos"
         >
           <Column

@@ -9,11 +9,7 @@ import { isProductCheckedState } from '../../atoms/isProductCheckedAtom'
 import { showErrorDialogState } from '../../atoms/showErrorDialog'
 import useDeleteProductMutation from '../../hooks/products/useDeleteProductMutation'
 
-const TableHeader = ({
-  setDisplayBasic
-}:
-TableHeaderProps) => {
-  // eslint-disable-next-line no-unused-vars
+const TableHeader = ({ setDisplayBasic }: TableHeaderProps) => {
   const { handleDeleteProduct } = useDeleteProductMutation('products')
   const [, setShowUpdateDialog] = useRecoilState(showUpdateDialogState)
   const [, setShowErrorDialog] = useRecoilState(showErrorDialogState)
@@ -26,7 +22,9 @@ TableHeaderProps) => {
     setDisplayBasic(false)
   }
   const updateProduct = () => {
-    isProductChecked.checked ? setShowUpdateDialog(true) : setShowErrorDialog(true)
+    isProductChecked.checked
+      ? setShowUpdateDialog(true)
+      : setShowErrorDialog(true)
   }
 
   return (
