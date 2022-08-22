@@ -34,7 +34,7 @@ const useDialogUpdateProductMutation = (queryId: string) => {
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries([queryId])
-      setShowUpdateDialog(true)
+      setShowUpdateDialog(false)
       setSelectedProduct(defaultProduct)
       setProductName('')
       setProductPrice(0)
