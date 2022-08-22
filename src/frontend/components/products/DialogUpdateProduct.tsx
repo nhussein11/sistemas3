@@ -39,7 +39,7 @@ const DialogUpdateProduct = () => {
         </span>
       </div>
       <button onClick={handleUpdateProduct}>Update</button>
-    </Dialog> // comentario
+    </Dialog>
   )
 }
 

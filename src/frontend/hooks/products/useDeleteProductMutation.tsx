@@ -9,7 +9,7 @@ import {
   selectedProductState
 } from '../../atoms/selectedProductAtom'
 import { showErrorDialogState } from '../../atoms/showErrorDialog'
-import { deleteProduct } from '../../services/deleteProduct'
+import { deleteProduct } from '../../services/deleteProducts'
 
 const useDeleteProductMutation = (queryId: string) => {
   // eslint-disable-next-line no-unused-vars

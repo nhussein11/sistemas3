@@ -5,23 +5,27 @@ import { useRecoilState } from 'recoil'
 import { TableHeaderProps } from '../../@types/frontend.types'
 import { globalFilterValueState } from '../../atoms/globalFilterValueAtom'
 import { showUpdateDialogState } from '../../atoms/showUpdateDialogAtom'
+import { isProductCheckedState } from '../../atoms/isProductCheckedAtom'
+import { showErrorDialogState } from '../../atoms/showErrorDialog'
 
 const TableHeader = ({
   setDisplayBasic,
-  handleDeleteProduct,
-  handleUpdateProduct
-}: TableHeaderProps) => {
+  handleDeleteProduct
+}:
+TableHeaderProps) => {
   // eslint-disable-next-line no-unused-vars
-  const [_, setShowUpdateDialog] = useRecoilState(showUpdateDialogState)
+  const [, setShowUpdateDialog] = useRecoilState(showUpdateDialogState)
+  const [, setShowErrorDialog] = useRecoilState(showErrorDialogState)
   const [globalFilterValue, setGlobalFilterValue] = useRecoilState(
     globalFilterValueState
   )
-  const deleleteProduct = () => {
+  const [isProductChecked] = useRecoilState(isProductCheckedState)
+  const deleteProduct = () => {
     handleDeleteProduct()
     setDisplayBasic(false)
   }
   const updateProduct = () => {
-    handleUpdateProduct()
+    isProductChecked.checked ? setShowUpdateDialog(true) : setShowErrorDialog(true)
     setDisplayBasic(false)
   }
 
@@ -53,7 +57,7 @@ const TableHeader = ({
         <Button
           label="Borrar"
           className="p-button-raised p-button-danger"
-          onClick={deleleteProduct}
+          onClick={deleteProduct}
         />
         <Button
           label="Modificar"

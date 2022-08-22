@@ -1,7 +1,5 @@
-import { Button } from 'primereact/button'
-import { Dialog } from 'primereact/dialog'
-import { InputText } from 'primereact/inputtext'
 import React from 'react'
+import { Dialog } from 'primereact/dialog'
 import useDialogUpdateProductMutation from '../../hooks/products/useDialogUpdateProductMutation'
 
 const DialogError = () => {

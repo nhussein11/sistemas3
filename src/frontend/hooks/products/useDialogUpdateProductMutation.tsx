@@ -24,7 +24,7 @@ const useDialogUpdateProductMutation = (queryId: string) => {
     showErrorDialogState
   )
   // eslint-disable-next-line no-unused-vars
-  const [isProductChecked, setIsProductChecked] = useRecoilState(isProductCheckedState)
+  const [, setIsProductChecked] = useRecoilState(isProductCheckedState)
   const [productName, setProductName] = useState('')
   const [productPrice, setProductPrice] = useState(0)
   const queryClient = useQueryClient()
@@ -34,15 +34,11 @@ const useDialogUpdateProductMutation = (queryId: string) => {
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries([queryId])
-      setShowUpdateDialog(false)
+      setShowUpdateDialog(true)
       setSelectedProduct(defaultProduct)
       setProductName('')
       setProductPrice(0)
       setIsProductChecked(defaultProductChecked)
-    },
-    onError: () => {
-      console.log('error')
-      setShowErrorDialog(true)
     }
   })
   const handleUpdateProduct = () => {
