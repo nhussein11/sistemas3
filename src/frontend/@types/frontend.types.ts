@@ -11,8 +11,6 @@ export type SelectBodyTemplateProps = {
 
 export type TableHeaderProps = {
   setDisplayBasic: Dispatch<boolean>
-  handleDeleteProduct: () => void
-  // handleUpdateProduct: () => void
 }
 
 export type DialogNewProductProps = {

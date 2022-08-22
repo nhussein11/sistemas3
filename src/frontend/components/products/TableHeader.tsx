@@ -7,13 +7,14 @@ import { globalFilterValueState } from '../../atoms/globalFilterValueAtom'
 import { showUpdateDialogState } from '../../atoms/showUpdateDialogAtom'
 import { isProductCheckedState } from '../../atoms/isProductCheckedAtom'
 import { showErrorDialogState } from '../../atoms/showErrorDialog'
+import useDeleteProductMutation from '../../hooks/products/useDeleteProductMutation'
 
 const TableHeader = ({
-  setDisplayBasic,
-  handleDeleteProduct
+  setDisplayBasic
 }:
 TableHeaderProps) => {
   // eslint-disable-next-line no-unused-vars
+  const { handleDeleteProduct } = useDeleteProductMutation('products')
   const [, setShowUpdateDialog] = useRecoilState(showUpdateDialogState)
   const [, setShowErrorDialog] = useRecoilState(showErrorDialogState)
   const [globalFilterValue, setGlobalFilterValue] = useRecoilState(

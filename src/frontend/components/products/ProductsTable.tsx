@@ -8,13 +8,11 @@ import TableHeader from './TableHeader'
 import SelectBodyTemplate from './SelectBodyTemplate'
 import DialogNewProduct from './DialogNewProduct'
 import DialogUpdateProduct from './DialogUpdateProduct'
-import useDeleteProductMutation from '../../hooks/products/useDeleteProductMutation'
 import DialogError from './DialogError'
 // import useDialogUpdateProductMutation from '../../hooks/products/useDialogUpdateProductMutation'
 
 const ProductsTable = ({ products }: TableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
-  const { handleDeleteProduct } = useDeleteProductMutation('products')
   return (
     <div className="datatable-filter">
       <div className="card">
@@ -28,7 +26,6 @@ const ProductsTable = ({ products }: TableProps) => {
           responsiveLayout="scroll"
           header={
             <TableHeader
-              handleDeleteProduct={handleDeleteProduct}
               setDisplayBasic={setDisplayBasic}
             />
           }
