@@ -26,7 +26,6 @@ TableHeaderProps) => {
   }
   const updateProduct = () => {
     isProductChecked.checked ? setShowUpdateDialog(true) : setShowErrorDialog(true)
-    setDisplayBasic(false)
   }
 
   return (
