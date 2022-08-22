@@ -70,3 +70,11 @@
     justify-content: space-around;
   }
   
+    /*SECTION TABLE*/
+    .footer-update-dialog{
+      display:flex;
+      flex-direction: row;
+      justify-content: end;
+      margin-top: 1rem;
+    }
+    
