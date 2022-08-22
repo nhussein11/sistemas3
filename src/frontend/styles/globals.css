@@ -1,28 +1,29 @@
 /*GLOBAL*/
-.main-container{
-    display: flex;
-    margin: 3rem;
-    justify-content: center;
-    flex-direction: column;
+.main-container {
+  display: flex;
+  margin: 3rem;
+  justify-content: center;
+  flex-direction: column;
 }
 /*SECTION RESUME*/
-.summary-section{
-    display: flex;
-    justify-content: flex-start;
-    margin-bottom: 1rem;
-    flex-direction: row;
+.summary-section {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 1rem;
+  flex-direction: row;
 }
-.card-title{
-    width: 15rem;
+.card-title {
+  width: 15rem;
 }
-.card-item{
-    width: 7rem;
-    margin-right: 1rem;
-    margin-left: 1rem;
+.card-item {
+  width: 7rem;
+  margin-right: 1rem;
+  margin-left: 1rem;
 }
 
 /*SECTION TABLE*/
 /* DataTableDemo.css */
+
 .datatable-filter{
     margin-bottom: 40px;
   }
@@ -77,4 +78,3 @@
       justify-content: flex-end;
       margin-top: 1rem;
     }
-    
