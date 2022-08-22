@@ -39,7 +39,7 @@ const DialogUpdateProduct = () => {
           <label htmlFor="in">Descripcion</label>
         </span>
       </div>
-      <div className="footer-update-dialog">
+      <div className="footer-button-updateDialog">
         <Button
           label="Confirmar"
           icon="pi pi-check"
