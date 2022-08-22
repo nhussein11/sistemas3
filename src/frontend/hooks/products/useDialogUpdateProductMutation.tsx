@@ -10,6 +10,7 @@ import {
   defaultProduct,
   selectedProductState
 } from '../../atoms/selectedProductAtom'
+import { showErrorDialogState } from '../../atoms/showErrorDialog'
 import { showUpdateDialogState } from '../../atoms/showUpdateDialogAtom'
 import { updateProduct } from '../../services/updateProduct'
 
@@ -19,8 +20,11 @@ const useDialogUpdateProductMutation = (queryId: string) => {
   const [showUpdateDialog, setShowUpdateDialog] = useRecoilState(
     showUpdateDialogState
   )
+  const [showErrorDialog, setShowErrorDialog] = useRecoilState(
+    showErrorDialogState
+  )
   // eslint-disable-next-line no-unused-vars
-  const [_, setIsProductChecked] = useRecoilState(isProductCheckedState)
+  const [, setIsProductChecked] = useRecoilState(isProductCheckedState)
   const [productName, setProductName] = useState('')
   const [productPrice, setProductPrice] = useState(0)
   const queryClient = useQueryClient()
@@ -30,7 +34,7 @@ const useDialogUpdateProductMutation = (queryId: string) => {
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries([queryId])
-      setShowUpdateDialog(false)
+      setShowUpdateDialog(true)
       setSelectedProduct(defaultProduct)
       setProductName('')
       setProductPrice(0)
@@ -52,6 +56,8 @@ const useDialogUpdateProductMutation = (queryId: string) => {
     setProductName,
     setProductPrice,
     showUpdateDialog,
+    showErrorDialog,
+    setShowErrorDialog,
     setShowUpdateDialog
   }
 }

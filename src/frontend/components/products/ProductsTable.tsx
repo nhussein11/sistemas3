@@ -9,6 +9,8 @@ import SelectBodyTemplate from './SelectBodyTemplate'
 import DialogNewProduct from './DialogNewProduct'
 import DialogUpdateProduct from './DialogUpdateProduct'
 import useDeleteProductMutation from '../../hooks/products/useDeleteProductMutation'
+import DialogError from './DialogError'
+// import useDialogUpdateProductMutation from '../../hooks/products/useDialogUpdateProductMutation'
 
 const ProductsTable = ({ products }: TableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
@@ -83,6 +85,7 @@ const ProductsTable = ({ products }: TableProps) => {
         closeDialog={() => setDisplayBasic(false)}
       />
       <DialogUpdateProduct />
+      <DialogError></DialogError>
     </div>
   )
 }
