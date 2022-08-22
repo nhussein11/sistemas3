@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
+import NumberFormat from 'react-number-format'
 
 import { TableProps } from '../../@types/frontend.types'
 import TableHeader from './TableHeader'
@@ -41,31 +42,41 @@ const ProductsTable = ({ products }: TableProps) => {
                 rowData
               })
             }
-            style={{ minWidth: '5rem' }}
+            alignHeader={'center'}
           />
           <Column
-            field="id"
-            header="id"
+            field="Id"
+            header="Id"
             body={(rowData) => rowData.id}
-            style={{ minWidth: '5rem' }}
+            alignHeader={'center'}
           />
           <Column
-            field="nombre"
-            header="nombre"
+            field="Nombre"
+            header="Nombre"
             body={(rowData) => rowData.name}
-            style={{ minWidth: '5rem' }}
+            alignHeader={'center'}
           />
           <Column
-            field="descripcion"
-            header="descripcion"
+            field="Descripcion"
+            header="Descripcion"
             body={(rowData) => rowData.descripcion}
-            style={{ minWidth: '5rem' }}
+            alignHeader={'center'}
           />
           <Column
-            field="precio"
-            header="precio"
-            body={(rowData) => rowData.price}
-            style={{ minWidth: '5rem' }}
+            field="Precio"
+            header="Precio"
+            body={(rowData) => {
+              return (
+                <NumberFormat
+                  value={rowData.price}
+                  displayType={'text'}
+                  thousandSeparator={'.'}
+                  decimalSeparator={','}
+                  prefix={'$'}
+                ></NumberFormat>
+              )
+            }}
+            alignHeader={'center'}
           />
         </DataTable>
       </div>

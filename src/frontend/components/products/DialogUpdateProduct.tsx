@@ -2,6 +2,7 @@ import React from 'react'
 import { Dialog } from 'primereact/dialog'
 import { InputText } from 'primereact/inputtext'
 import useDialogUpdateProductMutation from '../../hooks/products/useDialogUpdateProductMutation'
+import { Button } from 'primereact/button'
 
 const DialogUpdateProduct = () => {
   const {
@@ -38,7 +39,14 @@ const DialogUpdateProduct = () => {
           <label htmlFor="in">Descripcion</label>
         </span>
       </div>
-      <button onClick={handleUpdateProduct}>Update</button>
+      <div className="footer-update-dialog">
+        <Button
+          label="Confirmar"
+          icon="pi pi-check"
+          onClick={handleUpdateProduct}
+          autoFocus
+        />
+      </div>
     </Dialog>
   )
 }

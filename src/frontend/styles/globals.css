@@ -51,10 +51,12 @@
     padding: 1rem;
   }
   .datatable-filter .p-datatable.p-datatable-customers .p-datatable-thead > tr > th {
-    text-align: left;
+    min-width: '5rem';
+    /* text-align: center; */
   }
   .datatable-filter .p-datatable.p-datatable-customers .p-datatable-tbody > tr > td {
     cursor: auto;
+    text-align: center;
   }
   .datatable-filter .p-datatable.p-datatable-customers .p-dropdown-label:not(.p-placeholder) {
     text-transform: uppercase;
@@ -68,3 +70,11 @@
     justify-content: space-around;
   }
   
+    /*SECTION TABLE*/
+    .footer-update-dialog{
+      display:flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      margin-top: 1rem;
+    }
+    
