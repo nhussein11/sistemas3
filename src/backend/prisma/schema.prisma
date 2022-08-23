@@ -10,8 +10,34 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Products{
+model Product {
+  id            String         @id @default(cuid())
+  name          String
+  price         Float          @db.Real
+  
+  ProductXStore ProductXStore?
+
+  @@map("product")
+}
+
+model Store {
+  id            String          @id @default(cuid())
+  name          String
+  address       String
+
+  ProductXStore ProductXStore?
+  
+  @@map("store")
+}
+
+model ProductXStore {
   id String @id @default(cuid())
-  name String
-  price Float @db.Real
+
+  Product   Product @relation(fields: [productId], references: [id])
+  productId String @unique
+
+  Store   Store  @relation(fields: [storeId], references: [id])
+  storeId String @unique
+
+  @@map("product_x_store")
 }
