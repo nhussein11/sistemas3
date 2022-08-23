@@ -1,28 +1,18 @@
 import { Menubar } from 'primereact/menubar'
+import { useRouter } from 'next/router'
 
 const NavBar = () => {
+  const router = useRouter()
   const items = [
     {
       label: 'Inicio',
-      icon: 'pi pi-fw pi-home'
+      icon: 'pi pi-fw pi-home',
+      command: () => { router.push('/') }
     },
     {
       label: 'Stock',
       icon: 'pi pi-fw pi-pencil',
-      items: [
-        {
-          label: 'Nuevo',
-          icon: 'pi pi-fw pi-plus'
-        },
-        {
-          label: 'Borrar',
-          icon: 'pi pi-fw pi-plus'
-        },
-        {
-          label: 'Buscar',
-          icon: 'pi pi-fw pi-plus'
-        }
-      ]
+      command: () => { router.push('/stock') }
     },
     {
       label: 'Usuarios',
@@ -66,7 +56,7 @@ const NavBar = () => {
     }
   ]
 
-  return <Menubar model={items} />
+  return <Menubar model={items} onClick={(element) => console.log(element)}/>
 }
 
 export default NavBar
