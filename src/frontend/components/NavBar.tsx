@@ -1,5 +1,6 @@
 import { Menubar } from 'primereact/menubar'
 import { useRouter } from 'next/router'
+import { Button } from 'primereact/button'
 
 const NavBar = () => {
   const router = useRouter()
@@ -49,14 +50,10 @@ const NavBar = () => {
           icon: 'pi pi-fw pi-plus'
         }
       ]
-    },
-    {
-      label: 'Salir',
-      icon: 'pi pi-fw pi-power-off'
     }
   ]
 
-  return <Menubar model={items} onClick={(element) => console.log(element)}/>
+  return <Menubar model={items} end={<Button label="Cerrar Sesión" icon="pi pi-fw pi-power-off" className="p-button-raised-danger p-button-rounded" />}/>
 }
 
 export default NavBar

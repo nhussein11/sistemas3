@@ -1,3 +1,6 @@
+body{
+  background-color: #dfdfdf;
+}
 /*GLOBAL*/
 .main-container {
   display: flex;
@@ -71,10 +74,33 @@
     justify-content: space-around;
   }
   
-    /*SECTION TABLE*/
-    .footer-update-dialog{
-      display:flex;
-      flex-direction: row;
-      justify-content: flex-end;
-      margin-top: 1rem;
-    }
+/*SECTION TABLE*/
+.footer-update-dialog{
+  display:flex;
+  flex-direction: row;  
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+  /*SECTION DASHBOARD*/
+  .contenedor-dashboard{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+  }
+  .card-item-dashboard {
+    width: 20rem;
+    margin-top: 2rem;
+    margin-right: 1rem;
+    margin-left: 1rem;
+  }
+  .card-body{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  
+
+
