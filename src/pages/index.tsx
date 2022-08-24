@@ -12,9 +12,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className='contenedor-dashboard'>
-        <CardComponent name='Ganancias' value='$40.000' icon='pi-dollar'/>
-        <CardComponent name='Ventas' value='+1.300' icon='pi-shopping-cart'/>
-        <CardComponent name='Alumnos' value='+45' icon='pi-users'/>
+        <CardComponent name='Ganancias' value='$40.000' icon='pi-dollar' color='green'/>
+        <CardComponent name='Ventas' value='+1.300' icon='pi-shopping-cart' color='red'/>
+        <CardComponent name='Alumnos' value='+45' icon='pi-users' color='green'/>
       </div>
       <div className='contenedor-grafico'>
         <Card className='card-graph'>
