@@ -1,3 +1,6 @@
+body{
+  background-color: #dfdfdf;
+}
 /*GLOBAL*/
 .main-container {
   display: flex;
@@ -13,7 +16,7 @@
   flex-direction: row;
 }
 .card-title {
-  width: 15rem;
+  width: 12rem;
 }
 .card-item {
   width: 7rem;
@@ -71,10 +74,58 @@
     justify-content: space-around;
   }
   
-    /*SECTION TABLE*/
-    .footer-update-dialog{
-      display:flex;
-      flex-direction: row;
-      justify-content: flex-end;
-      margin-top: 1rem;
-    }
+/*SECTION TABLE*/
+.footer-update-dialog{
+  display:flex;
+  flex-direction: row;  
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+  /*SECTION DASHBOARD*/
+.contenedor-dashboard{
+  display: grid;
+  place-content: center;
+  grid-auto-flow: column;
+}
+
+/*GRAPH-----------------*/
+.card-graph{
+  width: 30rem;
+  margin: 10px;
+}
+.contenedor-grafico{
+  margin-top: 2rem;
+  display: grid;
+  place-content: center;
+  grid-auto-flow: column;
+}
+
+/*CARD--------------------*/
+.card-item-dashboard {
+  width: 20rem;
+  margin-top: 2rem;
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
+.p-card-header h2{
+  text-align: start;
+  margin-left: 1rem;
+}
+.p-card-content{
+  padding:0rem !important
+}
+.card-body{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0rem !important;
+}
+.p-card-footer{
+  padding: 0rem !important;
+}
+.p-card-footer p{
+  text-align: center;
+}
+/*CARD--------------------*/
+
