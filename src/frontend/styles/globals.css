@@ -16,7 +16,7 @@ body{
   flex-direction: row;
 }
 .card-title {
-  width: 15rem;
+  width: 12rem;
 }
 .card-item {
   width: 7rem;
@@ -84,6 +84,18 @@ body{
 
   /*SECTION DASHBOARD*/
 .contenedor-dashboard{
+  display: grid;
+  place-content: center;
+  grid-auto-flow: column;
+}
+
+/*GRAPH-----------------*/
+.card-graph{
+  width: 30rem;
+  margin: 10px;
+}
+.contenedor-grafico{
+  margin-top: 2rem;
   display: grid;
   place-content: center;
   grid-auto-flow: column;

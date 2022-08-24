@@ -1,7 +1,8 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import CardComponent from '../frontend/components/dashboard/Card'
-
+import BarChartDemo from '../frontend/components/dashboard/Graph'
+import { Card } from 'primereact/card'
 const Home: NextPage = () => {
   return (
     <div>
@@ -14,6 +15,14 @@ const Home: NextPage = () => {
         <CardComponent name='Ganancias' value='$40.000' icon='pi-dollar'/>
         <CardComponent name='Ventas' value='+1.300' icon='pi-shopping-cart'/>
         <CardComponent name='Alumnos' value='+45' icon='pi-users'/>
+      </div>
+      <div className='contenedor-grafico'>
+        <Card className='card-graph'>
+          <BarChartDemo/>
+        </Card>
+        <Card className='card-graph'>
+          <BarChartDemo/>
+        </Card>
       </div>
     </div>
   )
