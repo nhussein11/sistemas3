@@ -1,10 +1,8 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { Card } from 'primereact/card'
+import CardComponent from '../frontend/components/dashboard/Card'
 
 const Home: NextPage = () => {
-  const footer = <div><p>+20% <span>La última semana</span></p></div>
-  const header = <div><h2>Ganancias (Mensual)</h2></div>
   return (
     <div>
       <Head>
@@ -13,18 +11,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className='contenedor-dashboard'>
-        <Card className='card-item-dashboard' footer={footer} header={header}>
-            <div className='card-body'>
-              <h2>$40.000</h2>
-              <i className="pi pi-check mr-2" style={ { fontSize: '2em' } }></i>
-            </div>
-        </Card>
-        <Card className='card-item-dashboard'>
-            Content
-        </Card>
-        <Card className='card-item-dashboard'>
-            Content
-        </Card>
+        <CardComponent name='Ganancias' value='$40.000' icon='pi-dollar'/>
+        <CardComponent name='Ventas' value='+1.300' icon='pi-shopping-cart'/>
+        <CardComponent name='Alumnos' value='+45' icon='pi-users'/>
       </div>
     </div>
   )

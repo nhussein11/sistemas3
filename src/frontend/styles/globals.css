@@ -83,24 +83,37 @@ body{
 }
 
   /*SECTION DASHBOARD*/
-  .contenedor-dashboard{
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    justify-content: center;
-  }
-  .card-item-dashboard {
-    width: 20rem;
-    margin-top: 2rem;
-    margin-right: 1rem;
-    margin-left: 1rem;
-  }
-  .card-body{
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    justify-content: space-around;
-  }
-  
+.contenedor-dashboard{
+  display: grid;
+  place-content: center;
+  grid-auto-flow: column;
+}
 
+/*CARD--------------------*/
+.card-item-dashboard {
+  width: 20rem;
+  margin-top: 2rem;
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
+.p-card-header h2{
+  text-align: start;
+  margin-left: 1rem;
+}
+.p-card-content{
+  padding:0rem !important
+}
+.card-body{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0rem !important;
+}
+.p-card-footer{
+  padding: 0rem !important;
+}
+.p-card-footer p{
+  text-align: center;
+}
+/*CARD--------------------*/
 
