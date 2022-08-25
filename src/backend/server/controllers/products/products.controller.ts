@@ -11,10 +11,10 @@ const getProducts = async () => {
   }
 }
 
-const createProduct = async (name: string, price: number) => {
+const createProduct = async (name: string, price: number, description: string) => {
   try {
     const productCreated: Product = await prisma.product.create({
-      data: { name, price }
+      data: { name, price, description }
     })
     return productCreated
   } catch (error) {
@@ -35,7 +35,7 @@ const getProductById = async (id: string) => {
   }
 }
 
-const updateProductById = async (id: string, name: string, price: number) => {
+const updateProductById = async (id: string, name: string, price: number, description: string) => {
   try {
     await prisma.product.findUniqueOrThrow({ where: { id } })
 
@@ -47,7 +47,8 @@ const updateProductById = async (id: string, name: string, price: number) => {
       where: { id },
       data: {
         name,
-        price
+        price,
+        description
       }
     })
 
