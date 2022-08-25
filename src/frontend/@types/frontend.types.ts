@@ -28,3 +28,10 @@ export type SummaryProps = {
   noStock: string
   available: number
 }
+
+export type CardProps = {
+  name : string
+  value : string
+  icon : string
+  color : string
+}
