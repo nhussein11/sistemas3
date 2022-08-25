@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useState } from 'react'
 import { createNewProduct } from '../../services/createNewProduct'
 import useField from '../useField'
 
@@ -9,24 +8,21 @@ const useDialogNewProductMutation = (queryId: string) => {
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries([queryId])
-      setProductName('')
-      setProductPrice(0)
+      productName.onChange('')
+      productPrice.onChange(0)
     }
   })
-  const productName = useField('', 'text')
-  //const [productName, setProductName] = useState('')
-  const [productPrice, setProductPrice] = useState(0)
-  // description and other when backend is ready
+  const productName = useField({ initialValue: '', type: 'text' })
+  const productPrice = useField({ initialValue: 0, type: 'number' })
   const handleCreateNewProduct = () => {
     mutate({
-      name: productName.value,
-      price: productPrice
+      name: productName.value as string,
+      price: productPrice.value as number
     })
   }
   return {
     handleCreateNewProduct,
     productName,
-    setProductPrice,
     productPrice
   }
 }
