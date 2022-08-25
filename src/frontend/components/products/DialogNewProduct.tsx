@@ -10,13 +10,8 @@ const DialogNewProduct = ({
   displayBasic,
   closeDialog
 }: DialogNewProductProps) => {
-  const {
-    handleCreateNewProduct,
-    productName,
-    productPrice,
-    setProductName,
-    setProductPrice
-  } = useDialogNewProductMutation('products')
+  const { handleCreateNewProduct, productName, productPrice } =
+    useDialogNewProductMutation('products')
   return (
     <Dialog
       visible={displayBasic}
@@ -27,18 +22,11 @@ const DialogNewProduct = ({
     >
       <div className="field-form-container">
         <span className="p-float-label">
-          <InputText
-            value={productName}
-            onChange={(e) => setProductName(e.target.value)}
-          />
+          <InputText {...productName} name="productName" />
           <label htmlFor="in">Nombre</label>
         </span>
         <span className="p-float-label">
-          <InputText
-            value={productPrice}
-            type="number"
-            onChange={(e) => setProductPrice(Number(e.target.value).valueOf())}
-          />
+          <InputText {...productPrice} name="productPrice" />
           <label htmlFor="in">Descripcion</label>
         </span>
       </div>
