@@ -8,10 +8,13 @@ datasource db {
 }
 
 model Product {
-  id          String @id @default(cuid())
-  name        String
-  description String
-  price       Float  @db.Real
+  id               String             @id @default(cuid())
+  name             String
+  description      String
+  price            Float              @db.Real
+  product_x_store  product_x_store?   @relation("productToproduct_x_store") 
+  movement_details movement_details[] @relation("MovementDetailsToProduct")
+
 
   Stock Stock?
 
@@ -19,6 +22,7 @@ model Product {
 
   @@map("product")
 }
+
 
 model Store {
   id      String @id @default(cuid())
@@ -75,7 +79,6 @@ model MovementDetails {
   Movement Movement[]
 
   @@map("movement_details")
-}
 
 enum MovementTypeEnum {
   POSITIVE
