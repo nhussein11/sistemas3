@@ -16,6 +16,10 @@ model Product {
   movement_details movement_details[] @relation("MovementDetailsToProduct")
 
 
+  Stock Stock?
+
+  MovementDetails MovementDetails[]
+
   @@map("product")
 }
 
@@ -25,41 +29,42 @@ model Store {
   name    String
   address String
 
-  ProductXStore ProductXStore?
+  Stock Stock?
 
   @@map("store")
 }
 
-model ProductXStore {
+model Stock {
   id String @id @default(cuid())
 
   Product   Product @relation(fields: [productId], references: [id])
-  productId String  @unique   @default(cuid())
+  productId String  @unique @default("")
 
   Store   Store  @relation(fields: [storeId], references: [id])
-  storeId String @unique  @default(cuid())
+  storeId String @unique @default("")
 
-  @@map("product_x_store")
+  @@map("stock")
 }
 
 model Movement {
-  id       String   @id @default(cuid())
-  datetime DateTime
+  id          String   @id @default(cuid())
+  datetime    DateTime @default(now())
+  observation String   @default("")
 
-  MovementDetails MovementDetails @relation(fields: [movementDetailsId], references: [id])
-  movementDetailsId String @unique
+  MovementDetails   MovementDetails @relation(fields: [movementDetailsId], references: [id])
+  movementDetailsId String          @unique
 
-  MovementType          MovementType @relation(fields: [movementTypeId], references: [id])
+  MovementType   MovementType @relation(fields: [movementTypeId], references: [id])
   movementTypeId String       @unique
 
   @@map("movement")
 }
 
 model MovementType {
-  id       String           @id @default(cuid())
-  datetime DateTime
-  movement MovementTypeEnum
-  cause    String
+  id           String           @id @default(cuid())
+  movementtype MovementTypeEnum
+  movementname MovementNameEnum
+  cause        String
 
   Movement Movement[]
 
@@ -71,11 +76,18 @@ model MovementDetails {
 
   Product Product[]
 
-  Movement   Movement? 
-  
+  Movement Movement[]
+
   @@map("movement_details")
 
 enum MovementTypeEnum {
   POSITIVE
   NEGATIVE
+}
+
+enum MovementNameEnum {
+  REMITO
+  FACTURA
+  ORDEN_DE_COMPRA
+  ORDEN_DE_PAGO
 }
