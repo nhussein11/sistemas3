@@ -15,46 +15,65 @@ model Product {
   product_x_store  product_x_store?   @relation("productToproduct_x_store") 
   movement_details movement_details[] @relation("MovementDetailsToProduct")
 
+
   @@map("product")
 }
 
-model movement {
-  id                String           @id
-  datetime          DateTime
-  movementDetailsId String           @unique
-  movementTypeId    String           @unique
-  movement_details  movement_details @relation(fields: [movementDetailsId], references: [id])
-  movement_type     movement_type    @relation(fields: [movementTypeId], references: [id])
+
+model Store {
+  id      String @id @default(cuid())
+  name    String
+  address String
+
+  ProductXStore ProductXStore?
+
+  @@map("store")
 }
 
-model movement_details {
-  id       String    @id
-  movement movement?
-  product  Product[] @relation("MovementDetailsToProduct")
+model ProductXStore {
+  id String @id @default(cuid())
+
+  Product   Product @relation(fields: [productId], references: [id])
+  productId String  @unique   @default(cuid())
+
+  Store   Store  @relation(fields: [storeId], references: [id])
+  storeId String @unique  @default(cuid())
+
+  @@map("product_x_store")
 }
 
-model movement_type {
-  id                               String           @id
-  datetime                         DateTime
-  movement                         MovementTypeEnum
-  cause                            String
-  movement_movementTomovement_type movement?
+model Movement {
+  id       String   @id @default(cuid())
+  datetime DateTime
+
+  MovementDetails MovementDetails @relation(fields: [movementDetailsId], references: [id])
+  movementDetailsId String @unique
+
+  MovementType          MovementType @relation(fields: [movementTypeId], references: [id])
+  movementTypeId String       @unique
+
+  @@map("movement")
 }
 
-model product_x_store {
-  id        String  @id
-  productId String  @unique
-  storeId   String  @unique
-  product   Product @relation("productToproduct_x_store", fields: [productId], references: [id])
-  store     store   @relation(fields: [storeId], references: [id])
+model MovementType {
+  id       String           @id @default(cuid())
+  datetime DateTime
+  movement MovementTypeEnum
+  cause    String
+
+  Movement Movement[]
+
+  @@map("movement_type")
 }
 
-model store {
-  id              String           @id
-  name            String
-  address         String
-  product_x_store product_x_store?
-}
+model MovementDetails {
+  id String @id @default(cuid())
+
+  Product Product[]
+
+  Movement   Movement? 
+  
+  @@map("movement_details")
 
 enum MovementTypeEnum {
   POSITIVE
