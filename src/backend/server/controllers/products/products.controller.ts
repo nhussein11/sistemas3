@@ -39,7 +39,7 @@ const updateProductById = async (id: string, name: string, price: number, descri
   try {
     await prisma.product.findUniqueOrThrow({ where: { id } })
 
-    if (!name || !price || !description)  {
+    if (!name || !price || !description) {
       throw new Error('Name, price or description must be provided!')
     }
 
