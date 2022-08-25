@@ -14,7 +14,6 @@ const DialogNewProduct = ({
     handleCreateNewProduct,
     productName,
     productPrice,
-    setProductName,
     setProductPrice
   } = useDialogNewProductMutation('products')
   return (
@@ -28,8 +27,7 @@ const DialogNewProduct = ({
       <div className="field-form-container">
         <span className="p-float-label">
           <InputText
-            value={productName}
-            onChange={(e) => setProductName(e.target.value)}
+            {...productName}
           />
           <label htmlFor="in">Nombre</label>
         </span>
