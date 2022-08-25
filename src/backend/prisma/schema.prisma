@@ -11,6 +11,8 @@ model Product {
   id    String @id @default(cuid())
   name  String
   price Float  @db.Real
+
+  @@map("product")
 }
 
 
