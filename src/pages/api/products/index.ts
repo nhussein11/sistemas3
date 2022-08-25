@@ -4,7 +4,7 @@ import {
   createProduct
 } from '../../../backend/server/controllers/products/products.controller'
 
-export default async function products(
+export default async function products (
   req: NextApiRequest,
   res: NextApiResponse
 ) {
