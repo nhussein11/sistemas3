@@ -8,11 +8,75 @@ datasource db {
 }
 
 model Product {
-  id    String @id @default(cuid())
-  name  String
-  price Float  @db.Real
+  id          String @id @default(cuid())
+  name        String
+  description String
+  price       Float  @db.Real
+
+  ProductXStore ProductXStore?
+
+  MovementDetails MovementDetails[]
 
   @@map("product")
 }
 
+model Store {
+  id      String @id @default(cuid())
+  name    String
+  address String
 
+  ProductXStore ProductXStore?
+
+  @@map("store")
+}
+
+model ProductXStore {
+  id String @id @default(cuid())
+
+  Product   Product @relation(fields: [productId], references: [id])
+  productId String  @unique
+
+  Store   Store  @relation(fields: [storeId], references: [id])
+  storeId String @unique
+
+  @@map("product_x_store")
+}
+
+model Movement {
+  id       String   @id @default(cuid())
+  datetime DateTime
+
+  MovementDetails MovementDetails @relation(fields: [movementDetailsId], references: [id])
+  movementDetailsId String @unique
+
+  MovementType          MovementType @relation(fields: [movementTypeId], references: [id])
+  movementTypeId String       @unique
+
+  @@map("movement")
+}
+
+model MovementType {
+  id       String           @id @default(cuid())
+  datetime DateTime
+  movement MovementTypeEnum
+  cause    String
+
+  Movement Movement[]
+
+  @@map("movement_type")
+}
+
+model MovementDetails {
+  id String @id @default(cuid())
+
+  Product Product[]
+
+  Movement   Movement? 
+  
+  @@map("movement_details")
+}
+
+enum MovementTypeEnum {
+  POSITIVE
+  NEGATIVE
+}
