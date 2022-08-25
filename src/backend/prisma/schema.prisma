@@ -13,7 +13,7 @@ model Product {
   description String
   price       Float  @db.Real
 
-  ProductXStore ProductXStore?
+  ProductXStore ProductXStore? 
 
   MovementDetails MovementDetails[]
 
@@ -34,10 +34,10 @@ model ProductXStore {
   id String @id @default(cuid())
 
   Product   Product @relation(fields: [productId], references: [id])
-  productId String  @unique
+  productId String  @unique   @default(cuid())
 
   Store   Store  @relation(fields: [storeId], references: [id])
-  storeId String @unique
+  storeId String @unique  @default(cuid())
 
   @@map("product_x_store")
 }

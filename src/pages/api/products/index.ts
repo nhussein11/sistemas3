@@ -4,7 +4,7 @@ import {
   createProduct
 } from '../../../backend/server/controllers/products/products.controller'
 
-export default async function products (
+export default async function products(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
@@ -21,8 +21,8 @@ export default async function products (
 
     case 'POST':
       try {
-        const { name, price } = body
-        const productCreated = await createProduct(name, price)
+        const { name, price, description } = body
+        const productCreated = await createProduct(name, price, description)
         return res.status(201).send({ productCreated })
       } catch (error) {
         return res.status(500).send({ error })
