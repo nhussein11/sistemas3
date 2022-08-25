@@ -16,7 +16,7 @@ const DialogUpdateProduct = () => {
   return (
     <Dialog
       visible={showUpdateDialog}
-      header="Nuevo Producto"
+      header="Actualizar Producto"
       style={{ width: '50vw' }}
       onHide={() => setShowUpdateDialog(false)}
     >
