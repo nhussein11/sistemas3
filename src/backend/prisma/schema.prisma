@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,33 +8,9 @@ datasource db {
 }
 
 model Product {
-  id            String         @id @default(cuid())
-  name          String
-  price         Float          @db.Real
-  
-  ProductXStore ProductXStore?
-
-  @@map("product")
+  id    String @id @default(cuid())
+  name  String
+  price Float  @db.Real
 }
 
-model Store {
-  id            String          @id @default(cuid())
-  name          String
-  address       String
 
-  ProductXStore ProductXStore?
-  
-  @@map("store")
-}
-
-model ProductXStore {
-  id String @id @default(cuid())
-
-  Product   Product @relation(fields: [productId], references: [id])
-  productId String @unique
-
-  Store   Store  @relation(fields: [storeId], references: [id])
-  storeId String @unique
-
-  @@map("product_x_store")
-}

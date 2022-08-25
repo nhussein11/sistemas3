@@ -4,7 +4,7 @@ import { prisma } from '../../../server/prisma-client/prisma-client'
 
 const getProducts = async () => {
   try {
-    const products: Product[] = await prisma.products.findMany()
+    const products: Product[] = await prisma.product.findMany()
     return products
   } catch (error) {
     throw error
@@ -13,7 +13,7 @@ const getProducts = async () => {
 
 const createProduct = async (name: string, price: number) => {
   try {
-    const productCreated: Product = await prisma.products.create({
+    const productCreated: Product = await prisma.product.create({
       data: { name, price }
     })
     return productCreated
@@ -24,7 +24,7 @@ const createProduct = async (name: string, price: number) => {
 
 const getProductById = async (id: string) => {
   try {
-    const product: Product = await prisma.products.findUniqueOrThrow({
+    const product: Product = await prisma.product.findUniqueOrThrow({
       where: {
         id
       }
@@ -37,13 +37,13 @@ const getProductById = async (id: string) => {
 
 const updateProductById = async (id: string, name: string, price: number) => {
   try {
-    await prisma.products.findUniqueOrThrow({ where: { id } })
+    await prisma.product.findUniqueOrThrow({ where: { id } })
 
     if (!name || !price) {
       throw new Error('Name or price must be provided!')
     }
 
-    const updatedProduct: Product = await prisma.products.update({
+    const updatedProduct: Product = await prisma.product.update({
       where: { id },
       data: {
         name,
@@ -59,7 +59,7 @@ const updateProductById = async (id: string, name: string, price: number) => {
 
 const deleteProductById = async (id: string) => {
   try {
-    const deletedProduct: Product = await prisma.products.delete({
+    const deletedProduct: Product = await prisma.product.delete({
       where: { id }
     })
     return deletedProduct
