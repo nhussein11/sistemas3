@@ -12,12 +12,8 @@ model Product {
   name             String
   description      String
   price            Float              @db.Real
-  product_x_store  product_x_store?   @relation("productToproduct_x_store") 
-  movement_details movement_details[] @relation("MovementDetailsToProduct")
-
-
+  
   Stock Stock?
-
   MovementDetails MovementDetails[]
 
   @@map("product")
@@ -79,6 +75,7 @@ model MovementDetails {
   Movement Movement[]
 
   @@map("movement_details")
+}
 
 enum MovementTypeEnum {
   POSITIVE
