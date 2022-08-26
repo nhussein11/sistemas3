@@ -9,6 +9,7 @@ const DialogUpdateProduct = () => {
     handleUpdateProduct,
     productName,
     productPrice,
+    productDescription,
     showUpdateDialog,
     setShowUpdateDialog
   } = useDialogUpdateProductMutation('products')
@@ -31,7 +32,11 @@ const DialogUpdateProduct = () => {
           <InputText
             {...productPrice}
           />
-          <label htmlFor="in">Descripcion</label>
+          <label htmlFor="in">Price</label>
+        </span>
+        <span className="p-float-label">
+          <InputText {...productDescription} name="productDescription" />
+          <label htmlFor="in">Description</label>
         </span>
       </div>
       <div className="footer-button-updateDialog">

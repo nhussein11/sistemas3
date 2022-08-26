@@ -27,10 +27,11 @@ const useDialogUpdateProductMutation = (queryId: string) => {
   // eslint-disable-next-line no-unused-vars
   const [, setIsProductChecked] = useRecoilState(isProductCheckedState)
   const productName = useField({ initialValue: '', type: 'text' })
+  const productDescription = useField({ initialValue: '', type: 'text' })
   const productPrice = useField({ initialValue: 0, type: 'number' })
   const queryClient = useQueryClient()
-  const updateQuery = ({ id, name, price }: Product) =>
-    updateProduct({ id, name, price })
+  const updateQuery = ({ id, name, price, description }: Product) =>
+    updateProduct({ id, name, price, description })
   const { mutate } = useMutation(updateQuery, {
     onSuccess: () => {
       // Invalidate and refetch
@@ -38,22 +39,25 @@ const useDialogUpdateProductMutation = (queryId: string) => {
       setShowUpdateDialog(false)
       setSelectedProduct(defaultProduct)
       productName.onChange('')
+      productDescription.onChange('')
       productPrice.onChange(0)
       setIsProductChecked(defaultProductChecked)
     }
   })
   const handleUpdateProduct = () => {
-    mutate({ id: selectedProduct.id, name: productName.value as string, price: productPrice.value as number })
+    mutate({ id: selectedProduct.id, name: productName.value as string, description: productDescription.value as string, price: productPrice.value as number })
   }
   useEffect(() => {
     productName.onChange(selectedProduct.name)
     productPrice.onChange(selectedProduct.price)
+    productDescription.onChange(selectedProduct.description)
   }, [selectedProduct])
 
   return {
     handleUpdateProduct,
     productName,
     productPrice,
+    productDescription,
     showUpdateDialog,
     showErrorDialog,
     setShowErrorDialog,
