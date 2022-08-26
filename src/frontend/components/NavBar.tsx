@@ -8,30 +8,23 @@ const NavBar = () => {
     {
       label: 'Inicio',
       icon: 'pi pi-fw pi-home',
-      command: () => { router.push('/') }
+      command: () => {
+        router.push('/')
+      }
     },
     {
       label: 'Stock',
       icon: 'pi pi-fw pi-pencil',
-      command: () => { router.push('/stock') }
+      command: () => {
+        router.push('/stock')
+      }
     },
     {
       label: 'Usuarios',
       icon: 'pi pi-fw pi-user',
-      items: [
-        {
-          label: 'Nuevo',
-          icon: 'pi pi-fw pi-plus'
-        },
-        {
-          label: 'Borrar',
-          icon: 'pi pi-fw pi-plus'
-        },
-        {
-          label: 'Buscar',
-          icon: 'pi pi-fw pi-plus'
-        }
-      ]
+      command: () => {
+        router.push('/stock')
+      }
     },
     {
       label: 'Movimientos',
@@ -53,7 +46,18 @@ const NavBar = () => {
     }
   ]
 
-  return <Menubar model={items} end={<Button label="Cerrar Sesión" icon="pi pi-fw pi-power-off" className="p-button-raised-danger p-button-rounded" />}/>
+  return (
+    <Menubar
+      model={items}
+      end={
+        <Button
+          label="Cerrar Sesión"
+          icon="pi pi-fw pi-power-off"
+          className="p-button-raised-danger p-button-rounded"
+        />
+      }
+    />
+  )
 }
 
 export default NavBar
