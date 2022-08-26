@@ -50,7 +50,7 @@ const ProductsTable = ({ products }: TableProps) => {
           <Column
             field="Descripcion"
             header="Descripcion"
-            body={(rowData) => rowData.descripcion}
+            body={(rowData) => rowData.description}
             alignHeader={'center'}
           />
           <Column

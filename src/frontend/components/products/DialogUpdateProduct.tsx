@@ -9,8 +9,7 @@ const DialogUpdateProduct = () => {
     handleUpdateProduct,
     productName,
     productPrice,
-    setProductName,
-    setProductPrice,
+    productDescription,
     showUpdateDialog,
     setShowUpdateDialog
   } = useDialogUpdateProductMutation('products')
@@ -18,25 +17,26 @@ const DialogUpdateProduct = () => {
   return (
     <Dialog
       visible={showUpdateDialog}
-      header="Nuevo Producto"
+      header="Actualizar Producto"
       style={{ width: '50vw' }}
       onHide={() => setShowUpdateDialog(false)}
     >
       <div className="field-form-container">
         <span className="p-float-label">
           <InputText
-            value={productName}
-            onChange={(e) => setProductName(e.target.value)}
+            {...productName}
           />
           <label htmlFor="in">Nombre</label>
         </span>
         <span className="p-float-label">
           <InputText
-            value={productPrice}
-            type="number"
-            onChange={(e) => setProductPrice(Number(e.target.value).valueOf())}
+            {...productPrice}
           />
-          <label htmlFor="in">Descripcion</label>
+          <label htmlFor="in">Price</label>
+        </span>
+        <span className="p-float-label">
+          <InputText {...productDescription} name="productDescription" />
+          <label htmlFor="in">Description</label>
         </span>
       </div>
       <div className="footer-button-updateDialog">
