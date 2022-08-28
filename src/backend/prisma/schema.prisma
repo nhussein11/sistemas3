@@ -5,20 +5,21 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 model Product {
-  id               String             @id @default(cuid())
-  name             String
-  description      String
-  price            Float              @db.Real
-  
-  Stock Stock?
+  id          String @id @default(cuid())
+  name        String
+  description String
+  category    String
+  price       Float  @db.Real
+
+  Stock           Stock?
   MovementDetails MovementDetails[]
 
   @@map("product")
 }
-
 
 model Store {
   id      String @id @default(cuid())
@@ -38,6 +39,9 @@ model Stock {
 
   Store   Store  @relation(fields: [storeId], references: [id])
   storeId String @unique @default("")
+
+  quantity     Int
+  min_quantity Int
 
   @@map("stock")
 }
@@ -88,3 +92,4 @@ enum MovementNameEnum {
   ORDEN_DE_COMPRA
   ORDEN_DE_PAGO
 }
+
