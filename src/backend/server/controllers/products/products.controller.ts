@@ -1,4 +1,5 @@
 /* eslint-disable no-useless-catch */
+import { CategoryEnum } from '@prisma/client'
 import { Product } from '../../../../shared/schemas/product.type'
 import { prisma } from '../../../server/prisma-client/prisma-client'
 
@@ -11,10 +12,10 @@ const getProducts = async () => {
   }
 }
 
-const createProduct = async (name: string, price: number, description: string) => {
+const createProduct = async (name: string, price: number, description: string, category: CategoryEnum) => {
   try {
     const productCreated: Product = await prisma.product.create({
-      data: { name, price, description }
+      data: { name, price, description, category }
     })
     return productCreated
   } catch (error) {
