@@ -13,10 +13,10 @@ const NavBar = () => {
       }
     },
     {
-      label: 'Stock',
+      label: 'Productos',
       icon: 'pi pi-fw pi-pencil',
       command: () => {
-        router.push('/stock')
+        router.push('/productos')
       }
     },
     {
