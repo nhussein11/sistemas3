@@ -41,7 +41,7 @@ model Stock {
   storeId String @unique @default("")
 
   quantity     Int
-  min_quantity Int
+  minQuantity Int
 
   @@map("stock")
 }
