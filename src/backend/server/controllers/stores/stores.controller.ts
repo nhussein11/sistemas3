@@ -21,5 +21,50 @@ const createStore = async (name: string, address: string) => {
     throw error
   }
 }
+const getStoreById = async (id: string) => {
+  try {
+    const store: Store = await prisma.store.findUniqueOrThrow({
+      where: {
+        id
+      }
+    })
+    return store
+  } catch (error) {
+    throw error
+  }
+}
 
-export { getStores, createStore }
+const updateStoreById = async (id: string, name: string, address: string) => {
+  try {
+    await prisma.store.findUniqueOrThrow({ where: { id } })
+
+    if (!name || !address) {
+      throw new Error('Name or address must be provided!')
+    }
+
+    const updatedStore: Store = await prisma.store.update({
+      where: { id },
+      data: {
+        name,
+        address
+      }
+    })
+
+    return updatedStore
+  } catch (error) {
+    throw error
+  }
+}
+
+const deleteStoreById = async (id: string) => {
+  try {
+    const deletedStore: Store = await prisma.store.delete({
+      where: { id }
+    })
+    return deletedStore
+  } catch (error) {
+    throw error
+  }
+}
+
+export { getStores, createStore, getStoreById, updateStoreById, deleteStoreById }
