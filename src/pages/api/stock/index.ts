@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { createStock, getStocks } from '../../../backend/server/controllers/stock/stock.controller'
+import { createStock, getStocks } from '../../../backend/server/controllers/stocks/stock.controller'
 
-export default async function products (
+export default async function stocks (
   req: NextApiRequest,
   res: NextApiResponse
 ) {

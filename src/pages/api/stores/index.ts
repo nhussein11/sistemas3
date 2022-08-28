@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { getStores, createStore } from '../../../backend/server/controllers/stores/stores.controller'
 
-export default async function products (
+export default async function stores (
   req: NextApiRequest,
   res: NextApiResponse
 ) {
