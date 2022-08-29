@@ -72,6 +72,12 @@ body{
   .field-form-container{
     display: flex;
     justify-content: space-around;
+    flex-direction: column;
+  }
+  .form-container{
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
   }
   
 /*SECTION TABLE*/

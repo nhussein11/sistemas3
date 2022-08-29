@@ -14,7 +14,7 @@ const DialogNewProduct = ({
   const { handleCreateNewProduct, productName, productPrice, productDescription, productCategory } =
     useDialogNewProductMutation('products')
   const [category, setCategory] = useState('IMPRESORA')
-  const CATEGORIES = [{ name: 'IMPRESORA', code: 'IMPRESORA' }, { name: 'FILAMENTO', code: 'FILAMENTO' }]
+  const CATEGORIES = ['IMPRESORA', 'FILAMENTO']
   return (
     <Dialog
       visible={displayBasic}
@@ -23,20 +23,21 @@ const DialogNewProduct = ({
       footer={() => DialogFooter({ closeDialog, handleCreateNewProduct })}
       onHide={() => closeDialog()}
     >
-      <div className="field-form-container">
-        <span className="p-float-label">
-          <InputText {...productName} name="productName" />
-          <label htmlFor="in">Nombre</label>
-        </span>
-         <span className="p-float-label">
-          <InputText {...productDescription} name="productDescription" />
-          <label htmlFor="in">Description</label>
-        </span>
-        <Dropdown value={productCategory} options={CATEGORIES} onChange={(e) => setCategory(e.value)} placeholder={category}/>
-        <span className="p-float-label">
+      <div className='form-container'>
+        <div className="field-form-container">
+          <span className="p-float-label">
+            <InputText {...productName} name="productName" />
+            <label htmlFor="in">Nombre</label>
+          </span>
+          <Dropdown value={productCategory} options={CATEGORIES} onChange={(e) => setCategory(e.value)} placeholder={category}/>
+        </div>
+        <div className='field-form-container'>
+          <span className="p-float-label">
+            <InputText {...productDescription} name="productDescription" />
+            <label htmlFor="in">Descripción</label>
+          </span>
           <InputText {...productPrice} name="productPrice" />
-          <label htmlFor="in">Price</label>
-        </span>
+        </div>
       </div>
     </Dialog>
   )
