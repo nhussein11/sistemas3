@@ -61,8 +61,8 @@ model Movement {
 
 model MovementType {
   id           String           @id @default(cuid())
-  movementtype MovementTypeEnum
-  movementname MovementNameEnum
+  movementType MovementTypeEnum
+  movementName MovementNameEnum
   cause        String
 
   Movement Movement[]

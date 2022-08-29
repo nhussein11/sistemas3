@@ -59,7 +59,6 @@ const updateMovementDetailsById = async (
         quantity
       }
     })
-
     return updatedMovementDetails
   } catch (error) {
     throw error
