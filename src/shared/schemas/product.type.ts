@@ -1,6 +1,9 @@
+import { CategoryEnum } from '@prisma/client'
+
 export type Product = {
-    id: string
-    name: string
-    price: number
-    description: string
+  id: string
+  name: string
+  price: number
+  description: string,
+  category: CategoryEnum
 }
