@@ -22,10 +22,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         return res.status(500).send({ error })
       }
     case 'PUT':
-      const { observation, movementDetailsId, movementTypeId } = body
+      const { observation, movementTypeId } = body
 
       try {
-        const updatedMovement = await updateMovementById(id, observation, movementDetailsId, movementTypeId)
+        const updatedMovement = await updateMovementById(id, observation, movementTypeId)
         return res.status(200).send({ updatedMovement })
       } catch (error) {
         return res.status(500).send({ error })
