@@ -4,6 +4,7 @@ import { Dropdown } from 'primereact/dropdown'
 import React, { useState } from 'react'
 import { DialogNewProductProps } from '../../@types/frontend.types'
 import useDialogNewProductMutation from '../../hooks/products/useDialogNewProductMutation'
+import { CategoryEnum } from '@prisma/client'
 
 import DialogFooter from './DialogFooter'
 
@@ -14,7 +15,7 @@ const DialogNewProduct = ({
   const { handleCreateNewProduct, productName, productPrice, productDescription, productCategory } =
     useDialogNewProductMutation('products')
   const [category, setCategory] = useState('IMPRESORA')
-  const CATEGORIES = ['IMPRESORA', 'FILAMENTO']
+  const CATEGORIES = [CategoryEnum.IMPRESORA, CategoryEnum.FILAMENTO]
   return (
     <Dialog
       visible={displayBasic}

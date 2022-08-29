@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import { useRecoilState } from 'recoil'
 import { Product } from '../../../shared/schemas/product.type'
+import { CategoryEnum } from '@prisma/client'
 import {
   defaultProductChecked,
   isProductCheckedState
@@ -47,7 +48,7 @@ const useDialogUpdateProductMutation = (queryId: string) => {
     }
   })
   const handleUpdateProduct = () => {
-    mutate({ id: selectedProduct.id, name: productName.value as string, description: productDescription.value as string, category: productCategory.value as string, price: productPrice.value as number })
+    mutate({ id: selectedProduct.id, name: productName.value as string, description: productDescription.value as string, category: productCategory.value as CategoryEnum, price: productPrice.value as number })
   }
   useEffect(() => {
     productName.onChange(selectedProduct.name)
