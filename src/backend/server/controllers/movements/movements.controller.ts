@@ -13,12 +13,11 @@ const getMovements = async () => {
 
 const createMovement = async (
   observation: string,
-  movementDetailsId: string,
   movementTypeId: string
 ) => {
   try {
     const movementCreated: Movement = await prisma.movement.create({
-      data: { observation, movementDetailsId, movementTypeId }
+      data: { observation, movementTypeId }
     })
     return movementCreated
   } catch (error) {
@@ -42,15 +41,14 @@ const getMovementById = async (id: string) => {
 const updateMovementById = async (
   id: string,
   observation: string,
-  movementDetailsId: string,
   movementTypeId: string
 ) => {
   try {
     await prisma.movement.findUniqueOrThrow({ where: { id } })
 
-    if (!observation || !movementDetailsId || !movementTypeId) {
+    if (!observation || !movementTypeId) {
       throw new Error(
-        'Observation, movementDetailsId or movementTypeId must be provided!'
+        'Observation or movementTypeId must be provided!'
       )
     }
 
@@ -58,7 +56,6 @@ const updateMovementById = async (
       where: { id },
       data: {
         observation,
-        movementDetailsId,
         movementTypeId
       }
     })

@@ -21,11 +21,10 @@ export default async function movements (
 
     case 'POST':
       try {
-        const { observation, movementDetailsId, movementTypeId } =
+        const { observation, movementTypeId } =
           body
         const movementCreated = await createMovement(
           observation,
-          movementDetailsId,
           movementTypeId
         )
         return res.status(201).send({ movementCreated })
