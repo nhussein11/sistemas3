@@ -29,9 +29,10 @@ const useDialogUpdateProductMutation = (queryId: string) => {
   const productName = useField({ initialValue: '', type: 'text' })
   const productDescription = useField({ initialValue: '', type: 'text' })
   const productPrice = useField({ initialValue: 0, type: 'number' })
+  const productCategory = useField({ initialValue: '', type: 'text' })
   const queryClient = useQueryClient()
-  const updateQuery = ({ id, name, price, description }: Product) =>
-    updateProduct({ id, name, price, description })
+  const updateQuery = ({ id, name, price, description, category }: Product) =>
+    updateProduct({ id, name, price, description, category })
   const { mutate } = useMutation(updateQuery, {
     onSuccess: () => {
       // Invalidate and refetch
@@ -40,17 +41,19 @@ const useDialogUpdateProductMutation = (queryId: string) => {
       setSelectedProduct(defaultProduct)
       productName.onChange('')
       productDescription.onChange('')
+      productCategory.onChange('')
       productPrice.onChange(0)
       setIsProductChecked(defaultProductChecked)
     }
   })
   const handleUpdateProduct = () => {
-    mutate({ id: selectedProduct.id, name: productName.value as string, description: productDescription.value as string, price: productPrice.value as number })
+    mutate({ id: selectedProduct.id, name: productName.value as string, description: productDescription.value as string, category: productCategory.value as string, price: productPrice.value as number })
   }
   useEffect(() => {
     productName.onChange(selectedProduct.name)
     productPrice.onChange(selectedProduct.price)
     productDescription.onChange(selectedProduct.description)
+    productCategory.onChange(selectedProduct.category)
   }, [selectedProduct])
 
   return {
@@ -58,6 +61,7 @@ const useDialogUpdateProductMutation = (queryId: string) => {
     productName,
     productPrice,
     productDescription,
+    productCategory,
     showUpdateDialog,
     showErrorDialog,
     setShowErrorDialog,
