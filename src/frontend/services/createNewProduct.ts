@@ -2,6 +2,7 @@ import publicAxiosInstance from '../api/axios-api'
 type ProductData = {
   name: string
   description: string
+  category: string
   price: number
 
 }

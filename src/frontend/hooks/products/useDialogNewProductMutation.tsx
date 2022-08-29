@@ -10,24 +10,28 @@ const useDialogNewProductMutation = (queryId: string) => {
       queryClient.invalidateQueries([queryId])
       productName.onChange('')
       productDescription.onChange('')
+      productCategory.onChange('')
       productPrice.onChange(0)
     }
   })
   const productName = useField({ initialValue: '', type: 'text' })
   const productPrice = useField({ initialValue: 0, type: 'number' })
   const productDescription = useField({ initialValue: '', type: 'text' })
+  const productCategory = useField({ initialValue: '', type: 'text' })
   const handleCreateNewProduct = () => {
     mutate({
       name: productName.value as string,
       price: productPrice.value as number,
-      description: productDescription.value as string
+      description: productDescription.value as string,
+      category: productCategory.value as string
     })
   }
   return {
     handleCreateNewProduct,
     productName,
     productPrice,
-    productDescription
+    productDescription,
+    productCategory
   }
 }
 
