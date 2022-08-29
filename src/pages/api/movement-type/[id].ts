@@ -1,5 +1,6 @@
 /* eslint-disable no-case-declarations */
 import { NextApiRequest, NextApiResponse } from 'next'
+import { deleteMovementTypeById, getMovementTypeById, updateMovementTypeById } from '../../../backend/server/controllers/movement-types/movement-types.controller'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const {

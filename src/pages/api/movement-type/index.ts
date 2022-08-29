@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
+import { createMovementType, getMovementsTypes } from '../../../backend/server/controllers/movement-types/movement-types.controller'
 
-export default async function movementType(
+export default async function movementType (
   req: NextApiRequest,
   res: NextApiResponse
 ) {

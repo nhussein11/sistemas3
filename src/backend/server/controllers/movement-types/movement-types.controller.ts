@@ -42,7 +42,7 @@ const getMovementTypeById = async (id: string) => {
   }
 }
 
-const updateMovementDetailsById = async (
+const updateMovementTypeById = async (
   id: string,
   movementType: MovementTypeEnum,
   movementName: MovementNameEnum,
@@ -86,6 +86,6 @@ export {
   getMovementsTypes,
   createMovementType,
   getMovementTypeById,
-  updateMovementDetailsById,
+  updateMovementTypeById,
   deleteMovementTypeById
 }
