@@ -36,7 +36,7 @@ const createProduct = async (
       if (!stockExisting) {
         await createStock(productCreated.id, storeId, quantity, minQuantity)
       } else {
-        await updateStockById(stockExisting.id, quantity, minQuantity)
+        await updateStockById(stockExisting.id, quantity)
       }
     } catch (error) {}
     return productCreated
