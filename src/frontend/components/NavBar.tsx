@@ -27,6 +27,13 @@ const NavBar = () => {
       }
     },
     {
+      label: 'Depositos',
+      icon: 'pi pi-fw pi-house',
+      command: () => {
+        router.push('/stores')
+      }
+    },
+    {
       label: 'Movimientos',
       icon: 'pi pi-fw pi-pencil',
       items: [
