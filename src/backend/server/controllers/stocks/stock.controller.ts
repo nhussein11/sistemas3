@@ -81,10 +81,24 @@ const deleteStockById = async (id: string) => {
   }
 }
 
+const getProductExistingById = async (productId:string) => {
+  try {
+    const stock: Stock = await prisma.stock.findUniqueOrThrow({
+      where: {
+        productId
+      }
+    })
+    return stock
+  } catch (error) {
+    throw error
+  }
+}
+
 export {
   getStocks,
   createStock,
   getStockById,
   updateStockById,
-  deleteStockById
+  deleteStockById,
+  getProductExistingById
 }

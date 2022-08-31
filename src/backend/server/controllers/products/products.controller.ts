@@ -1,7 +1,13 @@
 /* eslint-disable no-useless-catch */
 import { CategoryEnum } from '@prisma/client'
 import { Product } from '../../../../shared/schemas/product.type'
+import { Stock } from '../../../../shared/schemas/stock.type'
 import { prisma } from '../../../server/prisma-client/prisma-client'
+import {
+  createStock,
+  getProductExistingById,
+  updateStockById
+} from '../stocks/stock.controller'
 
 const getProducts = async () => {
   try {
@@ -12,11 +18,27 @@ const getProducts = async () => {
   }
 }
 
-const createProduct = async (name: string, price: number, description: string, category: CategoryEnum) => {
+const createProduct = async (
+  name: string,
+  price: number,
+  description: string,
+  category: CategoryEnum,
+  storeId: string,
+  quantity: number,
+  minQuantity: number
+) => {
   try {
     const productCreated: Product = await prisma.product.create({
       data: { name, price, description, category }
     })
+    try {
+      const stockExisting: Stock = await getProductExistingById(productCreated.id)
+      if (!stockExisting) {
+        await createStock(productCreated.id, storeId, quantity, minQuantity)
+      } else {
+        await updateStockById(stockExisting.id, quantity, minQuantity)
+      }
+    } catch (error) {}
     return productCreated
   } catch (error) {
     throw error
@@ -36,7 +58,13 @@ const getProductById = async (id: string) => {
   }
 }
 
-const updateProductById = async (id: string, name: string, price: number, description: string, category:CategoryEnum) => {
+const updateProductById = async (
+  id: string,
+  name: string,
+  price: number,
+  description: string,
+  category: CategoryEnum
+) => {
   try {
     await prisma.product.findUniqueOrThrow({ where: { id } })
 

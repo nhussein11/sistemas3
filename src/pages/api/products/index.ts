@@ -21,8 +21,24 @@ export default async function products (
 
     case 'POST':
       try {
-        const { name, price, description, category } = body
-        const productCreated = await createProduct(name, price, description, category)
+        const {
+          name,
+          price,
+          description,
+          category,
+          storeId,
+          quantity,
+          minQuantity
+        } = body
+        const productCreated = await createProduct(
+          name,
+          price,
+          description,
+          category,
+          storeId,
+          quantity,
+          minQuantity
+        )
         return res.status(201).send({ productCreated })
       } catch (error) {
         return res.status(500).send({ error })
