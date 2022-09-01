@@ -1,21 +1,16 @@
 import { NextPage } from 'next'
 import React from 'react'
+import { useRecoilState } from 'recoil'
+import { globalFilterValueState } from '../frontend/atoms/globalFilterValueAtom'
 import StoresTable from '../frontend/components/store/StoresTable'
-
-const storesDummyData = [
-  {
-    id: 1,
-    name: 'Store 1',
-    address: 'Store 1 address'
-  },
-  {
-    id: 2,
-    name: 'Store 2',
-    address: 'Store 2 address'
-  }
-]
+import useStoresQuery from '../frontend/hooks/stores/useStoresQuery'
+import { filterStores } from '../frontend/services/stores/filterStores'
 const Stores: NextPage = () => {
-  return <StoresTable stores={storesDummyData}/>
+  const query = useStoresQuery('stores')
+  const [globalFilterValue] = useRecoilState(globalFilterValueState)
+  return (
+    <StoresTable stores={filterStores(query.data?.stores, globalFilterValue)} />
+  )
 }
 
 export default Stores
