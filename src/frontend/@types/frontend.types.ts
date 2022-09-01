@@ -1,5 +1,6 @@
 import { Dispatch } from 'react'
 import { Product } from '../../shared/schemas/product.type'
+import { Stock } from '../../shared/schemas/stock.type'
 import { Store } from '../../shared/schemas/store.type'
 
 export type TableProps = {
@@ -48,4 +49,8 @@ export type StoreCheckedBodyTemplateProps = {
 export type StoreDialogFooterProps ={
   closeDialog: () => void
   handleCreateNewStore: () => void
+}
+
+export type StockCheckedBodyTemplateProps = {
+  rowData: Stock
 }
