@@ -1,10 +1,11 @@
 import { Dialog } from 'primereact/dialog'
 import { InputText } from 'primereact/inputtext'
 import React from 'react'
+import { DialogNewStoreProps } from '../../@types/frontend.types'
 import useDialogNewStoreMutation from '../../hooks/stores/useDialogNewStoreMutation'
 import StoreDialogFooter from './StoreDialogFooter'
 
-const DialogNewStore = ({ displayBasic, closeDialog }) => {
+const DialogNewStore = ({ displayBasic, closeDialog }:DialogNewStoreProps) => {
   const { storeAddress, storeName, handleCreateNewStore } =
     useDialogNewStoreMutation('stores')
   return (

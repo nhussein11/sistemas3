@@ -1,7 +1,11 @@
 import { Button } from 'primereact/button'
 import React from 'react'
+import { StoreDialogFooterProps } from '../../@types/frontend.types'
 
-const StoreDialogFooter = ({ closeDialog, handleCreateNewStore }) => {
+const StoreDialogFooter = ({
+  closeDialog,
+  handleCreateNewStore
+}: StoreDialogFooterProps) => {
   const createStore = () => {
     handleCreateNewStore()
     closeDialog()

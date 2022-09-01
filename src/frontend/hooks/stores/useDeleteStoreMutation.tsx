@@ -6,6 +6,7 @@ import { showErrorDialogState } from '../../atoms/showErrorDialog'
 import { deleteStore } from '../../services/stores/deleteStore'
 
 const useDeleteStoreMutation = (queryId: string) => {
+  // eslint-disable-next-line no-unused-vars
   const [_, setIsStoreChecked] = useRecoilState(isStoreCheckedState)
   const [selectedStore, setSelectedStore] = useRecoilState(selectedStoreState)
   const [, setShowErrorDialog] = useRecoilState(showErrorDialogState)
