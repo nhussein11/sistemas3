@@ -28,7 +28,7 @@ const NavBar = () => {
     },
     {
       label: 'Depositos',
-      icon: 'pi pi-fw pi-house',
+      icon: 'pi pi-fw pi-table',
       command: () => {
         router.push('/stores')
       }
