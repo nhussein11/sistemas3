@@ -23,7 +23,7 @@ model Product {
 
 model Store {
   id      String @id @default(cuid())
-  name    String
+  name    String  
   address String
 
   Stock Stock?
@@ -35,10 +35,10 @@ model Stock {
   id String @id @default(cuid())
 
   Product   Product @relation(fields: [productId], references: [id])
-  productId String  @unique @default("")
+  productId String  @unique
 
   Store   Store  @relation(fields: [storeId], references: [id])
-  storeId String @unique @default("")
+  storeId String @unique
 
   quantity     Int
   minQuantity Int
