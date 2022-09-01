@@ -1,5 +1,5 @@
 /* eslint-disable no-useless-catch */
-import { Movement } from '../../../../shared/schemas/movement.type'
+import { Movement } from '@prisma/client'
 import { prisma } from '../../../server/prisma-client/prisma-client'
 
 const getMovements = async () => {

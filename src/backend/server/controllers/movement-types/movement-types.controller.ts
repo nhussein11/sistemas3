@@ -1,6 +1,5 @@
 /* eslint-disable no-useless-catch */
-import { MovementNameEnum, MovementTypeEnum } from '@prisma/client'
-import { MovementType } from '../../../../shared/schemas/movement-type.type'
+import { MovementNameEnum, MovementType, MovementTypeEnum } from '@prisma/client'
 import { prisma } from '../../prisma-client/prisma-client'
 
 const getMovementsTypes = async () => {

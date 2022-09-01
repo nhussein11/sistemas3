@@ -1,7 +1,5 @@
 /* eslint-disable no-useless-catch */
-import { CategoryEnum } from '@prisma/client'
-import { Product } from '../../../../shared/schemas/product.type'
-import { Stock } from '../../../../shared/schemas/stock.type'
+import { CategoryEnum, Product, Stock } from '@prisma/client'
 import { prisma } from '../../../server/prisma-client/prisma-client'
 import {
   createStock,

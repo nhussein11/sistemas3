@@ -1,5 +1,5 @@
 /* eslint-disable no-useless-catch */
-import { Stock } from '../../../../shared/schemas/stock.type'
+import { Stock } from '@prisma/client'
 import { prisma } from '../../../server/prisma-client/prisma-client'
 
 const getStocks = async () => {
