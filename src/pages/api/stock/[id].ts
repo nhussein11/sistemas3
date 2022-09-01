@@ -1,6 +1,10 @@
 /* eslint-disable no-case-declarations */
 import { NextApiRequest, NextApiResponse } from 'next'
-import { deleteStockById, getStockById, updateStockById } from '../../../backend/server/controllers/stocks/stock.controller'
+import {
+  deleteStockById,
+  getStockById,
+  updateStockById
+} from '../../../backend/server/controllers/stocks/stock.controller'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const {
@@ -22,10 +26,15 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         return res.status(500).send({ error })
       }
     case 'PUT':
-      const { quantity } = body
+      const { storeId, quantity, minQuantity } = body
 
       try {
-        const updatedStock = await updateStockById(id, quantity)
+        const updatedStock = await updateStockById(
+          id,
+          storeId,
+          quantity,
+          minQuantity
+        )
         return res.status(200).send({ updatedStock })
       } catch (error) {
         return res.status(500).send({ error })
