@@ -70,14 +70,27 @@ body{
     justify-content: space-around;
   }
   .field-form-container{
-    display: flex;
+    display: grid;
     justify-content: space-around;
     flex-direction: column;
+  }
+  .field-form-container div{
+    display: grid;
+    flex-direction: column;
+  }
+
+  .field-drop{
+    display: grid;
+    justify-content: space-around;
+    flex-direction: column;
+  }
+  .field-form-container span{
+    margin-top: 25px;
   }
   .form-container{
     display: flex;
     justify-content: space-around;
-    flex-direction: row;
+    flex-direction: column;
   }
   
 /*SECTION TABLE*/
