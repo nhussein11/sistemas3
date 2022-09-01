@@ -18,12 +18,11 @@ const createStock = async (
   minQuantity: number
 ) => {
   try {
-    // const stockExisting: Stock = await getProductExistingById(
-    //   productId, storeId
-    // )
-    try {
-      await updateStockById(stockExisting.id, quantity)
-    } catch (error) {
+    const stockExisting: Stock | null = await getStockExisting(
+      productId,
+      storeId
+    )
+    if (!stockExisting) {
       const stockCreated: Stock = await prisma.stock.create({
         data: {
           productId,
@@ -34,6 +33,8 @@ const createStock = async (
       })
       return stockCreated
     }
+    await updateStockById(stockExisting.id, storeId, quantity, minQuantity)
+    return updateStockById
   } catch (error) {
     throw error
   }
@@ -51,18 +52,24 @@ const getStockById = async (id: string) => {
   }
 }
 
-const updateStockById = async (id: string, quantity: number) => {
+const updateStockById = async (
+  id: string,
+  storeId: string,
+  quantity: number,
+  minQuantity: number
+) => {
   try {
     await prisma.stock.findUniqueOrThrow({ where: { id } })
-    // agregar la posibilidad de actuliazar tanto el storeId como el min quantity, ademas queantity
-    if (!quantity) {
-      throw new Error('Quantity must be provided!')
+    if (!storeId && !quantity && !minQuantity) {
+      throw new Error('Store id or quantity or min quantity must be provided!')
     }
 
     const updatedStock: Stock = await prisma.stock.update({
       where: { id },
       data: {
-        quantity
+        storeId,
+        quantity,
+        minQuantity
       }
     })
 
@@ -83,11 +90,12 @@ const deleteStockById = async (id: string) => {
   }
 }
 
-const getProductExistingById = async (productId: string) => {
+const getStockExisting = async (productId: string, storeId: string) => {
   try {
-    const stock: Stock = await prisma.stock.findUniqueOrThrow({
+    const stock: Stock | null = await prisma.stock.findFirst({
       where: {
-        productId
+        productId,
+        storeId
       }
     })
     return stock
@@ -102,5 +110,5 @@ export {
   getStockById,
   updateStockById,
   deleteStockById,
-  getProductExistingById
+  getStockExisting
 }

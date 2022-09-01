@@ -1,13 +1,7 @@
 /* eslint-disable no-useless-catch */
 import { CategoryEnum } from '@prisma/client'
 import { Product } from '../../../../shared/schemas/product.type'
-import { Stock } from '../../../../shared/schemas/stock.type'
 import { prisma } from '../../../server/prisma-client/prisma-client'
-import {
-  createStock,
-  getProductExistingById,
-  updateStockById
-} from '../stocks/stock.controller'
 
 const getProducts = async () => {
   try {
@@ -28,6 +22,7 @@ const createProduct = async (
     const productCreated: Product = await prisma.product.create({
       data: { name, price, description, category }
     })
+
     return productCreated
   } catch (error) {
     throw error
@@ -57,7 +52,7 @@ const updateProductById = async (
   try {
     await prisma.product.findUniqueOrThrow({ where: { id } })
 
-    if (!name || !price || !description || !category) {
+    if (!name && !price && !description && !category) {
       throw new Error('Name, price, description or category must be provided!')
     }
 
