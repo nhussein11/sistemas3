@@ -1,13 +1,14 @@
 import { Column } from 'primereact/column'
 import { DataTable } from 'primereact/datatable'
 import React, { useState } from 'react'
+import { StoresTableProps } from '../../@types/frontend.types'
 import DialogError from '../products/DialogError'
 import DialogNewStore from './DialogNewStore'
 import DialogUpdateStore from './DialogUpdateStore'
 import StoreCheckedBodyTemplate from './StoreCheckedBodyTemplate'
 import StoreTableHeader from './StoreTableHeader'
 
-const StoresTable = ({ stores }) => {
+const StoresTable = ({ stores }:StoresTableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
   return (
     <div className="datatable-filter">

@@ -1,10 +1,13 @@
 import { Dispatch } from 'react'
 import { Product } from '../../shared/schemas/product.type'
+import { Store } from '../../shared/schemas/store.type'
 
 export type TableProps = {
   products: Product[]
 }
-
+export type StoresTableProps = {
+stores: Store[]
+}
 export type SelectBodyTemplateProps = {
   rowData: Product
 }

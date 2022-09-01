@@ -16,6 +16,7 @@ const useDialogUpdateStoreMutation = (queryId: string) => {
   const [showUpdateDialog, setShowUpdateDialog] = useRecoilState(
     showUpdateDialogState
   )
+  // eslint-disable-next-line no-unused-vars
   const [_, setIsStoreChecked] = useRecoilState(isStoreCheckedState)
   const [selectedStore, setSelectedStore] = useRecoilState(selectedStoreState)
   const [showErrorDialog, setShowErrorDialog] =

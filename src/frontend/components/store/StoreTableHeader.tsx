@@ -2,17 +2,18 @@ import { Button } from 'primereact/button'
 import { InputText } from 'primereact/inputtext'
 import React from 'react'
 import { useRecoilState } from 'recoil'
+import { TableHeaderProps } from '../../@types/frontend.types'
 import { globalFilterValueState } from '../../atoms/globalFilterValueAtom'
 import { isStoreCheckedState } from '../../atoms/isStoreCheckedAtom'
 import { showErrorDialogState } from '../../atoms/showErrorDialog'
 import { showUpdateDialogState } from '../../atoms/showUpdateDialogAtom'
 import useDeleteStoreMutation from '../../hooks/stores/useDeleteStoreMutation'
 
-const StoreTableHeader = ({ setDisplayBasic }) => {
+const StoreTableHeader = ({ setDisplayBasic }:TableHeaderProps) => {
   const [globalFilterValue, setGlobalFilterValue] = useRecoilState(
     globalFilterValueState
   )
-  const [isStoreChecked, setIsStoreChecked] =
+  const [isStoreChecked] =
     useRecoilState(isStoreCheckedState)
   const [, setShowUpdateDialog] = useRecoilState(showUpdateDialogState)
   const [, setShowErrorDialog] = useRecoilState(showErrorDialogState)
