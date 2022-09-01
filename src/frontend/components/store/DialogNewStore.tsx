@@ -18,16 +18,14 @@ const DialogNewStore = ({ displayBasic, closeDialog }:DialogNewStoreProps) => {
     >
       <div className="form-container">
         <div className="field-form-container">
-          <span className="p-float-label">
-            <InputText {...storeName} name="storeName" />
-            <label htmlFor="in">name</label>
-          </span>
-        </div>
-        <div className="field-form-container">
-          <span className="p-float-label">
-            <InputText {...storeAddress} name="storeAddress" />
-            <label htmlFor="in">address</label>
-          </span>
+          <div>
+            <label htmlFor="id">Nombre</label>
+            <InputText {...storeName} name="storeName" placeholder='Nombre'/>
+          </div>
+          <div>
+            <label htmlFor="id">Dirección</label>
+            <InputText {...storeAddress} name="storeAddress" placeholder='Dirección'/>
+          </div>
         </div>
       </div>
     </Dialog>
