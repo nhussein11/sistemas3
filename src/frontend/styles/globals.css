@@ -73,6 +73,7 @@ body{
     display: grid;
     justify-content: space-around;
     flex-direction: column;
+    grid-template-columns: auto auto;
   }
   .field-form-container div{
     display: grid;
