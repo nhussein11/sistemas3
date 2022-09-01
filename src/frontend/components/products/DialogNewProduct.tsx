@@ -35,35 +35,37 @@ const DialogNewProduct = ({
     >
       <div className="form-container">
         <div className="field-form-container">
-          <span className="p-float-label">
-            <InputText {...productName} name="productName" />
-            <label htmlFor="in">Nombre</label>
-          </span>
-          <Dropdown
-            value={category}
-            options={CATEGORIES}
-            onChange={(e) => {
-              setCategory(e.value)
-            }}
-            placeholder={category}
-          />
-          <Dropdown
-            value={selectedStore.name}
-            options={storesQuery?.data?.stores.map(
-              (store: Store) => store.name
-            )}
-            onChange={(e) => changeStore(e.target.value)}
-            placeholder="select a Store"
-          />
+          <div>
+            <label htmlFor="id">Nombre</label>
+            <InputText {...productName} name="productName" placeholder='nombre'/>
+          </div>
+          <div>
+            <label htmlFor="id">Descripción</label>
+            <InputText {...productDescription} name="productDescription" placeholder='descripción'/>
+          </div>
+          <div>
+            <label htmlFor="id">Precio</label>
+            <InputText {...productPrice} name="productPrice" placeholder='precio'/>
+          </div>
+          <div>
+            <label htmlFor="id">Cantidad</label>
+            <InputText {...productQuantity} name="productQuantity" placeholder='precio'/>
+          </div>
+          <div>
+            <label htmlFor="id">Cantidad Mínima</label>
+            <InputText {...productMinQuantity} name="productMinQuantity" placeholder='precio'/>
+          </div>
+          {/* COMIENZAN LOS DROPS */}
         </div>
-        <div className="field-form-container">
-          <span className="p-float-label">
-            <InputText {...productDescription} name="productDescription" />
-            <label htmlFor="in">Descripción</label>
-          </span>
-          <InputText {...productPrice} name="productPrice" />
-          <InputText {...productQuantity} name="productQuantity" />
-          <InputText {...productMinQuantity} name="productMinQuantity" />
+        <div className='field-drop'>
+          <div className='field-drop'>
+            <label htmlFor="id">Categoría</label>
+            <Dropdown value={category} options={CATEGORIES} onChange={(e) => setCategory(e.value)} placeholder={'select category'}/>
+          </div>
+          <div className='field-drop'>
+            <label htmlFor="id">Store</label>
+            <Dropdown value={selectedStore.name} options={storesQuery?.data?.stores.map((store: Store) => store.name)} onChange={(e) => changeStore(e.target.value)} placeholder="select a Store"/>
+          </div>
         </div>
       </div>
     </Dialog>
