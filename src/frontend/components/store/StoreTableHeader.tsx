@@ -3,13 +3,25 @@ import { InputText } from 'primereact/inputtext'
 import React from 'react'
 import { useRecoilState } from 'recoil'
 import { globalFilterValueState } from '../../atoms/globalFilterValueAtom'
+import { isStoreCheckedState } from '../../atoms/isStoreCheckedAtom'
+import { showErrorDialogState } from '../../atoms/showErrorDialog'
+import { showUpdateDialogState } from '../../atoms/showUpdateDialogAtom'
 import useDeleteStoreMutation from '../../hooks/stores/useDeleteStoreMutation'
 
 const StoreTableHeader = ({ setDisplayBasic }) => {
   const [globalFilterValue, setGlobalFilterValue] = useRecoilState(
     globalFilterValueState
   )
+  const [isStoreChecked, setIsStoreChecked] =
+    useRecoilState(isStoreCheckedState)
+  const [, setShowUpdateDialog] = useRecoilState(showUpdateDialogState)
+  const [, setShowErrorDialog] = useRecoilState(showErrorDialogState)
   const { handleDeleteStore } = useDeleteStoreMutation('stores')
+  const updateProduct = () => {
+    isStoreChecked.checked
+      ? setShowUpdateDialog(true)
+      : setShowErrorDialog(true)
+  }
   return (
     <div className="header-table">
       <div className="flex justify-content-between">
@@ -43,7 +55,7 @@ const StoreTableHeader = ({ setDisplayBasic }) => {
         <Button
           label="Modificar"
           className="p-button-raised p-button-secondary"
-          onClick={() => console.log('update store')}
+          onClick={updateProduct}
         />
       </div>
     </div>
