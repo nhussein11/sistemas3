@@ -15,7 +15,7 @@ const createStock = async (
   productId: string,
   storeId: string,
   quantity: number,
-  minQuantity: number
+  minQuantity: number = 0
 ) => {
   try {
     const stockExisting: Stock | null = await getStockExisting(
@@ -104,11 +104,28 @@ const getStockExisting = async (productId: string, storeId: string) => {
   }
 }
 
+const isStockEnough = async (productId: string, quantity: number) => {
+  try {
+    const stock: Stock | null = await prisma.stock.findFirst({
+      where: {
+        productId,
+        quantity: {
+          gt: quantity
+        }
+      }
+    })
+    return stock
+  } catch (error) {
+    throw error
+  }
+}
+
 export {
   getStocks,
   createStock,
   getStockById,
   updateStockById,
   deleteStockById,
-  getStockExisting
+  getStockExisting,
+  isStockEnough
 }
