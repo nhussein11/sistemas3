@@ -1,27 +1,30 @@
 import { Dialog } from 'primereact/dialog'
 import { InputText } from 'primereact/inputtext'
 import React from 'react'
+import useDialogNewStoreMutation from '../../hooks/stores/useDialogNewStoreMutation'
 import StoreDialogFooter from './StoreDialogFooter'
 
 const DialogNewStore = ({ displayBasic, closeDialog }) => {
+  const { storeAddress, storeName, handleCreateNewStore } =
+    useDialogNewStoreMutation('stores')
   return (
     <Dialog
       visible={displayBasic}
-      header="Nuevo Producto"
+      header="Nuevo Deposito"
       style={{ width: '50vw' }}
-      footer={() => StoreDialogFooter({ closeDialog })}
+      footer={() => StoreDialogFooter({ closeDialog, handleCreateNewStore })}
       onHide={() => closeDialog()}
     >
       <div className="form-container">
         <div className="field-form-container">
           <span className="p-float-label">
-            <InputText id="name" type={'text'} name="storeName" />
+            <InputText {...storeName} name="storeName" />
             <label htmlFor="in">name</label>
           </span>
         </div>
         <div className="field-form-container">
           <span className="p-float-label">
-            <InputText id="address" type={'text'} name="storeAddress" />
+            <InputText {...storeAddress} name="storeAddress" />
             <label htmlFor="in">address</label>
           </span>
         </div>
