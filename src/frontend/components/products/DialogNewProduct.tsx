@@ -25,19 +25,23 @@ const DialogNewProduct = ({
       onHide={() => closeDialog()}
     >
       <div className='form-container'>
-        <div className="field-form-container">
-          <span className="p-float-label">
-            <InputText {...productName} name="productName" />
-            <label htmlFor="in">Nombre</label>
-          </span>
-          <Dropdown value={productCategory} options={CATEGORIES} onChange={(e) => setCategory(e.value)} placeholder={category}/>
-        </div>
         <div className='field-form-container'>
-          <span className="p-float-label">
-            <InputText {...productDescription} name="productDescription" />
-            <label htmlFor="in">Descripción</label>
-          </span>
-          <InputText {...productPrice} name="productPrice" />
+          <div>
+            <label htmlFor="id">Nombre</label>
+            <InputText {...productName} name="productName" placeholder='nombre'/>
+          </div>
+          <div>
+            <label htmlFor="id">Descripción</label>
+            <InputText {...productDescription} name="productDescription" placeholder='descripción'/>
+          </div>
+          <div>
+            <label htmlFor="id">Precio</label>
+            <InputText {...productPrice} name="productPrice" placeholder='precio'/>
+          </div>
+        </div>
+        <div className='field-drop'>
+          <label htmlFor="id">Categoría</label>
+          <Dropdown value={productCategory} options={CATEGORIES} onChange={(e) => setCategory(e.value)} placeholder={category}/>
         </div>
       </div>
     </Dialog>
