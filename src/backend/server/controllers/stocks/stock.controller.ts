@@ -18,15 +18,22 @@ const createStock = async (
   minQuantity: number
 ) => {
   try {
-    const stockCreated: Stock = await prisma.stock.create({
-      data: {
-        productId,
-        storeId,
-        quantity,
-        minQuantity
-      }
-    })
-    return stockCreated
+    // const stockExisting: Stock = await getProductExistingById(
+    //   productId, storeId
+    // )
+    try {
+      await updateStockById(stockExisting.id, quantity)
+    } catch (error) {
+      const stockCreated: Stock = await prisma.stock.create({
+        data: {
+          productId,
+          storeId,
+          quantity,
+          minQuantity
+        }
+      })
+      return stockCreated
+    }
   } catch (error) {
     throw error
   }
@@ -44,13 +51,10 @@ const getStockById = async (id: string) => {
   }
 }
 
-const updateStockById = async (
-  id: string,
-  quantity: number
-) => {
+const updateStockById = async (id: string, quantity: number) => {
   try {
     await prisma.stock.findUniqueOrThrow({ where: { id } })
-
+    // agregar la posibilidad de actuliazar tanto el storeId como el min quantity, ademas queantity
     if (!quantity) {
       throw new Error('Quantity must be provided!')
     }
@@ -79,7 +83,7 @@ const deleteStockById = async (id: string) => {
   }
 }
 
-const getProductExistingById = async (productId:string) => {
+const getProductExistingById = async (productId: string) => {
   try {
     const stock: Stock = await prisma.stock.findUniqueOrThrow({
       where: {

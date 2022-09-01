@@ -13,12 +13,19 @@ const getMovements = async () => {
 
 const createMovement = async (
   observation: string,
-  movementTypeId: string
+  movementTypeId: string,
+  productId: string,
+  quantity: number
 ) => {
   try {
+    // si es venta, checkeo que tenga stock para vender
     const movementCreated: Movement = await prisma.movement.create({
       data: { observation, movementTypeId }
     })
+    // crear detalle
+    // evaluar mov creado
+    // if venta --> disminuir stock
+    // if venta --> aumentar  stock
     return movementCreated
   } catch (error) {
     throw error
@@ -47,9 +54,7 @@ const updateMovementById = async (
     await prisma.movement.findUniqueOrThrow({ where: { id } })
 
     if (!observation || !movementTypeId) {
-      throw new Error(
-        'Observation or movementTypeId must be provided!'
-      )
+      throw new Error('Observation or movementTypeId must be provided!')
     }
 
     const updatedMovement: Movement = await prisma.movement.update({
