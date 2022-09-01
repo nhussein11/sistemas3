@@ -9,15 +9,14 @@ import {
   selectedProductState
 } from '../../atoms/selectedProductAtom'
 import { showErrorDialogState } from '../../atoms/showErrorDialog'
-import { deleteProduct } from '../../services/deleteProducts'
+import { deleteProduct } from '../../services/products/deleteProducts'
 
 const useDeleteProductMutation = (queryId: string) => {
   // eslint-disable-next-line no-unused-vars
   const [_, setIsProductChecked] = useRecoilState(isProductCheckedState)
   const [selectedProduct, setSelectedProduct] =
     useRecoilState(selectedProductState)
-  const [, setShowErrorDialog] =
-    useRecoilState(showErrorDialogState)
+  const [, setShowErrorDialog] = useRecoilState(showErrorDialogState)
 
   const queryClient = useQueryClient()
   const { mutate } = useMutation(
