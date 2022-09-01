@@ -13,8 +13,8 @@ import {
 } from '../../atoms/selectedProductAtom'
 import { showErrorDialogState } from '../../atoms/showErrorDialog'
 import { showUpdateDialogState } from '../../atoms/showUpdateDialogAtom'
-import { updateProduct } from '../../services/updateProduct'
 import useField from '../useField'
+import { updateProduct } from '../../services/products/updateProduct'
 
 const useDialogUpdateProductMutation = (queryId: string) => {
   const [selectedProduct, setSelectedProduct] =
