@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
-import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
-import NumberFormat from 'react-number-format'
-
-import { TableProps } from '../../@types/frontend.types'
-import TableHeader from './TableHeader'
-import SelectBodyTemplate from './SelectBodyTemplate'
+import { DataTable } from 'primereact/datatable'
 import DialogNewProduct from './DialogNewProduct'
 import DialogUpdateProduct from './DialogUpdateProduct'
 import DialogError from './DialogError'
+import NumberFormat from 'react-number-format'
+import { TableProps } from '../../@types/frontend.types'
+import TableHeader from './TableHeader'
+import SelectBodyTemplate from './SelectBodyTemplate'
+
 const ProductsTable = ({ products }: TableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
   return (

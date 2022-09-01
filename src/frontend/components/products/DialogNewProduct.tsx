@@ -1,10 +1,10 @@
-import { Dialog } from 'primereact/dialog'
-import { InputText } from 'primereact/inputtext'
-import { Dropdown } from 'primereact/dropdown'
 import React, { useState } from 'react'
-import { DialogNewProductProps } from '../../@types/frontend.types'
-import useDialogNewProductMutation from '../../hooks/products/useDialogNewProductMutation'
 import { CategoryEnum } from '@prisma/client'
+import { Dialog } from 'primereact/dialog'
+import { Dropdown } from 'primereact/dropdown'
+import { DialogNewProductProps } from '../../@types/frontend.types'
+import { InputText } from 'primereact/inputtext'
+import useDialogNewProductMutation from '../../hooks/products/useDialogNewProductMutation'
 
 import DialogFooter from './DialogFooter'
 
