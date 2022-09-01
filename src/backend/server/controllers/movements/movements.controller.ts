@@ -1,9 +1,10 @@
 /* eslint-disable no-useless-catch */
-import { MovementTypeEnum, Stock } from '@prisma/client'
+import { MovementDetails, MovementTypeEnum, Stock } from '@prisma/client'
 import { MovementType } from '../../../../shared/schemas/movement-type.type'
 import { Movement } from '../../../../shared/schemas/movement.type'
 import { prisma } from '../../../server/prisma-client/prisma-client'
 import { getMovementTypeById } from '../movement-types/movement-types.controller'
+import { createMovementDetails } from '../movements-details/movement-details.controller'
 import {
   createStock,
   getStockExisting,
@@ -72,6 +73,11 @@ const createMovement = async (
     const movementCreated: Movement = await prisma.movement.create({
       data: { observation, movementTypeId }
     })
+    await createMovementDetails(
+      productId,
+      movementCreated.id,
+      quantity
+    )
     return movementCreated
   } catch (error) {
     throw error
