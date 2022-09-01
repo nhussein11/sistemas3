@@ -44,8 +44,8 @@ const StoresTable = ({ stores }) => {
             alignHeader={'center'}
           />
           <Column
-            field="Descripcion"
-            header="Descripcion"
+            field="Direccion"
+            header="Direccion"
             body={(rowData) => rowData.address}
             alignHeader={'center'}
           />

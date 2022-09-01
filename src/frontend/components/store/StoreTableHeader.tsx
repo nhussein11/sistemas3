@@ -3,11 +3,13 @@ import { InputText } from 'primereact/inputtext'
 import React from 'react'
 import { useRecoilState } from 'recoil'
 import { globalFilterValueState } from '../../atoms/globalFilterValueAtom'
+import useDeleteStoreMutation from '../../hooks/stores/useDeleteStoreMutation'
 
 const StoreTableHeader = ({ setDisplayBasic }) => {
   const [globalFilterValue, setGlobalFilterValue] = useRecoilState(
     globalFilterValueState
   )
+  const { handleDeleteStore } = useDeleteStoreMutation('stores')
   return (
     <div className="header-table">
       <div className="flex justify-content-between">
@@ -36,7 +38,7 @@ const StoreTableHeader = ({ setDisplayBasic }) => {
         <Button
           label="Borrar"
           className="p-button-raised p-button-danger"
-          onClick={() => console.log('delete store')}
+          onClick={handleDeleteStore}
         />
         <Button
           label="Modificar"
