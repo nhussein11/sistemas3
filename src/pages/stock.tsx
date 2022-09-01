@@ -1,26 +1,21 @@
 import { NextPage } from 'next'
 import React from 'react'
+import { useRecoilState } from 'recoil'
+import { globalFilterValueState } from '../frontend/atoms/globalFilterValueAtom'
 import StockTable from '../frontend/components/stock/StockTable'
-
-const stocksDummyData = [
-  {
-    id: 1,
-    productId: 1,
-    storeId: 1,
-    quantity: 10,
-    minQuantity: 5
-  },
-  {
-    id: 2,
-    productId: 2,
-    storeId: 2,
-    quantity: 10,
-    minQuantity: 5
-  }
-]
-
+import useStocksQuery from '../frontend/hooks/stock/useStocksQuery'
+import { filterStocks } from '../frontend/services/stock/filterStocks'
 const Stock: NextPage = () => {
-  return <StockTable stocks={stocksDummyData}/>
+  const query = useStocksQuery('stocks')
+  const [globalFilterValue] = useRecoilState(globalFilterValueState)
+  return (
+    <StockTable
+      stocks={filterStocks(
+        query?.data?.stocks,
+        Number(globalFilterValue).valueOf()
+      )}
+    />
+  )
 }
 
 export default Stock
