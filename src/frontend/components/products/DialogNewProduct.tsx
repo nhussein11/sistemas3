@@ -5,7 +5,6 @@ import React from 'react'
 import { DialogNewProductProps } from '../../@types/frontend.types'
 import useDialogNewProductMutation from '../../hooks/products/useDialogNewProductMutation'
 import DialogFooter from './DialogFooter'
-import { Store } from '../../../shared/schemas/store.type'
 
 const DialogNewProduct = ({
   displayBasic,
@@ -18,12 +17,7 @@ const DialogNewProduct = ({
     productDescription,
     category,
     setCategory,
-    CATEGORIES,
-    storesQuery,
-    changeStore,
-    selectedStore,
-    productQuantity,
-    productMinQuantity
+    CATEGORIES
   } = useDialogNewProductMutation('products')
   return (
     <Dialog
@@ -47,24 +41,12 @@ const DialogNewProduct = ({
             <label htmlFor="id">Precio</label>
             <InputText {...productPrice} name="productPrice" placeholder='precio'/>
           </div>
-          <div>
-            <label htmlFor="id">Cantidad</label>
-            <InputText {...productQuantity} name="productQuantity" placeholder='precio'/>
-          </div>
-          <div>
-            <label htmlFor="id">Cantidad Mínima</label>
-            <InputText {...productMinQuantity} name="productMinQuantity" placeholder='precio'/>
-          </div>
           {/* COMIENZAN LOS DROPS */}
         </div>
         <div className='field-drop'>
           <div className='field-drop'>
             <label htmlFor="id">Categoría</label>
             <Dropdown value={category} options={CATEGORIES} onChange={(e) => setCategory(e.value)} placeholder={'select category'}/>
-          </div>
-          <div className='field-drop'>
-            <label htmlFor="id">Store</label>
-            <Dropdown value={selectedStore.name} options={storesQuery?.data?.stores.map((store: Store) => store.name)} onChange={(e) => changeStore(e.target.value)} placeholder="select a Store"/>
           </div>
         </div>
       </div>
