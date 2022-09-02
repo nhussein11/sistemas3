@@ -25,19 +25,13 @@ export default async function products (
           name,
           price,
           description,
-          category,
-          storeId,
-          quantity,
-          minQuantity
+          category
         } = body
         const productCreated = await createProduct(
           name,
           price,
           description,
-          category,
-          storeId,
-          quantity,
-          minQuantity
+          category
         )
         return res.status(201).send({ productCreated })
       } catch (error) {

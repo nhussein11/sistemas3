@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
 import { CategoryEnum, Product } from '@prisma/client'
 import {
@@ -12,8 +12,8 @@ import {
 } from '../../atoms/selectedProductAtom'
 import { showErrorDialogState } from '../../atoms/showErrorDialog'
 import { showUpdateDialogState } from '../../atoms/showUpdateDialogAtom'
-import { updateProduct } from '../../services/updateProduct'
 import useField from '../useField'
+import { updateProduct } from '../../services/products/updateProduct'
 
 const useDialogUpdateProductMutation = (queryId: string) => {
   const [selectedProduct, setSelectedProduct] =
@@ -28,7 +28,7 @@ const useDialogUpdateProductMutation = (queryId: string) => {
   const productName = useField({ initialValue: '', type: 'text' })
   const productDescription = useField({ initialValue: '', type: 'text' })
   const productPrice = useField({ initialValue: 0, type: 'number' })
-  const productCategory = useField({ initialValue: '', type: 'text' })
+  const [productCategory, setProductCategory] = useState('IMPRESORA')
   const queryClient = useQueryClient()
   const updateQuery = ({ id, name, price, description, category }: Product) =>
     updateProduct({ id, name, price, description, category })
@@ -40,7 +40,7 @@ const useDialogUpdateProductMutation = (queryId: string) => {
       setSelectedProduct(defaultProduct)
       productName.onChange('')
       productDescription.onChange('')
-      productCategory.onChange('')
+      setProductCategory(CategoryEnum.IMPRESORA)
       productPrice.onChange(0)
       setIsProductChecked(defaultProductChecked)
     }
@@ -50,7 +50,11 @@ const useDialogUpdateProductMutation = (queryId: string) => {
       id: selectedProduct.id,
       name: productName.value as string,
       description: productDescription.value as string,
+<<<<<<< HEAD
       category: productCategory.value as CategoryEnum,
+=======
+      category: productCategory as CategoryEnum,
+>>>>>>> master
       price: productPrice.value as number
     })
   }
@@ -58,9 +62,8 @@ const useDialogUpdateProductMutation = (queryId: string) => {
     productName.onChange(selectedProduct.name)
     productPrice.onChange(selectedProduct.price)
     productDescription.onChange(selectedProduct.description)
-    productCategory.onChange(selectedProduct.category)
+    setProductCategory(selectedProduct.category)
   }, [selectedProduct])
-
   return {
     handleUpdateProduct,
     productName,

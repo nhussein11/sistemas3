@@ -5,7 +5,7 @@ import { globalFilterValueState } from '../frontend/atoms/globalFilterValueAtom'
 import Summary from '../frontend/components/products/Summary'
 import ProductsTable from '../frontend/components/products/ProductsTable'
 import useProductsQuery from '../frontend/hooks/products/useProductsQuery'
-import { filterProducts } from '../frontend/services/filterProducts'
+import { filterProducts } from '../frontend/services/products/filterProducts'
 
 const Home: NextPage = () => {
   const query = useProductsQuery('products')

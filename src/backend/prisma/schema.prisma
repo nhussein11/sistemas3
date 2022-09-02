@@ -15,7 +15,7 @@ model Product {
   category    CategoryEnum 
   price       Float  @db.Real
 
-  Stock           Stock?
+  Stock           Stock[]
   MovementDetails MovementDetails[]
 
   @@map("product")
@@ -26,7 +26,7 @@ model Store {
   name    String  
   address String
 
-  Stock Stock?
+  Stock Stock[]
 
   @@map("store")
 }
@@ -35,10 +35,10 @@ model Stock {
   id String @id @default(cuid())
 
   Product   Product @relation(fields: [productId], references: [id])
-  productId String  @unique
+  productId String  
 
   Store   Store  @relation(fields: [storeId], references: [id])
-  storeId String @unique
+  storeId String 
 
   quantity     Int
   minQuantity Int

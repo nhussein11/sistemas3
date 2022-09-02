@@ -1,11 +1,6 @@
 /* eslint-disable no-useless-catch */
-import { CategoryEnum, Product, Stock } from '@prisma/client'
+import { CategoryEnum, Product } from '@prisma/client'
 import { prisma } from '../../../server/prisma-client/prisma-client'
-import {
-  createStock,
-  getProductExistingById,
-  updateStockById
-} from '../stocks/stock.controller'
 
 const getProducts = async () => {
   try {
@@ -20,21 +15,13 @@ const createProduct = async (
   name: string,
   price: number,
   description: string,
-  category: CategoryEnum,
-  storeId: string,
-  quantity: number,
-  minQuantity: number
+  category: CategoryEnum
 ) => {
   try {
     const productCreated: Product = await prisma.product.create({
       data: { name, price, description, category }
     })
-    try {
-      const stockExisting: Stock = await getProductExistingById(productCreated.id)
-      await updateStockById(stockExisting.id, quantity)
-    } catch (error) {
-      await createStock(productCreated.id, storeId, quantity, minQuantity)
-    }
+
     return productCreated
   } catch (error) {
     throw error
@@ -64,7 +51,7 @@ const updateProductById = async (
   try {
     await prisma.product.findUniqueOrThrow({ where: { id } })
 
-    if (!name || !price || !description || !category) {
+    if (!name && !price && !description && !category) {
       throw new Error('Name, price, description or category must be provided!')
     }
 
@@ -88,6 +75,11 @@ const deleteProductById = async (id: string) => {
   try {
     const deletedProduct: Product = await prisma.product.delete({
       where: { id }
+    })
+    await prisma.stock.deleteMany({
+      where: {
+        productId: id
+      }
     })
     return deletedProduct
   } catch (error) {

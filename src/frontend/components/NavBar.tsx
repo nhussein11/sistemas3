@@ -20,10 +20,17 @@ const NavBar = () => {
       }
     },
     {
-      label: 'Usuarios',
+      label: 'Stock',
       icon: 'pi pi-fw pi-user',
       command: () => {
         router.push('/stock')
+      }
+    },
+    {
+      label: 'Depositos',
+      icon: 'pi pi-fw pi-table',
+      command: () => {
+        router.push('/stores')
       }
     },
     {

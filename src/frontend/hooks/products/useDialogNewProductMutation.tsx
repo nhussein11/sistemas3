@@ -1,7 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { createNewProduct } from '../../services/createNewProduct'
 import useField from '../useField'
 import { CategoryEnum } from '@prisma/client'
+import { useState } from 'react'
+import { createNewProduct } from '../../services/products/createNewProduct'
 
 const useDialogNewProductMutation = (queryId: string) => {
   const queryClient = useQueryClient()
@@ -11,20 +12,21 @@ const useDialogNewProductMutation = (queryId: string) => {
       queryClient.invalidateQueries([queryId])
       productName.onChange('')
       productDescription.onChange('')
-      productCategory.onChange(0)
+      setCategory(CategoryEnum.IMPRESORA)
       productPrice.onChange(0)
     }
   })
   const productName = useField({ initialValue: '', type: 'text' })
   const productPrice = useField({ initialValue: 0, type: 'number' })
   const productDescription = useField({ initialValue: '', type: 'text' })
-  const productCategory = useField({ initialValue: 0, type: 'number' })
+  const [category, setCategory] = useState(CategoryEnum.IMPRESORA)
+  const CATEGORIES = [CategoryEnum.IMPRESORA, CategoryEnum.FILAMENTO]
   const handleCreateNewProduct = () => {
     mutate({
       name: productName.value as string,
       price: productPrice.value as number,
       description: productDescription.value as string,
-      category: productCategory.value as CategoryEnum
+      category
     })
   }
   return {
@@ -32,7 +34,9 @@ const useDialogNewProductMutation = (queryId: string) => {
     productName,
     productPrice,
     productDescription,
-    productCategory
+    category,
+    setCategory,
+    CATEGORIES
   }
 }
 
