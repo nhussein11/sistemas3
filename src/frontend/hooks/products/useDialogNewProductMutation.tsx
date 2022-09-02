@@ -3,8 +3,13 @@ import useField from '../useField'
 import { CategoryEnum } from '@prisma/client'
 import { useState } from 'react'
 import { createNewProduct } from '../../services/products/createNewProduct'
+import { useRecoilState } from 'recoil'
+import { showErrorDialogState } from '../../atoms/showErrorDialog'
+import { defaultErrorState, ErrorState } from '../../atoms/ErrorAtom'
 
 const useDialogNewProductMutation = (queryId: string) => {
+  const [, setShowErrorDialog] = useRecoilState(showErrorDialogState)
+  const [, setErrorState] = useRecoilState(ErrorState)
   const queryClient = useQueryClient()
   const { mutate } = useMutation(createNewProduct, {
     onSuccess: () => {
@@ -14,6 +19,11 @@ const useDialogNewProductMutation = (queryId: string) => {
       productDescription.onChange('')
       setCategory(CategoryEnum.IMPRESORA)
       productPrice.onChange(0)
+      setErrorState(defaultErrorState)
+    },
+    onError: (error: any) => {
+      setErrorState({ status: error.response.status, message: error.message })
+      setShowErrorDialog(true)
     }
   })
   const productName = useField({ initialValue: '', type: 'text' })
