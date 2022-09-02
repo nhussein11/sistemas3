@@ -4,8 +4,8 @@ import React, { useState } from 'react'
 import { StockTableProps } from '../../@types/frontend.types'
 import useProductsQuery from '../../hooks/products/useProductsQuery'
 import useStoresQuery from '../../hooks/stores/useStoresQuery'
-import { findProduct } from '../../services/products/findProduct'
-import { findStore } from '../../services/stores/findStore'
+import { findProductName } from '../../services/products/findProductName'
+import { findStoreName } from '../../services/stores/findStoreName'
 import DialogError from '../products/DialogError'
 import DialogNewStock from './DialogNewStock'
 import DialogUpdateStock from './DialogUpdateStock'
@@ -49,13 +49,13 @@ const StockTable = ({ stocks }: StockTableProps) => {
           <Column
             field="ProductName"
             header="ProductName"
-            body={(rowData) => findProduct(rowData.productId, productsQuery)}
+            body={(rowData) => findProductName(rowData.productId, productsQuery)}
             alignHeader={'center'}
           />
           <Column
             field="StoreName"
             header="StoreName"
-            body={(rowData) => findStore(rowData.storeId, storesQuery)}
+            body={(rowData) => findStoreName(rowData.storeId, storesQuery)}
             alignHeader={'center'}
           />
           <Column

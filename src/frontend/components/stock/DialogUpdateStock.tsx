@@ -42,7 +42,7 @@ const DialogUpdateStock = () => {
           <div className="field-drop">
           <label htmlFor="id">Depositos</label>
           <Dropdown
-            value={selectedStore.name}
+            value={selectedStore?.name}
             options={storesQuery?.data?.stores.map(
               (store: Store) => store.name
             )}

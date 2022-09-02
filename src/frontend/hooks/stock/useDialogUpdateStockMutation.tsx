@@ -3,15 +3,19 @@ import { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
 import { Store } from '../../../shared/schemas/store.type'
 import { StockUpdateData } from '../../@types/frontend.types'
-import { defaultStockChecked, isStockCheckedState } from '../../atoms/isStockSelectedAtom'
+import {
+  defaultStockChecked,
+  isStockCheckedState
+} from '../../atoms/isStockSelectedAtom'
 import { defaultStock, selectedStockState } from '../../atoms/selectedStockAtom'
 import { defaultStore } from '../../atoms/selectedStoreAtom'
 import { showUpdateDialogState } from '../../atoms/showUpdateDialogAtom'
 import { updateStock } from '../../services/stock/updateStock'
+import { findStore } from '../../services/stores/findStore'
 import useStoresQuery from '../stores/useStoresQuery'
 import useField from '../useField'
 
-const useDialogUpdateStockMutation = (queryId:string) => {
+const useDialogUpdateStockMutation = (queryId: string) => {
   const [showUpdateDialog, setShowUpdateDialog] = useRecoilState(
     showUpdateDialogState
   )
@@ -47,6 +51,7 @@ const useDialogUpdateStockMutation = (queryId:string) => {
   useEffect(() => {
     quantity.onChange(selectedStock.quantity)
     minQuantity.onChange(selectedStock.minQuantity)
+    setSelectedStore(findStore(selectedStock.storeId, storesQuery) as Store)
   }, [selectedStock])
   const handleUpdateStock = () => {
     mutate({
@@ -70,7 +75,6 @@ const useDialogUpdateStockMutation = (queryId:string) => {
     showUpdateDialog,
     setShowUpdateDialog,
     selectedStore
-
   }
 }
 
