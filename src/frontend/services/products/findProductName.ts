@@ -1,7 +1,7 @@
 import { UseQueryResult } from '@tanstack/react-query'
 import { Product } from '../../../shared/schemas/product.type'
 
-export const findProduct = (
+export const findProductName = (
   id: string,
   productsQuery: UseQueryResult<{ products: Product[] }, unknown>
 ) => {
