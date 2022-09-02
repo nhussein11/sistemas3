@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRecoilState } from 'recoil'
+import { defaultErrorState, ErrorState } from '../../atoms/ErrorAtom'
 import { defaultStockChecked, isStockCheckedState } from '../../atoms/isStockSelectedAtom'
 import { defaultStock, selectedStockState } from '../../atoms/selectedStockAtom'
 import { showErrorDialogState } from '../../atoms/showErrorDialog'
@@ -9,6 +10,7 @@ const useDeleteStockMutation = (queryId:string) => {
   const [, setIsStockChecked] = useRecoilState(isStockCheckedState)
   const [selectedStock, setSelectedStock] = useRecoilState(selectedStockState)
   const [, setShowErrorDialog] = useRecoilState(showErrorDialogState)
+  const [, setErrorState] = useRecoilState(ErrorState)
   const queryClient = useQueryClient()
   const { mutate } = useMutation(
     (stockId: string) => deleteStock(stockId),
@@ -18,8 +20,10 @@ const useDeleteStockMutation = (queryId:string) => {
         queryClient.invalidateQueries([queryId])
         setSelectedStock(defaultStock)
         setIsStockChecked(defaultStockChecked)
+        setErrorState(defaultErrorState)
       },
-      onError: () => {
+      onError: (error:any) => {
+        setErrorState({ status: error.response.status, message: error.message })
         setShowErrorDialog(true)
       }
     }
