@@ -1,7 +1,5 @@
 /* eslint-disable no-case-declarations */
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { ErrorProps } from 'next/error'
 import {
   getProductById,
   updateProductById,
