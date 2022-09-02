@@ -33,7 +33,13 @@ const createStock = async (
       })
       return stockCreated
     }
-    await updateStockById(stockExisting.id, storeId, quantity, minQuantity)
+    await updateStockById(
+      stockExisting.id,
+      productId,
+      storeId,
+      quantity,
+      minQuantity
+    )
     return updateStockById
   } catch (error) {
     throw error
@@ -54,6 +60,7 @@ const getStockById = async (id: string) => {
 
 const updateStockById = async (
   id: string,
+  productId: string = '',
   storeId: string,
   quantity: number,
   minQuantity: number
@@ -63,7 +70,10 @@ const updateStockById = async (
     if (!storeId && !quantity && !minQuantity) {
       throw new Error('Store id or quantity or min quantity must be provided!')
     }
-
+    const stockExisting = await getStockExisting(productId, storeId)
+    if (stockExisting) {
+      await deleteStockById(stockExisting.id)
+    }
     const updatedStock: Stock = await prisma.stock.update({
       where: { id },
       data: {
