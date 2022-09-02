@@ -60,7 +60,7 @@ const getStockById = async (id: string) => {
 
 const updateStockById = async (
   id: string,
-  productId: string,
+  productId: string = '',
   storeId: string,
   quantity: number,
   minQuantity: number
