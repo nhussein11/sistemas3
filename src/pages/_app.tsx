@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import React from 'react'
 import { RecoilRoot } from 'recoil'
 import NavBar from '../frontend/components/NavBar'
+
 function MyApp ({ Component, pageProps }: AppProps) {
   const [queryClient] = React.useState(() => new QueryClient())
 

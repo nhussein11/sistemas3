@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { Dialog } from 'primereact/dialog'
-import { InputText } from 'primereact/inputtext'
-import { Dropdown } from 'primereact/dropdown'
-import useDialogUpdateProductMutation from '../../hooks/products/useDialogUpdateProductMutation'
 import { Button } from 'primereact/button'
+import { Dialog } from 'primereact/dialog'
+import { Dropdown } from 'primereact/dropdown'
+import { InputText } from 'primereact/inputtext'
+import useDialogUpdateProductMutation from '../../hooks/products/useDialogUpdateProductMutation'
 
 const DialogUpdateProduct = () => {
   const {

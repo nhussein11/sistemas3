@@ -1,7 +1,7 @@
+import { Store } from '@prisma/client'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
-import { Store } from '../../../shared/schemas/store.type'
 import { StockUpdateData } from '../../@types/frontend.types'
 import {
   defaultStockChecked,

@@ -1,6 +1,6 @@
+import { Button } from 'primereact/button'
 import { Menubar } from 'primereact/menubar'
 import { useRouter } from 'next/router'
-import { Button } from 'primereact/button'
 
 const NavBar = () => {
   const router = useRouter()

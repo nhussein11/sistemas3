@@ -1,4 +1,4 @@
-import { Store } from '../../../shared/schemas/store.type'
+import { Store } from '@prisma/client'
 
 export const filterStores = (stores: Store[], search: string) => {
   return stores?.filter((store) => {

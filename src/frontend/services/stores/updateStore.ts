@@ -1,4 +1,4 @@
-import { Store } from '../../../shared/schemas/store.type'
+import { Store } from '@prisma/client'
 import publicAxiosInstance from '../../api/axios-api'
 
 export const updateStore = async ({ id, name, address }: Store) => {

@@ -1,7 +1,7 @@
+import React from 'react'
 import { Button } from 'primereact/button'
 import { Dialog } from 'primereact/dialog'
 import { InputText } from 'primereact/inputtext'
-import React from 'react'
 import useDialogUpdateStoreMutation from '../../hooks/stores/useDialogUpdateStoreMutation'
 
 const DialogUpdateStore = () => {

@@ -1,8 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
-import { Product } from '../../../shared/schemas/product.type'
-import { CategoryEnum } from '@prisma/client'
+import { CategoryEnum, Product } from '@prisma/client'
 import {
   defaultProductChecked,
   isProductCheckedState

@@ -1,7 +1,5 @@
+import { Product, Stock, Store } from '@prisma/client'
 import { Dispatch } from 'react'
-import { Product } from '../../shared/schemas/product.type'
-import { Stock } from '../../shared/schemas/stock.type'
-import { Store } from '../../shared/schemas/store.type'
 
 export type TableProps = {
   products: Product[]

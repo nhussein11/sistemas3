@@ -1,5 +1,5 @@
 /* eslint-disable no-useless-catch */
-import { Store } from '../../../../shared/schemas/store.type'
+import { Store } from '@prisma/client'
 import { prisma } from '../../../server/prisma-client/prisma-client'
 
 const getStores = async () => {

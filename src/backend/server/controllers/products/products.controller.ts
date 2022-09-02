@@ -1,6 +1,5 @@
 /* eslint-disable no-useless-catch */
-import { CategoryEnum } from '@prisma/client'
-import { Product } from '../../../../shared/schemas/product.type'
+import { CategoryEnum, Product } from '@prisma/client'
 import { prisma } from '../../../server/prisma-client/prisma-client'
 
 const getProducts = async () => {

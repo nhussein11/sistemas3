@@ -1,5 +1,5 @@
+import { Product } from '@prisma/client'
 import { UseQueryResult } from '@tanstack/react-query'
-import { Product } from '../../../shared/schemas/product.type'
 
 export const findProductName = (
   id: string,

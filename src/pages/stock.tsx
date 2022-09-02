@@ -5,6 +5,7 @@ import { globalFilterValueState } from '../frontend/atoms/globalFilterValueAtom'
 import StockTable from '../frontend/components/stock/StockTable'
 import useStocksQuery from '../frontend/hooks/stock/useStocksQuery'
 import { filterStocks } from '../frontend/services/stock/filterStocks'
+
 const Stock: NextPage = () => {
   const query = useStocksQuery('stocks')
   const [globalFilterValue] = useRecoilState(globalFilterValueState)

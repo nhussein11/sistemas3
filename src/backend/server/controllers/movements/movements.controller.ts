@@ -1,7 +1,5 @@
 /* eslint-disable no-useless-catch */
-import { MovementTypeEnum, Stock } from '@prisma/client'
-import { MovementType } from '../../../../shared/schemas/movement-type.type'
-import { Movement } from '../../../../shared/schemas/movement.type'
+import { Movement, MovementType, MovementTypeEnum, Stock } from '@prisma/client'
 import { prisma } from '../../../server/prisma-client/prisma-client'
 import { getMovementTypeById } from '../movement-types/movement-types.controller'
 import { createMovementDetails } from '../movements-details/movement-details.controller'

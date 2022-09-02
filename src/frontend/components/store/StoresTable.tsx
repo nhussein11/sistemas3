@@ -1,10 +1,10 @@
+import React, { useState } from 'react'
 import { Column } from 'primereact/column'
 import { DataTable } from 'primereact/datatable'
-import React, { useState } from 'react'
-import { StoresTableProps } from '../../@types/frontend.types'
 import DialogError from '../products/DialogError'
 import DialogNewStore from './DialogNewStore'
 import DialogUpdateStore from './DialogUpdateStore'
+import { StoresTableProps } from '../../@types/frontend.types'
 import StoreCheckedBodyTemplate from './StoreCheckedBodyTemplate'
 import StoreTableHeader from './StoreTableHeader'
 

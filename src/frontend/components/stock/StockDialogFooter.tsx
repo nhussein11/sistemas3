@@ -1,5 +1,5 @@
-import { Button } from 'primereact/button'
 import React from 'react'
+import { Button } from 'primereact/button'
 import { StockDialogFooterProps } from '../../@types/frontend.types'
 
 const StockDialogFooter = ({ closeDialog, handleCreateNewStock }:StockDialogFooterProps) => {
