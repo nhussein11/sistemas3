@@ -54,3 +54,8 @@ export type StoreDialogFooterProps ={
 export type StockCheckedBodyTemplateProps = {
   rowData: Stock
 }
+
+export type DialogNewStockProps = {
+  displayBasic: boolean
+  closeDialog: () => void
+}

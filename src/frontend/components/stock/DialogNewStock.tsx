@@ -3,10 +3,11 @@ import { Dialog } from 'primereact/dialog'
 import { Dropdown } from 'primereact/dropdown'
 import { InputText } from 'primereact/inputtext'
 import React from 'react'
+import { DialogNewStockProps } from '../../@types/frontend.types'
 import useDialogNewStockMutation from '../../hooks/stock/useDialogNewStockMutation'
 import StockDialogFooter from './StockDialogFooter'
 
-const DialogNewStock = ({displayBasic,closeDialog}) => {
+const DialogNewStock = ({ displayBasic, closeDialog }:DialogNewStockProps) => {
   const {
     handleCreateNewStock,
     quantity,
@@ -30,21 +31,39 @@ const DialogNewStock = ({displayBasic,closeDialog}) => {
         <div className="field-form-container">
           <div>
             <label htmlFor="id">Cantidad</label>
-            <InputText {...quantity} name="quantity" placeholder='quantity'/>
+            <InputText {...quantity} name="quantity" placeholder="quantity" />
           </div>
           <div>
             <label htmlFor="id">Cantidad minima</label>
-            <InputText {...minQuantity} name="minQuantity" placeholder='minQuantity'/>
+            <InputText
+              {...minQuantity}
+              name="minQuantity"
+              placeholder="minQuantity"
+            />
           </div>
         </div>
-        <div className='field-drop'>
-            <label htmlFor="id">Depositos</label>
-            <Dropdown value={selectedStore.name} options={storesQuery?.data?.stores.map((store: Store) => store.name)} onChange={(e) => changeStore(e.target.value)} placeholder="select a Store"/>
-          </div>
-          <div className='field-drop'>
-            <label htmlFor="id">Productos</label>
-            <Dropdown value={selectedProduct.name} options={productsQuery?.data?.products.map((store: Store) => store.name)} onChange={(e) => changeProduct(e.target.value)} placeholder={'select product'}/>
-          </div>
+        <div className="field-drop">
+          <label htmlFor="id">Depositos</label>
+          <Dropdown
+            value={selectedStore.name}
+            options={storesQuery?.data?.stores.map(
+              (store: Store) => store.name
+            )}
+            onChange={(e) => changeStore(e.target.value)}
+            placeholder="select a Store"
+          />
+        </div>
+        <div className="field-drop">
+          <label htmlFor="id">Productos</label>
+          <Dropdown
+            value={selectedProduct.name}
+            options={productsQuery?.data?.products.map(
+              (store: Store) => store.name
+            )}
+            onChange={(e) => changeProduct(e.target.value)}
+            placeholder={'select product'}
+          />
+        </div>
       </div>
     </Dialog>
   )
