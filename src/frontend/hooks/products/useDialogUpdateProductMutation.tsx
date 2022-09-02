@@ -50,11 +50,7 @@ const useDialogUpdateProductMutation = (queryId: string) => {
       id: selectedProduct.id,
       name: productName.value as string,
       description: productDescription.value as string,
-<<<<<<< HEAD
-      category: productCategory.value as CategoryEnum,
-=======
       category: productCategory as CategoryEnum,
->>>>>>> master
       price: productPrice.value as number
     })
   }
