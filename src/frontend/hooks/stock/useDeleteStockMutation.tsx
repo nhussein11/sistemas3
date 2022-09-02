@@ -6,7 +6,7 @@ import { showErrorDialogState } from '../../atoms/showErrorDialog'
 import { deleteStock } from '../../services/stock/deleteStock'
 
 const useDeleteStockMutation = (queryId:string) => {
-  const [_, setIsStockChecked] = useRecoilState(isStockCheckedState)
+  const [, setIsStockChecked] = useRecoilState(isStockCheckedState)
   const [selectedStock, setSelectedStock] = useRecoilState(selectedStockState)
   const [, setShowErrorDialog] = useRecoilState(showErrorDialogState)
   const queryClient = useQueryClient()
