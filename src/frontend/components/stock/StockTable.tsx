@@ -1,13 +1,14 @@
 import { Column } from 'primereact/column'
 import { DataTable } from 'primereact/datatable'
 import React, { useState } from 'react'
+import { StockTableProps } from '../../@types/frontend.types'
 import DialogError from '../products/DialogError'
 import DialogNewStock from './DialogNewStock'
 import DialogUpdateStock from './DialogUpdateStock'
 import StockCheckedBodyTemplate from './StockCheckedBodyTemplate'
 import StockTableHeader from './StockTableHeader'
 
-const StockTable = ({ stocks }) => {
+const StockTable = ({ stocks }:StockTableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
 
   return (

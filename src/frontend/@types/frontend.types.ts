@@ -7,7 +7,7 @@ export type TableProps = {
   products: Product[]
 }
 export type StoresTableProps = {
-stores: Store[]
+  stores: Store[]
 }
 export type SelectBodyTemplateProps = {
   rowData: Product
@@ -38,15 +38,15 @@ export type SummaryProps = {
 }
 
 export type CardProps = {
-  name : string
-  value : string
-  icon : string
-  color : string
+  name: string
+  value: string
+  icon: string
+  color: string
 }
 export type StoreCheckedBodyTemplateProps = {
   rowData: Store
 }
-export type StoreDialogFooterProps ={
+export type StoreDialogFooterProps = {
   closeDialog: () => void
   handleCreateNewStore: () => void
 }
@@ -60,9 +60,19 @@ export type DialogNewStockProps = {
   closeDialog: () => void
 }
 
-export type StockUpdateData={
+export type StockUpdateData = {
   id: string
   storeId: string
   quantity: number
   minQuantity: number
+}
+
+export type StockTableProps = { stocks: Stock[] }
+
+export type StockDialogFooterProps = {
+  closeDialog: () => void
+  handleCreateNewStock: () => void
+}
+export type StockTableHeaderProps = {
+  setDisplayBasic: Dispatch<boolean>
 }

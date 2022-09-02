@@ -2,13 +2,14 @@ import { Button } from 'primereact/button'
 import { InputText } from 'primereact/inputtext'
 import React from 'react'
 import { useRecoilState } from 'recoil'
+import { StockTableHeaderProps } from '../../@types/frontend.types'
 import { globalFilterValueState } from '../../atoms/globalFilterValueAtom'
 import { isStockCheckedState } from '../../atoms/isStockSelectedAtom'
 import { showErrorDialogState } from '../../atoms/showErrorDialog'
 import { showUpdateDialogState } from '../../atoms/showUpdateDialogAtom'
 import useDeleteStockMutation from '../../hooks/stock/useDeleteStockMutation'
 
-const StockTableHeader = ({ setDisplayBasic }) => {
+const StockTableHeader = ({ setDisplayBasic }:StockTableHeaderProps) => {
   const [globalFilterValue, setGlobalFilterValue] = useRecoilState(
     globalFilterValueState
   )

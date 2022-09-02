@@ -16,7 +16,7 @@ const useDialogUpdateStockMutation = (queryId:string) => {
     showUpdateDialogState
   )
   const [selectedStock, setSelectedStock] = useRecoilState(selectedStockState)
-  const [_, setIsStockChecked] = useRecoilState(isStockCheckedState)
+  const [, setIsStockChecked] = useRecoilState(isStockCheckedState)
   const quantity = useField({ initialValue: 0, type: 'number' })
   const minQuantity = useField({ initialValue: 0, type: 'number' })
   const queryClient = useQueryClient()
