@@ -42,6 +42,7 @@ const createMovement = async (
       // Actualizo el stock
       await updateStockById(
         stockToSell.id,
+        productId,
         stockToSell.storeId,
         (stockToSell.quantity -= quantity),
         stockToSell.minQuantity
@@ -62,6 +63,7 @@ const createMovement = async (
       } else {
         await updateStockById(
           stockToUpdate.id,
+          productId,
           stockToUpdate.storeId,
           (stockToUpdate.quantity += quantity),
           stockToUpdate.minQuantity
