@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
 import { Product } from '../../../shared/schemas/product.type'
 import { CategoryEnum } from '@prisma/client'
@@ -22,15 +22,14 @@ const useDialogUpdateProductMutation = (queryId: string) => {
   const [showUpdateDialog, setShowUpdateDialog] = useRecoilState(
     showUpdateDialogState
   )
-  const [showErrorDialog, setShowErrorDialog] = useRecoilState(
-    showErrorDialogState
-  )
+  const [showErrorDialog, setShowErrorDialog] =
+    useRecoilState(showErrorDialogState)
   // eslint-disable-next-line no-unused-vars
   const [, setIsProductChecked] = useRecoilState(isProductCheckedState)
   const productName = useField({ initialValue: '', type: 'text' })
   const productDescription = useField({ initialValue: '', type: 'text' })
   const productPrice = useField({ initialValue: 0, type: 'number' })
-  const productCategory = useField({ initialValue: '', type: 'text' })
+  const [productCategory, setProductCategory] = useState('IMPRESORA')
   const queryClient = useQueryClient()
   const updateQuery = ({ id, name, price, description, category }: Product) =>
     updateProduct({ id, name, price, description, category })
@@ -42,21 +41,27 @@ const useDialogUpdateProductMutation = (queryId: string) => {
       setSelectedProduct(defaultProduct)
       productName.onChange('')
       productDescription.onChange('')
-      productCategory.onChange('')
+      setProductCategory(CategoryEnum.IMPRESORA)
       productPrice.onChange(0)
       setIsProductChecked(defaultProductChecked)
     }
   })
   const handleUpdateProduct = () => {
-    mutate({ id: selectedProduct.id, name: productName.value as string, description: productDescription.value as string, category: productCategory.value as CategoryEnum, price: productPrice.value as number })
+    mutate({
+      id: selectedProduct.id,
+      name: productName.value as string,
+      description: productDescription.value as string,
+      category: productCategory as CategoryEnum,
+      price: productPrice.value as number
+    })
   }
   useEffect(() => {
     productName.onChange(selectedProduct.name)
     productPrice.onChange(selectedProduct.price)
     productDescription.onChange(selectedProduct.description)
-    productCategory.onChange(selectedProduct.category)
+    setProductCategory(selectedProduct.category)
   }, [selectedProduct])
-
+  console.log(selectedProduct.category)
   return {
     handleUpdateProduct,
     productName,
