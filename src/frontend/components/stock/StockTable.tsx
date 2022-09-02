@@ -2,15 +2,20 @@ import { Column } from 'primereact/column'
 import { DataTable } from 'primereact/datatable'
 import React, { useState } from 'react'
 import { StockTableProps } from '../../@types/frontend.types'
+import useProductsQuery from '../../hooks/products/useProductsQuery'
+import useStoresQuery from '../../hooks/stores/useStoresQuery'
+import { findProduct } from '../../services/products/findProduct'
+import { findStore } from '../../services/stores/findStore'
 import DialogError from '../products/DialogError'
 import DialogNewStock from './DialogNewStock'
 import DialogUpdateStock from './DialogUpdateStock'
 import StockCheckedBodyTemplate from './StockCheckedBodyTemplate'
 import StockTableHeader from './StockTableHeader'
 
-const StockTable = ({ stocks }:StockTableProps) => {
+const StockTable = ({ stocks }: StockTableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
-
+  const productsQuery = useProductsQuery('products')
+  const storesQuery = useStoresQuery('stores')
   return (
     <div className="datatable-filter">
       <div className="card">
@@ -42,15 +47,15 @@ const StockTable = ({ stocks }:StockTableProps) => {
             alignHeader={'center'}
           />
           <Column
-            field="ProductId"
-            header="ProductId"
-            body={(rowData) => rowData.productId}
+            field="ProductName"
+            header="ProductName"
+            body={(rowData) => findProduct(rowData.productId, productsQuery)}
             alignHeader={'center'}
           />
           <Column
-            field="StoreId"
-            header="StoreId"
-            body={(rowData) => rowData.storeId}
+            field="StoreName"
+            header="StoreName"
+            body={(rowData) => findStore(rowData.storeId, storesQuery)}
             alignHeader={'center'}
           />
           <Column
@@ -68,11 +73,11 @@ const StockTable = ({ stocks }:StockTableProps) => {
         </DataTable>
       </div>
       <DialogNewStock
-      displayBasic={displayBasic}
-      closeDialog={() => setDisplayBasic(false)}
-    />
-    <DialogUpdateStock/>
-    <DialogError></DialogError>
+        displayBasic={displayBasic}
+        closeDialog={() => setDisplayBasic(false)}
+      />
+      <DialogUpdateStock />
+      <DialogError></DialogError>
     </div>
   )
 }
