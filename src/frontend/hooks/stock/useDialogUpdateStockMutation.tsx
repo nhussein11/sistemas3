@@ -38,8 +38,10 @@ const useDialogUpdateStockMutation = (queryId: string) => {
     id,
     storeId,
     quantity,
-    minQuantity
-  }: StockUpdateData) => updateStock({ id, storeId, quantity, minQuantity })
+    minQuantity,
+    productId
+  }: StockUpdateData) =>
+    updateStock({ id, storeId, quantity, minQuantity, productId })
   const { mutate } = useMutation(updateQuery, {
     onSuccess: () => {
       // Invalidate and refetch
@@ -67,7 +69,8 @@ const useDialogUpdateStockMutation = (queryId: string) => {
       id: selectedStock.id,
       storeId: selectedStore.id as string,
       quantity: quantity.value as number,
-      minQuantity: minQuantity.value as number
+      minQuantity: minQuantity.value as number,
+      productId: selectedStock.productId
     })
   }
   const changeStore = (name: string) => {

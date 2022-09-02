@@ -3,6 +3,7 @@ import publicAxiosInstance from '../../api/axios-api'
 
 export const updateStock = async ({
   id,
+  productId,
   storeId,
   quantity,
   minQuantity
@@ -10,7 +11,8 @@ export const updateStock = async ({
   const response = await publicAxiosInstance.put(`/stock/${id}`, {
     storeId,
     quantity,
-    minQuantity
+    minQuantity,
+    productId
   })
   return response
 }

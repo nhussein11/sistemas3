@@ -63,6 +63,7 @@ export type StockUpdateData = {
   storeId: string
   quantity: number
   minQuantity: number
+  productId: string
 }
 
 export type StockTableProps = { stocks: Stock[] }
