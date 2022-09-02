@@ -3,6 +3,7 @@ import Head from 'next/head'
 import CardComponent from '../frontend/components/dashboard/Card'
 import BarChartDemo from '../frontend/components/dashboard/Graph'
 import { Card } from 'primereact/card'
+
 const Home: NextPage = () => {
   return (
     <div>
