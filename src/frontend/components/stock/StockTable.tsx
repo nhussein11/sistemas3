@@ -1,6 +1,7 @@
 import { Column } from 'primereact/column'
 import { DataTable } from 'primereact/datatable'
 import React, { useState } from 'react'
+import DialogNewStock from './DialogNewStock'
 import StockCheckedBodyTemplate from './StockCheckedBodyTemplate'
 import StockTableHeader from './StockTableHeader'
 
@@ -63,6 +64,10 @@ const StockTable = ({ stocks }) => {
           />
         </DataTable>
       </div>
+      <DialogNewStock
+      displayBasic={displayBasic}
+      closeDialog={() => setDisplayBasic(false)}
+    />
       {/* <DialogNewProduct
       displayBasic={displayBasic}
       closeDialog={() => setDisplayBasic(false)}
