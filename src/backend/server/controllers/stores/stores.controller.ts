@@ -61,6 +61,11 @@ const deleteStoreById = async (id: string) => {
     const deletedStore: Store = await prisma.store.delete({
       where: { id }
     })
+    await prisma.stock.deleteMany({
+      where: {
+        storeId: id
+      }
+    })
     return deletedStore
   } catch (error) {
     throw error

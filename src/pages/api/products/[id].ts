@@ -1,5 +1,7 @@
 /* eslint-disable no-case-declarations */
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime'
 import { NextApiRequest, NextApiResponse } from 'next'
+import { ErrorProps } from 'next/error'
 import {
   getProductById,
   updateProductById,
@@ -45,14 +47,25 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       try {
         const deletedProduct = await deleteProductById(id)
         return res.status(200).send({ deletedProduct })
-      } catch (error) {
-        return res
-          .status(500)
-          .send({
-            error,
-            messageError:
-              "You cannot delete this product because it's belong to an existing stock"
-          })
+      } catch (error: any) {
+        switch (error.code) {
+          case 'P2003':
+            return res.status(401).send({
+              error,
+              messageError:
+                "You cannot delete this product because it's belong to an existing stock"
+            })
+          case 'P2025':
+            return res.status(402).send({
+              error,
+              messageError: 'Id not provided'
+            })
+          default:
+            return res.status(450).send({
+              error,
+              messageError: 'Something failed'
+            })
+        }
       }
 
     default:
