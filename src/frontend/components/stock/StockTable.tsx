@@ -1,16 +1,16 @@
+import React, { useState } from 'react'
 import { Column } from 'primereact/column'
 import { DataTable } from 'primereact/datatable'
-import React, { useState } from 'react'
-import { StockTableProps } from '../../@types/frontend.types'
-import useProductsQuery from '../../hooks/products/useProductsQuery'
-import useStoresQuery from '../../hooks/stores/useStoresQuery'
-import { findProductName } from '../../services/products/findProductName'
-import { findStoreName } from '../../services/stores/findStoreName'
 import DialogError from '../products/DialogError'
 import DialogNewStock from './DialogNewStock'
 import DialogUpdateStock from './DialogUpdateStock'
+import { findProductName } from '../../services/products/findProductName'
+import { findStoreName } from '../../services/stores/findStoreName'
+import { StockTableProps } from '../../@types/frontend.types'
 import StockCheckedBodyTemplate from './StockCheckedBodyTemplate'
 import StockTableHeader from './StockTableHeader'
+import useProductsQuery from '../../hooks/products/useProductsQuery'
+import useStoresQuery from '../../hooks/stores/useStoresQuery'
 
 const StockTable = ({ stocks }: StockTableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
@@ -49,7 +49,9 @@ const StockTable = ({ stocks }: StockTableProps) => {
           <Column
             field="ProductName"
             header="ProductName"
-            body={(rowData) => findProductName(rowData.productId, productsQuery)}
+            body={(rowData) =>
+              findProductName(rowData.productId, productsQuery)
+            }
             alignHeader={'center'}
           />
           <Column

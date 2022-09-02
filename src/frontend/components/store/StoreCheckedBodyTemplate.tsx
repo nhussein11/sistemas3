@@ -1,9 +1,9 @@
-import { Checkbox } from 'primereact/checkbox'
 import React from 'react'
-import { useRecoilState } from 'recoil'
-import { StoreCheckedBodyTemplateProps } from '../../@types/frontend.types'
-import { isStoreCheckedState } from '../../atoms/isStoreCheckedAtom'
+import { Checkbox } from 'primereact/checkbox'
 import { defaultStore, selectedStoreState } from '../../atoms/selectedStoreAtom'
+import { isStoreCheckedState } from '../../atoms/isStoreCheckedAtom'
+import { StoreCheckedBodyTemplateProps } from '../../@types/frontend.types'
+import { useRecoilState } from 'recoil'
 
 const StoreCheckedBodyTemplate = ({ rowData }:StoreCheckedBodyTemplateProps) => {
   const [, setSelectedStore] = useRecoilState(selectedStoreState)

@@ -1,10 +1,10 @@
-import { Store } from '@prisma/client'
+import React from 'react'
 import { Dialog } from 'primereact/dialog'
 import { Dropdown } from 'primereact/dropdown'
-import { InputText } from 'primereact/inputtext'
-import React from 'react'
 import { DialogNewStockProps } from '../../@types/frontend.types'
+import { InputText } from 'primereact/inputtext'
 import useDialogNewStockMutation from '../../hooks/stock/useDialogNewStockMutation'
+import { Store } from '@prisma/client'
 import StockDialogFooter from './StockDialogFooter'
 
 const DialogNewStock = ({ displayBasic, closeDialog }:DialogNewStockProps) => {

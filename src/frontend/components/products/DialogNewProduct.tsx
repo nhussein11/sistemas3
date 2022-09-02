@@ -1,19 +1,10 @@
-import React, { useState } from 'react'
-import { CategoryEnum } from '@prisma/client'
-import { Dialog } from 'primereact/dialog'
-import { Dropdown } from 'primereact/dropdown'
-<<<<<<< HEAD
-=======
 import React from 'react'
->>>>>>> master
+import { Dialog } from 'primereact/dialog'
+import DialogFooter from './DialogFooter'
+import { Dropdown } from 'primereact/dropdown'
 import { DialogNewProductProps } from '../../@types/frontend.types'
 import { InputText } from 'primereact/inputtext'
 import useDialogNewProductMutation from '../../hooks/products/useDialogNewProductMutation'
-<<<<<<< HEAD
-
-=======
->>>>>>> master
-import DialogFooter from './DialogFooter'
 
 const DialogNewProduct = ({
   displayBasic,
@@ -40,22 +31,39 @@ const DialogNewProduct = ({
         <div className="field-form-container">
           <div>
             <label htmlFor="id">Nombre</label>
-            <InputText {...productName} name="productName" placeholder='nombre'/>
+            <InputText
+              {...productName}
+              name="productName"
+              placeholder="nombre"
+            />
           </div>
           <div>
             <label htmlFor="id">Descripción</label>
-            <InputText {...productDescription} name="productDescription" placeholder='descripción'/>
+            <InputText
+              {...productDescription}
+              name="productDescription"
+              placeholder="descripción"
+            />
           </div>
           <div>
             <label htmlFor="id">Precio</label>
-            <InputText {...productPrice} name="productPrice" placeholder='precio'/>
+            <InputText
+              {...productPrice}
+              name="productPrice"
+              placeholder="precio"
+            />
           </div>
           {/* COMIENZAN LOS DROPS */}
         </div>
-        <div className='field-drop'>
-          <div className='field-drop'>
+        <div className="field-drop">
+          <div className="field-drop">
             <label htmlFor="id">Categoría</label>
-            <Dropdown value={category} options={CATEGORIES} onChange={(e) => setCategory(e.value)} placeholder={'select category'}/>
+            <Dropdown
+              value={category}
+              options={CATEGORIES}
+              onChange={(e) => setCategory(e.value)}
+              placeholder={'select category'}
+            />
           </div>
         </div>
       </div>

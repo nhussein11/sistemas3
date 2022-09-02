@@ -1,7 +1,7 @@
-import { Dialog } from 'primereact/dialog'
-import { InputText } from 'primereact/inputtext'
 import React from 'react'
+import { Dialog } from 'primereact/dialog'
 import { DialogNewStoreProps } from '../../@types/frontend.types'
+import { InputText } from 'primereact/inputtext'
 import useDialogNewStoreMutation from '../../hooks/stores/useDialogNewStoreMutation'
 import StoreDialogFooter from './StoreDialogFooter'
 

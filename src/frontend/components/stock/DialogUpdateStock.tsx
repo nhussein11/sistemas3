@@ -1,9 +1,9 @@
+import React from 'react'
 import { Button } from 'primereact/button'
 import { Dialog } from 'primereact/dialog'
 import { Dropdown } from 'primereact/dropdown'
 import { InputText } from 'primereact/inputtext'
-import React from 'react'
-import { Store } from '../../../shared/schemas/store.type'
+import { Store } from '@prisma/client'
 import useDialogUpdateStockMutation from '../../hooks/stock/useDialogUpdateStockMutation'
 
 const DialogUpdateStock = () => {
