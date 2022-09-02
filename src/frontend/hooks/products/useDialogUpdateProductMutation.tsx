@@ -61,7 +61,6 @@ const useDialogUpdateProductMutation = (queryId: string) => {
     productDescription.onChange(selectedProduct.description)
     setProductCategory(selectedProduct.category)
   }, [selectedProduct])
-  console.log(selectedProduct.category)
   return {
     handleUpdateProduct,
     productName,
