@@ -1,4 +1,4 @@
-import { Stock } from '../../../shared/schemas/stock.type'
+import { Stock } from "@prisma/client"
 
 export const filterStocks = (stores: Stock[], quantity: number) => {
   return stores?.filter((stock) => {
