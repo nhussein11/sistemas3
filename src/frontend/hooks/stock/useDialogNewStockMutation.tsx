@@ -1,12 +1,17 @@
 import { Product, Store } from '@prisma/client'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
+import { useRecoilState } from 'recoil'
+import { defaultErrorState, ErrorState } from '../../atoms/ErrorAtom'
+import { showErrorDialogState } from '../../atoms/showErrorDialog'
 import { createNewStock } from '../../services/stock/createNewStock'
 import useProductsQuery from '../products/useProductsQuery'
 import useStoresQuery from '../stores/useStoresQuery'
 import useField from '../useField'
 
 const useDialogNewStockMutation = (queryId: string) => {
+  const [, setShowErrorDialog] = useRecoilState(showErrorDialogState)
+  const [, setErrorState] = useRecoilState(ErrorState)
   const quantity = useField({ initialValue: 0, type: 'number' })
   const minQuantity = useField({ initialValue: 0, type: 'number' })
   const queryClient = useQueryClient()
@@ -30,6 +35,11 @@ const useDialogNewStockMutation = (queryId: string) => {
       queryClient.invalidateQueries([queryId])
       quantity.onChange(0)
       minQuantity.onChange(0)
+      setErrorState(defaultErrorState)
+    },
+    onError: (error: any) => {
+      setErrorState({ status: error.response.status, message: error.message })
+      setShowErrorDialog(true)
     }
   })
   const handleCreateNewStock = () => {
