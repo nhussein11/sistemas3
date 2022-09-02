@@ -59,3 +59,10 @@ export type DialogNewStockProps = {
   displayBasic: boolean
   closeDialog: () => void
 }
+
+export type StockUpdateData={
+  id: string
+  storeId: string
+  quantity: number
+  minQuantity: number
+}

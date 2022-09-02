@@ -1,7 +1,9 @@
 import { Column } from 'primereact/column'
 import { DataTable } from 'primereact/datatable'
 import React, { useState } from 'react'
+import DialogError from '../products/DialogError'
 import DialogNewStock from './DialogNewStock'
+import DialogUpdateStock from './DialogUpdateStock'
 import StockCheckedBodyTemplate from './StockCheckedBodyTemplate'
 import StockTableHeader from './StockTableHeader'
 
@@ -68,12 +70,8 @@ const StockTable = ({ stocks }) => {
       displayBasic={displayBasic}
       closeDialog={() => setDisplayBasic(false)}
     />
-      {/* <DialogNewProduct
-      displayBasic={displayBasic}
-      closeDialog={() => setDisplayBasic(false)}
-    />
-    <DialogUpdateProduct />
-    <DialogError></DialogError> */}
+    <DialogUpdateStock/>
+    <DialogError></DialogError>
     </div>
   )
 }
