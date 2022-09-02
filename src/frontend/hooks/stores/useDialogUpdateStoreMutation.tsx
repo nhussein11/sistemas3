@@ -2,6 +2,7 @@ import { Store } from '@prisma/client'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import { useRecoilState } from 'recoil'
+import { defaultErrorState, ErrorState } from '../../atoms/ErrorAtom'
 import {
   defaultStoreChecked,
   isStoreCheckedState
@@ -21,6 +22,7 @@ const useDialogUpdateStoreMutation = (queryId: string) => {
   const [selectedStore, setSelectedStore] = useRecoilState(selectedStoreState)
   const [showErrorDialog, setShowErrorDialog] =
     useRecoilState(showErrorDialogState)
+  const [, setErrorState] = useRecoilState(ErrorState)
   const storeName = useField({ initialValue: '', type: 'text' })
   const storeAddress = useField({ initialValue: '', type: 'text' })
   const queryClient = useQueryClient()
@@ -35,6 +37,11 @@ const useDialogUpdateStoreMutation = (queryId: string) => {
       storeName.onChange('')
       storeAddress.onChange('')
       setIsStoreChecked(defaultStoreChecked)
+      setErrorState(defaultErrorState)
+    },
+    onError: (error: any) => {
+      setErrorState({ status: error.response.status, message: error.message })
+      setShowErrorDialog(true)
     }
   })
   useEffect(() => {

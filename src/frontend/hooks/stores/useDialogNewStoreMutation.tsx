@@ -1,8 +1,13 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useRecoilState } from 'recoil'
+import { defaultErrorState, ErrorState } from '../../atoms/ErrorAtom'
+import { showErrorDialogState } from '../../atoms/showErrorDialog'
 import { createNewStore } from '../../services/stores/createNewStore'
 import useField from '../useField'
 
 const useDialogNewStoreMutation = (queryId: string) => {
+  const [, setShowErrorDialog] = useRecoilState(showErrorDialogState)
+  const [, setErrorState] = useRecoilState(ErrorState)
   const storeName = useField({ initialValue: '', type: 'text' })
   const storeAddress = useField({ initialValue: '', type: 'text' })
   const queryClient = useQueryClient()
@@ -12,6 +17,11 @@ const useDialogNewStoreMutation = (queryId: string) => {
       queryClient.invalidateQueries([queryId])
       storeName.onChange('')
       storeAddress.onChange('')
+      setErrorState(defaultErrorState)
+    },
+    onError: (error: any) => {
+      setErrorState({ status: error.response.status, message: error.message })
+      setShowErrorDialog(true)
     }
   })
 

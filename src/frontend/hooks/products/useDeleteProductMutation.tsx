@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRecoilState } from 'recoil'
+import { defaultErrorState, ErrorState } from '../../atoms/ErrorAtom'
 import {
   defaultProductChecked,
   isProductCheckedState
@@ -17,7 +18,7 @@ const useDeleteProductMutation = (queryId: string) => {
   const [selectedProduct, setSelectedProduct] =
     useRecoilState(selectedProductState)
   const [, setShowErrorDialog] = useRecoilState(showErrorDialogState)
-
+  const [, setErrorState] = useRecoilState(ErrorState)
   const queryClient = useQueryClient()
   const { mutate } = useMutation(
     (productId: string) => deleteProduct(productId),
@@ -27,8 +28,10 @@ const useDeleteProductMutation = (queryId: string) => {
         queryClient.invalidateQueries([queryId])
         setSelectedProduct(defaultProduct)
         setIsProductChecked(defaultProductChecked)
+        setErrorState(defaultErrorState)
       },
-      onError: () => {
+      onError: (error:any) => {
+        setErrorState({ status: error.response.status, message: error.message })
         setShowErrorDialog(true)
       }
     }

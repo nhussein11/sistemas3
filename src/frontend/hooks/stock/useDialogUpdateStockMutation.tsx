@@ -3,12 +3,14 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
 import { StockUpdateData } from '../../@types/frontend.types'
+import { defaultErrorState, ErrorState } from '../../atoms/ErrorAtom'
 import {
   defaultStockChecked,
   isStockCheckedState
 } from '../../atoms/isStockSelectedAtom'
 import { defaultStock, selectedStockState } from '../../atoms/selectedStockAtom'
 import { defaultStore } from '../../atoms/selectedStoreAtom'
+import { showErrorDialogState } from '../../atoms/showErrorDialog'
 import { showUpdateDialogState } from '../../atoms/showUpdateDialogAtom'
 import { updateStock } from '../../services/stock/updateStock'
 import { findStore } from '../../services/stores/findStore'
@@ -16,6 +18,8 @@ import useStoresQuery from '../stores/useStoresQuery'
 import useField from '../useField'
 
 const useDialogUpdateStockMutation = (queryId: string) => {
+  const [, setShowErrorDialog] = useRecoilState(showErrorDialogState)
+  const [, setErrorState] = useRecoilState(ErrorState)
   const [showUpdateDialog, setShowUpdateDialog] = useRecoilState(
     showUpdateDialogState
   )
@@ -46,6 +50,11 @@ const useDialogUpdateStockMutation = (queryId: string) => {
       quantity.onChange(0)
       minQuantity.onChange(0)
       setIsStockChecked(defaultStockChecked)
+      setErrorState(defaultErrorState)
+    },
+    onError: (error: any) => {
+      setErrorState({ status: error.response.status, message: error.message })
+      setShowErrorDialog(true)
     }
   })
   useEffect(() => {
