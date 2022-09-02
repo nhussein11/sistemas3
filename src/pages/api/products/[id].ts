@@ -29,7 +29,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       const { name, price, description, category } = body
 
       try {
-        const updatedProduct = await updateProductById(id, name, price, description, category)
+        const updatedProduct = await updateProductById(
+          id,
+          name,
+          price,
+          description,
+          category
+        )
         return res.status(200).send({ updatedProduct })
       } catch (error) {
         return res.status(500).send({ error })
@@ -39,8 +45,25 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       try {
         const deletedProduct = await deleteProductById(id)
         return res.status(200).send({ deletedProduct })
-      } catch (error) {
-        return res.status(500).send({ error })
+      } catch (error: any) {
+        switch (error.code) {
+          case 'P2003':
+            return res.status(401).send({
+              error,
+              messageError:
+                "You cannot delete this product because it's belong to an existing stock"
+            })
+          case 'P2025':
+            return res.status(402).send({
+              error,
+              messageError: 'Id not provided'
+            })
+          default:
+            return res.status(450).send({
+              error,
+              messageError: 'Something failed'
+            })
+        }
       }
 
     default:
