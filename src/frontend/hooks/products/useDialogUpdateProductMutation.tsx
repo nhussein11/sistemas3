@@ -13,6 +13,8 @@ import {
 import { showUpdateDialogState } from '../../atoms/showUpdateDialogAtom'
 import useField from '../useField'
 import { updateProduct } from '../../services/products/updateProduct'
+import { defaultErrorState, ErrorState } from '../../atoms/ErrorAtom'
+import { showErrorDialogState } from '../../atoms/showErrorDialog'
 
 const useDialogUpdateProductMutation = (queryId: string) => {
   const [selectedProduct, setSelectedProduct] =
@@ -21,6 +23,8 @@ const useDialogUpdateProductMutation = (queryId: string) => {
     showUpdateDialogState
   )
   // eslint-disable-next-line no-unused-vars
+  const [, setErrorState] = useRecoilState(ErrorState)
+  const [, setShowErrorDialog] = useRecoilState(showErrorDialogState)
   const [, setIsProductChecked] = useRecoilState(isProductCheckedState)
   const productName = useField({ initialValue: '', type: 'text' })
   const productDescription = useField({ initialValue: '', type: 'text' })
@@ -40,6 +44,11 @@ const useDialogUpdateProductMutation = (queryId: string) => {
       setProductCategory(CategoryEnum.IMPRESORA)
       productPrice.onChange(0)
       setIsProductChecked(defaultProductChecked)
+      setErrorState(defaultErrorState)
+    },
+    onError: (error: any) => {
+      setErrorState({ status: error.response.status, message: error.message })
+      setShowErrorDialog(true)
     }
   })
   const handleUpdateProduct = () => {
