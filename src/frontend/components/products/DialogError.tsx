@@ -1,13 +1,13 @@
 import React from 'react'
 import { Dialog } from 'primereact/dialog'
-import useDialogUpdateProductMutation from '../../hooks/products/useDialogUpdateProductMutation'
 import { useRecoilState } from 'recoil'
 import { defaultErrorState, ErrorState } from '../../atoms/ErrorAtom'
+import { showErrorDialogState } from '../../atoms/showErrorDialog'
 
 const DialogError = () => {
   const [errorState, setErrorState] = useRecoilState(ErrorState)
-  const { showErrorDialog, setShowErrorDialog } =
-    useDialogUpdateProductMutation('products')
+  const [showErrorDialog, setShowErrorDialog] =
+    useRecoilState(showErrorDialogState)
 
   return (
     <Dialog

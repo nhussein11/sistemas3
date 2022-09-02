@@ -10,7 +10,6 @@ import {
   defaultProduct,
   selectedProductState
 } from '../../atoms/selectedProductAtom'
-import { showErrorDialogState } from '../../atoms/showErrorDialog'
 import { showUpdateDialogState } from '../../atoms/showUpdateDialogAtom'
 import useField from '../useField'
 import { updateProduct } from '../../services/products/updateProduct'
@@ -21,8 +20,6 @@ const useDialogUpdateProductMutation = (queryId: string) => {
   const [showUpdateDialog, setShowUpdateDialog] = useRecoilState(
     showUpdateDialogState
   )
-  const [showErrorDialog, setShowErrorDialog] =
-    useRecoilState(showErrorDialogState)
   // eslint-disable-next-line no-unused-vars
   const [, setIsProductChecked] = useRecoilState(isProductCheckedState)
   const productName = useField({ initialValue: '', type: 'text' })
@@ -67,8 +64,6 @@ const useDialogUpdateProductMutation = (queryId: string) => {
     productDescription,
     productCategory,
     showUpdateDialog,
-    showErrorDialog,
-    setShowErrorDialog,
     setShowUpdateDialog
   }
 }

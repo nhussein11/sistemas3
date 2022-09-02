@@ -1,6 +1,6 @@
 import { atom } from 'recoil'
 export const defaultErrorState = {
-  message: '',
+  message: 'Id not provided',
   status: 200
 }
 export const ErrorState = atom({
