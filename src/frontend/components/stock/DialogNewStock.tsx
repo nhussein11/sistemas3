@@ -30,7 +30,7 @@ const DialogNewStock = ({ displayBasic, closeDialog }:DialogNewStockProps) => {
       <div className="form-container">
         <div className="field-form-container">
           <div>
-            <label htmlFor="id">Cantidad</label>
+            <label htmlFor="id">Cantidad en Stock</label>
             <InputText {...quantity} name="quantity" placeholder="quantity" />
           </div>
           <div>
@@ -42,27 +42,29 @@ const DialogNewStock = ({ displayBasic, closeDialog }:DialogNewStockProps) => {
             />
           </div>
         </div>
-        <div className="field-drop">
-          <label htmlFor="id">Depositos</label>
-          <Dropdown
-            value={selectedStore.name}
-            options={storesQuery?.data?.stores.map(
-              (store: Store) => store.name
-            )}
-            onChange={(e) => changeStore(e.target.value)}
-            placeholder="select a Store"
-          />
-        </div>
-        <div className="field-drop">
-          <label htmlFor="id">Productos</label>
-          <Dropdown
-            value={selectedProduct.name}
-            options={productsQuery?.data?.products.map(
-              (store: Store) => store.name
-            )}
-            onChange={(e) => changeProduct(e.target.value)}
-            placeholder={'select product'}
-          />
+        <div style={{ display: 'flex', alignItems: 'center', gridTemplateColumns: 'auto auto', columnGap: '2rem', alignSelf: 'center', marginTop: '1rem' }}>
+          <div className="field-drop">
+            <label htmlFor="id">Depositos Disponibles</label>
+            <Dropdown
+              value={selectedStore.name}
+              options={storesQuery?.data?.stores.map(
+                (store: Store) => store.name
+              )}
+              onChange={(e) => changeStore(e.target.value)}
+              placeholder="seleccionar Depósito"
+            />
+          </div>
+          <div className="field-drop">
+            <label htmlFor="id">Productos Disponibles</label>
+            <Dropdown
+              value={selectedProduct.name}
+              options={productsQuery?.data?.products.map(
+                (store: Store) => store.name
+              )}
+              onChange={(e) => changeProduct(e.target.value)}
+              placeholder={'Seleccionar Producto'}
+            />
+          </div>
         </div>
       </div>
     </Dialog>
