@@ -27,8 +27,7 @@ const DialogUpdateStock = () => {
      <div className="form-container">
         <div className="field-form-container">
           <div>
-          <div>
-            <label htmlFor="id">Cantidad</label>
+            <label htmlFor="id">Cantidad en Stock</label>
             <InputText {...quantity} name="quantity" placeholder="quantity" />
           </div>
           <div>
@@ -39,20 +38,19 @@ const DialogUpdateStock = () => {
               placeholder="minQuantity"
             />
           </div>
-          <div className="field-drop">
-          <label htmlFor="id">Depositos</label>
-          <Dropdown
-            value={selectedStore?.name}
-            options={storesQuery?.data?.stores.map(
-              (store: Store) => store.name
-            )}
-            onChange={(e) => changeStore(e.target.value)}
-            placeholder="select a Store"
-          />
-        </div>
-          </div>
         </div>
       </div>
+      <div className="field-drop">
+            <label htmlFor="id">Depositos Disponibles</label>
+            <Dropdown
+              value={selectedStore?.name}
+              options={storesQuery?.data?.stores.map(
+                (store: Store) => store.name
+              )}
+              onChange={(e) => changeStore(e.target.value)}
+              placeholder="seleccionar Depósito"
+            />
+          </div>
     <div className="footer-button-updateDialog">
       <Button
         label="Confirmar"
