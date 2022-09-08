@@ -1,24 +1,39 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import useField from '../useField'
-import { CategoryEnum } from '@prisma/client'
+import { MovementType } from '@prisma/client'
 import { useState } from 'react'
-import { createNewProduct } from '../../services/products/createNewProduct'
 import { useRecoilState } from 'recoil'
 import { showErrorDialogState } from '../../atoms/showErrorDialog'
 import { defaultErrorState, ErrorState } from '../../atoms/ErrorAtom'
+import { createNewMovement } from '../../services/movements/createNewMovement'
+import useMovementTypesQuery from './useMovementTypesQuery'
 
-const useDialogNewProductMutation = (queryId: string) => {
+const useDialogNewMovementMutation = (queryId: string) => {
   const [, setShowErrorDialog] = useRecoilState(showErrorDialogState)
   const [, setErrorState] = useRecoilState(ErrorState)
   const queryClient = useQueryClient()
-  const { mutate } = useMutation(createNewProduct, {
+  const movementTypesQuery = useMovementTypesQuery('movement-types')
+  const [selectedMovementType, setSelectedMovementType] = useState({
+    id: '',
+    movementType: '',
+    movementName: '',
+    cause: ''
+  })
+  const changeMovementType = (name: string) => {
+    const movementType = movementTypesQuery.data?.movementsTypes.find(
+      (movementType: MovementType) => movementType.movementName === name
+    )
+    console.log(movementType)
+    setSelectedMovementType(
+      movementType
+    )
+  }
+  const { mutate } = useMutation(createNewMovement, {
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries([queryId])
-      productName.onChange('')
-      productDescription.onChange('')
-      setCategory(CategoryEnum.IMPRESORA)
-      productPrice.onChange(0)
+      //! Deberia de registrar los detalles aca
+      movementObservation.onChange('')
       setErrorState(defaultErrorState)
     },
     onError: (error: any) => {
@@ -26,28 +41,20 @@ const useDialogNewProductMutation = (queryId: string) => {
       setShowErrorDialog(true)
     }
   })
-  const productName = useField({ initialValue: '', type: 'text' })
-  const productPrice = useField({ initialValue: 0, type: 'number' })
-  const productDescription = useField({ initialValue: '', type: 'text' })
-  const [category, setCategory] = useState(CategoryEnum.IMPRESORA)
-  const CATEGORIES = [CategoryEnum.IMPRESORA, CategoryEnum.FILAMENTO]
+  const movementObservation = useField({ initialValue: '', type: 'text' })
   const handleCreateNewProduct = () => {
     mutate({
-      name: productName.value as string,
-      price: productPrice.value as number,
-      description: productDescription.value as string,
-      category
+      datetime: new Date(),
+      observation: movementObservation.value as string,
+      MovementTypeId: selectedMovementType.id
     })
   }
   return {
     handleCreateNewProduct,
-    productName,
-    productPrice,
-    productDescription,
-    category,
-    setCategory,
-    CATEGORIES
+    movementObservation,
+    changeMovementType,
+    selectedMovementType
   }
 }
 
-export default useDialogNewProductMutation
+export default useDialogNewMovementMutation
