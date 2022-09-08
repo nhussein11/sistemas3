@@ -7,7 +7,6 @@ export const resolveMovementType = (
     unknown
   >
 ): string | undefined => {
-  console.log(movementTypesQuery?.data?.movementsTypes)
   const movementType = movementTypesQuery.data?.movementsTypes?.find(
     (movementType: MovementType) => movementType.id === movementTypeId
   )
