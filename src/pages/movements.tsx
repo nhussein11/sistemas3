@@ -5,7 +5,7 @@ import { globalFilterValueState } from '../frontend/atoms/globalFilterValueAtom'
 import Summary from '../frontend/components/products/Summary'
 import MovementsTable from '../frontend/components/movements/MovementsTable'
 import useProductsQuery from '../frontend/hooks/products/useProductsQuery'
-import { filterProducts } from '../frontend/services/products/filterProducts'
+import { filterMovements } from '../frontend/services/movements/filterMovements'
 
 const Home: NextPage = () => {
   const query = useProductsQuery('products')
@@ -24,7 +24,7 @@ const Home: NextPage = () => {
             available={query?.data?.products?.length}
           />
           <MovementsTable
-            products={filterProducts(query?.data?.products, globalFilterValue)}
+            movements={filterMovements(query?.data?.movements, globalFilterValue)}
           />
         </div>
       </div>

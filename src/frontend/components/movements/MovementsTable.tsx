@@ -4,17 +4,17 @@ import { DataTable } from 'primereact/datatable'
 import DialogNewMovement from './DialogNewMovement'
 import DialogError from './DialogError'
 import NumberFormat from 'react-number-format'
-import { TableProps } from '../../@types/frontend.types'
+import { MovementsTableProps } from '../../@types/frontend.types'
 import TableHeader from './TableHeader'
 import SelectBodyTemplate from './SelectBodyTemplate'
 
-const MovementsTable = ({ products }: TableProps) => {
+const MovementsTable = ({ movements }: MovementsTableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
   return (
     <div className="datatable-filter">
       <div className="card">
         <DataTable
-          value={products}
+          value={movements}
           paginator
           className="p-datatable-customers"
           showGridlines
@@ -22,7 +22,7 @@ const MovementsTable = ({ products }: TableProps) => {
           dataKey="id"
           responsiveLayout="scroll"
           header={<TableHeader setDisplayBasic={setDisplayBasic} />}
-          emptyMessage="No se encontraron Productos"
+          emptyMessage="No se encontraron Movimientos"
         >
           <Column
             field="select"
@@ -47,9 +47,9 @@ const MovementsTable = ({ products }: TableProps) => {
             alignHeader={'center'}
           />
           <Column
-            field="Descripcion"
-            header="Descripcion"
-            body={(rowData) => rowData.description}
+            field="Cantidad"
+            header="Cantidad Productos"
+            body={(rowData) => rowData.quantity}
             alignHeader={'center'}
           />
            <Column
