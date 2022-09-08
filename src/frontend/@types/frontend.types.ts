@@ -22,6 +22,10 @@ export type DialogNewProductProps = {
   displayBasic: boolean
   closeDialog: () => void
 }
+export type DialogNewMovementProps = {
+  displayBasic: boolean
+  closeDialog: () => void
+}
 
 export type DialogFooterProps = {
   closeDialog: () => void
