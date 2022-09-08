@@ -36,20 +36,9 @@ const NavBar = () => {
     {
       label: 'Movimientos',
       icon: 'pi pi-fw pi-pencil',
-      items: [
-        {
-          label: 'Nuevo',
-          icon: 'pi pi-fw pi-plus'
-        },
-        {
-          label: 'Borrar',
-          icon: 'pi pi-fw pi-plus'
-        },
-        {
-          label: 'Buscar',
-          icon: 'pi pi-fw pi-plus'
-        }
-      ]
+      command: () => {
+        router.push('/movements')
+      }
     }
   ]
 
