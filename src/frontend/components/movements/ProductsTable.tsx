@@ -18,8 +18,7 @@ const ProductsTable = () => {
         dataKey="id" paginator rows={5}
         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
-        responsiveLayout="scroll"
-        header={'Productos Disponibles/Agregados'}>
+        responsiveLayout="scroll">
             <Column field="name" header="Nombre" style={{ minWidth: '2rem' }}></Column>
             <Column field="quantity" header="Cantidad" ></Column>
             <Column field="price" header="Precio Unidad" style={{ minWidth: '1rem' }}></Column>

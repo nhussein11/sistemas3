@@ -56,6 +56,7 @@ const DialogNewMovement = ({
       </div>
       <div style={{ display: 'flex', margin: '0.2rem' }}>
         <ProductsTable></ProductsTable>
+        <i className='pi pi-arrow-right' style={{ fontSize: '2rem', alignSelf: 'center' }}></i>
         <ProductsTable></ProductsTable>
       </div>
     </Dialog>
