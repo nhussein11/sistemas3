@@ -6,6 +6,7 @@ import DialogError from './DialogError'
 import { MovementsTableProps } from '../../@types/frontend.types'
 import TableHeader from './TableHeader'
 import SelectBodyTemplate from './SelectBodyTemplate'
+import { parseDate } from '../../services/movements/parseDate'
 
 const MovementsTable = ({ movements }: MovementsTableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
@@ -42,7 +43,7 @@ const MovementsTable = ({ movements }: MovementsTableProps) => {
           <Column
             field="Fecha"
             header="Fecha"
-            body={(rowData) => rowData.date}// creo que este atributo no tiene movimiento
+            body={(rowData) => parseDate(rowData?.datetime)}
             alignHeader={'center'}
           />
           <Column
@@ -51,7 +52,7 @@ const MovementsTable = ({ movements }: MovementsTableProps) => {
             body={(rowData) => rowData.observation}
             alignHeader={'center'}
           />
-           <Column
+          <Column
             field="TipoMovimiento"
             header="Tipo Movimiento"
             body={(rowData) => rowData.movementTypeId}
