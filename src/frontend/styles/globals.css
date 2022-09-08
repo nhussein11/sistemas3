@@ -149,3 +149,6 @@ body{
 }
 /*CARD--------------------*/
 
+.dialog-movements{
+  width: 80% !important
+}

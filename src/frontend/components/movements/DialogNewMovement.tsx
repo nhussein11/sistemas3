@@ -24,10 +24,19 @@ const DialogNewMovement = ({
       style={{ width: '50vw' }}
       footer={() => DialogFooter({ closeDialog, handleCreateNewProduct })}
       onHide={() => closeDialog()}
+      className={'p-dialog dialog-movements'}
     >
-      <div className="form-container">
+      <div className="form-container" style={{ display: 'flex', flexDirection: 'row' }}>
           <div className="field-drop">
             <label htmlFor="id">Seleccionar Tipo de Movimiento</label>
+            <Dropdown
+              options={CATEGORIES}
+              onChange={(e) => setCategory(e.value)}
+              placeholder={'Seleccionar'}
+            />
+          </div>
+          <div className="field-drop">
+            <label htmlFor="id">Seleccionar Depósito</label>
             <Dropdown
               options={CATEGORIES}
               onChange={(e) => setCategory(e.value)}
@@ -45,7 +54,8 @@ const DialogNewMovement = ({
           </div>
         </div>
       </div>
-      <div>
+      <div style={{ display: 'flex', margin: '0.2rem' }}>
+        <ProductsTable></ProductsTable>
         <ProductsTable></ProductsTable>
       </div>
     </Dialog>

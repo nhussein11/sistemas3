@@ -2,7 +2,6 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useRecoilState } from 'recoil'
 import { globalFilterValueState } from '../frontend/atoms/globalFilterValueAtom'
-import Summary from '../frontend/components/products/Summary'
 import MovementsTable from '../frontend/components/movements/MovementsTable'
 import useProductsQuery from '../frontend/hooks/products/useProductsQuery'
 import { filterMovements } from '../frontend/services/movements/filterMovements'
@@ -18,11 +17,6 @@ const Home: NextPage = () => {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <div className="main-container">
-          <Summary
-            inStock={query?.data?.products?.length}
-            noStock={'0'}
-            available={query?.data?.products?.length}
-          />
           <MovementsTable
             movements={filterMovements(query?.data?.movements, globalFilterValue)}
           />
