@@ -5,7 +5,7 @@ import { Dropdown } from 'primereact/dropdown'
 import { DialogNewMovementProps } from '../../@types/frontend.types'
 import { InputText } from 'primereact/inputtext'
 import useDialogNewMovementMutation from '../../hooks/movements/useDialogNewMovementMutation'
-import ProductsTable from './ProductsTable'
+import MovementsProductsTable from './MovementsProductsTable'
 
 const DialogNewMovement = ({
   displayBasic,
@@ -55,9 +55,9 @@ const DialogNewMovement = ({
         </div>
       </div>
       <div style={{ display: 'flex', margin: '0.2rem' }}>
-        <ProductsTable></ProductsTable>
+        <MovementsProductsTable/>
         <i className='pi pi-arrow-right' style={{ fontSize: '2rem', alignSelf: 'center' }}></i>
-        <ProductsTable></ProductsTable>
+        <MovementsProductsTable/>
       </div>
     </Dialog>
   )

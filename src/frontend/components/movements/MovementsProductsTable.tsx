@@ -3,7 +3,7 @@ import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import ActionAddBodyTemplate from './ActionAddBodyTemplate'
 
-const ProductsTable = () => {
+const MovementsProductsTable = () => {
   const products = [
     {
       name: 'nombre',
@@ -29,4 +29,4 @@ const ProductsTable = () => {
   )
 }
 
-export default ProductsTable
+export default MovementsProductsTable
