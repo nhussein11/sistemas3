@@ -8,7 +8,7 @@ import { TableProps } from '../../@types/frontend.types'
 import TableHeader from './TableHeader'
 import SelectBodyTemplate from './SelectBodyTemplate'
 
-const ProductsTable = ({ products }: TableProps) => {
+const MovementsTable = ({ products }: TableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
   return (
     <div className="datatable-filter">
@@ -84,4 +84,4 @@ const ProductsTable = ({ products }: TableProps) => {
     </div>
   )
 }
-export default ProductsTable
+export default MovementsTable

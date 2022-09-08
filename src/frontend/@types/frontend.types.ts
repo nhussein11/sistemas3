@@ -1,8 +1,11 @@
-import { Product, Stock, Store } from '@prisma/client'
+import { Product, Stock, Store, Movement } from '@prisma/client'
 import { Dispatch } from 'react'
 
 export type TableProps = {
   products: Product[]
+}
+export type MovementsTableProps = {
+  movements: Movement[]
 }
 export type StoresTableProps = {
   stores: Store[]

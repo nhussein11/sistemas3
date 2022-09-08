@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { useRecoilState } from 'recoil'
 import { globalFilterValueState } from '../frontend/atoms/globalFilterValueAtom'
 import Summary from '../frontend/components/products/Summary'
-import ProductsTable from '../frontend/components/products/ProductsTable'
+import MovementsTable from '../frontend/components/movements/MovementsTable'
 import useProductsQuery from '../frontend/hooks/products/useProductsQuery'
 import { filterProducts } from '../frontend/services/products/filterProducts'
 
@@ -23,7 +23,7 @@ const Home: NextPage = () => {
             noStock={'0'}
             available={query?.data?.products?.length}
           />
-          <ProductsTable
+          <MovementsTable
             products={filterProducts(query?.data?.products, globalFilterValue)}
           />
         </div>
