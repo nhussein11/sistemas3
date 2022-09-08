@@ -9,6 +9,7 @@ import SelectBodyTemplate from './SelectBodyTemplate'
 import { parseDate } from '../../services/movements/parseDate'
 import { resolveMovementName } from '../../services/movements/resolveMovementName'
 import useMovementTypesQuery from '../../hooks/movements/useMovementTypesQuery'
+import { resolveMovementType } from '../../services/movements/resolveMovementType'
 
 const MovementsTable = ({ movements }: MovementsTableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
@@ -56,10 +57,18 @@ const MovementsTable = ({ movements }: MovementsTableProps) => {
             alignHeader={'center'}
           />
           <Column
+            field="NombreMovimiento"
+            header="Nombre Movimiento"
+            body={(rowData) =>
+              resolveMovementName(rowData.movementTypeId, movementTypesQuery)
+            }
+            alignHeader={'center'}
+          />
+          <Column
             field="TipoMovimiento"
             header="Tipo Movimiento"
             body={(rowData) =>
-              resolveMovementName(rowData.movementTypeId, movementTypesQuery)
+              resolveMovementType(rowData.movementTypeId, movementTypesQuery)
             }
             alignHeader={'center'}
           />
