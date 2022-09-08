@@ -7,9 +7,12 @@ import { MovementsTableProps } from '../../@types/frontend.types'
 import TableHeader from './TableHeader'
 import SelectBodyTemplate from './SelectBodyTemplate'
 import { parseDate } from '../../services/movements/parseDate'
+import { resolveMovementName } from '../../services/movements/resolveMovementName'
+import useMovementTypesQuery from '../../hooks/movements/useMovementTypesQuery'
 
 const MovementsTable = ({ movements }: MovementsTableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
+  const movementTypesQuery = useMovementTypesQuery('movement-types')
   return (
     <div className="datatable-filter">
       <div className="card">
@@ -55,7 +58,9 @@ const MovementsTable = ({ movements }: MovementsTableProps) => {
           <Column
             field="TipoMovimiento"
             header="Tipo Movimiento"
-            body={(rowData) => rowData.movementTypeId}
+            body={(rowData) =>
+              resolveMovementName(rowData.movementTypeId, movementTypesQuery)
+            }
             alignHeader={'center'}
           />
         </DataTable>
