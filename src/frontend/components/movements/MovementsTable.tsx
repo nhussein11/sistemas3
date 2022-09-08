@@ -52,44 +52,10 @@ const MovementsTable = ({ movements }: MovementsTableProps) => {
             body={(rowData) => rowData.observation}
             alignHeader={'center'}
           />
-          <Column
-            field="Cantidad"
-            header="Cantidad Productos"
-            body={(rowData) => rowData.quantity}
-            alignHeader={'center'}
-          />
            <Column
             field="TipoMovimiento"
             header="Tipo Movimiento"
             body={(rowData) => rowData.movementTypeId}
-            alignHeader={'center'}
-          />
-           <Column
-            field="Deposito"
-            header="Deposito"
-            body={(rowData) => rowData.storeId}
-            alignHeader={'center'}
-          />
-          <Column
-            field="Monto"
-            header="Monto"
-            body={(rowData) => {
-              return (
-                <NumberFormat
-                  value={12000}// creo que este campo sería calculado
-                  displayType={'text'}
-                  thousandSeparator={'.'}
-                  decimalSeparator={','}
-                  prefix={'$'}
-                ></NumberFormat>
-              )
-            }}
-            alignHeader={'center'}
-          />
-           <Column
-            field="Usuario"
-            header="Usuario"
-            body={(rowData) => 'nom usuario'}// este campo creo que falta como atributo
             alignHeader={'center'}
           />
         </DataTable>
