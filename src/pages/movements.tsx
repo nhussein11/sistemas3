@@ -3,11 +3,11 @@ import Head from 'next/head'
 import { useRecoilState } from 'recoil'
 import { globalFilterValueState } from '../frontend/atoms/globalFilterValueAtom'
 import MovementsTable from '../frontend/components/movements/MovementsTable'
-import useProductsQuery from '../frontend/hooks/products/useProductsQuery'
+import useMovementsQuery from '../frontend/hooks/movements/useMovementsQuery'
 import { filterMovements } from '../frontend/services/movements/filterMovements'
 
 const Home: NextPage = () => {
-  const query = useProductsQuery('products')
+  const query = useMovementsQuery('movements')
   const [globalFilterValue] = useRecoilState(globalFilterValueState)
   return (
       <div>
