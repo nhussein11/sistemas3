@@ -41,9 +41,15 @@ const MovementsTable = ({ movements }: MovementsTableProps) => {
             alignHeader={'center'}
           />
           <Column
-            field="Nombre"
-            header="Nombre"
-            body={(rowData) => rowData.name}
+            field="Fecha"
+            header="Fecha"
+            body={(rowData) => rowData.date}// creo que este atributo no tiene movimiento
+            alignHeader={'center'}
+          />
+          <Column
+            field="Observación"
+            header="Observación"
+            body={(rowData) => rowData.observation}
             alignHeader={'center'}
           />
           <Column
@@ -53,18 +59,24 @@ const MovementsTable = ({ movements }: MovementsTableProps) => {
             alignHeader={'center'}
           />
            <Column
-            field="Category"
-            header="Categoría"
-            body={(rowData) => rowData.category}
+            field="TipoMovimiento"
+            header="Tipo Movimiento"
+            body={(rowData) => rowData.movementTypeId}
+            alignHeader={'center'}
+          />
+           <Column
+            field="Deposito"
+            header="Deposito"
+            body={(rowData) => rowData.storeId}
             alignHeader={'center'}
           />
           <Column
-            field="Precio"
-            header="Precio"
+            field="Monto"
+            header="Monto"
             body={(rowData) => {
               return (
                 <NumberFormat
-                  value={rowData.price}
+                  value={12000}// creo que este campo sería calculado
                   displayType={'text'}
                   thousandSeparator={'.'}
                   decimalSeparator={','}
@@ -72,6 +84,12 @@ const MovementsTable = ({ movements }: MovementsTableProps) => {
                 ></NumberFormat>
               )
             }}
+            alignHeader={'center'}
+          />
+           <Column
+            field="Usuario"
+            header="Usuario"
+            body={(rowData) => 'nom usuario'}// este campo creo que falta como atributo
             alignHeader={'center'}
           />
         </DataTable>
