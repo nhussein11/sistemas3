@@ -26,7 +26,6 @@ const createMovement = async (
   details: any[]
 ) => {
   console.log(movementTypeId)
-  
   try {
     const movementType: MovementType | null = await getMovementTypeById(
       movementTypeId
