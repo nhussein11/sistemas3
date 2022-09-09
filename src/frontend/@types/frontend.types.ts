@@ -82,3 +82,25 @@ export type StockDialogFooterProps = {
 export type StockTableHeaderProps = {
   setDisplayBasic: Dispatch<boolean>
 }
+export type DialogFooterMovementProps = {
+  closeDialog: () => void
+  handleCreateNewMovement: () => void
+}
+export type MovementDetailData = {
+  productId: string
+  quantity: number
+  name: string
+  price: number
+}
+export type MovementsTableHeaderProps = {
+  setDisplayBasic: Dispatch<boolean>
+  setDisplayMovementDetailsTable: Dispatch<
+    boolean | ((prev: boolean) => boolean)
+  >
+}
+export type DialogMovementDetailsProps = {
+  setDisplayMovementDetailsTable: Dispatch<
+    boolean | ((prev: boolean) => boolean)
+  >
+  displayMovementDetailsTable: boolean
+}

@@ -3,13 +3,21 @@ import { Column } from 'primereact/column'
 import { DataTable } from 'primereact/datatable'
 import DialogNewMovement from './DialogNewMovement'
 import DialogError from './DialogError'
-import NumberFormat from 'react-number-format'
 import { MovementsTableProps } from '../../@types/frontend.types'
 import TableHeader from './TableHeader'
 import SelectBodyTemplate from './SelectBodyTemplate'
+import { parseDate } from '../../services/movements/parseDate'
+import { resolveMovementName } from '../../services/movements/resolveMovementName'
+import useMovementTypesQuery from '../../hooks/movements/useMovementTypesQuery'
+import { resolveMovementType } from '../../services/movements/resolveMovementType'
+import MovementDetailsTable from './MovementDetailsTable'
 
 const MovementsTable = ({ movements }: MovementsTableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
+  const [displayMovementDetailsTable, setDisplayMovementDetailsTable] =
+    useState(false)
+
+  const movementTypesQuery = useMovementTypesQuery('movement-types')
   return (
     <div className="datatable-filter">
       <div className="card">
@@ -21,7 +29,12 @@ const MovementsTable = ({ movements }: MovementsTableProps) => {
           rows={10}
           dataKey="id"
           responsiveLayout="scroll"
-          header={<TableHeader setDisplayBasic={setDisplayBasic} />}
+          header={
+            <TableHeader
+              setDisplayMovementDetailsTable={setDisplayMovementDetailsTable}
+              setDisplayBasic={setDisplayBasic}
+            />
+          }
           emptyMessage="No se encontraron Movimientos"
         >
           <Column
@@ -43,7 +56,7 @@ const MovementsTable = ({ movements }: MovementsTableProps) => {
           <Column
             field="Fecha"
             header="Fecha"
-            body={(rowData) => rowData.date}// creo que este atributo no tiene movimiento
+            body={(rowData) => parseDate(rowData?.datetime)}
             alignHeader={'center'}
           />
           <Column
@@ -53,43 +66,19 @@ const MovementsTable = ({ movements }: MovementsTableProps) => {
             alignHeader={'center'}
           />
           <Column
-            field="Cantidad"
-            header="Cantidad Productos"
-            body={(rowData) => rowData.quantity}
-            alignHeader={'center'}
-          />
-           <Column
-            field="TipoMovimiento"
-            header="Tipo Movimiento"
-            body={(rowData) => rowData.movementTypeId}
-            alignHeader={'center'}
-          />
-           <Column
-            field="Deposito"
-            header="Deposito"
-            body={(rowData) => rowData.storeId}
+            field="NombreMovimiento"
+            header="Nombre Movimiento"
+            body={(rowData) =>
+              resolveMovementName(rowData.movementTypeId, movementTypesQuery)
+            }
             alignHeader={'center'}
           />
           <Column
-            field="Monto"
-            header="Monto"
-            body={(rowData) => {
-              return (
-                <NumberFormat
-                  value={12000}// creo que este campo sería calculado
-                  displayType={'text'}
-                  thousandSeparator={'.'}
-                  decimalSeparator={','}
-                  prefix={'$'}
-                ></NumberFormat>
-              )
-            }}
-            alignHeader={'center'}
-          />
-           <Column
-            field="Usuario"
-            header="Usuario"
-            body={(rowData) => 'nom usuario'}// este campo creo que falta como atributo
+            field="TipoMovimiento"
+            header="Tipo Movimiento"
+            body={(rowData) =>
+              resolveMovementType(rowData.movementTypeId, movementTypesQuery)
+            }
             alignHeader={'center'}
           />
         </DataTable>
@@ -98,6 +87,11 @@ const MovementsTable = ({ movements }: MovementsTableProps) => {
         displayBasic={displayBasic}
         closeDialog={() => setDisplayBasic(false)}
       />
+      <MovementDetailsTable
+        setDisplayMovementDetailsTable={setDisplayMovementDetailsTable}
+        displayMovementDetailsTable={displayMovementDetailsTable}
+      />
+
       <DialogError></DialogError>
     </div>
   )

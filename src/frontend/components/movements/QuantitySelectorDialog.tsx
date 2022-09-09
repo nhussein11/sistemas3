@@ -1,14 +1,33 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { ConfirmDialog } from 'primereact/confirmdialog'
 import { InputText } from 'primereact/inputtext'
+import useQuantitySelectorDialog from '../../hooks/movements/useQuantitySelectorDialog'
 
 const QuantitySelectorDialog = () => {
-  const [visible, setVisible] = useState(false)
-  const bodyInput = () => {
-    return <InputText name="quantity" placeholder="Ingresar Cantidad" />
-  }
+  const {
+    showQuantitySelectorDialog,
+    setShowQuantitySelectorDialog,
+    showQuantitySelectorDialogDefaultState,
+    quantity,
+    addDetail
+  } = useQuantitySelectorDialog()
   return (
-    <ConfirmDialog visible={visible} onHide={() => setVisible(false)} message={bodyInput} header="Cantidad" accept={() => console.log('metemos el producto en tabla')} reject={() => console.log('Cancelamos')} />
+    <ConfirmDialog
+      visible={showQuantitySelectorDialog.show}
+      onHide={() =>
+        setShowQuantitySelectorDialog(showQuantitySelectorDialogDefaultState)
+      }
+      message={
+        <InputText
+          {...quantity}
+          name="quantity"
+          placeholder="Ingresar Cantidad"
+        />
+      }
+      header="Cantidad"
+      accept={() => addDetail()}
+      reject={() => console.log('Cancelamos')}
+    />
   )
 }
 

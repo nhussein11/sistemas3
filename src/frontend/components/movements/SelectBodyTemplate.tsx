@@ -1,33 +1,32 @@
 import React from 'react'
 import { Checkbox } from 'primereact/checkbox'
 import { useRecoilState } from 'recoil'
-import { SelectBodyTemplateProps } from '../../@types/frontend.types'
 import {
-  defaultProduct,
-  selectedProductState
-} from '../../atoms/selectedProductAtom'
-import { isProductCheckedState } from '../../atoms/isProductCheckedAtom'
+  defaultMovement,
+  selectedMovementState
+} from '../../atoms/selectedMovementAtom'
+import { isSMovementCheckedState } from '../../atoms/setSelectedMovementAtom'
+import { Movement } from '@prisma/client'
 
-const SelectBodyTemplate = ({ rowData }: SelectBodyTemplateProps) => {
-  const [, setSelectedProduct] =
-    useRecoilState(selectedProductState)
-  const [isProductChecked, setIsProductChecked] = useRecoilState(
-    isProductCheckedState
+const SelectBodyTemplate = ({ rowData }: { rowData: Movement }) => {
+  const [, setSelectedMovement] = useRecoilState(selectedMovementState)
+  const [isMovementChecked, setIsMovementChecked] = useRecoilState(
+    isSMovementCheckedState
   )
   const handleCheck = () => {
-    if (isProductChecked.id === rowData.id) {
-      setIsProductChecked({ id: '', checked: false })
-      setSelectedProduct(defaultProduct)
+    if (isMovementChecked.id === rowData.id) {
+      setIsMovementChecked({ id: '', checked: false })
+      setSelectedMovement(defaultMovement)
       return
     }
-    setIsProductChecked({ id: rowData.id, checked: true })
-    setSelectedProduct(rowData)
+    setIsMovementChecked({ id: rowData.id, checked: true })
+    setSelectedMovement(rowData)
   }
   return (
     <Checkbox
       onChange={() => handleCheck()}
       value={rowData.id}
-      checked={isProductChecked.id === rowData.id}
+      checked={isMovementChecked.id === rowData.id}
     ></Checkbox>
   )
 }
