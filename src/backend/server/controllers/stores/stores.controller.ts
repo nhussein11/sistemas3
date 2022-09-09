@@ -72,4 +72,12 @@ const deleteStoreById = async (id: string) => {
   }
 }
 
-export { getStores, createStore, getStoreById, updateStoreById, deleteStoreById }
+const getStoreByIndex = async (index: number) => {
+  try {
+    const stores = await getStores()
+    return stores[index]
+  } catch (error) {
+    throw error
+  }
+}
+export { getStores, createStore, getStoreById, updateStoreById, deleteStoreById, getStoreByIndex }

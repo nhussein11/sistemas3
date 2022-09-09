@@ -9,6 +9,7 @@ import {
   isStockEnough,
   updateStockById
 } from '../stocks/stock.controller'
+import { getStoreByIndex } from '../stores/stores.controller'
 
 const getMovements = async () => {
   try {
@@ -23,8 +24,7 @@ const createMovement = async (
   observation: string,
   movementTypeId: string,
   productId: string,
-  quantity: number,
-  storeId: string = ''
+  quantity: number
 ) => {
   try {
     const movementType: MovementType | null = await getMovementTypeById(
@@ -33,27 +33,26 @@ const createMovement = async (
     if (!movementType) {
       return
     }
-    // si es venta, checkeo que tenga stock para vender
+
     if (movementType.movementType === MovementTypeEnum.POSITIVE) {
+      const store = await getStoreByIndex(1)
+      const { id: storeId } = store
       const stockToSell: Stock | null = await isStockEnough(productId, quantity)
       if (!stockToSell) {
         return
       }
-      // Actualizo el stock
       await updateStockById(
         stockToSell.id,
         productId,
-        stockToSell.storeId,
+        storeId,
         (stockToSell.quantity -= quantity),
         stockToSell.minQuantity
       )
     }
+
     if (movementType.movementType === MovementTypeEnum.NEGATIVE) {
-      if (storeId === '') {
-        return
-      }
-      // Aca tengo la duda de: Tendria que actualizar fijarme si el stock existe o no?, en base a eso crear uno, lo dejo platneado:
-      // Actualizo el stock
+      const store = await getStoreByIndex(1)
+      const { id: storeId } = store
       const stockToUpdate: Stock | null = await getStockExisting(
         productId,
         storeId
@@ -64,15 +63,17 @@ const createMovement = async (
         await updateStockById(
           stockToUpdate.id,
           productId,
-          stockToUpdate.storeId,
+          storeId,
           (stockToUpdate.quantity += quantity),
           stockToUpdate.minQuantity
         )
       }
     }
+
     const movementCreated: Movement = await prisma.movement.create({
       data: { observation, movementTypeId }
     })
+
     await createMovementDetails(productId, movementCreated.id, quantity)
     return movementCreated
   } catch (error) {
