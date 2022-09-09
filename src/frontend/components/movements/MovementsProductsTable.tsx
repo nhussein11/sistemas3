@@ -3,6 +3,7 @@ import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import ActionAddBodyTemplate from './ActionAddBodyTemplate'
 import ActionDeleteBodyTemplate from './ActionDeleteBodyTemplate'
+import NumberFormat from 'react-number-format'
 
 const MovementsProductsTable = ({
   products,
@@ -52,7 +53,17 @@ const MovementsProductsTable = ({
           <Column
             field="priceTotal"
             header="Precio Total"
-            body={(rowData) => rowData.price * rowData.quantity}
+            body={(rowData) => {
+              return (
+                <NumberFormat
+                  value={rowData.price * rowData.quantity}
+                  displayType={'text'}
+                  thousandSeparator={'.'}
+                  decimalSeparator={','}
+                  prefix={'$'}
+                ></NumberFormat>
+              )
+            }}
             style={{ minWidth: '1rem' }}
           ></Column>
             )}
