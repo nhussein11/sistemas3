@@ -48,11 +48,6 @@ const TableHeader = ({
           className="p-button-raised p-button-danger"
           onClick={deleteMovement}
         />
-        <Button
-          label="Ver Detalles"
-          className="p-button-p-button-raised p-button-warning"
-          onClick={() => setDisplayMovementDetailsTable((prev:boolean) => !prev)}
-        />
       </div>
     </div>
   )
