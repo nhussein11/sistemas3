@@ -1,14 +1,18 @@
-import { MovementDetails } from '@prisma/client'
+import { Column } from 'primereact/column'
+import { DataTable } from 'primereact/datatable'
 import { Dialog } from 'primereact/dialog'
 import React from 'react'
 import { DialogMovementDetailsProps } from '../../@types/frontend.types'
 import useMovementDetailsTable from '../../hooks/movements/useMovementDetailsTable'
+import useProductsQuery from '../../hooks/products/useProductsQuery'
+import { findProductName } from '../../services/products/findProductName'
 
 const MovementDetailsTable = ({
   setDisplayMovementDetailsTable,
   displayMovementDetailsTable
 }: DialogMovementDetailsProps) => {
   const { filteredDetails } = useMovementDetailsTable()
+  const ProductsQuery = useProductsQuery('products')
   if (displayMovementDetailsTable) {
     return (
       <Dialog
@@ -17,7 +21,37 @@ const MovementDetailsTable = ({
         style={{ width: '50vw' }}
         onHide={() => setDisplayMovementDetailsTable(false)}
       >
-        {filteredDetails?.map((d: MovementDetails) => d.productId)}
+        <DataTable
+          value={filteredDetails}
+          paginator
+          className="p-datatable-customers"
+          showGridlines
+          rows={10}
+          dataKey="id"
+          responsiveLayout="scroll"
+          emptyMessage="No se encontraron Detalles"
+        >
+          <Column
+            field="Id"
+            header="Id"
+            body={(rowData) => rowData.id}
+            alignHeader={'center'}
+          />
+          <Column
+            field="Product"
+            header="Product"
+            body={(rowData) =>
+              findProductName(rowData.productId, ProductsQuery)
+            }
+            alignHeader={'center'}
+          />
+          <Column
+            field="Quantity"
+            header="Quantity"
+            body={(rowData) => rowData.quantity}
+            alignHeader={'center'}
+          />
+        </DataTable>
       </Dialog>
     )
   } else return <></>
