@@ -2,6 +2,7 @@ import React from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import ActionAddBodyTemplate from './ActionAddBodyTemplate'
+import ActionDeleteBodyTemplate from './ActionDeleteBodyTemplate'
 
 const MovementsProductsTable = ({
   products,
@@ -55,6 +56,15 @@ const MovementsProductsTable = ({
             style={{ minWidth: '1rem' }}
           ></Column>
             )}
+        {detailsTable && (
+          <Column
+            body={(rowData) => (
+              <ActionDeleteBodyTemplate productId={rowData.productId} />
+            )}
+            exportable={false}
+            style={{ minWidth: '2rem' }}
+          ></Column>
+        )}
       </DataTable>
     </div>
   )
