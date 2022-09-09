@@ -1,5 +1,5 @@
 /* eslint-disable no-useless-catch */
-import { Movement, MovementType, MovementTypeEnum, Stock } from '@prisma/client'
+import { Movement, MovementType, MovementTypeEnum } from '@prisma/client'
 import { prisma } from '../../../server/prisma-client/prisma-client'
 import { getMovementTypeById } from '../movement-types/movement-types.controller'
 import { createMovementDetails } from '../movements-details/movement-details.controller'
@@ -23,8 +23,7 @@ const getMovements = async () => {
 const createMovement = async (
   observation: string,
   movementTypeId: string,
-  productId: string,
-  quantity: number
+  productIdAndQuantities: any[]
 ) => {
   try {
     const movementType: MovementType | null = await getMovementTypeById(
@@ -33,48 +32,30 @@ const createMovement = async (
     if (!movementType) {
       return
     }
-
-    if (movementType.movementType === MovementTypeEnum.POSITIVE) {
-      const store = await getStoreByIndex(0)
-      const { id: storeId } = store
-      const stockToSell: Stock | null = await isStockEnough(productId, quantity)
-      if (!stockToSell) {
-        return
-      }
-      await updateStockById(
-        stockToSell.id,
-        productId,
-        storeId,
-        (stockToSell.quantity -= quantity),
-        stockToSell.minQuantity
-      )
-    }
-
-    if (movementType.movementType === MovementTypeEnum.NEGATIVE) {
-      const store = await getStoreByIndex(1)
-      const { id: storeId } = store
-      const stockToUpdate: Stock | null = await getStockExisting(
-        productId,
-        storeId
-      )
-      if (!stockToUpdate) {
-        await createStock(productId, storeId, quantity)
-      } else {
-        await updateStockById(
-          stockToUpdate.id,
-          productId,
-          storeId,
-          (stockToUpdate.quantity += quantity),
-          stockToUpdate.minQuantity
-        )
-      }
-    }
-
     const movementCreated: Movement = await prisma.movement.create({
       data: { observation, movementTypeId }
     })
 
-    await createMovementDetails(productId, movementCreated.id, quantity)
+    for (const productIdAndQuantity of productIdAndQuantities) {
+      const { productId, quantity } = productIdAndQuantity
+      await handleStockChanges(productId, quantity, movementType.movementType)
+    }
+
+    const promiseArrayMovementsDetails = productIdAndQuantities.map(
+      (productIdAndQuantity: any) => {
+        const { productId, quantity } = productIdAndQuantity
+        return createMovementDetails(productId, movementCreated.id, quantity)
+      }
+    )
+    const allPromisesMovementsDetails = Promise.all(
+      promiseArrayMovementsDetails
+    )
+    allPromisesMovementsDetails.then((movementDetails) => {
+      movementDetails.map((results) => {
+        return console.log(results)
+      })
+    })
+
     return movementCreated
   } catch (error) {
     throw error
@@ -128,6 +109,47 @@ const deleteMovementById = async (id: string) => {
     return deletedMovement
   } catch (error) {
     throw error
+  }
+}
+
+const handleStockChanges = async (
+  productId: string,
+  quantity: number,
+  movementType: MovementTypeEnum
+) => {
+  if (movementType === MovementTypeEnum.POSITIVE) {
+    const store = await getStoreByIndex(0)
+    const { id: storeId } = store
+    const stockToSell = await isStockEnough(productId, quantity)
+    if (!stockToSell) {
+      return
+    }
+    const updatedStock = await updateStockById(
+      stockToSell.id,
+      productId,
+      storeId,
+      stockToSell.quantity - quantity,
+      stockToSell.minQuantity
+    )
+    return updatedStock
+  }
+
+  if (movementType === MovementTypeEnum.NEGATIVE) {
+    const store = await getStoreByIndex(1)
+    const { id: storeId } = store
+    const stockToUpdate = await getStockExisting(productId, storeId)
+    if (!stockToUpdate) {
+      await createStock(productId, storeId, quantity)
+    } else {
+      const updatedStock = await updateStockById(
+        stockToUpdate.id,
+        productId,
+        storeId,
+        stockToUpdate.quantity + quantity,
+        stockToUpdate.minQuantity
+      )
+      return updatedStock
+    }
   }
 }
 
