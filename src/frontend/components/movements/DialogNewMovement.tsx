@@ -8,24 +8,26 @@ import useDialogNewMovementMutation from '../../hooks/movements/useDialogNewMove
 import MovementsProductsTable from './MovementsProductsTable'
 import { MovementType } from '@prisma/client'
 import useMovementTypesQuery from '../../hooks/movements/useMovementTypesQuery'
+import useProductsQuery from '../../hooks/products/useProductsQuery'
 
 const DialogNewMovement = ({
   displayBasic,
   closeDialog
 }: DialogNewMovementProps) => {
   const {
-    handleCreateNewProduct,
+    handleCreateNewMovement,
     selectedMovementType,
     changeMovementType,
     movementObservation
   } = useDialogNewMovementMutation('products')
   const movementTypesQuery = useMovementTypesQuery('movement-types')
+  const productsQuery = useProductsQuery('products')
   return (
     <Dialog
       visible={displayBasic}
       header="Nuevo Movimiento"
       style={{ width: '50vw' }}
-      footer={() => DialogFooter({ closeDialog, handleCreateNewProduct })}
+      footer={() => DialogFooter({ closeDialog, handleCreateNewMovement })}
       onHide={() => closeDialog()}
       className={'p-dialog dialog-movements'}
     >
@@ -53,9 +55,9 @@ const DialogNewMovement = ({
         </div>
       </div>
       <div style={{ display: 'flex', margin: '0.2rem' }}>
-        <MovementsProductsTable/>
+        <MovementsProductsTable products={productsQuery?.data?.products}/>
         <i className='pi pi-arrow-right' style={{ fontSize: '2rem', alignSelf: 'center' }}></i>
-        <MovementsProductsTable/>
+        <MovementsProductsTable products={[]}/>
       </div>
     </Dialog>
   )
