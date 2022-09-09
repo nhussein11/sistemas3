@@ -32,8 +32,8 @@ const MovementDetailsTable = ({
           emptyMessage="No se encontraron Detalles"
         >
           <Column
-            field="Producto"
-            header="Product"
+            field="Product"
+            header="Producto"
             body={(rowData) =>
               findProductName(rowData.productId, ProductsQuery)
             }
