@@ -7,12 +7,15 @@ import { showErrorDialogState } from '../../atoms/showErrorDialog'
 import { defaultErrorState, ErrorState } from '../../atoms/ErrorAtom'
 import { createNewMovement } from '../../services/movements/createNewMovement'
 import useMovementTypesQuery from './useMovementTypesQuery'
+import { selectedMovementDetailsState } from '../../atoms/selectedMovementDetails'
+import { ParseMovementDetails } from '../../services/movements/parseMovementDetails'
 
 const useDialogNewMovementMutation = (queryId: string) => {
   const [, setShowErrorDialog] = useRecoilState(showErrorDialogState)
   const [, setErrorState] = useRecoilState(ErrorState)
   const queryClient = useQueryClient()
   const movementTypesQuery = useMovementTypesQuery('movement-types')
+  const [selectedMovementDetails] = useRecoilState(selectedMovementDetailsState)
   const [selectedMovementType, setSelectedMovementType] = useState({
     id: '',
     movementType: '',
@@ -32,11 +35,12 @@ const useDialogNewMovementMutation = (queryId: string) => {
     onSuccess: (data) => {
       // Invalidate and refetch
       queryClient.invalidateQueries([queryId])
-      //! Deberia de registrar los detalles aca
+      console.log(data.data)
       movementObservation.onChange('')
       setErrorState(defaultErrorState)
     },
     onError: (error: any) => {
+      console.log(error)
       setErrorState({ status: error.response.status, message: error.message })
       setShowErrorDialog(true)
     }
@@ -46,7 +50,8 @@ const useDialogNewMovementMutation = (queryId: string) => {
     mutate({
       datetime: new Date(),
       observation: movementObservation.value as string,
-      MovementTypeId: selectedMovementType.id
+      MovementTypeId: selectedMovementType.id,
+      details: ParseMovementDetails(selectedMovementDetails)
     })
   }
   return {
