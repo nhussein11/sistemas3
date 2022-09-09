@@ -10,9 +10,13 @@ import { parseDate } from '../../services/movements/parseDate'
 import { resolveMovementName } from '../../services/movements/resolveMovementName'
 import useMovementTypesQuery from '../../hooks/movements/useMovementTypesQuery'
 import { resolveMovementType } from '../../services/movements/resolveMovementType'
+import MovementDetailsTable from './MovementDetailsTable'
 
 const MovementsTable = ({ movements }: MovementsTableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
+  const [displayMovementDetailsTable, setDisplayMovementDetailsTable] =
+    useState(false)
+
   const movementTypesQuery = useMovementTypesQuery('movement-types')
   return (
     <div className="datatable-filter">
@@ -25,7 +29,12 @@ const MovementsTable = ({ movements }: MovementsTableProps) => {
           rows={10}
           dataKey="id"
           responsiveLayout="scroll"
-          header={<TableHeader setDisplayBasic={setDisplayBasic} />}
+          header={
+            <TableHeader
+              setDisplayMovementDetailsTable={setDisplayMovementDetailsTable}
+              setDisplayBasic={setDisplayBasic}
+            />
+          }
           emptyMessage="No se encontraron Movimientos"
         >
           <Column
@@ -78,6 +87,11 @@ const MovementsTable = ({ movements }: MovementsTableProps) => {
         displayBasic={displayBasic}
         closeDialog={() => setDisplayBasic(false)}
       />
+      <MovementDetailsTable
+        setDisplayMovementDetailsTable={setDisplayMovementDetailsTable}
+        displayMovementDetailsTable={displayMovementDetailsTable}
+      />
+
       <DialogError></DialogError>
     </div>
   )

@@ -2,11 +2,14 @@ import React from 'react'
 import { Button } from 'primereact/button'
 import { InputText } from 'primereact/inputtext'
 import { useRecoilState } from 'recoil'
-import { TableHeaderProps } from '../../@types/frontend.types'
+import { MovementsTableHeaderProps } from '../../@types/frontend.types'
 import { globalFilterValueState } from '../../atoms/globalFilterValueAtom'
 import useDeleteMovementMutation from '../../hooks/movements/useDeleteMovementMutation'
 
-const TableHeader = ({ setDisplayBasic }: TableHeaderProps) => {
+const TableHeader = ({
+  setDisplayBasic,
+  setDisplayMovementDetailsTable
+}: MovementsTableHeaderProps) => {
   const { handleDeleteMovement } = useDeleteMovementMutation('movements')
   const [globalFilterValue, setGlobalFilterValue] = useRecoilState(
     globalFilterValueState
@@ -44,6 +47,11 @@ const TableHeader = ({ setDisplayBasic }: TableHeaderProps) => {
           label="Borrar"
           className="p-button-raised p-button-danger"
           onClick={deleteMovement}
+        />
+        <Button
+          label="Ver Detalles"
+          className="p-button-p-button-raised p-button-warning"
+          onClick={() => setDisplayMovementDetailsTable((prev:boolean) => !prev)}
         />
       </div>
     </div>
