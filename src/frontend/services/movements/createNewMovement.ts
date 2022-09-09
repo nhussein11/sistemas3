@@ -2,7 +2,7 @@ import publicAxiosInstance from '../../api/axios-api'
 type MovementData = {
   datetime: Date
   observation: string
-  MovementTypeId: string
+  movementTypeId: string
   details: {
     productId: string
     quantity: number

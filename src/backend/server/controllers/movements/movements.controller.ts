@@ -23,8 +23,9 @@ const getMovements = async () => {
 const createMovement = async (
   observation: string,
   movementTypeId: string,
-  productIdAndQuantities: any[]
+  details: any[]
 ) => {
+  console.log(movementTypeId)
   try {
     const movementType: MovementType | null = await getMovementTypeById(
       movementTypeId
@@ -36,12 +37,12 @@ const createMovement = async (
       data: { observation, movementTypeId }
     })
 
-    for (const productIdAndQuantity of productIdAndQuantities) {
+    for (const productIdAndQuantity of details) {
       const { productId, quantity } = productIdAndQuantity
       await handleStockChanges(productId, quantity, movementType.movementType)
     }
 
-    const promiseArrayMovementsDetails = productIdAndQuantities.map(
+    const promiseArrayMovementsDetails = details.map(
       (productIdAndQuantity: any) => {
         const { productId, quantity } = productIdAndQuantity
         return createMovementDetails(productId, movementCreated.id, quantity)
@@ -55,9 +56,10 @@ const createMovement = async (
         return console.log(results)
       })
     })
-
+    console.log(movementCreated)
     return movementCreated
   } catch (error) {
+    console.log(error)
     throw error
   }
 }
