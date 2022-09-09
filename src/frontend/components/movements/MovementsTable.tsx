@@ -86,6 +86,8 @@ const MovementsTable = ({ movements }: MovementsTableProps) => {
             header="Detalle"
             body={(rowData) => {
               return (<Button
+                icon='pi pi-eye'
+                iconPos='right'
                 label="Ver Detalle"
                 className="p-button-p-button-raised p-button-warning"
                 onClick={() => {
