@@ -35,7 +35,7 @@ const createMovement = async (
     }
 
     if (movementType.movementType === MovementTypeEnum.POSITIVE) {
-      const store = await getStoreByIndex(1)
+      const store = await getStoreByIndex(0)
       const { id: storeId } = store
       const stockToSell: Stock | null = await isStockEnough(productId, quantity)
       if (!stockToSell) {
