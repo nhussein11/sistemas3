@@ -48,7 +48,7 @@ const createMovement = async (
       )
     }
     if (movementType.movementType === MovementTypeEnum.NEGATIVE) {
-
+      const 
       // Aca tengo la duda de: Tendria que actualizar fijarme si el stock existe o no?, en base a eso crear uno, lo dejo platneado:
       // Actualizo el stock
       const stockToUpdate: Stock | null = await getStockExisting(
