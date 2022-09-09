@@ -23,8 +23,7 @@ const createMovement = async (
   observation: string,
   movementTypeId: string,
   productId: string,
-  quantity: number,
-  storeId: string = ''
+  quantity: number
 ) => {
   try {
     const movementType: MovementType | null = await getMovementTypeById(
@@ -49,9 +48,7 @@ const createMovement = async (
       )
     }
     if (movementType.movementType === MovementTypeEnum.NEGATIVE) {
-      if (storeId === '') {
-        return
-      }
+
       // Aca tengo la duda de: Tendria que actualizar fijarme si el stock existe o no?, en base a eso crear uno, lo dejo platneado:
       // Actualizo el stock
       const stockToUpdate: Stock | null = await getStockExisting(
