@@ -33,7 +33,7 @@ const createMovement = async (
     if (!movementType) {
       return
     }
-    // si es venta, checkeo que tenga stock para vender
+
     if (movementType.movementType === MovementTypeEnum.POSITIVE) {
       const store = await getStoreByIndex(1)
       const { id: storeId } = store
@@ -41,7 +41,6 @@ const createMovement = async (
       if (!stockToSell) {
         return
       }
-      // Actualizo el stock
       await updateStockById(
         stockToSell.id,
         productId,
@@ -50,11 +49,10 @@ const createMovement = async (
         stockToSell.minQuantity
       )
     }
+
     if (movementType.movementType === MovementTypeEnum.NEGATIVE) {
       const store = await getStoreByIndex(1)
       const { id: storeId } = store
-      // Aca tengo la duda de: Tendria que actualizar fijarme si el stock existe o no?, en base a eso crear uno, lo dejo platneado:
-      // Actualizo el stock
       const stockToUpdate: Stock | null = await getStockExisting(
         productId,
         storeId
@@ -71,9 +69,11 @@ const createMovement = async (
         )
       }
     }
+
     const movementCreated: Movement = await prisma.movement.create({
       data: { observation, movementTypeId }
     })
+
     await createMovementDetails(productId, movementCreated.id, quantity)
     return movementCreated
   } catch (error) {
