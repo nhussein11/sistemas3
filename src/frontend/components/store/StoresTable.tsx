@@ -35,12 +35,6 @@ const StoresTable = ({ stores }:StoresTableProps) => {
             alignHeader={'center'}
           />
           <Column
-            field="Id"
-            header="Id"
-            body={(rowData) => rowData.id}
-            alignHeader={'center'}
-          />
-          <Column
             field="Nombre"
             header="Nombre"
             body={(rowData) => rowData.name}

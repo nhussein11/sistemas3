@@ -11,11 +11,17 @@ import { resolveMovementName } from '../../services/movements/resolveMovementNam
 import useMovementTypesQuery from '../../hooks/movements/useMovementTypesQuery'
 import { resolveMovementType } from '../../services/movements/resolveMovementType'
 import MovementDetailsTable from './MovementDetailsTable'
+import { Button } from 'primereact/button'
+import { useRecoilState } from 'recoil'
+import {
+  selectedMovementState
+} from '../../atoms/selectedMovementAtom'
 
 const MovementsTable = ({ movements }: MovementsTableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
   const [displayMovementDetailsTable, setDisplayMovementDetailsTable] =
     useState(false)
+  const [, setSelectedMovement] = useRecoilState(selectedMovementState)
 
   const movementTypesQuery = useMovementTypesQuery('movement-types')
   return (
@@ -48,12 +54,6 @@ const MovementsTable = ({ movements }: MovementsTableProps) => {
             alignHeader={'center'}
           />
           <Column
-            field="Id"
-            header="Id"
-            body={(rowData) => rowData.id}
-            alignHeader={'center'}
-          />
-          <Column
             field="Fecha"
             header="Fecha"
             body={(rowData) => parseDate(rowData?.datetime)}
@@ -76,8 +76,30 @@ const MovementsTable = ({ movements }: MovementsTableProps) => {
           <Column
             field="TipoMovimiento"
             header="Tipo Movimiento"
-            body={(rowData) =>
-              resolveMovementType(rowData.movementTypeId, movementTypesQuery)
+            body={(rowData) => {
+              if ((resolveMovementType(rowData.movementTypeId, movementTypesQuery)) === 'POSITIVE') {
+                return (<h2 style={{ color: 'green' }}>ENTRADA</h2>)
+              } else {
+                return (<h2 style={{ color: 'red' } }>SALIDA</h2>)
+              }
+            }
+            }
+            alignHeader={'center'}
+          />
+          <Column
+            field="detail"
+            header="Detalle"
+            body={(rowData) => {
+              return (<Button
+                icon='pi pi-eye'
+                iconPos='right'
+                label="Ver Detalle"
+                className="p-button-p-button-raised p-button-warning"
+                onClick={() => {
+                  setDisplayMovementDetailsTable((prev:boolean) => !prev)
+                  setSelectedMovement(rowData)
+                }}/>)
+            }
             }
             alignHeader={'center'}
           />

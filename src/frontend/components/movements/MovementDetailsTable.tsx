@@ -32,14 +32,8 @@ const MovementDetailsTable = ({
           emptyMessage="No se encontraron Detalles"
         >
           <Column
-            field="Id"
-            header="Id"
-            body={(rowData) => rowData.id}
-            alignHeader={'center'}
-          />
-          <Column
             field="Product"
-            header="Product"
+            header="Producto"
             body={(rowData) =>
               findProductName(rowData.productId, ProductsQuery)
             }
@@ -47,7 +41,7 @@ const MovementDetailsTable = ({
           />
           <Column
             field="Quantity"
-            header="Quantity"
+            header="Cantidad"
             body={(rowData) => rowData.quantity}
             alignHeader={'center'}
           />
