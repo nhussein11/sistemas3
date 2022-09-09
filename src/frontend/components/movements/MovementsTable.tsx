@@ -11,11 +11,17 @@ import { resolveMovementName } from '../../services/movements/resolveMovementNam
 import useMovementTypesQuery from '../../hooks/movements/useMovementTypesQuery'
 import { resolveMovementType } from '../../services/movements/resolveMovementType'
 import MovementDetailsTable from './MovementDetailsTable'
+import { Button } from 'primereact/button'
+import { useRecoilState } from 'recoil'
+import {
+  selectedMovementState
+} from '../../atoms/selectedMovementAtom'
 
 const MovementsTable = ({ movements }: MovementsTableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
   const [displayMovementDetailsTable, setDisplayMovementDetailsTable] =
     useState(false)
+  const [, setSelectedMovement] = useRecoilState(selectedMovementState)
 
   const movementTypesQuery = useMovementTypesQuery('movement-types')
   return (
@@ -72,6 +78,21 @@ const MovementsTable = ({ movements }: MovementsTableProps) => {
             header="Tipo Movimiento"
             body={(rowData) =>
               resolveMovementType(rowData.movementTypeId, movementTypesQuery)
+            }
+            alignHeader={'center'}
+          />
+          <Column
+            field="detail"
+            header="Detalle"
+            body={(rowData) => {
+              return (<Button
+                label="Ver Detalle"
+                className="p-button-p-button-raised p-button-warning"
+                onClick={() => {
+                  setDisplayMovementDetailsTable((prev:boolean) => !prev)
+                  setSelectedMovement(rowData)
+                }}/>)
+            }
             }
             alignHeader={'center'}
           />
