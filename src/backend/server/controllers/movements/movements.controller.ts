@@ -9,6 +9,7 @@ import {
   isStockEnough,
   updateStockById
 } from '../stocks/stock.controller'
+import { getStoreByIndex } from '../stores/stores.controller'
 
 const getMovements = async () => {
   try {
@@ -34,6 +35,8 @@ const createMovement = async (
     }
     // si es venta, checkeo que tenga stock para vender
     if (movementType.movementType === MovementTypeEnum.POSITIVE) {
+      const store = await getStoreByIndex(1)
+      const { id: storeId } = store
       const stockToSell: Stock | null = await isStockEnough(productId, quantity)
       if (!stockToSell) {
         return
@@ -42,13 +45,14 @@ const createMovement = async (
       await updateStockById(
         stockToSell.id,
         productId,
-        stockToSell.storeId,
+        storeId,
         (stockToSell.quantity -= quantity),
         stockToSell.minQuantity
       )
     }
     if (movementType.movementType === MovementTypeEnum.NEGATIVE) {
-      const 
+      const store = await getStoreByIndex(1)
+      const { id: storeId } = store
       // Aca tengo la duda de: Tendria que actualizar fijarme si el stock existe o no?, en base a eso crear uno, lo dejo platneado:
       // Actualizo el stock
       const stockToUpdate: Stock | null = await getStockExisting(
@@ -61,7 +65,7 @@ const createMovement = async (
         await updateStockById(
           stockToUpdate.id,
           productId,
-          stockToUpdate.storeId,
+          storeId,
           (stockToUpdate.quantity += quantity),
           stockToUpdate.minQuantity
         )
