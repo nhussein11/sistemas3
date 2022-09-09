@@ -72,4 +72,16 @@ const deleteStoreById = async (id: string) => {
   }
 }
 
-export { getStores, createStore, getStoreById, updateStoreById, deleteStoreById }
+const getStoreByName = async (name: string) => {
+  try {
+    const store: Store = await prisma.store.findFirstOrThrow({
+      where: {
+        name
+      }
+    })
+    return store
+  } catch (error) {
+    throw error
+  }
+}
+export { getStores, createStore, getStoreById, updateStoreById, deleteStoreById, getStoreByName }
