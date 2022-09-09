@@ -4,15 +4,15 @@ import { InputText } from 'primereact/inputtext'
 import { useRecoilState } from 'recoil'
 import { TableHeaderProps } from '../../@types/frontend.types'
 import { globalFilterValueState } from '../../atoms/globalFilterValueAtom'
-import useDeleteProductMutation from '../../hooks/products/useDeleteProductMutation'
+import useDeleteMovementMutation from '../../hooks/movements/useDeleteMovementMutation'
 
 const TableHeader = ({ setDisplayBasic }: TableHeaderProps) => {
-  const { handleDeleteProduct } = useDeleteProductMutation('products')
+  const { handleDeleteMovement } = useDeleteMovementMutation('movements')
   const [globalFilterValue, setGlobalFilterValue] = useRecoilState(
     globalFilterValueState
   )
-  const deleteProduct = () => {
-    handleDeleteProduct()
+  const deleteMovement = () => {
+    handleDeleteMovement()
     setDisplayBasic(false)
   }
   return (
@@ -43,7 +43,7 @@ const TableHeader = ({ setDisplayBasic }: TableHeaderProps) => {
         <Button
           label="Borrar"
           className="p-button-raised p-button-danger"
-          onClick={deleteProduct}
+          onClick={deleteMovement}
         />
       </div>
     </div>
