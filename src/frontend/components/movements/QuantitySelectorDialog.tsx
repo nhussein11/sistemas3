@@ -1,14 +1,54 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { ConfirmDialog } from 'primereact/confirmdialog'
 import { InputText } from 'primereact/inputtext'
+import { useRecoilState } from 'recoil'
+import {
+  showQuantitySelectorDialogDefaultState,
+  showQuantitySelectorDialogState
+} from '../../atoms/showQuantitySelectorDialog'
+import useField from '../../hooks/useField'
+import { selectedMovementDetailsState } from '../../atoms/selectedMovementDetails'
 
 const QuantitySelectorDialog = () => {
-  const [visible, setVisible] = useState(false)
+  const [showQuantitySelectorDialog, setShowQuantitySelectorDialog] =
+    useRecoilState(showQuantitySelectorDialogState)
+  const quantity = useField({
+    type: 'number',
+    initialValue: 0
+  })
+  const [, setSelectedMovementDetails] = useRecoilState(
+    selectedMovementDetailsState
+  )
   const bodyInput = () => {
-    return <InputText name="quantity" placeholder="Ingresar Cantidad" />
+    return (
+      <InputText
+        {...quantity}
+        name="quantity"
+        placeholder="Ingresar Cantidad"
+      />
+    )
   }
   return (
-    <ConfirmDialog visible={visible} onHide={() => setVisible(false)} message={bodyInput} header="Cantidad" accept={() => console.log('metemos el producto en tabla')} reject={() => console.log('Cancelamos')} />
+    <ConfirmDialog
+      visible={showQuantitySelectorDialog.show}
+      onHide={() =>
+        setShowQuantitySelectorDialog(showQuantitySelectorDialogDefaultState)
+      }
+      message={bodyInput}
+      header="Cantidad"
+      accept={() =>
+        setSelectedMovementDetails((prev) => [
+          ...prev,
+          {
+            productId: showQuantitySelectorDialog.productId,
+            quantity: quantity.value as number,
+            name: showQuantitySelectorDialog.name,
+            price: showQuantitySelectorDialog.price
+          }
+        ])
+      }
+      reject={() => console.log('Cancelamos')}
+    />
   )
 }
 
