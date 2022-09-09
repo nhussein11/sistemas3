@@ -41,12 +41,6 @@ const StockTable = ({ stocks }: StockTableProps) => {
             alignHeader={'center'}
           />
           <Column
-            field="Id"
-            header="Id"
-            body={(rowData) => rowData.id}
-            alignHeader={'center'}
-          />
-          <Column
             field="ProductName"
             header="ProductName"
             body={(rowData) =>

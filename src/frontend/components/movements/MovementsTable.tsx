@@ -48,12 +48,6 @@ const MovementsTable = ({ movements }: MovementsTableProps) => {
             alignHeader={'center'}
           />
           <Column
-            field="Id"
-            header="Id"
-            body={(rowData) => rowData.id}
-            alignHeader={'center'}
-          />
-          <Column
             field="Fecha"
             header="Fecha"
             body={(rowData) => parseDate(rowData?.datetime)}
