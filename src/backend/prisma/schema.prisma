@@ -54,7 +54,7 @@ model Movement {
   MovementDetails   MovementDetails[]
 
   MovementType   MovementType @relation(fields: [movementTypeId], references: [id])
-  movementTypeId String       @unique
+  movementTypeId String       
 
   @@map("movement")
 }
