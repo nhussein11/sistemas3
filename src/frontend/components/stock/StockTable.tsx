@@ -42,7 +42,7 @@ const StockTable = ({ stocks }: StockTableProps) => {
           />
           <Column
             field="ProductName"
-            header="ProductName"
+            header="Nombre Producto"
             body={(rowData) =>
               findProductName(rowData.productId, productsQuery)
             }
@@ -50,19 +50,19 @@ const StockTable = ({ stocks }: StockTableProps) => {
           />
           <Column
             field="StoreName"
-            header="StoreName"
+            header="Nombre Depósito"
             body={(rowData) => findStoreName(rowData.storeId, storesQuery)}
             alignHeader={'center'}
           />
           <Column
             field="quantity"
-            header="quantity"
+            header="Cantidad"
             body={(rowData) => rowData.quantity}
             alignHeader={'center'}
           />
           <Column
             field="minQuantity"
-            header="minQuantity"
+            header="Cantidad Mínima"
             body={(rowData) => rowData.minQuantity}
             alignHeader={'center'}
           />
