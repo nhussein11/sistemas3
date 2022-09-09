@@ -76,6 +76,8 @@ const updateStockById = async (
       quantityDeletedStock = stockExisting.quantity
       await deleteStockById(stockExisting.id)
     }
+    console.log('stockExisting: ', stockExisting?.quantity)
+    console.log('quantity: ', quantity)
     const updatedStock: Stock = await prisma.stock.update({
       where: { id },
       data: {
@@ -84,7 +86,6 @@ const updateStockById = async (
         minQuantity
       }
     })
-
     return updatedStock
   } catch (error) {
     throw error

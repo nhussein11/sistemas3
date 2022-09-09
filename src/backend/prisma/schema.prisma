@@ -74,10 +74,10 @@ model MovementDetails {
   id String @id @default(cuid())
 
   Product Product @relation(fields: [productId],references: [id])
-  productId String @unique
+  productId String 
 
   Movement Movement @relation(fields: [movementId],references: [id])
-  movementId String @unique
+  movementId String 
 
   quantity Int
 
