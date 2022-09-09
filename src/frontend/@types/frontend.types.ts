@@ -86,3 +86,10 @@ export type DialogFooterMovementProps = {
   closeDialog: () => void
   handleCreateNewMovement: () => void
 }
+export type MovementDetailData = {
+  productId: string
+  quantity: number
+  name: string
+  price: number
+
+}
