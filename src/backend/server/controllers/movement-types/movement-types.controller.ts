@@ -28,6 +28,7 @@ const createMovementType = async (
 }
 
 const getMovementTypeById = async (id: string) => {
+  console.log(id)
   try {
     const movementType: MovementType | null =
       await prisma.movementType.findUnique({

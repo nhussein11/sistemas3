@@ -50,7 +50,7 @@ const useDialogNewMovementMutation = (queryId: string) => {
     mutate({
       datetime: new Date(),
       observation: movementObservation.value as string,
-      MovementTypeId: selectedMovementType.id,
+      movementTypeId: selectedMovementType.id,
       details: ParseMovementDetails(selectedMovementDetails)
     })
   }
