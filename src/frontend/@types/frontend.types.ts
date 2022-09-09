@@ -82,3 +82,7 @@ export type StockDialogFooterProps = {
 export type StockTableHeaderProps = {
   setDisplayBasic: Dispatch<boolean>
 }
+export type DialogFooterMovementProps = {
+  closeDialog: () => void
+  handleCreateNewMovement: () => void
+}
