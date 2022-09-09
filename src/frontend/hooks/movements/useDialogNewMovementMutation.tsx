@@ -29,7 +29,7 @@ const useDialogNewMovementMutation = (queryId: string) => {
     )
   }
   const { mutate } = useMutation(createNewMovement, {
-    onSuccess: () => {
+    onSuccess: (data) => {
       // Invalidate and refetch
       queryClient.invalidateQueries([queryId])
       //! Deberia de registrar los detalles aca
@@ -42,7 +42,7 @@ const useDialogNewMovementMutation = (queryId: string) => {
     }
   })
   const movementObservation = useField({ initialValue: '', type: 'text' })
-  const handleCreateNewProduct = () => {
+  const handleCreateNewMovement = () => {
     mutate({
       datetime: new Date(),
       observation: movementObservation.value as string,
@@ -50,7 +50,7 @@ const useDialogNewMovementMutation = (queryId: string) => {
     })
   }
   return {
-    handleCreateNewProduct,
+    handleCreateNewMovement,
     movementObservation,
     changeMovementType,
     selectedMovementType
