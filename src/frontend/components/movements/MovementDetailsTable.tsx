@@ -41,7 +41,7 @@ const MovementDetailsTable = ({
           />
           <Column
             field="Quantity"
-            header="Quantity"
+            header="Cantidad"
             body={(rowData) => rowData.quantity}
             alignHeader={'center'}
           />
