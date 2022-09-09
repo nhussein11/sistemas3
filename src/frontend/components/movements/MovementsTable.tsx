@@ -76,8 +76,13 @@ const MovementsTable = ({ movements }: MovementsTableProps) => {
           <Column
             field="TipoMovimiento"
             header="Tipo Movimiento"
-            body={(rowData) =>
-              resolveMovementType(rowData.movementTypeId, movementTypesQuery)
+            body={(rowData) => {
+              if ((resolveMovementType(rowData.movementTypeId, movementTypesQuery)) === 'POSITIVE') {
+                return (<h2 style={{ color: 'green' }}>ENTRADA</h2>)
+              } else {
+                return (<h2 style={{ color: 'red' } }>SALIDA</h2>)
+              }
+            }
             }
             alignHeader={'center'}
           />
