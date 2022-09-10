@@ -5,8 +5,8 @@ import { useRecoilState } from 'recoil'
 import { TableHeaderProps } from '../../@types/frontend.types'
 import { globalFilterValueState } from '../../atoms/globalFilterValueAtom'
 import { showUpdateDialogState } from '../../atoms/showUpdateDialogAtom'
-import { isProductCheckedState } from '../../atoms/isProductCheckedAtom'
-import { showErrorDialogState } from '../../atoms/showErrorDialog'
+import { isProductCheckedState } from '../../atoms/products/isProductCheckedAtom'
+import { showErrorDialogState } from '../../atoms/error/showErrorDialog'
 import useDeleteProductMutation from '../../hooks/products/useDeleteProductMutation'
 
 const TableHeader = ({ setDisplayBasic }: TableHeaderProps) => {

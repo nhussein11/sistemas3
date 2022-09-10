@@ -1,9 +1,9 @@
 import { useRecoilState } from 'recoil'
-import { selectedMovementDetailsState } from '../../atoms/selectedMovementDetails'
+import { selectedMovementDetailsState } from '../../atoms/movements/selectedMovementDetails'
 import {
   showQuantitySelectorDialogDefaultState,
   showQuantitySelectorDialogState
-} from '../../atoms/showQuantitySelectorDialog'
+} from '../../atoms/movements/showQuantitySelectorDialog'
 import useField from '../useField'
 
 const useQuantitySelectorDialog = () => {

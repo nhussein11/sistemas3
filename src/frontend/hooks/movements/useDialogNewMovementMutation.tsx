@@ -3,18 +3,15 @@ import useField from '../useField'
 import { MovementType, Store } from '@prisma/client'
 import { useState } from 'react'
 import { useRecoilState } from 'recoil'
-import { showErrorDialogState } from '../../atoms/showErrorDialog'
-import { defaultErrorState, ErrorState } from '../../atoms/ErrorAtom'
+import { showErrorDialogState } from '../../atoms/error/showErrorDialog'
+import { defaultErrorState, ErrorState } from '../../atoms/error/ErrorAtom'
 import { createNewMovement } from '../../services/movements/createNewMovement'
 import useMovementTypesQuery from './useMovementTypesQuery'
-import {
-  defaultMovementDetails,
-  selectedMovementDetailsState
-} from '../../atoms/selectedMovementDetails'
 import { ParseMovementDetails } from '../../services/movements/parseMovementDetails'
 import useStoresQuery from '../stores/useStoresQuery'
-import { defaultStore, selectedStoreState } from '../../atoms/selectedStoreAtom'
+import { defaultStore, selectedStoreState } from '../../atoms/stores/selectedStoreAtom'
 import useProductsQuery from '../products/useProductsQuery'
+import { defaultMovementDetails, selectedMovementDetailsState } from '../../atoms/movements/selectedMovementDetails'
 const useDialogNewMovementMutation = (queryId: string) => {
   const [, setShowErrorDialog] = useRecoilState(showErrorDialogState)
   const [, setErrorState] = useRecoilState(ErrorState)

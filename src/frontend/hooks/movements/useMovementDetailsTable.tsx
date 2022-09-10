@@ -1,6 +1,6 @@
 import { MovementDetails } from '@prisma/client'
 import { useRecoilState } from 'recoil'
-import { selectedMovementState } from '../../atoms/selectedMovementAtom'
+import { selectedMovementState } from '../../atoms/movements/selectedMovementAtom'
 import useDetailsQuery from '../details/useDetailsQuery'
 
 const useMovementDetailsTable = () => {

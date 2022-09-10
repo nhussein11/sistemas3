@@ -5,16 +5,16 @@ import { CategoryEnum, Product } from '@prisma/client'
 import {
   defaultProductChecked,
   isProductCheckedState
-} from '../../atoms/isProductCheckedAtom'
+} from '../../atoms/products/isProductCheckedAtom'
 import {
   defaultProduct,
   selectedProductState
-} from '../../atoms/selectedProductAtom'
+} from '../../atoms/products/selectedProductAtom'
 import { showUpdateDialogState } from '../../atoms/showUpdateDialogAtom'
 import useField from '../useField'
 import { updateProduct } from '../../services/products/updateProduct'
-import { defaultErrorState, ErrorState } from '../../atoms/ErrorAtom'
-import { showErrorDialogState } from '../../atoms/showErrorDialog'
+import { defaultErrorState, ErrorState } from '../../atoms/error/ErrorAtom'
+import { showErrorDialogState } from '../../atoms/error/showErrorDialog'
 
 const useDialogUpdateProductMutation = (queryId: string) => {
   const [selectedProduct, setSelectedProduct] =

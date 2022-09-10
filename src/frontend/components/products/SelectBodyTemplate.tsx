@@ -5,8 +5,8 @@ import { SelectBodyTemplateProps } from '../../@types/frontend.types'
 import {
   defaultProduct,
   selectedProductState
-} from '../../atoms/selectedProductAtom'
-import { isProductCheckedState } from '../../atoms/isProductCheckedAtom'
+} from '../../atoms/products/selectedProductAtom'
+import { isProductCheckedState } from '../../atoms/products/isProductCheckedAtom'
 
 const SelectBodyTemplate = ({ rowData }: SelectBodyTemplateProps) => {
   const [, setSelectedProduct] =

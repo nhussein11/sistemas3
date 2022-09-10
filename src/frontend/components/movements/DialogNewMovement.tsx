@@ -7,8 +7,8 @@ import { InputText } from 'primereact/inputtext'
 import useDialogNewMovementMutation from '../../hooks/movements/useDialogNewMovementMutation'
 import MovementsProductsTable from './MovementsProductsTable'
 import { useRecoilState } from 'recoil'
-import { selectedMovementDetailsState } from '../../atoms/selectedMovementDetails'
 import QuantitySelectorDialog from './QuantitySelectorDialog'
+import { selectedMovementDetailsState } from '../../atoms/movements/selectedMovementDetails'
 
 const DialogNewMovement = ({
   displayBasic,

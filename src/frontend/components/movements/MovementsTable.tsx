@@ -15,7 +15,7 @@ import { Button } from 'primereact/button'
 import { useRecoilState } from 'recoil'
 import {
   selectedMovementState
-} from '../../atoms/selectedMovementAtom'
+} from '../../atoms/movements/selectedMovementAtom'
 
 const MovementsTable = ({ movements }: MovementsTableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
