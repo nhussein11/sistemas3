@@ -6,12 +6,13 @@ import { DialogNewMovementProps } from '../../@types/frontend.types'
 import { InputText } from 'primereact/inputtext'
 import useDialogNewMovementMutation from '../../hooks/movements/useDialogNewMovementMutation'
 import MovementsProductsTable from './MovementsProductsTable'
-import { MovementType } from '@prisma/client'
+import { MovementType, Store } from '@prisma/client'
 import useMovementTypesQuery from '../../hooks/movements/useMovementTypesQuery'
 import useProductsQuery from '../../hooks/products/useProductsQuery'
 import { useRecoilState } from 'recoil'
 import { selectedMovementDetailsState } from '../../atoms/selectedMovementDetails'
 import QuantitySelectorDialog from './QuantitySelectorDialog'
+import useStoresQuery from '../../hooks/stores/useStoresQuery'
 
 const DialogNewMovement = ({
   displayBasic,
@@ -21,10 +22,13 @@ const DialogNewMovement = ({
     handleCreateNewMovement,
     selectedMovementType,
     changeMovementType,
-    movementObservation
-  } = useDialogNewMovementMutation('products')
+    movementObservation,
+    selectedStore,
+    changeStore
+  } = useDialogNewMovementMutation('movements')
   const movementTypesQuery = useMovementTypesQuery('movement-types')
   const productsQuery = useProductsQuery('products')
+  const storesQuery = useStoresQuery('stores')
   const [selectedMovementDetails] = useRecoilState(selectedMovementDetailsState)
   return (
     <Dialog
@@ -50,6 +54,17 @@ const DialogNewMovement = ({
             placeholder="seleccionar Depósito"
           />
         </div>
+          <div className="field-drop">
+          <label htmlFor="id">Seleccionar Deposito</label>
+           <Dropdown
+            value={selectedStore?.name}
+            options={storesQuery?.data?.stores.map(
+              (store: Store) => store.name
+            )}
+            onChange={(e) => changeStore(e.target.value)}
+            placeholder="seleccionar Depósito"
+          />
+          </div>
         <div
           className="field-form-container"
           style={{ display: 'grid', alignSelf: 'center' }}
