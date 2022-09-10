@@ -11,6 +11,7 @@ import { selectedMovementDetailsState } from '../../atoms/selectedMovementDetail
 import { ParseMovementDetails } from '../../services/movements/parseMovementDetails'
 import useStoresQuery from '../stores/useStoresQuery'
 import { selectedStoreState } from '../../atoms/selectedStoreAtom'
+import useProductsQuery from '../products/useProductsQuery'
 
 const useDialogNewMovementMutation = (queryId: string) => {
   const [, setShowErrorDialog] = useRecoilState(showErrorDialogState)
@@ -18,6 +19,7 @@ const useDialogNewMovementMutation = (queryId: string) => {
   const queryClient = useQueryClient()
   const movementTypesQuery = useMovementTypesQuery('movement-types')
   const storesQuery = useStoresQuery('stores')
+  const productsQuery = useProductsQuery('products')
   const [selectedMovementDetails] = useRecoilState(selectedMovementDetailsState)
   const [selectedStore, setSelectedStore] = useRecoilState(selectedStoreState)
   const [selectedMovementType, setSelectedMovementType] = useState({
@@ -59,13 +61,23 @@ const useDialogNewMovementMutation = (queryId: string) => {
       storeId: selectedStore.id
     })
   }
+  const movementTypesOptions = movementTypesQuery?.data?.movementsTypes.map(
+    (movementTypes: MovementType) => movementTypes.movementName
+  )
+  const storesOptions = storesQuery?.data?.stores.map(
+    (store: Store) => store.name
+  )
+  const productsOptions = productsQuery?.data?.products
   return {
     handleCreateNewMovement,
     movementObservation,
     changeMovementType,
     selectedMovementType,
     selectedStore,
-    changeStore
+    changeStore,
+    movementTypesOptions,
+    storesOptions,
+    productsOptions
   }
 }
 
