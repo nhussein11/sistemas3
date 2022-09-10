@@ -88,6 +88,7 @@ const MovementsTable = ({ movements }: MovementsTableProps) => {
             }
             alignHeader={'center'}
           />
+          {/* !esto es una posible fuente de bugs!! */}
           <Column
             field="detail"
             header="Detalle"
@@ -107,7 +108,6 @@ const MovementsTable = ({ movements }: MovementsTableProps) => {
             }}
             alignHeader={'center'}
           />
-          {/* !esto es una posible fuente de bugs */}
         </DataTable>
       </div>
       <DialogNewMovement
