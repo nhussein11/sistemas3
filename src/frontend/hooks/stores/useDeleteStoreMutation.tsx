@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRecoilState } from 'recoil'
-import { defaultErrorState, ErrorState } from '../../atoms/ErrorAtom'
-import { defaultStoreChecked, isStoreCheckedState } from '../../atoms/isStoreCheckedAtom'
-import { defaultStore, selectedStoreState } from '../../atoms/selectedStoreAtom'
-import { showErrorDialogState } from '../../atoms/showErrorDialog'
+import { defaultErrorState, ErrorState } from '../../atoms/error/ErrorAtom'
+import { defaultStoreChecked, isStoreCheckedState } from '../../atoms/stores/isStoreCheckedAtom'
+import { defaultStore, selectedStoreState } from '../../atoms/stores/selectedStoreAtom'
+import { showErrorDialogState } from '../../atoms/error/showErrorDialog'
 import { deleteStore } from '../../services/stores/deleteStore'
 
 const useDeleteStoreMutation = (queryId: string) => {

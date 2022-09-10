@@ -4,8 +4,8 @@ import { useRecoilState } from 'recoil'
 import {
   defaultMovement,
   selectedMovementState
-} from '../../atoms/selectedMovementAtom'
-import { isSMovementCheckedState } from '../../atoms/setSelectedMovementAtom'
+} from '../../atoms/movements/selectedMovementAtom'
+import { isSMovementCheckedState } from '../../atoms/movements/setSelectedMovementAtom'
 import { Movement } from '@prisma/client'
 
 const SelectBodyTemplate = ({ rowData }: { rowData: Movement }) => {

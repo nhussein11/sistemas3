@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from 'primereact/button'
-import { showQuantitySelectorDialogState } from '../../atoms/showQuantitySelectorDialog'
+import { showQuantitySelectorDialogState } from '../../atoms/movements/showQuantitySelectorDialog'
 import { useRecoilState } from 'recoil'
 
 const ActionAddBodyTemplate = ({

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Checkbox } from 'primereact/checkbox'
-import { defaultStore, selectedStoreState } from '../../atoms/selectedStoreAtom'
-import { isStoreCheckedState } from '../../atoms/isStoreCheckedAtom'
+import { defaultStore, selectedStoreState } from '../../atoms/stores/selectedStoreAtom'
+import { isStoreCheckedState } from '../../atoms/stores/isStoreCheckedAtom'
 import { StoreCheckedBodyTemplateProps } from '../../@types/frontend.types'
 import { useRecoilState } from 'recoil'
 

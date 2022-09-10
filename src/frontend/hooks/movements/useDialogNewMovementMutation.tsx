@@ -1,21 +1,28 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import useField from '../useField'
-import { MovementType } from '@prisma/client'
+import { MovementType, Store } from '@prisma/client'
 import { useState } from 'react'
 import { useRecoilState } from 'recoil'
-import { showErrorDialogState } from '../../atoms/showErrorDialog'
-import { defaultErrorState, ErrorState } from '../../atoms/ErrorAtom'
+import { showErrorDialogState } from '../../atoms/error/showErrorDialog'
+import { defaultErrorState, ErrorState } from '../../atoms/error/ErrorAtom'
 import { createNewMovement } from '../../services/movements/createNewMovement'
 import useMovementTypesQuery from './useMovementTypesQuery'
-import { selectedMovementDetailsState } from '../../atoms/selectedMovementDetails'
 import { ParseMovementDetails } from '../../services/movements/parseMovementDetails'
-
+import useStoresQuery from '../stores/useStoresQuery'
+import { defaultStore, selectedStoreState } from '../../atoms/stores/selectedStoreAtom'
+import useProductsQuery from '../products/useProductsQuery'
+import { defaultMovementDetails, selectedMovementDetailsState } from '../../atoms/movements/selectedMovementDetails'
 const useDialogNewMovementMutation = (queryId: string) => {
   const [, setShowErrorDialog] = useRecoilState(showErrorDialogState)
   const [, setErrorState] = useRecoilState(ErrorState)
   const queryClient = useQueryClient()
   const movementTypesQuery = useMovementTypesQuery('movement-types')
-  const [selectedMovementDetails] = useRecoilState(selectedMovementDetailsState)
+  const storesQuery = useStoresQuery('stores')
+  const productsQuery = useProductsQuery('products')
+  const [selectedMovementDetails, setSelectedMovementDetails] = useRecoilState(
+    selectedMovementDetailsState
+  )
+  const [selectedStore, setSelectedStore] = useRecoilState(selectedStoreState)
   const [selectedMovementType, setSelectedMovementType] = useState({
     id: '',
     movementType: '',
@@ -26,17 +33,26 @@ const useDialogNewMovementMutation = (queryId: string) => {
     const movementType = movementTypesQuery.data?.movementsTypes.find(
       (movementType: MovementType) => movementType.movementName === name
     )
-    console.log(movementType)
-    setSelectedMovementType(
-      movementType
+    setSelectedMovementType(movementType)
+  }
+  const changeStore = (name: string) => {
+    setSelectedStore(
+      storesQuery.data?.stores.find((store: Store) => store.name === name)
     )
   }
   const { mutate } = useMutation(createNewMovement, {
     onSuccess: (data) => {
       // Invalidate and refetch
       queryClient.invalidateQueries([queryId])
-      console.log(data.data)
       movementObservation.onChange('')
+      setSelectedMovementType({
+        id: '',
+        movementType: '',
+        movementName: '',
+        cause: ''
+      })
+      setSelectedMovementDetails(defaultMovementDetails)
+      setSelectedStore(defaultStore)
       setErrorState(defaultErrorState)
     },
     onError: (error: any) => {
@@ -48,17 +64,29 @@ const useDialogNewMovementMutation = (queryId: string) => {
   const movementObservation = useField({ initialValue: '', type: 'text' })
   const handleCreateNewMovement = () => {
     mutate({
-      datetime: new Date(),
       observation: movementObservation.value as string,
       movementTypeId: selectedMovementType.id,
-      details: ParseMovementDetails(selectedMovementDetails)
+      details: ParseMovementDetails(selectedMovementDetails),
+      storeId: selectedStore.id
     })
   }
+  const movementTypesOptions = movementTypesQuery?.data?.movementsTypes.map(
+    (movementTypes: MovementType) => movementTypes.movementName
+  )
+  const storesOptions = storesQuery?.data?.stores.map(
+    (store: Store) => store.name
+  )
+  const productsOptions = productsQuery?.data?.products
   return {
     handleCreateNewMovement,
     movementObservation,
     changeMovementType,
-    selectedMovementType
+    selectedMovementType,
+    selectedStore,
+    changeStore,
+    movementTypesOptions,
+    storesOptions,
+    productsOptions
   }
 }
 

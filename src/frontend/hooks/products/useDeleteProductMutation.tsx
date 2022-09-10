@@ -1,15 +1,15 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRecoilState } from 'recoil'
-import { defaultErrorState, ErrorState } from '../../atoms/ErrorAtom'
+import { defaultErrorState, ErrorState } from '../../atoms/error/ErrorAtom'
 import {
   defaultProductChecked,
   isProductCheckedState
-} from '../../atoms/isProductCheckedAtom'
+} from '../../atoms/products/isProductCheckedAtom'
 import {
   defaultProduct,
   selectedProductState
-} from '../../atoms/selectedProductAtom'
-import { showErrorDialogState } from '../../atoms/showErrorDialog'
+} from '../../atoms/products/selectedProductAtom'
+import { showErrorDialogState } from '../../atoms/error/showErrorDialog'
 import { deleteProduct } from '../../services/products/deleteProducts'
 
 const useDeleteProductMutation = (queryId: string) => {

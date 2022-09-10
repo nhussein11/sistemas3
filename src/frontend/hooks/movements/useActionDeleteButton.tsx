@@ -1,5 +1,6 @@
 import { useRecoilState } from 'recoil'
-import { selectedMovementDetailsState } from '../../atoms/selectedMovementDetails'
+import { selectedMovementDetailsState } from '../../atoms/movements/selectedMovementDetails'
+
 const useActionDeleteButton = (productId: string) => {
   const [, setSelectedMovementDetails] = useRecoilState(
     selectedMovementDetailsState

@@ -4,8 +4,8 @@ import { CategoryEnum } from '@prisma/client'
 import { useState } from 'react'
 import { createNewProduct } from '../../services/products/createNewProduct'
 import { useRecoilState } from 'recoil'
-import { showErrorDialogState } from '../../atoms/showErrorDialog'
-import { defaultErrorState, ErrorState } from '../../atoms/ErrorAtom'
+import { showErrorDialogState } from '../../atoms/error/showErrorDialog'
+import { defaultErrorState, ErrorState } from '../../atoms/error/ErrorAtom'
 
 const useDialogNewProductMutation = (queryId: string) => {
   const [, setShowErrorDialog] = useRecoilState(showErrorDialogState)

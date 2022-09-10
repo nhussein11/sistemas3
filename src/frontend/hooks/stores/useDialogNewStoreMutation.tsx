@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRecoilState } from 'recoil'
-import { defaultErrorState, ErrorState } from '../../atoms/ErrorAtom'
-import { showErrorDialogState } from '../../atoms/showErrorDialog'
+import { defaultErrorState, ErrorState } from '../../atoms/error/ErrorAtom'
+import { showErrorDialogState } from '../../atoms/error/showErrorDialog'
 import { createNewStore } from '../../services/stores/createNewStore'
 import useField from '../useField'
 

@@ -6,12 +6,9 @@ import { DialogNewMovementProps } from '../../@types/frontend.types'
 import { InputText } from 'primereact/inputtext'
 import useDialogNewMovementMutation from '../../hooks/movements/useDialogNewMovementMutation'
 import MovementsProductsTable from './MovementsProductsTable'
-import { MovementType } from '@prisma/client'
-import useMovementTypesQuery from '../../hooks/movements/useMovementTypesQuery'
-import useProductsQuery from '../../hooks/products/useProductsQuery'
 import { useRecoilState } from 'recoil'
-import { selectedMovementDetailsState } from '../../atoms/selectedMovementDetails'
 import QuantitySelectorDialog from './QuantitySelectorDialog'
+import { selectedMovementDetailsState } from '../../atoms/movements/selectedMovementDetails'
 
 const DialogNewMovement = ({
   displayBasic,
@@ -21,10 +18,13 @@ const DialogNewMovement = ({
     handleCreateNewMovement,
     selectedMovementType,
     changeMovementType,
-    movementObservation
-  } = useDialogNewMovementMutation('products')
-  const movementTypesQuery = useMovementTypesQuery('movement-types')
-  const productsQuery = useProductsQuery('products')
+    movementObservation,
+    selectedStore,
+    changeStore,
+    movementTypesOptions,
+    storesOptions,
+    productsOptions
+  } = useDialogNewMovementMutation('movements')
   const [selectedMovementDetails] = useRecoilState(selectedMovementDetailsState)
   return (
     <Dialog
@@ -43,13 +43,20 @@ const DialogNewMovement = ({
           <label htmlFor="id">Seleccionar Tipo de Movimiento</label>
           <Dropdown
             value={selectedMovementType?.movementName}
-            options={movementTypesQuery?.data?.movementsTypes.map(
-              (movementTypes: MovementType) => movementTypes.movementName
-            )}
+            options={movementTypesOptions}
             onChange={(e) => changeMovementType(e.target.value)}
             placeholder="seleccionar Depósito"
           />
         </div>
+          <div className="field-drop">
+          <label htmlFor="id">Seleccionar Deposito</label>
+           <Dropdown
+            value={selectedStore?.name}
+            options={storesOptions}
+            onChange={(e) => changeStore(e.target.value)}
+            placeholder="seleccionar Depósito"
+          />
+          </div>
         <div
           className="field-form-container"
           style={{ display: 'grid', alignSelf: 'center' }}
@@ -67,7 +74,7 @@ const DialogNewMovement = ({
       <div style={{ display: 'flex', margin: '0.2rem' }}>
         <MovementsProductsTable
           detailsTable={false}
-          products={productsQuery?.data?.products}
+          products={productsOptions}
         />
         <i
           className="pi pi-arrow-right"

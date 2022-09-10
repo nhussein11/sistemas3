@@ -1,8 +1,8 @@
 import React from 'react'
 import { Dialog } from 'primereact/dialog'
 import { useRecoilState } from 'recoil'
-import { defaultErrorState, ErrorState } from '../../atoms/ErrorAtom'
-import { showErrorDialogState } from '../../atoms/showErrorDialog'
+import { defaultErrorState, ErrorState } from '../../atoms/error/ErrorAtom'
+import { showErrorDialogState } from '../../atoms/error/showErrorDialog'
 
 const DialogError = () => {
   const [errorState, setErrorState] = useRecoilState(ErrorState)
