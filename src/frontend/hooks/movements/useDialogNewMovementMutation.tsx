@@ -7,12 +7,14 @@ import { showErrorDialogState } from '../../atoms/showErrorDialog'
 import { defaultErrorState, ErrorState } from '../../atoms/ErrorAtom'
 import { createNewMovement } from '../../services/movements/createNewMovement'
 import useMovementTypesQuery from './useMovementTypesQuery'
-import { selectedMovementDetailsState } from '../../atoms/selectedMovementDetails'
+import {
+  defaultMovementDetails,
+  selectedMovementDetailsState
+} from '../../atoms/selectedMovementDetails'
 import { ParseMovementDetails } from '../../services/movements/parseMovementDetails'
 import useStoresQuery from '../stores/useStoresQuery'
-import { selectedStoreState } from '../../atoms/selectedStoreAtom'
+import { defaultStore, selectedStoreState } from '../../atoms/selectedStoreAtom'
 import useProductsQuery from '../products/useProductsQuery'
-
 const useDialogNewMovementMutation = (queryId: string) => {
   const [, setShowErrorDialog] = useRecoilState(showErrorDialogState)
   const [, setErrorState] = useRecoilState(ErrorState)
@@ -20,7 +22,9 @@ const useDialogNewMovementMutation = (queryId: string) => {
   const movementTypesQuery = useMovementTypesQuery('movement-types')
   const storesQuery = useStoresQuery('stores')
   const productsQuery = useProductsQuery('products')
-  const [selectedMovementDetails] = useRecoilState(selectedMovementDetailsState)
+  const [selectedMovementDetails, setSelectedMovementDetails] = useRecoilState(
+    selectedMovementDetailsState
+  )
   const [selectedStore, setSelectedStore] = useRecoilState(selectedStoreState)
   const [selectedMovementType, setSelectedMovementType] = useState({
     id: '',
@@ -44,6 +48,14 @@ const useDialogNewMovementMutation = (queryId: string) => {
       // Invalidate and refetch
       queryClient.invalidateQueries([queryId])
       movementObservation.onChange('')
+      setSelectedMovementType({
+        id: '',
+        movementType: '',
+        movementName: '',
+        cause: ''
+      })
+      setSelectedMovementDetails(defaultMovementDetails)
+      setSelectedStore(defaultStore)
       setErrorState(defaultErrorState)
     },
     onError: (error: any) => {
