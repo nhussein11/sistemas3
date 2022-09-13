@@ -16,7 +16,6 @@ model Product {
   price       Float        @db.Real
 
   Stock         Stock[]
-  RecordDetails RecordDetails[]
 
   @@map("product")
 }
@@ -59,8 +58,6 @@ model RecordDetails {
 
   quantity  Int
   subtotal  Float    @db.Real
-  Product   Product? @relation(fields: [productId], references: [id])
-  productId String?
 
   @@map("record_details")
 }
