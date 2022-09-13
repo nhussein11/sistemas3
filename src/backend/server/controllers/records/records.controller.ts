@@ -1,7 +1,7 @@
 /* eslint-disable no-useless-catch */
 import { Record, RecordType, RecordTypeEnum } from '@prisma/client'
 import { prisma } from '../../prisma-client/prisma-client'
-import { getMovementTypeById } from '../record-types/record-types.controller'
+import { getRecordTypeById } from '../record-types/record-types.controller'
 import { createMovementDetails } from '../movements-details/movement-details.controller'
 import {
   createStock,
@@ -22,18 +22,18 @@ const getRecords = async () => {
 
 const createRecord = async (
   observation: string,
+  senderName: string,
+  address: string,
   recordTypeId: string,
   details: any[]
 ) => {
   try {
-    const recordType: RecordType | null = await getMovementTypeById(
-      recordTypeId
-    )
+    const recordType: RecordType | null = await getRecordTypeById(recordTypeId)
     if (!recordType) {
       return
     }
     const recordCreated: Record = await prisma.record.create({
-      data: { observation, recordTypeId }
+      data: { observation, senderName, address, recordTypeId }
     })
 
     for (const productIdAndQuantity of details) {

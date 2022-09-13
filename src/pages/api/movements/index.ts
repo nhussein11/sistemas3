@@ -4,7 +4,7 @@ import {
   getMovements
 } from '../../../backend/server/controllers/records/records.controller'
 
-export default async function movements (
+export default async function movements(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
@@ -21,10 +21,12 @@ export default async function movements (
 
     case 'POST':
       try {
-        const { observation, movementTypeId, details } =
+        const { observation, senderName, address, movementTypeId, details } =
           body
         const movementCreated = await createMovement(
           observation,
+          senderName,
+          address,
           movementTypeId,
           details
         )
