@@ -1,5 +1,5 @@
 /* eslint-disable no-useless-catch */
-import { Movement, MovementType, MovementTypeEnum } from '@prisma/client'
+import { Record, RecordType, RecordTypeEnum } from '@prisma/client'
 import { prisma } from '../../../server/prisma-client/prisma-client'
 import { getMovementTypeById } from '../movement-types/movement-types.controller'
 import { createMovementDetails } from '../movements-details/movement-details.controller'
@@ -11,41 +11,40 @@ import {
 } from '../stocks/stock.controller'
 import { getStoreByIndex } from '../stores/stores.controller'
 
-const getMovements = async () => {
+const getRecords = async () => {
   try {
-    const movements: Movement[] = await prisma.movement.findMany()
-    return movements
+    const records: Record[] = await prisma.record.findMany()
+    return records
   } catch (error) {
     throw error
   }
 }
 
-const createMovement = async (
+const createRecord = async (
   observation: string,
-  movementTypeId: string,
+  recordTypeId: string,
   details: any[]
 ) => {
-  console.log(movementTypeId)
   try {
-    const movementType: MovementType | null = await getMovementTypeById(
-      movementTypeId
+    const recordType: RecordType | null = await getMovementTypeById(
+      recordTypeId
     )
-    if (!movementType) {
+    if (!recordType) {
       return
     }
-    const movementCreated: Movement = await prisma.movement.create({
-      data: { observation, movementTypeId }
+    const recordCreated: Record = await prisma.record.create({
+      data: { observation, recordTypeId }
     })
 
     for (const productIdAndQuantity of details) {
       const { productId, quantity } = productIdAndQuantity
-      await handleStockChanges(productId, quantity, movementType.movementType)
+      await handleStockChanges(productId, quantity, recordType.recordType)
     }
 
     const promiseArrayMovementsDetails = details.map(
       (productIdAndQuantity: any) => {
         const { productId, quantity } = productIdAndQuantity
-        return createMovementDetails(productId, movementCreated.id, quantity)
+        return createMovementDetails(productId, recordCreated.id, quantity)
       }
     )
     const allPromisesMovementsDetails = Promise.all(
@@ -56,44 +55,43 @@ const createMovement = async (
         return console.log(results)
       })
     })
-    console.log(movementCreated)
-    return movementCreated
+
+    return recordCreated
   } catch (error) {
-    console.log(error)
     throw error
   }
 }
 
-const getMovementById = async (id: string) => {
+const getRecordById = async (id: string) => {
   try {
-    const movement: Movement = await prisma.movement.findUniqueOrThrow({
+    const record: Record = await prisma.record.findUniqueOrThrow({
       where: {
         id
       }
     })
-    return movement
+    return record
   } catch (error) {
     throw error
   }
 }
 
-const updateMovementById = async (
+const updateRecordById = async (
   id: string,
   observation: string,
-  movementTypeId: string
+  recordTypeId: string
 ) => {
   try {
-    await prisma.movement.findUniqueOrThrow({ where: { id } })
+    await prisma.record.findUniqueOrThrow({ where: { id } })
 
-    if (!observation || !movementTypeId) {
+    if (!observation || !recordTypeId) {
       throw new Error('Observation or movementTypeId must be provided!')
     }
 
-    const updatedMovement: Movement = await prisma.movement.update({
+    const updatedMovement: Record = await prisma.record.update({
       where: { id },
       data: {
         observation,
-        movementTypeId
+        recordTypeId
       }
     })
 
@@ -103,12 +101,12 @@ const updateMovementById = async (
   }
 }
 
-const deleteMovementById = async (id: string) => {
+const deleteRecordById = async (id: string) => {
   try {
-    const deletedMovement: Movement = await prisma.movement.delete({
+    const deletedRecord: Record = await prisma.record.delete({
       where: { id }
     })
-    return deletedMovement
+    return deletedRecord
   } catch (error) {
     throw error
   }
@@ -117,9 +115,9 @@ const deleteMovementById = async (id: string) => {
 const handleStockChanges = async (
   productId: string,
   quantity: number,
-  movementType: MovementTypeEnum
+  recordType: RecordTypeEnum
 ) => {
-  if (movementType === MovementTypeEnum.POSITIVE) {
+  if (recordType === RecordTypeEnum.POSITIVE) {
     const store = await getStoreByIndex(0)
     const { id: storeId } = store
     const stockToSell = await isStockEnough(productId, quantity)
@@ -136,7 +134,7 @@ const handleStockChanges = async (
     return updatedStock
   }
 
-  if (movementType === MovementTypeEnum.NEGATIVE) {
+  if (recordType === RecordTypeEnum.NEGATIVE) {
     const store = await getStoreByIndex(1)
     const { id: storeId } = store
     const stockToUpdate = await getStockExisting(productId, storeId)
@@ -156,9 +154,9 @@ const handleStockChanges = async (
 }
 
 export {
-  getMovements,
-  createMovement,
-  getMovementById,
-  updateMovementById,
-  deleteMovementById
+  getRecords,
+  createRecord,
+  getRecordById,
+  updateRecordById,
+  deleteRecordById
 }
