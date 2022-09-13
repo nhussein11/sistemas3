@@ -16,7 +16,7 @@ const useDialogNewRecordMutation = (queryId: string) => {
   const [, setShowErrorDialog] = useRecoilState(showErrorDialogState)
   const [, setErrorState] = useRecoilState(ErrorState)
   const queryClient = useQueryClient()
-  const mecordTypesQuery = useRecordTypesQuery('mecord-types')
+  const recordTypesQuery = useRecordTypesQuery('mecord-types')
   const storesQuery = useStoresQuery('stores')
   const productsQuery = useProductsQuery('products')
   const [selectedRecordDetails, setSelectedRecordDetails] = useRecoilState(
@@ -30,10 +30,10 @@ const useDialogNewRecordMutation = (queryId: string) => {
     cause: ''
   })
   const changeRecordType = (name: string) => {
-    const mecordType = mecordTypesQuery.data?.recordsTypes.find(
-      (mecordType: RecordType) => mecordType.mecordName === name
+    const recordType = recordTypesQuery.data?.recordsTypes.find(
+      (mecordType: RecordType) => recordType.recordName === name
     )
-    setSelectedRecordType(mecordType)
+    setSelectedRecordType(recordType)
   }
   const changeStore = (name: string) => {
     setSelectedStore(
@@ -65,13 +65,13 @@ const useDialogNewRecordMutation = (queryId: string) => {
   const handleCreateNewRecord = () => {
     mutate({
       observation: mecordObservation.value as string,
-      mecordTypeId: selectedRecordType.id,
+      recordTypeId: selectedRecordType.id,
       details: ParseRecordDetails(selectedRecordDetails),
       storeId: selectedStore.id
     })
   }
-  const mecordTypesOptions = mecordTypesQuery?.data?.recordsTypes.map(
-    (mecordTypes: RecordType) => mecordTypes.mecordName
+  const mecordTypesOptions = recordTypesQuery?.data?.recordsTypes.map(
+    (mecordTypes: RecordType) => mecordTypes.recordName
   )
   const storesOptions = storesQuery?.data?.stores.map(
     (store: Store) => store.name
