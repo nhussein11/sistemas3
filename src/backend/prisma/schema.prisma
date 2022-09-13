@@ -3,27 +3,26 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 model Product {
-  id          String @id @default(cuid())
+  id          String       @id @default(cuid())
   name        String
   description String
-  category    CategoryEnum 
-  price       Float  @db.Real
+  category    CategoryEnum
+  price       Float        @db.Real
 
   Stock           Stock[]
-  MovementDetails MovementDetails[]
 
   @@map("product")
 }
 
 model Store {
   id      String @id @default(cuid())
-  name    String  
+  name    String
   address String
 
   Stock Stock[]
@@ -35,26 +34,41 @@ model Stock {
   id String @id @default(cuid())
 
   Product   Product @relation(fields: [productId], references: [id])
-  productId String  
+  productId String
 
   Store   Store  @relation(fields: [storeId], references: [id])
-  storeId String 
+  storeId String
 
-  quantity     Int
+  quantity    Int
   minQuantity Int
+
+  MovementDetails MovementDetails[]
 
   @@map("stock")
 }
 
+model MovementDetails {
+  id String @id @default(cuid())
+
+  Stock   Stock @relation(fields: [stockId], references: [id])
+  stockId String
+
+  Movement   Movement @relation(fields: [movementId], references: [id])
+  movementId String
+
+  quantity Int
+
+  @@map("movement_details")
+}
 model Movement {
   id          String   @id @default(cuid())
   datetime    DateTime @default(now())
   observation String   @default("")
 
-  MovementDetails   MovementDetails[]
+  MovementDetails MovementDetails[]
 
   MovementType   MovementType @relation(fields: [movementTypeId], references: [id])
-  movementTypeId String       
+  movementTypeId String
 
   @@map("movement")
 }
@@ -70,19 +84,7 @@ model MovementType {
   @@map("movement_type")
 }
 
-model MovementDetails {
-  id String @id @default(cuid())
 
-  Product Product @relation(fields: [productId],references: [id])
-  productId String 
-
-  Movement Movement @relation(fields: [movementId],references: [id])
-  movementId String 
-
-  quantity Int
-
-  @@map("movement_details")
-}
 
 enum CategoryEnum {
   IMPRESORA
@@ -100,4 +102,3 @@ enum MovementNameEnum {
   ORDEN_DE_COMPRA
   ORDEN_DE_PAGO
 }
-
