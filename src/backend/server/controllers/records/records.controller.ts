@@ -1,7 +1,7 @@
 /* eslint-disable no-useless-catch */
 import { Record, RecordType, RecordTypeEnum } from '@prisma/client'
-import { prisma } from '../../../server/prisma-client/prisma-client'
-import { getMovementTypeById } from '../movement-types/movement-types.controller'
+import { prisma } from '../../prisma-client/prisma-client'
+import { getMovementTypeById } from '../record-types/record-types.controller'
 import { createMovementDetails } from '../movements-details/movement-details.controller'
 import {
   createStock,

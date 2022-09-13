@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import {
   createMovement,
   getMovements
-} from '../../../backend/server/controllers/movements/movements.controller'
+} from '../../../backend/server/controllers/records/records.controller'
 
 export default async function movements (
   req: NextApiRequest,

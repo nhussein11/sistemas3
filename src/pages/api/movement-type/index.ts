@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { createMovementType, getMovementsTypes } from '../../../backend/server/controllers/movement-types/movement-types.controller'
+import { createMovementType, getMovementsTypes } from '../../../backend/server/controllers/record-types/record-types.controller'
 
 export default async function movementType (
   req: NextApiRequest,
