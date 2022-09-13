@@ -1,23 +1,31 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import useField from '../useField'
-import { RecordType, Store } from '@prisma/client'
+import { RecordType, Store, Stock } from '@prisma/client'
 import { useState } from 'react'
 import { useRecoilState } from 'recoil'
 import { showErrorDialogState } from '../../atoms/error/showErrorDialog'
 import { defaultErrorState, ErrorState } from '../../atoms/error/ErrorAtom'
 import { createNewRecord } from '../../services/records/createNewRecord'
 import useRecordTypesQuery from './useRecordTypesQuery'
-import { ParseRecordDetails } from '../../services/records/parseRecordDetails'
 import useStoresQuery from '../stores/useStoresQuery'
-import { defaultStore, selectedStoreState } from '../../atoms/stores/selectedStoreAtom'
+import {
+  defaultStore,
+  selectedStoreState
+} from '../../atoms/stores/selectedStoreAtom'
+import {
+  defaultRecordDetails,
+  selectedRecordDetailsState
+} from '../../atoms/records/selectedRecordDetails'
+import useStocksQuery from '../stock/useStocksQuery'
+import { ParseRecordDetails } from '../../services/records/parseRecordDetails'
 import useProductsQuery from '../products/useProductsQuery'
-import { defaultRecordDetails, selectedRecordDetailsState } from '../../atoms/records/selectedRecordDetails'
 const useDialogNewRecordMutation = (queryId: string) => {
   const [, setShowErrorDialog] = useRecoilState(showErrorDialogState)
   const [, setErrorState] = useRecoilState(ErrorState)
   const queryClient = useQueryClient()
-  const recordTypesQuery = useRecordTypesQuery('mecord-types')
+  const recordTypesQuery = useRecordTypesQuery('record-types')
   const storesQuery = useStoresQuery('stores')
+  const stocksQuery = useStocksQuery('stocks')
   const productsQuery = useProductsQuery('products')
   const [selectedRecordDetails, setSelectedRecordDetails] = useRecoilState(
     selectedRecordDetailsState
@@ -25,13 +33,13 @@ const useDialogNewRecordMutation = (queryId: string) => {
   const [selectedStore, setSelectedStore] = useRecoilState(selectedStoreState)
   const [selectedRecordType, setSelectedRecordType] = useState({
     id: '',
-    mecordType: '',
-    mecordName: '',
+    recordType: '',
+    recordName: '',
     cause: ''
   })
   const changeRecordType = (name: string) => {
     const recordType = recordTypesQuery.data?.recordsTypes.find(
-      (mecordType: RecordType) => recordType.recordName === name
+      (recordType: RecordType) => recordType.recordName === name
     )
     setSelectedRecordType(recordType)
   }
@@ -44,11 +52,11 @@ const useDialogNewRecordMutation = (queryId: string) => {
     onSuccess: (data) => {
       // Invalidate and refetch
       queryClient.invalidateQueries([queryId])
-      mecordObservation.onChange('')
+      recordObservation.onChange('')
       setSelectedRecordType({
         id: '',
-        mecordType: '',
-        mecordName: '',
+        recordType: '',
+        recordName: '',
         cause: ''
       })
       setSelectedRecordDetails(defaultRecordDetails)
@@ -56,37 +64,35 @@ const useDialogNewRecordMutation = (queryId: string) => {
       setErrorState(defaultErrorState)
     },
     onError: (error: any) => {
-      console.log(error)
       setErrorState({ status: error.response.status, message: error.message })
       setShowErrorDialog(true)
     }
   })
-  const mecordObservation = useField({ initialValue: '', type: 'text' })
+  const recordObservation = useField({ initialValue: '', type: 'text' })
   const handleCreateNewRecord = () => {
     mutate({
-      observation: mecordObservation.value as string,
+      observation: recordObservation.value as string,
       recordTypeId: selectedRecordType.id,
-      details: ParseRecordDetails(selectedRecordDetails),
-      storeId: selectedStore.id
+      details: ParseRecordDetails(selectedRecordDetails, productsQuery)
     })
   }
-  const mecordTypesOptions = recordTypesQuery?.data?.recordsTypes.map(
-    (mecordTypes: RecordType) => mecordTypes.recordName
+  const recordTypesOptions = recordTypesQuery?.data?.recordsTypes.map(
+    (recordTypes: RecordType) => recordTypes.recordName
   )
   const storesOptions = storesQuery?.data?.stores.map(
     (store: Store) => store.name
   )
-  const productsOptions = productsQuery?.data?.products
+  const stockOptions = stocksQuery?.data?.stocks.filter((stock: Stock) => stock.storeId === selectedStore.id)
   return {
     handleCreateNewRecord,
-    mecordObservation,
+    recordObservation,
     changeRecordType,
     selectedRecordType,
     selectedStore,
     changeStore,
-    mecordTypesOptions,
+    recordTypesOptions,
     storesOptions,
-    productsOptions
+    stockOptions
   }
 }
 
