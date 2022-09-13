@@ -3,19 +3,23 @@ import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import ActionAddBodyTemplate from './ActionAddBodyTemplate'
 import ActionDeleteBodyTemplate from './ActionDeleteBodyTemplate'
-import NumberFormat from 'react-number-format'
-
-const RecordsProductsTable = ({
-  products,
+import useStoresQuery from '../../hooks/stores/useStoresQuery'
+import useProductsQuery from '../../hooks/products/useProductsQuery'
+import { findProductName } from '../../services/products/findProductName'
+import { findStoreName } from '../../services/stores/findStoreName'
+const RecordsStocksTable = ({
+  stocks,
   detailsTable
 }: {
-  products: Object[]
+  stocks: Object[]
   detailsTable: boolean
 }) => {
+  const storesQuery = useStoresQuery('stores')
+  const productsQuery = useProductsQuery('products')
   return (
     <div style={{ margin: '1rem' }}>
       <DataTable
-        value={products}
+        value={stocks}
         dataKey="id"
         paginator
         rows={5}
@@ -24,61 +28,43 @@ const RecordsProductsTable = ({
         responsiveLayout="scroll"
       >
         <Column
-          field="name"
-          header="Nombre"
+          field="ProductName"
+          header="Product Name"
+          body={(rowData) => findProductName(rowData.productId, productsQuery)}
           style={{ minWidth: '2rem' }}
         ></Column>
-        <Column field="quantity" header="Cantidad"></Column>
         <Column
-          field="price"
-          header="Precio Unidad"
+          field="StoreName"
+          header="Store Name"
+          body={(rowData) => findStoreName(rowData.storeId, storesQuery)}
           style={{ minWidth: '1rem' }}
         ></Column>
-
+        <Column
+          field="Quantity"
+          header="Stock Quantity"
+          body={(rowData) => rowData.quantity}
+          style={{ minWidth: '1rem' }}
+        ></Column>
         {!detailsTable
           ? (
             <Column
-              body={(rowData) => (
-                <ActionAddBodyTemplate
-                  productId={rowData.id}
-                  name={rowData.name}
-                  price={rowData.price}
-                />
-              )}
+              body={(rowData) => <ActionAddBodyTemplate storeId={rowData.storeId} productId={rowData.productId} stockId={rowData.id} />}
               exportable={false}
               style={{ minWidth: '2rem' }}
             ></Column>
             )
           : (
           <Column
-            field="priceTotal"
-            header="Precio Total"
-            body={(rowData) => {
-              return (
-                <NumberFormat
-                  value={rowData.price * rowData.quantity}
-                  displayType={'text'}
-                  thousandSeparator={'.'}
-                  decimalSeparator={','}
-                  prefix={'$'}
-                ></NumberFormat>
-              )
-            }}
-            style={{ minWidth: '1rem' }}
-          ></Column>
-            )}
-        {detailsTable && (
-          <Column
             body={(rowData) => (
-              <ActionDeleteBodyTemplate productId={rowData.productId} />
+              <ActionDeleteBodyTemplate stockId={rowData.stockId} />
             )}
             exportable={false}
             style={{ minWidth: '2rem' }}
           ></Column>
-        )}
+            )}
       </DataTable>
     </div>
   )
 }
 
-export default RecordsProductsTable
+export default RecordsStocksTable

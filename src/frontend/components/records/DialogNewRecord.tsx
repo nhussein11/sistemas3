@@ -5,10 +5,10 @@ import { Dropdown } from 'primereact/dropdown'
 import { DialogNewRecordProps } from '../../@types/frontend.types'
 import { InputText } from 'primereact/inputtext'
 import useDialogNewRecordMutation from '../../hooks/records/useDialogNewRecordMutation'
-import RecordsProductsTable from './RecordsProductsTable'
 import { useRecoilState } from 'recoil'
 import QuantitySelectorDialog from './QuantitySelectorDialog'
 import { selectedRecordDetailsState } from '../../atoms/records/selectedRecordDetails'
+import RecordsStocksTable from './RecordsStocksTable'
 
 const DialogNewRecord = ({
   displayBasic,
@@ -23,7 +23,7 @@ const DialogNewRecord = ({
     changeStore,
     recordTypesOptions,
     storesOptions,
-    productsOptions
+    stockOptions
   } = useDialogNewRecordMutation('records')
   const [selectedRecordDetails] = useRecoilState(selectedRecordDetailsState)
   return (
@@ -48,15 +48,15 @@ const DialogNewRecord = ({
             placeholder="seleccionar Depósito"
           />
         </div>
-          <div className="field-drop">
+        <div className="field-drop">
           <label htmlFor="id">Seleccionar Deposito</label>
-           <Dropdown
+          <Dropdown
             value={selectedStore?.name}
             options={storesOptions}
             onChange={(e) => changeStore(e.target.value)}
             placeholder="seleccionar Depósito"
           />
-          </div>
+        </div>
         <div
           className="field-form-container"
           style={{ display: 'grid', alignSelf: 'center' }}
@@ -72,18 +72,12 @@ const DialogNewRecord = ({
         </div>
       </div>
       <div style={{ display: 'flex', margin: '0.2rem' }}>
-        <RecordsProductsTable
-          detailsTable={false}
-          products={productsOptions}
-        />
+        <RecordsStocksTable detailsTable={false} stocks={stockOptions} />
         <i
           className="pi pi-arrow-right"
           style={{ fontSize: '2rem', alignSelf: 'center' }}
         ></i>
-        <RecordsProductsTable
-          detailsTable
-          products={selectedRecordDetails}
-        />
+        <RecordsStocksTable detailsTable stocks={selectedRecordDetails} />
       </div>
       <QuantitySelectorDialog />
     </Dialog>
