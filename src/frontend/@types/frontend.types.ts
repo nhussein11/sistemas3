@@ -1,11 +1,11 @@
-import { Product, Stock, Store, Movement } from '@prisma/client'
+import { Product, Stock, Store, Record } from '@prisma/client'
 import { Dispatch } from 'react'
 
 export type TableProps = {
   products: Product[]
 }
-export type MovementsTableProps = {
-  movements: Movement[]
+export type RecordsTableProps = {
+  records: Record[]
 }
 export type StoresTableProps = {
   stores: Store[]
@@ -22,7 +22,7 @@ export type DialogNewProductProps = {
   displayBasic: boolean
   closeDialog: () => void
 }
-export type DialogNewMovementProps = {
+export type DialogNewRecordProps = {
   displayBasic: boolean
   closeDialog: () => void
 }
@@ -82,25 +82,25 @@ export type StockDialogFooterProps = {
 export type StockTableHeaderProps = {
   setDisplayBasic: Dispatch<boolean>
 }
-export type DialogFooterMovementProps = {
+export type DialogFooterRecordProps = {
   closeDialog: () => void
-  handleCreateNewMovement: () => void
+  handleCreateNewRecord: () => void
 }
-export type MovementDetailData = {
+export type RecordDetailData = {
   productId: string
   quantity: number
   name: string
   price: number
 }
-export type MovementsTableHeaderProps = {
+export type RecordsTableHeaderProps = {
   setDisplayBasic: Dispatch<boolean>
-  setDisplayMovementDetailsTable: Dispatch<
+  setDisplayRecordDetailsTable: Dispatch<
     boolean | ((prev: boolean) => boolean)
   >
 }
-export type DialogMovementDetailsProps = {
-  setDisplayMovementDetailsTable: Dispatch<
+export type DialogRecordDetailsProps = {
+  setDisplayRecordDetailsTable: Dispatch<
     boolean | ((prev: boolean) => boolean)
   >
-  displayMovementDetailsTable: boolean
+  displayRecordDetailsTable: boolean
 }

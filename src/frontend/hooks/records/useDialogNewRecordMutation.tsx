@@ -5,9 +5,9 @@ import { useState } from 'react'
 import { useRecoilState } from 'recoil'
 import { showErrorDialogState } from '../../atoms/error/showErrorDialog'
 import { defaultErrorState, ErrorState } from '../../atoms/error/ErrorAtom'
-import { createNewRecord } from '../../services/mecords/createNewRecord'
+import { createNewRecord } from '../../services/records/createNewRecord'
 import useRecordTypesQuery from './useRecordTypesQuery'
-import { ParseRecordDetails } from '../../services/mecords/parseRecordDetails'
+import { ParseRecordDetails } from '../../services/records/parseRecordDetails'
 import useStoresQuery from '../stores/useStoresQuery'
 import { defaultStore, selectedStoreState } from '../../atoms/stores/selectedStoreAtom'
 import useProductsQuery from '../products/useProductsQuery'
@@ -30,7 +30,7 @@ const useDialogNewRecordMutation = (queryId: string) => {
     cause: ''
   })
   const changeRecordType = (name: string) => {
-    const mecordType = mecordTypesQuery.data?.mecordsTypes.find(
+    const mecordType = mecordTypesQuery.data?.recordsTypes.find(
       (mecordType: RecordType) => mecordType.mecordName === name
     )
     setSelectedRecordType(mecordType)
@@ -70,7 +70,7 @@ const useDialogNewRecordMutation = (queryId: string) => {
       storeId: selectedStore.id
     })
   }
-  const mecordTypesOptions = mecordTypesQuery?.data?.mecordsTypes.map(
+  const mecordTypesOptions = mecordTypesQuery?.data?.recordsTypes.map(
     (mecordTypes: RecordType) => mecordTypes.mecordName
   )
   const storesOptions = storesQuery?.data?.stores.map(

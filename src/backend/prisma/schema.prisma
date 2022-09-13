@@ -16,7 +16,7 @@ model Product {
   price       Float  @db.Real
 
   Stock           Stock[]
-  MovementDetails MovementDetails[]
+  RecordDetails RecordDetails[]
 
   @@map("product")
 }
@@ -46,42 +46,42 @@ model Stock {
   @@map("stock")
 }
 
-model Movement {
+model Record {
   id          String   @id @default(cuid())
   datetime    DateTime @default(now())
   observation String   @default("")
 
-  MovementDetails   MovementDetails[]
+  RecordDetails   RecordDetails[]
 
-  MovementType   MovementType @relation(fields: [movementTypeId], references: [id])
-  movementTypeId String       
+  RecordType   RecordType @relation(fields: [recordTypeId], references: [id])
+  recordTypeId String       
 
-  @@map("movement")
+  @@map("record")
 }
 
-model MovementType {
+model RecordType {
   id           String           @id @default(cuid())
-  movementType MovementTypeEnum
-  movementName MovementNameEnum
+  recordType RecordTypeEnum
+  recordName RecordNameEnum
   cause        String
 
-  Movement Movement[]
+  Record Record[]
 
-  @@map("movement_type")
+  @@map("record_type")
 }
 
-model MovementDetails {
+model RecordDetails {
   id String @id @default(cuid())
 
   Product Product @relation(fields: [productId],references: [id])
   productId String 
 
-  Movement Movement @relation(fields: [movementId],references: [id])
-  movementId String 
+  Record Record @relation(fields: [recordId],references: [id])
+  recordId String 
 
   quantity Int
 
-  @@map("movement_details")
+  @@map("record_details")
 }
 
 enum CategoryEnum {
@@ -89,12 +89,12 @@ enum CategoryEnum {
   FILAMENTO
 }
 
-enum MovementTypeEnum {
+enum RecordTypeEnum {
   POSITIVE
   NEGATIVE
 }
 
-enum MovementNameEnum {
+enum RecordNameEnum {
   REMITO
   FACTURA
   ORDEN_DE_COMPRA
