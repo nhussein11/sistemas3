@@ -7,7 +7,7 @@ const useRecordDetailsTable = () => {
   const detailsQuery = useDetailsQuery('details')
   const [selectedRecord] = useRecoilState(selectedRecordState)
   const filteredDetails: RecordDetails[] =
-    detailsQuery.data?.mecordsDetails?.filter(
+    detailsQuery.data?.recordsDetails?.filter(
       (d: RecordDetails) => d.recordId === selectedRecord.id
     )
   return { filteredDetails }
