@@ -1,10 +1,10 @@
 /* eslint-disable no-useless-catch */
-import { MovementNameEnum, MovementType, MovementTypeEnum } from '@prisma/client'
+import { MovementNameEnum, RecordType, MovementTypeEnum } from '@prisma/client'
 import { prisma } from '../../prisma-client/prisma-client'
 
 const getMovementsTypes = async () => {
   try {
-    const movementsTypes: MovementType[] = await prisma.movementType.findMany()
+    const movementsTypes: RecordType[] = await prisma.recordType.findMany()
     return movementsTypes
   } catch (error) {
     throw error
@@ -17,8 +17,8 @@ const createMovementType = async (
   cause: string
 ) => {
   try {
-    const movementTypeCreated: MovementType =
-      await prisma.movementType.create({
+    const movementTypeCreated: RecordType =
+      await prisma.recordType.create({
         data: { movementType, movementName, cause }
       })
     return movementTypeCreated
@@ -30,8 +30,8 @@ const createMovementType = async (
 const getMovementTypeById = async (id: string) => {
   console.log(id)
   try {
-    const movementType: MovementType | null =
-      await prisma.movementType.findUnique({
+    const movementType: RecordType | null =
+      await prisma.recordType.findUnique({
         where: {
           id
         }
@@ -49,14 +49,14 @@ const updateMovementTypeById = async (
   cause: string
 ) => {
   try {
-    await prisma.movementType.findUniqueOrThrow({ where: { id } })
+    await prisma.recordType.findUniqueOrThrow({ where: { id } })
 
     if (!movementType || !movementName || !cause) {
       throw new Error('movementType, movementName or cause must be provided!')
     }
 
-    const updatedMovementDetails: MovementType =
-      await prisma.movementType.update({
+    const updatedMovementDetails: RecordType =
+      await prisma.recordType.update({
         where: { id },
         data: {
           movementType,
@@ -72,8 +72,8 @@ const updateMovementTypeById = async (
 
 const deleteMovementTypeById = async (id: string) => {
   try {
-    const deletedMovementType: MovementType =
-      await prisma.movementType.delete({
+    const deletedMovementType: RecordType =
+      await prisma.recordType.delete({
         where: { id }
       })
     return deletedMovementType
