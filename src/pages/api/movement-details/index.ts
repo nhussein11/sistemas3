@@ -1,10 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import {
-  createMovementDetails,
-  getMovementsDetails
-} from '../../../backend/server/controllers/movements-details/movement-details.controller'
+  createRecordDetails,
+  getRecordsDetails
+} from '../../../backend/server/controllers/record-details/record-details.controller'
 
-export default async function movementsDetails (
+export default async function recordsDetails (
   req: NextApiRequest,
   res: NextApiResponse
 ) {
@@ -13,21 +13,22 @@ export default async function movementsDetails (
   switch (method) {
     case 'GET':
       try {
-        const movementsDetails = await getMovementsDetails()
-        return res.status(200).send({ movementsDetails })
+        const recordsDetails = await getRecordsDetails()
+        return res.status(200).send({ recordsDetails })
       } catch (error) {
         return res.status(500).send({ error })
       }
 
     case 'POST':
       try {
-        const { productId, movementId, quantity } = body
-        const movementDetailsCreated = await createMovementDetails(
+        const { productId, movementId, quantity, subtotal } = body
+        const recordDetailsCreated = await createRecordDetails(
           productId,
           movementId,
-          quantity
+          quantity,
+          subtotal
         )
-        return res.status(201).send({ movementDetailsCreated })
+        return res.status(201).send({ recordDetailsCreated })
       } catch (error) {
         return res.status(500).send({ error })
       }
