@@ -2,8 +2,13 @@ import React from 'react'
 import { Button } from 'primereact/button'
 import useActionDeleteButton from '../../hooks/records/useActionDeleteButton'
 
-const ActionDeleteBodyTemplate = ({ productId }: { productId: string }) => {
-  const { deleteSelectedDetail } = useActionDeleteButton(productId)
+const ActionDeleteBodyTemplate = ({
+  stockId
+
+}: {
+  stockId: string
+}) => {
+  const { deleteSelectedDetail } = useActionDeleteButton(stockId)
   return (
     <React.Fragment>
       <Button

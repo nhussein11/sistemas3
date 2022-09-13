@@ -4,15 +4,12 @@ import { Dialog } from 'primereact/dialog'
 import React from 'react'
 import { DialogRecordDetailsProps } from '../../@types/frontend.types'
 import useRecordDetailsTable from '../../hooks/records/useRecordDetailsTable'
-import useProductsQuery from '../../hooks/products/useProductsQuery'
-import { findProductName } from '../../services/products/findProductName'
-
 const RecordDetailsTable = ({
   setDisplayRecordDetailsTable,
   displayRecordDetailsTable
 }: DialogRecordDetailsProps) => {
-  const { filteredDetails } = useRecordDetailsTable()
-  const ProductsQuery = useProductsQuery('products')
+  const { filteredDetailsTableData } = useRecordDetailsTable()
+  console.log(filteredDetailsTableData)
   if (displayRecordDetailsTable) {
     return (
       <Dialog
@@ -22,7 +19,7 @@ const RecordDetailsTable = ({
         onHide={() => setDisplayRecordDetailsTable(false)}
       >
         <DataTable
-          value={filteredDetails}
+          value={filteredDetailsTableData}
           paginator
           className="p-datatable-customers"
           showGridlines
@@ -34,9 +31,13 @@ const RecordDetailsTable = ({
           <Column
             field="Product"
             header="Producto"
-            body={(rowData) =>
-              findProductName(rowData.productId, ProductsQuery)
-            }
+            body={(rowData) => rowData.productName}
+            alignHeader={'center'}
+          />
+          <Column
+            field="Deposito"
+            header="Deposito"
+            body={(rowData) => rowData.storeName}
             alignHeader={'center'}
           />
           <Column

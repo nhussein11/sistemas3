@@ -4,13 +4,13 @@ import { showQuantitySelectorDialogState } from '../../atoms/records/showQuantit
 import { useRecoilState } from 'recoil'
 
 const ActionAddBodyTemplate = ({
+  stockId,
   productId,
-  name,
-  price
+  storeId
 }: {
-  productId: string
-  name: string
-  price: number
+  stockId: string,
+  productId: string,
+  storeId: string
 }) => {
   const [, setShowQuantitySelectorDialog] = useRecoilState(
     showQuantitySelectorDialogState
@@ -23,9 +23,9 @@ const ActionAddBodyTemplate = ({
         onClick={() =>
           setShowQuantitySelectorDialog({
             show: true,
+            stockId,
             productId,
-            name,
-            price
+            storeId
           })
         }
       />

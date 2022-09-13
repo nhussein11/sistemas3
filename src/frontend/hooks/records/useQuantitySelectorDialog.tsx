@@ -20,10 +20,10 @@ const useQuantitySelectorDialog = () => {
     setSelectedRecordDetails((prev) => [
       ...prev,
       {
+        stockId: showQuantitySelectorDialog.stockId,
         productId: showQuantitySelectorDialog.productId,
-        quantity: quantity.value as number,
-        name: showQuantitySelectorDialog.name,
-        price: showQuantitySelectorDialog.price
+        storeId: showQuantitySelectorDialog.storeId,
+        quantity: quantity.value as number
       }
     ])
   }
