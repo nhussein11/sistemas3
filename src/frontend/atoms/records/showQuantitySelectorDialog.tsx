@@ -1,9 +1,9 @@
 import { atom } from 'recoil'
 export const showQuantitySelectorDialogDefaultState = {
   show: false,
+  stockId: '',
   productId: '',
-  name: '',
-  price: 0
+  storeId: ''
 }
 export const showQuantitySelectorDialogState = atom({
   key: 'showQuantitySelectorDialogState',
