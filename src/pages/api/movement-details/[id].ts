@@ -1,6 +1,10 @@
 /* eslint-disable no-case-declarations */
 import { NextApiRequest, NextApiResponse } from 'next'
-import { deleteMovementDetailsById, getMovementDetailsById, updateMovementDetailsById } from '../../../backend/server/controllers/movements-details/movement-details.controller'
+import {
+  deleteRecordDetailsById,
+  getRecordDetailsById,
+  updateRecordDetailsById
+} from '../../../backend/server/controllers/record-details/record-details.controller'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const {
@@ -16,25 +20,29 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   switch (method) {
     case 'GET':
       try {
-        const movementDetails = await getMovementDetailsById(id)
-        return res.status(200).send({ movementDetails })
+        const recordDetails = await getRecordDetailsById(id)
+        return res.status(200).send({ recordDetails })
       } catch (error) {
         return res.status(500).send({ error })
       }
     case 'PUT':
-      const { productId, movementId, quantity } = body
+      const { recordId, quantity } = body
 
       try {
-        const updatedMovementDetails = await updateMovementDetailsById(id, productId, movementId, quantity)
-        return res.status(200).send({ updatedMovementDetails })
+        const updatedRecordDetails = await updateRecordDetailsById(
+          id,
+          recordId,
+          quantity
+        )
+        return res.status(200).send({ updatedRecordDetails })
       } catch (error) {
         return res.status(500).send({ error })
       }
 
     case 'DELETE':
       try {
-        const deletedMovementDetails = await deleteMovementDetailsById(id)
-        return res.status(200).send({ deletedMovementDetails })
+        const deletedRecordDetails = await deleteRecordDetailsById(id)
+        return res.status(200).send({ deletedRecordDetails })
       } catch (error) {
         return res.status(500).send({ error })
       }

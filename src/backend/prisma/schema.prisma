@@ -3,27 +3,26 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 model Product {
-  id          String @id @default(cuid())
+  id          String       @id @default(cuid())
   name        String
   description String
-  category    CategoryEnum 
-  price       Float  @db.Real
+  category    CategoryEnum
+  price       Float        @db.Real
 
-  Stock           Stock[]
-  RecordDetails RecordDetails[]
+  Stock         Stock[]
 
   @@map("product")
 }
 
 model Store {
   id      String @id @default(cuid())
-  name    String  
+  name    String
   address String
 
   Stock Stock[]
@@ -35,53 +34,58 @@ model Stock {
   id String @id @default(cuid())
 
   Product   Product @relation(fields: [productId], references: [id])
-  productId String  
+  productId String
 
   Store   Store  @relation(fields: [storeId], references: [id])
-  storeId String 
+  storeId String
 
-  quantity     Int
+  quantity    Int
   minQuantity Int
 
+  RecordDetails RecordDetails[]
+
   @@map("stock")
+}
+
+model RecordDetails {
+  id String @id @default(cuid())
+
+  Stock   Stock  @relation(fields: [stockId], references: [id])
+  stockId String
+
+  Record   Record @relation(fields: [recordId], references: [id])
+  recordId String
+
+  quantity  Int
+  subtotal  Float    @db.Real
+
+  @@map("record_details")
 }
 
 model Record {
   id          String   @id @default(cuid())
   datetime    DateTime @default(now())
   observation String   @default("")
+  senderName  String
+  address     String
 
-  RecordDetails   RecordDetails[]
+  RecordDetails RecordDetails[]
 
   RecordType   RecordType @relation(fields: [recordTypeId], references: [id])
-  recordTypeId String       
+  recordTypeId String
 
   @@map("record")
 }
 
 model RecordType {
-  id           String           @id @default(cuid())
+  id         String         @id @default(cuid())
   recordType RecordTypeEnum
   recordName RecordNameEnum
-  cause        String
+  cause      String
 
   Record Record[]
 
   @@map("record_type")
-}
-
-model RecordDetails {
-  id String @id @default(cuid())
-
-  Product Product @relation(fields: [productId],references: [id])
-  productId String 
-
-  Record Record @relation(fields: [recordId],references: [id])
-  recordId String 
-
-  quantity Int
-
-  @@map("record_details")
 }
 
 enum CategoryEnum {
@@ -100,4 +104,3 @@ enum RecordNameEnum {
   ORDEN_DE_COMPRA
   ORDEN_DE_PAGO
 }
-

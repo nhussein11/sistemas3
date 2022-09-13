@@ -1,6 +1,6 @@
 /* eslint-disable no-case-declarations */
 import { NextApiRequest, NextApiResponse } from 'next'
-import { deleteMovementById, getMovementById, updateMovementById } from '../../../backend/server/controllers/movements/movements.controller'
+import { deleteRecordById, getRecordById, updateRecordById } from '../../../backend/server/controllers/records/records.controller'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const {
@@ -16,25 +16,25 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   switch (method) {
     case 'GET':
       try {
-        const movement = await getMovementById(id)
-        return res.status(200).send({ movement })
+        const record = await getRecordById(id)
+        return res.status(200).send({ record })
       } catch (error) {
         return res.status(500).send({ error })
       }
     case 'PUT':
-      const { observation, movementTypeId } = body
+      const { observation, recordTypeId } = body
 
       try {
-        const updatedMovement = await updateMovementById(id, observation, movementTypeId)
-        return res.status(200).send({ updatedMovement })
+        const updatedRecord = await updateRecordById(id, observation, recordTypeId)
+        return res.status(200).send({ updatedRecord })
       } catch (error) {
         return res.status(500).send({ error })
       }
 
     case 'DELETE':
       try {
-        const deletedMovement = await deleteMovementById(id)
-        return res.status(200).send({ deletedMovement })
+        const deletedRecord = await deleteRecordById(id)
+        return res.status(200).send({ deletedRecord })
       } catch (error) {
         return res.status(500).send({ error })
       }
