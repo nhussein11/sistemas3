@@ -1,32 +1,32 @@
 import React, { useState } from 'react'
 import { Column } from 'primereact/column'
 import { DataTable } from 'primereact/datatable'
-import DialogNewMovement from './DialogNewMovement'
+import DialogNewRecord from './DialogNewRecord'
 import DialogError from './DialogError'
-import { MovementsTableProps } from '../../@types/frontend.types'
+import { RecordsTableProps } from '../../@types/frontend.types'
 import TableHeader from './TableHeader'
 import SelectBodyTemplate from './SelectBodyTemplate'
-import { parseDate } from '../../services/movements/parseDate'
-import { resolveMovementName } from '../../services/movements/resolveMovementName'
-import useMovementTypesQuery from '../../hooks/movements/useMovementTypesQuery'
-import { resolveMovementType } from '../../services/movements/resolveMovementType'
-import MovementDetailsTable from './MovementDetailsTable'
+import { parseDate } from '../../services/records/parseDate'
+import { resolveRecordName } from '../../services/records/resolveRecordName'
+import useRecordTypesQuery from '../../hooks/records/useRecordTypesQuery'
+import { resolveRecordType } from '../../services/records/resolveRecordType'
+import RecordDetailsTable from './RecordDetailsTable'
 import { Button } from 'primereact/button'
 import { useRecoilState } from 'recoil'
-import { selectedMovementState } from '../../atoms/movements/selectedMovementAtom'
+import { selectedRecordState } from '../../atoms/records/selectedRecordAtom'
 
-const MovementsTable = ({ movements }: MovementsTableProps) => {
+const RecordsTable = ({ records }: RecordsTableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
-  const [displayMovementDetailsTable, setDisplayMovementDetailsTable] =
+  const [displayRecordDetailsTable, setDisplayRecordDetailsTable] =
     useState(false)
-  const [, setSelectedMovement] = useRecoilState(selectedMovementState)
+  const [, setSelectedRecord] = useRecoilState(selectedRecordState)
 
-  const movementTypesQuery = useMovementTypesQuery('movement-types')
+  const recordTypesQuery = useRecordTypesQuery('record-types')
   return (
     <div className="datatable-filter">
       <div className="card">
         <DataTable
-          value={movements}
+          value={records}
           paginator
           className="p-datatable-customers"
           showGridlines
@@ -35,11 +35,11 @@ const MovementsTable = ({ movements }: MovementsTableProps) => {
           responsiveLayout="scroll"
           header={
             <TableHeader
-              setDisplayMovementDetailsTable={setDisplayMovementDetailsTable}
+              setDisplayRecordDetailsTable={setDisplayRecordDetailsTable}
               setDisplayBasic={setDisplayBasic}
             />
           }
-          emptyMessage="No se encontraron Movimientos"
+          emptyMessage="No se encontraron Comprobantes"
         >
           <Column
             field="select"
@@ -64,20 +64,20 @@ const MovementsTable = ({ movements }: MovementsTableProps) => {
             alignHeader={'center'}
           />
           <Column
-            field="NombreMovimiento"
-            header="Nombre Movimiento"
+            field="NombreComprobante"
+            header="Comprobante"
             body={(rowData) =>
-              resolveMovementName(rowData.movementTypeId, movementTypesQuery)
+              resolveRecordName(rowData.recordTypeId, recordTypesQuery)
             }
             alignHeader={'center'}
           />
           <Column
-            field="TipoMovimiento"
-            header="Tipo Movimiento"
+            field="TipoComprobante"
+            header="Tipo Comprobante"
             body={(rowData) =>
-              resolveMovementType(
-                rowData.movementTypeId,
-                movementTypesQuery
+              resolveRecordType(
+                rowData.recordTypeId,
+                recordTypesQuery
               ) === 'POSITIVE'
                 ? (
                 <h2 style={{ color: 'green' }}>ENTRADA</h2>
@@ -100,8 +100,8 @@ const MovementsTable = ({ movements }: MovementsTableProps) => {
                   label="Ver Detalle"
                   className="p-button-p-button-raised p-button-warning"
                   onClick={() => {
-                    setDisplayMovementDetailsTable((prev: boolean) => !prev)
-                    setSelectedMovement(rowData)
+                    setDisplayRecordDetailsTable((prev: boolean) => !prev)
+                    setSelectedRecord(rowData)
                   }}
                 />
               )
@@ -110,17 +110,17 @@ const MovementsTable = ({ movements }: MovementsTableProps) => {
           />
         </DataTable>
       </div>
-      <DialogNewMovement
+      <DialogNewRecord
         displayBasic={displayBasic}
         closeDialog={() => setDisplayBasic(false)}
       />
-      <MovementDetailsTable
-        setDisplayMovementDetailsTable={setDisplayMovementDetailsTable}
-        displayMovementDetailsTable={displayMovementDetailsTable}
+      <RecordDetailsTable
+        setDisplayRecordDetailsTable={setDisplayRecordDetailsTable}
+        displayRecordDetailsTable={displayRecordDetailsTable}
       />
 
       <DialogError></DialogError>
     </div>
   )
 }
-export default MovementsTable
+export default RecordsTable

@@ -2,31 +2,31 @@ import React from 'react'
 import { Checkbox } from 'primereact/checkbox'
 import { useRecoilState } from 'recoil'
 import {
-  defaultMovement,
-  selectedMovementState
-} from '../../atoms/movements/selectedMovementAtom'
-import { isSMovementCheckedState } from '../../atoms/movements/setSelectedMovementAtom'
-import { Movement } from '@prisma/client'
+  defaultRecord,
+  selectedRecordState
+} from '../../atoms/records/selectedRecordAtom'
+import { isSRecordCheckedState } from '../../atoms/records/setSelectedRecordAtom'
+import { Record } from '@prisma/client'
 
-const SelectBodyTemplate = ({ rowData }: { rowData: Movement }) => {
-  const [, setSelectedMovement] = useRecoilState(selectedMovementState)
-  const [isMovementChecked, setIsMovementChecked] = useRecoilState(
-    isSMovementCheckedState
+const SelectBodyTemplate = ({ rowData }: { rowData: Record }) => {
+  const [, setSelectedRecord] = useRecoilState(selectedRecordState)
+  const [isRecordChecked, setIsRecordChecked] = useRecoilState(
+    isSRecordCheckedState
   )
   const handleCheck = () => {
-    if (isMovementChecked.id === rowData.id) {
-      setIsMovementChecked({ id: '', checked: false })
-      setSelectedMovement(defaultMovement)
+    if (isRecordChecked.id === rowData.id) {
+      setIsRecordChecked({ id: '', checked: false })
+      setSelectedRecord(defaultRecord)
       return
     }
-    setIsMovementChecked({ id: rowData.id, checked: true })
-    setSelectedMovement(rowData)
+    setIsRecordChecked({ id: rowData.id, checked: true })
+    setSelectedRecord(rowData)
   }
   return (
     <Checkbox
       onChange={() => handleCheck()}
       value={rowData.id}
-      checked={isMovementChecked.id === rowData.id}
+      checked={isRecordChecked.id === rowData.id}
     ></Checkbox>
   )
 }

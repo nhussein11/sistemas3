@@ -2,38 +2,38 @@ import React from 'react'
 import { Dialog } from 'primereact/dialog'
 import DialogFooter from './DialogFooter'
 import { Dropdown } from 'primereact/dropdown'
-import { DialogNewMovementProps } from '../../@types/frontend.types'
+import { DialogNewRecordProps } from '../../@types/frontend.types'
 import { InputText } from 'primereact/inputtext'
-import useDialogNewMovementMutation from '../../hooks/movements/useDialogNewMovementMutation'
-import MovementsProductsTable from './MovementsProductsTable'
+import useDialogNewRecordMutation from '../../hooks/records/useDialogNewRecordMutation'
+import RecordsProductsTable from './RecordsProductsTable'
 import { useRecoilState } from 'recoil'
 import QuantitySelectorDialog from './QuantitySelectorDialog'
-import { selectedMovementDetailsState } from '../../atoms/movements/selectedMovementDetails'
+import { selectedRecordDetailsState } from '../../atoms/records/selectedRecordDetails'
 
-const DialogNewMovement = ({
+const DialogNewRecord = ({
   displayBasic,
   closeDialog
-}: DialogNewMovementProps) => {
+}: DialogNewRecordProps) => {
   const {
-    handleCreateNewMovement,
-    selectedMovementType,
-    changeMovementType,
-    movementObservation,
+    handleCreateNewRecord,
+    selectedRecordType,
+    changeRecordType,
+    recordObservation,
     selectedStore,
     changeStore,
-    movementTypesOptions,
+    recordTypesOptions,
     storesOptions,
     productsOptions
-  } = useDialogNewMovementMutation('movements')
-  const [selectedMovementDetails] = useRecoilState(selectedMovementDetailsState)
+  } = useDialogNewRecordMutation('records')
+  const [selectedRecordDetails] = useRecoilState(selectedRecordDetailsState)
   return (
     <Dialog
       visible={displayBasic}
       header="Nuevo Movimiento"
       style={{ width: '50vw' }}
-      footer={() => DialogFooter({ closeDialog, handleCreateNewMovement })}
+      footer={() => DialogFooter({ closeDialog, handleCreateNewRecord })}
       onHide={() => closeDialog()}
-      className={'p-dialog dialog-movements'}
+      className={'p-dialog dialog-records'}
     >
       <div
         className="form-container"
@@ -42,9 +42,9 @@ const DialogNewMovement = ({
         <div className="field-drop">
           <label htmlFor="id">Seleccionar Tipo de Movimiento</label>
           <Dropdown
-            value={selectedMovementType?.movementName}
-            options={movementTypesOptions}
-            onChange={(e) => changeMovementType(e.target.value)}
+            value={selectedRecordType?.recordName}
+            options={recordTypesOptions}
+            onChange={(e) => changeRecordType(e.target.value)}
             placeholder="seleccionar Depósito"
           />
         </div>
@@ -64,15 +64,15 @@ const DialogNewMovement = ({
           <div style={{ width: '500px' }}>
             <label htmlFor="observation">Observación</label>
             <InputText
-              {...movementObservation}
-              name="movementObservation"
+              {...recordObservation}
+              name="recordObservation"
               placeholder="ingresar Observación"
             />
           </div>
         </div>
       </div>
       <div style={{ display: 'flex', margin: '0.2rem' }}>
-        <MovementsProductsTable
+        <RecordsProductsTable
           detailsTable={false}
           products={productsOptions}
         />
@@ -80,9 +80,9 @@ const DialogNewMovement = ({
           className="pi pi-arrow-right"
           style={{ fontSize: '2rem', alignSelf: 'center' }}
         ></i>
-        <MovementsProductsTable
+        <RecordsProductsTable
           detailsTable
-          products={selectedMovementDetails}
+          products={selectedRecordDetails}
         />
       </div>
       <QuantitySelectorDialog />
@@ -90,4 +90,4 @@ const DialogNewMovement = ({
   )
 }
 
-export default DialogNewMovement
+export default DialogNewRecord

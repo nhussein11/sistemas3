@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from 'primereact/button'
-import useActionDeleteButton from '../../hooks/movements/useActionDeleteButton'
+import useActionDeleteButton from '../../hooks/records/useActionDeleteButton'
 
 const ActionDeleteBodyTemplate = ({ productId }: { productId: string }) => {
   const { deleteSelectedDetail } = useActionDeleteButton(productId)

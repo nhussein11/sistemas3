@@ -5,7 +5,7 @@ import ActionAddBodyTemplate from './ActionAddBodyTemplate'
 import ActionDeleteBodyTemplate from './ActionDeleteBodyTemplate'
 import NumberFormat from 'react-number-format'
 
-const MovementsProductsTable = ({
+const RecordsProductsTable = ({
   products,
   detailsTable
 }: {
@@ -81,4 +81,4 @@ const MovementsProductsTable = ({
   )
 }
 
-export default MovementsProductsTable
+export default RecordsProductsTable

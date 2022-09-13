@@ -2,20 +2,20 @@ import React from 'react'
 import { Button } from 'primereact/button'
 import { InputText } from 'primereact/inputtext'
 import { useRecoilState } from 'recoil'
-import { MovementsTableHeaderProps } from '../../@types/frontend.types'
+import { RecordsTableHeaderProps } from '../../@types/frontend.types'
 import { globalFilterValueState } from '../../atoms/globalFilterValueAtom'
-import useDeleteMovementMutation from '../../hooks/movements/useDeleteMovementMutation'
+import useDeleteRecordMutation from '../../hooks/records/useDeleteRecordMutation'
 
 const TableHeader = ({
   setDisplayBasic,
-  setDisplayMovementDetailsTable
-}: MovementsTableHeaderProps) => {
-  const { handleDeleteMovement } = useDeleteMovementMutation('movements')
+  setDisplayRecordDetailsTable
+}: RecordsTableHeaderProps) => {
+  const { handleDeleteRecord } = useDeleteRecordMutation('records')
   const [globalFilterValue, setGlobalFilterValue] = useRecoilState(
     globalFilterValueState
   )
-  const deleteMovement = () => {
-    handleDeleteMovement()
+  const deleteRecord = () => {
+    handleDeleteRecord()
     setDisplayBasic(false)
   }
   return (
@@ -46,7 +46,7 @@ const TableHeader = ({
         <Button
           label="Borrar"
           className="p-button-raised p-button-danger"
-          onClick={deleteMovement}
+          onClick={deleteRecord}
         />
       </div>
     </div>

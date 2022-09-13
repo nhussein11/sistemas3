@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
-import { getMovements } from '../../services/movements/getMovements'
+import { getRecords } from '../../services/records/getRecords'
 
-const useMovementsQuery = (queryId: string) => {
-  const query = useQuery([queryId], () => getMovements().then((res) => res.data))
+const useRecordsQuery = (queryId: string) => {
+  const query = useQuery([queryId], () => getRecords().then((res) => res.data))
   return query
 }
 
-export default useMovementsQuery
+export default useRecordsQuery

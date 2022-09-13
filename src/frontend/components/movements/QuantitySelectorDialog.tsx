@@ -1,7 +1,7 @@
 import React from 'react'
 import { ConfirmDialog } from 'primereact/confirmdialog'
 import { InputText } from 'primereact/inputtext'
-import useQuantitySelectorDialog from '../../hooks/movements/useQuantitySelectorDialog'
+import useQuantitySelectorDialog from '../../hooks/records/useQuantitySelectorDialog'
 
 const QuantitySelectorDialog = () => {
   const {

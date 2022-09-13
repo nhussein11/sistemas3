@@ -1,12 +1,12 @@
 import { useRecoilState } from 'recoil'
-import { selectedMovementDetailsState } from '../../atoms/movements/selectedMovementDetails'
+import { selectedRecordDetailsState } from '../../atoms/records/selectedRecordDetails'
 
 const useActionDeleteButton = (productId: string) => {
-  const [, setSelectedMovementDetails] = useRecoilState(
-    selectedMovementDetailsState
+  const [, setSelectedRecordDetails] = useRecoilState(
+    selectedRecordDetailsState
   )
   const deleteSelectedDetail = () => {
-    setSelectedMovementDetails((prev) =>
+    setSelectedRecordDetails((prev) =>
       prev.filter((detail) => detail.productId !== productId)
     )
   }

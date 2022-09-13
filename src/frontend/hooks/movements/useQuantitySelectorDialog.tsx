@@ -1,9 +1,9 @@
 import { useRecoilState } from 'recoil'
-import { selectedMovementDetailsState } from '../../atoms/movements/selectedMovementDetails'
+import { selectedRecordDetailsState } from '../../atoms/records/selectedRecordDetails'
 import {
   showQuantitySelectorDialogDefaultState,
   showQuantitySelectorDialogState
-} from '../../atoms/movements/showQuantitySelectorDialog'
+} from '../../atoms/records/showQuantitySelectorDialog'
 import useField from '../useField'
 
 const useQuantitySelectorDialog = () => {
@@ -13,11 +13,11 @@ const useQuantitySelectorDialog = () => {
     type: 'number',
     initialValue: 0
   })
-  const [, setSelectedMovementDetails] = useRecoilState(
-    selectedMovementDetailsState
+  const [, setSelectedRecordDetails] = useRecoilState(
+    selectedRecordDetailsState
   )
   const addDetail = () => {
-    setSelectedMovementDetails((prev) => [
+    setSelectedRecordDetails((prev) => [
       ...prev,
       {
         productId: showQuantitySelectorDialog.productId,

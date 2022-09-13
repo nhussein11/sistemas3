@@ -2,24 +2,24 @@ import { Column } from 'primereact/column'
 import { DataTable } from 'primereact/datatable'
 import { Dialog } from 'primereact/dialog'
 import React from 'react'
-import { DialogMovementDetailsProps } from '../../@types/frontend.types'
-import useMovementDetailsTable from '../../hooks/movements/useMovementDetailsTable'
+import { DialogRecordDetailsProps } from '../../@types/frontend.types'
+import useRecordDetailsTable from '../../hooks/records/useRecordDetailsTable'
 import useProductsQuery from '../../hooks/products/useProductsQuery'
 import { findProductName } from '../../services/products/findProductName'
 
-const MovementDetailsTable = ({
-  setDisplayMovementDetailsTable,
-  displayMovementDetailsTable
-}: DialogMovementDetailsProps) => {
-  const { filteredDetails } = useMovementDetailsTable()
+const RecordDetailsTable = ({
+  setDisplayRecordDetailsTable,
+  displayRecordDetailsTable
+}: DialogRecordDetailsProps) => {
+  const { filteredDetails } = useRecordDetailsTable()
   const ProductsQuery = useProductsQuery('products')
-  if (displayMovementDetailsTable) {
+  if (displayRecordDetailsTable) {
     return (
       <Dialog
         header="Detalles del Movimiento"
-        visible={displayMovementDetailsTable}
+        visible={displayRecordDetailsTable}
         style={{ width: '50vw' }}
-        onHide={() => setDisplayMovementDetailsTable(false)}
+        onHide={() => setDisplayRecordDetailsTable(false)}
       >
         <DataTable
           value={filteredDetails}
@@ -51,4 +51,4 @@ const MovementDetailsTable = ({
   } else return <></>
 }
 
-export default MovementDetailsTable
+export default RecordDetailsTable

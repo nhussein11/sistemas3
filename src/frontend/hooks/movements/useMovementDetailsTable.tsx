@@ -1,16 +1,16 @@
-import { MovementDetails } from '@prisma/client'
+import { RecordDetails } from '@prisma/client'
 import { useRecoilState } from 'recoil'
-import { selectedMovementState } from '../../atoms/movements/selectedMovementAtom'
+import { selectedRecordState } from '../../atoms/records/selectedRecordAtom'
 import useDetailsQuery from '../details/useDetailsQuery'
 
-const useMovementDetailsTable = () => {
+const useRecordDetailsTable = () => {
   const detailsQuery = useDetailsQuery('details')
-  const [selectedMovement] = useRecoilState(selectedMovementState)
-  const filteredDetails: MovementDetails[] =
-    detailsQuery.data?.movementsDetails?.filter(
-      (d: MovementDetails) => d.movementId === selectedMovement.id
+  const [selectedRecord] = useRecoilState(selectedRecordState)
+  const filteredDetails: RecordDetails[] =
+    detailsQuery.data?.mecordsDetails?.filter(
+      (d: RecordDetails) => d.mecordId === selectedRecord.id
     )
   return { filteredDetails }
 }
 
-export default useMovementDetailsTable
+export default useRecordDetailsTable

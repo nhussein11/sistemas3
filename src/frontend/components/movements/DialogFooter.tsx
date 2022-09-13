@@ -1,10 +1,10 @@
 import React from 'react'
 import { Button } from 'primereact/button'
-import { DialogFooterMovementProps } from '../../@types/frontend.types'
+import { DialogFooterRecordProps } from '../../@types/frontend.types'
 
-const DialogFooter = ({ closeDialog, handleCreateNewMovement }:DialogFooterMovementProps) => {
-  const createMovement = () => {
-    handleCreateNewMovement()
+const DialogFooter = ({ closeDialog, handleCreateNewRecord }:DialogFooterRecordProps) => {
+  const createRecord = () => {
+    handleCreateNewRecord()
     closeDialog()
   }
   return (
@@ -18,7 +18,7 @@ const DialogFooter = ({ closeDialog, handleCreateNewMovement }:DialogFooterMovem
       <Button
         label="Guardar"
         icon="pi pi-check"
-        onClick={createMovement}
+        onClick={createRecord}
         autoFocus
       />
     </div>

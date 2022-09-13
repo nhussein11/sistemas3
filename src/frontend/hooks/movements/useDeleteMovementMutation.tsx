@@ -1,27 +1,27 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRecoilState } from 'recoil'
 import { defaultErrorState, ErrorState } from '../../atoms/error/ErrorAtom'
-import { defaultMovement, selectedMovementState } from '../../atoms/movements/selectedMovementAtom'
-import { defaultMovementChecked, isSMovementCheckedState } from '../../atoms/movements/setSelectedMovementAtom'
+import { defaultRecord, selectedRecordState } from '../../atoms/records/selectedRecordAtom'
+import { defaultRecordChecked, isSRecordCheckedState } from '../../atoms/records/setSelectedRecordAtom'
 import { showErrorDialogState } from '../../atoms/error/showErrorDialog'
-import { deleteMovement } from '../../services/movements/deleteMovement'
+import { deleteRecord } from '../../services/records/deleteRecord'
 
-const useDeleteMovementMutation = (queryId: string) => {
-  const [, setIsMovementChecked] = useRecoilState(isSMovementCheckedState)
-  const [selectedMovement, setSelectedMovement] = useRecoilState(
-    selectedMovementState
+const useDeleteRecordMutation = (queryId: string) => {
+  const [, setIsRecordChecked] = useRecoilState(isSRecordCheckedState)
+  const [selectedRecord, setSelectedRecord] = useRecoilState(
+    selectedRecordState
   )
   const [, setShowErrorDialog] = useRecoilState(showErrorDialogState)
   const [, setErrorState] = useRecoilState(ErrorState)
   const queryClient = useQueryClient()
   const { mutate } = useMutation(
-    (movementId: string) => deleteMovement(movementId),
+    (recordId: string) => deleteRecord(recordId),
     {
       onSuccess: () => {
         // Invalidate and refetch
         queryClient.invalidateQueries([queryId])
-        setSelectedMovement(defaultMovement)
-        setIsMovementChecked(defaultMovementChecked)
+        setSelectedRecord(defaultRecord)
+        setIsRecordChecked(defaultRecordChecked)
         setErrorState(defaultErrorState)
       },
       onError: (error:any) => {
@@ -30,12 +30,12 @@ const useDeleteMovementMutation = (queryId: string) => {
       }
     }
   )
-  const handleDeleteMovement = () => {
-    mutate(selectedMovement.id)
+  const handleDeleteRecord = () => {
+    mutate(selectedRecord.id)
   }
   return {
-    handleDeleteMovement
+    handleDeleteRecord
   }
 }
 
-export default useDeleteMovementMutation
+export default useDeleteRecordMutation
