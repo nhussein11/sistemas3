@@ -87,10 +87,10 @@ export type DialogFooterRecordProps = {
   handleCreateNewRecord: () => void
 }
 export type RecordDetailData = {
+  stockId: string
   productId: string
+  storeId: string
   quantity: number
-  name: string
-  price: number
 }
 export type RecordsTableHeaderProps = {
   setDisplayBasic: Dispatch<boolean>
