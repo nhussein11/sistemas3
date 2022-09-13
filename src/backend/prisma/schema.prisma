@@ -15,7 +15,7 @@ model Product {
   category    CategoryEnum
   price       Float        @db.Real
 
-  Stock           Stock[]
+  Stock Stock[]
 
   @@map("product")
 }
@@ -50,41 +50,43 @@ model Stock {
 model MovementDetails {
   id String @id @default(cuid())
 
-  Stock   Stock @relation(fields: [stockId], references: [id])
+  Stock   Stock  @relation(fields: [stockId], references: [id])
   stockId String
 
-  Movement   Movement @relation(fields: [movementId], references: [id])
-  movementId String
+  Record   Record @relation(fields: [recordId], references: [id])
+  recordId String
 
   quantity Int
+  subtotal Float @db.Real
 
   @@map("movement_details")
 }
-model Movement {
+
+model Record {
   id          String   @id @default(cuid())
   datetime    DateTime @default(now())
   observation String   @default("")
+  senderName  String
+  address     String
 
   MovementDetails MovementDetails[]
 
-  MovementType   MovementType @relation(fields: [movementTypeId], references: [id])
-  movementTypeId String
+  recordType   RecordType @relation(fields: [recordTypeId], references: [id])
+  recordTypeId String
 
-  @@map("movement")
+  @@map("record")
 }
 
-model MovementType {
+model RecordType {
   id           String           @id @default(cuid())
   movementType MovementTypeEnum
   movementName MovementNameEnum
   cause        String
 
-  Movement Movement[]
+  Record Record[]
 
-  @@map("movement_type")
+  @@map("record_type")
 }
-
-
 
 enum CategoryEnum {
   IMPRESORA
