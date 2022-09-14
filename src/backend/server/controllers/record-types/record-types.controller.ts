@@ -17,10 +17,9 @@ const createRecordType = async (
   cause: string
 ) => {
   try {
-    const recordTypeCreated: RecordType =
-      await prisma.recordType.create({
-        data: { recordType, recordName, cause }
-      })
+    const recordTypeCreated: RecordType = await prisma.recordType.create({
+      data: { recordType, recordName, cause }
+    })
     return recordTypeCreated
   } catch (error) {
     throw error
@@ -29,12 +28,11 @@ const createRecordType = async (
 
 const getRecordTypeById = async (id: string) => {
   try {
-    const recordType: RecordType | null =
-      await prisma.recordType.findUnique({
-        where: {
-          id
-        }
-      })
+    const recordType: RecordType | null = await prisma.recordType.findUnique({
+      where: {
+        id
+      }
+    })
     return recordType
   } catch (error) {
     throw error
@@ -54,15 +52,14 @@ const updateRecordTypeById = async (
       throw new Error('movementType, movementName or cause must be provided!')
     }
 
-    const updatedRecordDetails: RecordType =
-      await prisma.recordType.update({
-        where: { id },
-        data: {
-          recordType,
-          recordName,
-          cause
-        }
-      })
+    const updatedRecordDetails: RecordType = await prisma.recordType.update({
+      where: { id },
+      data: {
+        recordType,
+        recordName,
+        cause
+      }
+    })
     return updatedRecordDetails
   } catch (error) {
     throw error
@@ -71,10 +68,9 @@ const updateRecordTypeById = async (
 
 const deleteRecordTypeById = async (id: string) => {
   try {
-    const deletedRecordType: RecordType =
-      await prisma.recordType.delete({
-        where: { id }
-      })
+    const deletedRecordType: RecordType = await prisma.recordType.delete({
+      where: { id }
+    })
     return deletedRecordType
   } catch (error) {
     throw error

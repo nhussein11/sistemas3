@@ -2,7 +2,7 @@
 import { Record, RecordType, RecordTypeEnum } from '@prisma/client'
 import { prisma } from '../../prisma-client/prisma-client'
 import { getRecordTypeById } from '../record-types/record-types.controller'
-import { createRecordDetails } from '../record-details/record-details.controller'
+import { createRecordDetails, deleteRecordsDetailsByRecordId } from '../record-details/record-details.controller'
 import {
   createStock,
   getStockExisting,
@@ -24,11 +24,11 @@ const createRecord = async (
   observation: string,
   senderName: string,
   address: string,
-  subtotal: number,
   recordTypeId: string,
   details: any[]
 ) => {
   try {
+    console.log(recordTypeId)
     const recordType: RecordType | null = await getRecordTypeById(recordTypeId)
     if (!recordType) {
       return
@@ -43,9 +43,14 @@ const createRecord = async (
     }
 
     const promiseArrayMovementsDetails = details.map(
-      (stockIdAndQuantity: any) => {
-        const { stockId, quantity } = stockIdAndQuantity
-        return createRecordDetails(stockId, recordCreated.id, quantity, subtotal)
+      (stockIdQuantityAndSubtotal: any) => {
+        const { stockId, quantity, subtotal } = stockIdQuantityAndSubtotal
+        return createRecordDetails(
+          stockId,
+          recordCreated.id,
+          quantity,
+          subtotal
+        )
       }
     )
     const allPromisesMovementsDetails = Promise.all(
@@ -104,6 +109,10 @@ const updateRecordById = async (
 
 const deleteRecordById = async (id: string) => {
   try {
+    if (!id) {
+      return
+    }
+    await deleteRecordsDetailsByRecordId(id)
     const deletedRecord: Record = await prisma.record.delete({
       where: { id }
     })
