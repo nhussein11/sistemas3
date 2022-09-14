@@ -1,6 +1,8 @@
 import publicAxiosInstance from '../../api/axios-api'
 type RecordData = {
-  observation: string
+  observation: string,
+  senderName: string,
+  address: string,
   recordTypeId: string,
   details: {
     stockId: string

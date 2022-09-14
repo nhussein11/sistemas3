@@ -44,12 +44,12 @@ const createRecord = async (
 
     const promiseArrayMovementsDetails = details.map(
       (stockIdQuantityAndSubtotal: any) => {
-        const { stockId, quantity, subtotal } = stockIdQuantityAndSubtotal
+        const { stockId, quantity, subTotal } = stockIdQuantityAndSubtotal
         return createRecordDetails(
           stockId,
           recordCreated.id,
           quantity,
-          subtotal
+          subTotal
         )
       }
     )
