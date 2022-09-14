@@ -25,7 +25,7 @@ export default async function records (
           observation,
           senderName,
           address,
-          movementTypeId,
+          recordTypeId,
           details
         } = body
         console.log(body)
@@ -33,7 +33,7 @@ export default async function records (
           observation,
           senderName,
           address,
-          movementTypeId,
+          recordTypeId,
           details
         )
         return res.status(201).send({ recordCreated })
