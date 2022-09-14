@@ -24,11 +24,11 @@ const createRecord = async (
   observation: string,
   senderName: string,
   address: string,
-  subtotal: number,
   recordTypeId: string,
   details: any[]
 ) => {
   try {
+    console.log(recordTypeId)
     const recordType: RecordType | null = await getRecordTypeById(recordTypeId)
     if (!recordType) {
       return
@@ -43,8 +43,8 @@ const createRecord = async (
     }
 
     const promiseArrayMovementsDetails = details.map(
-      (stockIdAndQuantity: any) => {
-        const { stockId, quantity } = stockIdAndQuantity
+      (stockIdQuantityAndSubtotal: any) => {
+        const { stockId, quantity, subtotal } = stockIdQuantityAndSubtotal
         return createRecordDetails(
           stockId,
           recordCreated.id,

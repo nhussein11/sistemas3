@@ -25,7 +25,6 @@ export default async function records (
           observation,
           senderName,
           address,
-          subtotal,
           movementTypeId,
           details
         } = body
@@ -33,12 +32,12 @@ export default async function records (
           observation,
           senderName,
           address,
-          subtotal,
           movementTypeId,
           details
         )
         return res.status(201).send({ recordCreated })
       } catch (error) {
+        console.log('index record:', error)
         return res.status(500).send({ error })
       }
 
