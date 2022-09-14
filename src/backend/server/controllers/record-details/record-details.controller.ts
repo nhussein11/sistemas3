@@ -81,10 +81,22 @@ const deleteRecordDetailsById = async (id: string) => {
   }
 }
 
+const deleteRecordsDetailsByRecordId = async (id: string) => {
+  try {
+    const { count } = await prisma.recordDetails.deleteMany({
+      where: { recordId: id }
+    })
+    return count
+  } catch (error) {
+    throw error
+  }
+}
+
 export {
   getRecordsDetails,
   createRecordDetails,
   getRecordDetailsById,
   updateRecordDetailsById,
-  deleteRecordDetailsById
+  deleteRecordDetailsById,
+  deleteRecordsDetailsByRecordId
 }

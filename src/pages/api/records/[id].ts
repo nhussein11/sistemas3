@@ -1,6 +1,10 @@
 /* eslint-disable no-case-declarations */
 import { NextApiRequest, NextApiResponse } from 'next'
-import { deleteRecordById, getRecordById, updateRecordById } from '../../../backend/server/controllers/records/records.controller'
+import {
+  deleteRecordById,
+  getRecordById,
+  updateRecordById
+} from '../../../backend/server/controllers/records/records.controller'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const {
@@ -25,7 +29,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       const { observation, recordTypeId } = body
 
       try {
-        const updatedRecord = await updateRecordById(id, observation, recordTypeId)
+        const updatedRecord = await updateRecordById(
+          id,
+          observation,
+          recordTypeId
+        )
         return res.status(200).send({ updatedRecord })
       } catch (error) {
         return res.status(500).send({ error })
@@ -36,6 +44,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         const deletedRecord = await deleteRecordById(id)
         return res.status(200).send({ deletedRecord })
       } catch (error) {
+        console.log(error)
+
         return res.status(500).send({ error })
       }
 
