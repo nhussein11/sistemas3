@@ -28,6 +28,7 @@ export default async function records (
           movementTypeId,
           details
         } = body
+        console.log(body)
         const recordCreated = await createRecord(
           observation,
           senderName,

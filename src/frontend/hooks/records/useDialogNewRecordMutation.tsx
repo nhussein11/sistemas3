@@ -72,6 +72,8 @@ const useDialogNewRecordMutation = (queryId: string) => {
   const handleCreateNewRecord = () => {
     mutate({
       observation: recordObservation.value as string,
+      senderName: 'Emisor del movimiento',
+      address: 'Direccion',
       recordTypeId: selectedRecordType.id,
       details: ParseRecordDetails(selectedRecordDetails, productsQuery)
     })
@@ -82,7 +84,9 @@ const useDialogNewRecordMutation = (queryId: string) => {
   const storesOptions = storesQuery?.data?.stores.map(
     (store: Store) => store.name
   )
-  const stockOptions = stocksQuery?.data?.stocks.filter((stock: Stock) => stock.storeId === selectedStore.id)
+  const stockOptions = stocksQuery?.data?.stocks.filter(
+    (stock: Stock) => stock.storeId === selectedStore.id
+  )
   return {
     handleCreateNewRecord,
     recordObservation,
