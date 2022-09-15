@@ -29,8 +29,8 @@ const DialogNewRecord = ({
   return (
     <Dialog
       visible={displayBasic}
-      header="Nuevo Movimiento"
-      style={{ width: '50vw' }}
+      header="Cargar Nuevo Comprobante"
+      style={{ width: 'auto' }}
       footer={() => DialogFooter({ closeDialog, handleCreateNewRecord })}
       onHide={() => closeDialog()}
       className={'p-dialog dialog-records'}
@@ -40,21 +40,21 @@ const DialogNewRecord = ({
         style={{ display: 'flex', flexDirection: 'row' }}
       >
         <div className="field-drop">
-          <label htmlFor="id">Seleccionar Tipo de Movimiento</label>
+          <label htmlFor="id">Tipo de Comprobante</label>
           <Dropdown
             value={selectedRecordType?.recordName}
             options={recordTypesOptions}
             onChange={(e) => changeRecordType(e.target.value)}
-            placeholder="seleccionar Depósito"
+            placeholder="seleccionar"
           />
         </div>
         <div className="field-drop">
-          <label htmlFor="id">Seleccionar Deposito</label>
+          <label htmlFor="id">Deposito</label>
           <Dropdown
             value={selectedStore?.name}
             options={storesOptions}
             onChange={(e) => changeStore(e.target.value)}
-            placeholder="seleccionar Depósito"
+            placeholder="seleccionar"
           />
         </div>
         <div
