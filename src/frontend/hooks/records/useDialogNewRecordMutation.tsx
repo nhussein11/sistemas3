@@ -53,6 +53,8 @@ const useDialogNewRecordMutation = (queryId: string) => {
       // Invalidate and refetch
       queryClient.invalidateQueries([queryId])
       recordObservation.onChange('')
+      recordSenderName.onChange('')
+      recordAdress.onChange('')
       setSelectedRecordType({
         id: '',
         recordType: '',
@@ -69,11 +71,13 @@ const useDialogNewRecordMutation = (queryId: string) => {
     }
   })
   const recordObservation = useField({ initialValue: '', type: 'text' })
+  const recordSenderName = useField({ initialValue: '', type: 'text' })
+  const recordAdress = useField({ initialValue: '', type: 'text' })
   const handleCreateNewRecord = () => {
     mutate({
       observation: recordObservation.value as string,
-      senderName: 'Emisor del movimiento',
-      address: 'Direccion',
+      senderName: recordSenderName.value as string,
+      address: recordAdress.value as string,
       recordTypeId: selectedRecordType.id,
       details: ParseRecordDetails(selectedRecordDetails, productsQuery)
     })
@@ -96,7 +100,9 @@ const useDialogNewRecordMutation = (queryId: string) => {
     changeStore,
     recordTypesOptions,
     storesOptions,
-    stockOptions
+    stockOptions,
+    senderName,
+    address
   }
 }
 
