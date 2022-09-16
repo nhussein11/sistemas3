@@ -23,8 +23,7 @@ const RecordsStocksTable = ({
         dataKey="id"
         paginator
         rows={5}
-        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
+        paginatorTemplate="PrevPageLink PageLinks NextPageLink CurrentPageReport RowsPerPageDropdown"
         responsiveLayout="scroll"
       >
         <Column

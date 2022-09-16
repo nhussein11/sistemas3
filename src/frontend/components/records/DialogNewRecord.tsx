@@ -37,11 +37,8 @@ const DialogNewRecord = ({
       onHide={() => closeDialog()}
       className={'p-dialog dialog-records'}
     >
-      <div
-        className="form-container"
-        style={{ display: 'flex', flexDirection: 'row' }}
-      >
-        <div className="field-drop">
+      <div style={{ display: 'grid', gridTemplateColumns: 'auto auto auto', columnGap: '1rem' }}>
+        <div style={{ display: 'grid' }}>
           <label htmlFor="id">Tipo de Comprobante</label>
           <Dropdown
             value={selectedRecordType?.recordName}
@@ -50,7 +47,7 @@ const DialogNewRecord = ({
             placeholder="seleccionar"
           />
         </div>
-        <div className="field-drop">
+        <div style={{ display: 'grid' }}>
           <label htmlFor="id">Deposito</label>
           <Dropdown
             value={selectedStore?.name}
@@ -59,11 +56,7 @@ const DialogNewRecord = ({
             placeholder="seleccionar"
           />
         </div>
-        <div
-          className="field-form-container"
-          style={{ display: 'grid', alignSelf: 'center' }}
-        >
-          <div style={{ width: '500px' }}>
+        <div style={{ display: 'grid' }}>
             <label htmlFor="observation">Observación</label>
             <InputText
               {...recordObservation}
@@ -71,17 +64,9 @@ const DialogNewRecord = ({
               placeholder="ingresar Observación"
             />
           </div>
-        </div>
       </div>
-      <div
-        className="form-container"
-        style={{ display: 'flex', flexDirection: 'row' }}
-      >
-            <div
-          className="field-form-container"
-          style={{ display: 'grid', alignSelf: 'center' }}
-        >
-          <div style={{ width: '500px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'auto auto', columnGap: '1rem' }}>
+          <div style={{ display: 'grid' }}>
             <label htmlFor="recordSenderName">Nombre Emisor</label>
             <InputText
               {...recordSenderName}
@@ -89,12 +74,7 @@ const DialogNewRecord = ({
               placeholder="ingresar Nombre Emisor"
             />
           </div>
-        </div>
-        <div
-          className="field-form-container"
-          style={{ display: 'grid', alignSelf: 'center' }}
-        >
-          <div style={{ width: '500px' }}>
+          <div style={{ display: 'grid' }}>
             <label htmlFor="address">Dirección</label>
             <InputText
               {...recordAdress}
@@ -102,7 +82,6 @@ const DialogNewRecord = ({
               placeholder="ingresar Dirección"
             />
           </div>
-        </div>
       </div>
       <div style={{ display: 'flex', margin: '0.2rem' }}>
         <RecordsStocksTable detailsTable={false} stocks={stockOptions} />
