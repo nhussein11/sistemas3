@@ -92,7 +92,7 @@ const RecordsTable = ({ records }: RecordsTableProps) => {
           />
           {/* !esto es una posible fuente de bugs!! */}
           <Column
-            field="detail"
+            field="options"
             header="Opciones"
             body={(rowData) => {
               return (
