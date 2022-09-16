@@ -23,25 +23,24 @@ const RecordsStocksTable = ({
         dataKey="id"
         paginator
         rows={5}
-        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
+        paginatorTemplate="PrevPageLink PageLinks NextPageLink CurrentPageReport RowsPerPageDropdown"
         responsiveLayout="scroll"
       >
         <Column
           field="ProductName"
-          header="Product Name"
+          header="Nombre"
           body={(rowData) => findProductName(rowData.productId, productsQuery)}
           style={{ minWidth: '2rem' }}
         ></Column>
         <Column
           field="StoreName"
-          header="Store Name"
+          header="Depósito"
           body={(rowData) => findStoreName(rowData.storeId, storesQuery)}
           style={{ minWidth: '1rem' }}
         ></Column>
         <Column
           field="Quantity"
-          header="Stock Quantity"
+          header="Cantidad en Stock"
           body={(rowData) => rowData.quantity}
           style={{ minWidth: '1rem' }}
         ></Column>

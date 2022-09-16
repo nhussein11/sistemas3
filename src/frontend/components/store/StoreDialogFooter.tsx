@@ -19,6 +19,7 @@ const StoreDialogFooter = ({
         className="p-button-text"
       />
       <Button
+        className="p-button-raised p-button-success"
         label="Guardar"
         icon="pi pi-check"
         onClick={createStore}

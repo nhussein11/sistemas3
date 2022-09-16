@@ -1,16 +1,23 @@
 import React, { useState } from 'react'
 import { Column } from 'primereact/column'
 import { DataTable } from 'primereact/datatable'
+import { Button } from 'primereact/button'
 import DialogNewProduct from './DialogNewProduct'
 import DialogUpdateProduct from './DialogUpdateProduct'
 import DialogError from './DialogError'
 import NumberFormat from 'react-number-format'
 import { TableProps } from '../../@types/frontend.types'
 import TableHeader from './TableHeader'
-import SelectBodyTemplate from './SelectBodyTemplate'
+import useDeleteProductMutation from '../../hooks/products/useDeleteProductMutation'
+import { useRecoilState } from 'recoil'
+import { selectedProductState } from '../../atoms/products/selectedProductAtom'
+import { showUpdateDialogState } from '../../atoms/showUpdateDialogAtom'
 
 const ProductsTable = ({ products }: TableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
+  const { handleDeleteProduct } = useDeleteProductMutation('products')
+  const [, setSelectedProduct] = useRecoilState(selectedProductState)
+  const [, setShowUpdateDialog] = useRecoilState(showUpdateDialogState)
   return (
     <div className="datatable-filter">
       <div className="card">
@@ -25,16 +32,6 @@ const ProductsTable = ({ products }: TableProps) => {
           header={<TableHeader setDisplayBasic={setDisplayBasic} />}
           emptyMessage="No se encontraron Productos"
         >
-          <Column
-            field="select"
-            header="Select"
-            body={(rowData) =>
-              SelectBodyTemplate({
-                rowData
-              })
-            }
-            alignHeader={'center'}
-          />
           <Column
             field="Nombre"
             header="Nombre"
@@ -65,6 +62,38 @@ const ProductsTable = ({ products }: TableProps) => {
                   decimalSeparator={','}
                   prefix={'$'}
                 ></NumberFormat>
+              )
+            }}
+            alignHeader={'center'}
+          />
+           <Column
+            field="options"
+            header="Opciones"
+            body={(rowData) => {
+              return (
+                <div>
+                  <Button
+                  icon="pi pi-pencil"
+                  iconPos="right"
+                  label="Editar"
+                  className="p-button-p-button-raised p-button-warning"
+                  onClick={() => {
+                    setSelectedProduct(rowData)
+                    setShowUpdateDialog(true)
+                  }}
+                  />
+                  <Button
+                  icon="pi pi-trash"
+                  iconPos="right"
+                  label="Borrar"
+                  className="p-button-p-button-raised p-button-danger"
+                  onClick={() => {
+                    setSelectedProduct(rowData)
+                    handleDeleteProduct()
+                    setDisplayBasic(false)
+                  }}
+                  />
+                </div>
               )
             }}
             alignHeader={'center'}

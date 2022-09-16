@@ -20,6 +20,8 @@ const DialogNewRecord = ({
     changeRecordType,
     recordObservation,
     selectedStore,
+    recordSenderName,
+    recordAdress,
     changeStore,
     recordTypesOptions,
     storesOptions,
@@ -29,39 +31,32 @@ const DialogNewRecord = ({
   return (
     <Dialog
       visible={displayBasic}
-      header="Nuevo Movimiento"
-      style={{ width: '50vw' }}
+      header="Cargar Nuevo Comprobante"
+      style={{ width: 'auto' }}
       footer={() => DialogFooter({ closeDialog, handleCreateNewRecord })}
       onHide={() => closeDialog()}
       className={'p-dialog dialog-records'}
     >
-      <div
-        className="form-container"
-        style={{ display: 'flex', flexDirection: 'row' }}
-      >
-        <div className="field-drop">
-          <label htmlFor="id">Seleccionar Tipo de Movimiento</label>
+      <div style={{ display: 'grid', gridTemplateColumns: 'auto auto auto', columnGap: '1rem' }}>
+        <div style={{ display: 'grid' }}>
+          <label htmlFor="id">Tipo de Comprobante</label>
           <Dropdown
             value={selectedRecordType?.recordName}
             options={recordTypesOptions}
             onChange={(e) => changeRecordType(e.target.value)}
-            placeholder="seleccionar Depósito"
+            placeholder="seleccionar"
           />
         </div>
-        <div className="field-drop">
-          <label htmlFor="id">Seleccionar Deposito</label>
+        <div style={{ display: 'grid' }}>
+          <label htmlFor="id">Deposito</label>
           <Dropdown
             value={selectedStore?.name}
             options={storesOptions}
             onChange={(e) => changeStore(e.target.value)}
-            placeholder="seleccionar Depósito"
+            placeholder="seleccionar"
           />
         </div>
-        <div
-          className="field-form-container"
-          style={{ display: 'grid', alignSelf: 'center' }}
-        >
-          <div style={{ width: '500px' }}>
+        <div style={{ display: 'grid' }}>
             <label htmlFor="observation">Observación</label>
             <InputText
               {...recordObservation}
@@ -69,7 +64,24 @@ const DialogNewRecord = ({
               placeholder="ingresar Observación"
             />
           </div>
-        </div>
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'auto auto', columnGap: '1rem' }}>
+          <div style={{ display: 'grid' }}>
+            <label htmlFor="recordSenderName">Nombre Emisor</label>
+            <InputText
+              {...recordSenderName}
+              name="senderName"
+              placeholder="ingresar Nombre Emisor"
+            />
+          </div>
+          <div style={{ display: 'grid' }}>
+            <label htmlFor="address">Dirección</label>
+            <InputText
+              {...recordAdress}
+              name="recordAdress"
+              placeholder="ingresar Dirección"
+            />
+          </div>
       </div>
       <div style={{ display: 'flex', margin: '0.2rem' }}>
         <RecordsStocksTable detailsTable={false} stocks={stockOptions} />

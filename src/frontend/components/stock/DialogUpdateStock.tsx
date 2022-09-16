@@ -21,16 +21,15 @@ const DialogUpdateStock = () => {
     <Dialog
     visible={showUpdateDialog}
     header="Actualizar Deposito"
-    style={{ width: '50vw' }}
+    style={{ width: 'auto' }}
     onHide={() => setShowUpdateDialog(false)}
   >
-     <div className="form-container">
-        <div className="field-form-container">
-          <div>
+      <div style={ { display: 'grid' } }>
+          <div style={ { display: 'grid' } }>
             <label htmlFor="id">Cantidad en Stock</label>
             <InputText {...quantity} name="quantity" placeholder="quantity" />
           </div>
-          <div>
+          <div style={ { display: 'grid' } }>
             <label htmlFor="id">Cantidad minima</label>
             <InputText
               {...minQuantity}
@@ -38,9 +37,7 @@ const DialogUpdateStock = () => {
               placeholder="minQuantity"
             />
           </div>
-        </div>
-      </div>
-      <div className="field-drop">
+          <div className="field-drop">
             <label htmlFor="id">Depositos Disponibles</label>
             <Dropdown
               value={selectedStore?.name}
@@ -51,6 +48,7 @@ const DialogUpdateStock = () => {
               placeholder="seleccionar Depósito"
             />
           </div>
+      </div>
     <div className="footer-button-updateDialog">
       <Button
         label="Confirmar"

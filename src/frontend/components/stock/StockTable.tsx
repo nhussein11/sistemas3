@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Column } from 'primereact/column'
+import { Button } from 'primereact/button'
 import { DataTable } from 'primereact/datatable'
 import DialogError from '../products/DialogError'
 import DialogNewStock from './DialogNewStock'
@@ -7,15 +8,18 @@ import DialogUpdateStock from './DialogUpdateStock'
 import { findProductName } from '../../services/products/findProductName'
 import { findStoreName } from '../../services/stores/findStoreName'
 import { StockTableProps } from '../../@types/frontend.types'
-import StockCheckedBodyTemplate from './StockCheckedBodyTemplate'
 import StockTableHeader from './StockTableHeader'
 import useProductsQuery from '../../hooks/products/useProductsQuery'
 import useStoresQuery from '../../hooks/stores/useStoresQuery'
-
+import { showUpdateDialogState } from '../../atoms/showUpdateDialogAtom'
+import { useRecoilState } from 'recoil'
+import { selectedStockState } from '../../atoms/stock/selectedStockAtom'
 const StockTable = ({ stocks }: StockTableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
   const productsQuery = useProductsQuery('products')
   const storesQuery = useStoresQuery('stores')
+  const [, setSelectedStock] = useRecoilState(selectedStockState)
+  const [, setShowUpdateDialog] = useRecoilState(showUpdateDialogState)
   return (
     <div className="datatable-filter">
       <div className="card">
@@ -30,16 +34,6 @@ const StockTable = ({ stocks }: StockTableProps) => {
           header={<StockTableHeader setDisplayBasic={setDisplayBasic} />}
           emptyMessage="No se encontraron Productos"
         >
-          <Column
-            field="select"
-            header="Select"
-            body={(rowData) =>
-              StockCheckedBodyTemplate({
-                rowData
-              })
-            }
-            alignHeader={'center'}
-          />
           <Column
             field="ProductName"
             header="Nombre Producto"
@@ -64,6 +58,27 @@ const StockTable = ({ stocks }: StockTableProps) => {
             field="minQuantity"
             header="Cantidad Mínima"
             body={(rowData) => rowData.minQuantity}
+            alignHeader={'center'}
+          />
+              <Column
+            field="options"
+            header="Opciones"
+            body={(rowData) => {
+              return (
+                <div>
+                  <Button
+                  icon="pi pi-pencil"
+                  iconPos="right"
+                  label="Editar"
+                  className="p-button-p-button-raised p-button-warning"
+                  onClick={() => {
+                    setSelectedStock(rowData)
+                    setShowUpdateDialog(true)
+                  }}
+                  />
+                </div>
+              )
+            }}
             alignHeader={'center'}
           />
         </DataTable>
