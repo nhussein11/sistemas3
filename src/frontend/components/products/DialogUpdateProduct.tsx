@@ -21,32 +21,48 @@ const DialogUpdateProduct = () => {
     <Dialog
       visible={showUpdateDialog}
       header="Actualizar Producto"
-      style={{ width: '50vw' }}
+      style={{ width: 'auto' }}
       onHide={() => setShowUpdateDialog(false)}
     >
-       <div className='form-container'>
-        <div className='field-form-container'>
-          <div>
+       <div style={ { display: 'grid' } }>
+          <div style={ { display: 'grid' } }>
             <label htmlFor="id">Nombre</label>
-            <InputText {...productName} name="productName" placeholder='nombre'/>
+            <InputText
+              {...productName}
+              name="productName"
+              placeholder="nombre"
+            />
           </div>
-          <div>
+          <div style={ { display: 'grid' } }>
             <label htmlFor="id">Descripción</label>
-            <InputText {...productDescription} name="productDescription" placeholder='descripción'/>
+            <InputText
+              {...productDescription}
+              name="productDescription"
+              placeholder="descripción"
+            />
           </div>
-          <div>
+          <div style={ { display: 'grid' } }>
             <label htmlFor="id">Precio</label>
-            <InputText {...productPrice} name="productPrice" placeholder='precio'/>
+            <InputText
+              {...productPrice}
+              name="productPrice"
+              placeholder="precio"
+            />
           </div>
-        </div>
-        <div className='field-drop'>
-          <label htmlFor="id">Categoría</label>
-          <Dropdown value={productCategory} options={CATEGORIES} onChange={(e) => setCategory(e.value)} placeholder={category}/>
-        </div>
+          <div className="field-drop">
+            <label htmlFor="id">Categoría</label>
+            <Dropdown
+              value={productCategory}
+              options={CATEGORIES}
+              onChange={(e) => setCategory(e.value)}
+              placeholder={category}
+            />
+          </div>
       </div>
       <div className="footer-button-updateDialog">
         <Button
-          label="Confirmar"
+          label="Guardar"
+          className="p-button-raised p-button-success"
           icon="pi pi-check"
           onClick={handleUpdateProduct}
           autoFocus
