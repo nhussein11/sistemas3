@@ -82,7 +82,7 @@ const DialogNewRecord = ({
           style={{ display: 'grid', alignSelf: 'center' }}
         >
           <div style={{ width: '500px' }}>
-            <label htmlFor="senderName">Nombre Emisor</label>
+            <label htmlFor="recordSenderName">Nombre Emisor</label>
             <InputText
               {...recordSenderName}
               name="senderName"
@@ -98,7 +98,7 @@ const DialogNewRecord = ({
             <label htmlFor="address">Dirección</label>
             <InputText
               {...recordAdress}
-              name="recordObservation"
+              name="recordAdress"
               placeholder="ingresar Dirección"
             />
           </div>

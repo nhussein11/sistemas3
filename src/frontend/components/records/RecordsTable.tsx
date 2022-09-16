@@ -61,6 +61,18 @@ const RecordsTable = ({ records }: RecordsTableProps) => {
             }
             alignHeader={'center'}
           />
+           <Column
+            field="recordSenderName"
+            header="Nombre Emisor"
+            body={(rowData) => rowData.senderName}
+            alignHeader={'center'}
+          />
+          <Column
+            field="recordAdress"
+            header="Dirección"
+            body={(rowData) => rowData.address}
+            alignHeader={'center'}
+          />
           <Column
             field="TipoComprobante"
             header="Tipo Comprobante"
