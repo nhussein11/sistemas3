@@ -67,7 +67,7 @@ body{
   }
   .header-table{
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
   }
   .field-form-container{
     display: grid;

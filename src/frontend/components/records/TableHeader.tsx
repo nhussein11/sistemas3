@@ -16,13 +16,6 @@ const TableHeader = ({
   return (
     <div className="header-table">
       <div className="flex justify-content-between">
-        <Button
-          type="button"
-          icon="pi pi-filter-slash"
-          label="Limpiar"
-          className="p-button-outlined"
-          onClick={() => setGlobalFilterValue('')}
-        />
         <span className="p-input-icon-left">
           <i className="pi pi-search" />
           <InputText

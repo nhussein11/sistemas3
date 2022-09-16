@@ -25,13 +25,6 @@ const StockTableHeader = ({ setDisplayBasic }:StockTableHeaderProps) => {
   return (
     <div className="header-table">
       <div className="flex justify-content-between">
-        <Button
-          type="button"
-          icon="pi pi-filter-slash"
-          label="Limpiar"
-          className="p-button-outlined"
-          onClick={() => setGlobalFilterValue('')}
-        />
         <span className="p-input-icon-left">
           <i className="pi pi-search" />
           <InputText
@@ -42,16 +35,6 @@ const StockTableHeader = ({ setDisplayBasic }:StockTableHeaderProps) => {
         </span>
       </div>
       <div className="actionsButtonsTable">
-        {/* <Button
-          label="Nuevo"
-          className="p-button-raised p-button-success"
-          onClick={() => setDisplayBasic(true)}
-        /> */}
-        {/* <Button
-          label="Borrar"
-          className="p-button-raised p-button-danger"
-          onClick={handleDeleteStock}
-        /> */}
         <Button
           label="Modificar"
           className="p-button-raised p-button-secondary"
