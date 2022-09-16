@@ -20,8 +20,8 @@ const DialogNewRecord = ({
     changeRecordType,
     recordObservation,
     selectedStore,
-    senderName,
-    address,
+    recordSenderName,
+    recordAdress,
     changeStore,
     recordTypesOptions,
     storesOptions,
@@ -72,14 +72,19 @@ const DialogNewRecord = ({
             />
           </div>
         </div>
-        <div
+      </div>
+      <div
+        className="form-container"
+        style={{ display: 'flex', flexDirection: 'row' }}
+      >
+            <div
           className="field-form-container"
           style={{ display: 'grid', alignSelf: 'center' }}
         >
           <div style={{ width: '500px' }}>
             <label htmlFor="senderName">Nombre Emisor</label>
             <InputText
-              {...senderName}
+              {...recordSenderName}
               name="senderName"
               placeholder="ingresar Nombre Emisor"
             />
@@ -92,7 +97,7 @@ const DialogNewRecord = ({
           <div style={{ width: '500px' }}>
             <label htmlFor="address">Dirección</label>
             <InputText
-              {...address}
+              {...recordAdress}
               name="recordObservation"
               placeholder="ingresar Dirección"
             />

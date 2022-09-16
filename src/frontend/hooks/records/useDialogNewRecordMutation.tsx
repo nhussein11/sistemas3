@@ -101,8 +101,8 @@ const useDialogNewRecordMutation = (queryId: string) => {
     recordTypesOptions,
     storesOptions,
     stockOptions,
-    senderName,
-    address
+    recordSenderName,
+    recordAdress
   }
 }
 
