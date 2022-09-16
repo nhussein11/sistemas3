@@ -17,6 +17,7 @@ const DialogFooter = ({ closeDialog, handleCreateNewProduct }:DialogFooterProps)
       />
       <Button
         label="Guardar"
+        className="p-button-raised p-button-success"
         icon="pi pi-check"
         onClick={createProduct}
         autoFocus

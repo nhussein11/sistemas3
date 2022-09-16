@@ -23,13 +23,12 @@ const DialogNewProduct = ({
     <Dialog
       visible={displayBasic}
       header="Nuevo Producto"
-      style={{ width: '50vw' }}
+      style={{ width: 'auto' }}
       footer={() => DialogFooter({ closeDialog, handleCreateNewProduct })}
       onHide={() => closeDialog()}
     >
-      <div className="form-container">
-        <div className="field-form-container">
-          <div>
+      <div style={ { display: 'grid' } }>
+          <div style={ { display: 'grid' } }>
             <label htmlFor="id">Nombre</label>
             <InputText
               {...productName}
@@ -37,7 +36,7 @@ const DialogNewProduct = ({
               placeholder="nombre"
             />
           </div>
-          <div>
+          <div style={ { display: 'grid' } }>
             <label htmlFor="id">Descripción</label>
             <InputText
               {...productDescription}
@@ -45,7 +44,7 @@ const DialogNewProduct = ({
               placeholder="descripción"
             />
           </div>
-          <div>
+          <div style={ { display: 'grid' } }>
             <label htmlFor="id">Precio</label>
             <InputText
               {...productPrice}
@@ -53,9 +52,6 @@ const DialogNewProduct = ({
               placeholder="precio"
             />
           </div>
-          {/* COMIENZAN LOS DROPS */}
-        </div>
-        <div className="field-drop">
           <div className="field-drop">
             <label htmlFor="id">Categoría</label>
             <Dropdown
@@ -65,7 +61,6 @@ const DialogNewProduct = ({
               placeholder={'select category'}
             />
           </div>
-        </div>
       </div>
     </Dialog>
   )
