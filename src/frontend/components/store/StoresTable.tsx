@@ -47,7 +47,6 @@ const StoresTable = ({ stores }:StoresTableProps) => {
           <Column
             field="options"
             header="Opciones"
-            style={{ minWidth: '1rem' }}
             body={(rowData) => {
               return (
                 <div>

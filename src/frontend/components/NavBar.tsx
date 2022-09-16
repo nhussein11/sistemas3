@@ -14,28 +14,28 @@ const NavBar = () => {
     },
     {
       label: 'Productos',
-      icon: 'pi pi-fw pi-pencil',
+      icon: 'pi pi-fw pi-box',
       command: () => {
         router.push('/productos')
       }
     },
     {
       label: 'Stock',
-      icon: 'pi pi-fw pi-user',
+      icon: 'pi pi-fw pi-table',
       command: () => {
         router.push('/stock')
       }
     },
     {
       label: 'Depositos',
-      icon: 'pi pi-fw pi-table',
+      icon: 'pi pi-fw pi-database',
       command: () => {
         router.push('/stores')
       }
     },
     {
       label: 'Comprobantes',
-      icon: 'pi pi-fw pi-pencil',
+      icon: 'pi pi-fw pi-file',
       command: () => {
         router.push('/records')
       }
@@ -49,8 +49,8 @@ const NavBar = () => {
         <Button
           label="Cerrar Sesión"
           icon="pi pi-fw pi-power-off"
-          className="p-button-raised-danger p-button-rounded"
-        />
+          className="p-button-p-button-raised p-button-danger"
+          />
       }
     />
   )
