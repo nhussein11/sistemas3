@@ -1,6 +1,7 @@
 /* eslint-disable no-useless-catch */
 import { Stock } from '@prisma/client'
 import { prisma } from '../../../server/prisma-client/prisma-client'
+import { handleRecordChangesByStockMovement } from '../records/records.controller'
 
 const getStocks = async () => {
   try {
@@ -76,8 +77,7 @@ const updateStockById = async (
       quantityDeletedStock = stockExisting.quantity
       await deleteStockById(stockExisting.id)
     }
-    console.log('stockExisting: ', stockExisting?.quantity)
-    console.log('quantity: ', quantity)
+
     const updatedStock: Stock = await prisma.stock.update({
       where: { id },
       data: {
@@ -86,6 +86,8 @@ const updateStockById = async (
         minQuantity
       }
     })
+    // TODO: preguntar si este es el stockID que debo poner o es otro
+    await handleRecordChangesByStockMovement(updatedStock.id, quantity)
     return updatedStock
   } catch (error) {
     throw error
