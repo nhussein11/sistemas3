@@ -101,6 +101,7 @@ enum RecordTypeEnum {
 enum RecordNameEnum {
   REMITO
   FACTURA
+  FACTURA_DUPLICADO
   ORDEN_DE_COMPRA
   ORDEN_DE_PAGO
 }
