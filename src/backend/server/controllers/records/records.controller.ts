@@ -1,8 +1,14 @@
 /* eslint-disable no-useless-catch */
 import { Record, RecordType, RecordTypeEnum } from '@prisma/client'
 import { prisma } from '../../prisma-client/prisma-client'
-import { getRecordTypeById } from '../record-types/record-types.controller'
-import { createRecordDetails, deleteRecordsDetailsByRecordId } from '../record-details/record-details.controller'
+import {
+  getRecordTypeById,
+  getRecordTypeByType
+} from '../record-types/record-types.controller'
+import {
+  createRecordDetails,
+  deleteRecordsDetailsByRecordId
+} from '../record-details/record-details.controller'
 import {
   createStock,
   getStockExisting,
@@ -28,7 +34,6 @@ const createRecord = async (
   details: any[]
 ) => {
   try {
-    console.log(recordTypeId)
     const recordType: RecordType | null = await getRecordTypeById(recordTypeId)
     if (!recordType) {
       return
@@ -163,10 +168,38 @@ const handleStockChanges = async (
   }
 }
 
+const handleRecordChangesByStockMovement = async (
+  stockId: string,
+  quantity: number
+) => {
+  const recordTypePositive = await getRecordTypeByType(RecordTypeEnum.POSITIVE)
+  const recordPositive = await prisma.record.create({
+    data: {
+      observation: 'Deposit movement IN',
+      senderName: 'Admin',
+      address: 'Admin-Address',
+      recordTypeId: recordTypePositive.id
+    }
+  })
+  await createRecordDetails(stockId, recordPositive.id, quantity, 0)
+
+  const recordTypeNegative = await getRecordTypeByType(RecordTypeEnum.NEGATIVE)
+  console.log(recordTypeNegative)
+  const recordNegative = await prisma.record.create({
+    data: {
+      observation: 'Deposit movement OUT',
+      senderName: 'Admin',
+      address: 'Admin-Address',
+      recordTypeId: recordTypeNegative.id
+    }
+  })
+  await createRecordDetails(stockId, recordNegative.id, quantity, 0)
+}
 export {
   getRecords,
   createRecord,
   getRecordById,
   updateRecordById,
-  deleteRecordById
+  deleteRecordById,
+  handleRecordChangesByStockMovement
 }

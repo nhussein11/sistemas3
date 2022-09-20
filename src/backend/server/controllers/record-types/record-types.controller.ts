@@ -77,10 +77,24 @@ const deleteRecordTypeById = async (id: string) => {
   }
 }
 
+const getRecordTypeByType = async (recordType: RecordTypeEnum) => {
+  try {
+    const recordTypeExisting: RecordType | null =
+      await prisma.recordType.findFirstOrThrow({
+        where: {
+          recordType
+        }
+      })
+    return recordTypeExisting
+  } catch (error) {
+    throw error
+  }
+}
 export {
   getRecordsTypes,
   createRecordType,
   getRecordTypeById,
   updateRecordTypeById,
-  deleteRecordTypeById
+  deleteRecordTypeById,
+  getRecordTypeByType
 }
