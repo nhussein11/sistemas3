@@ -41,9 +41,9 @@ const DialogUpdateStock = () => {
             <label htmlFor="id">Depositos Disponibles</label>
             <Dropdown
               value={selectedStore?.name}
-              options={storesQuery?.data?.stores.map(
-                (store: Store) => store.name
-              )}
+              options={storesQuery?.data?.stores.filter(
+                (store: Store) => store.name !== selectedStore?.name
+              ).map((store: Store) => store.name)}
               onChange={(e) => changeStore(e.target.value)}
               placeholder="seleccionar Depósito"
             />
