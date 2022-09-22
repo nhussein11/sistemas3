@@ -43,7 +43,9 @@ const DialogUpdateStock = () => {
               value={selectedStore?.name}
               options={storesQuery?.data?.stores.filter(
                 (store: Store) => store.name !== selectedStore?.name
-              ).map((store: Store) => store.name)}
+              ).map(
+                (store: Store) => store.name)
+              }
               onChange={(e) => changeStore(e.target.value)}
               placeholder="seleccionar Depósito"
             />
