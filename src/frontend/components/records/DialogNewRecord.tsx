@@ -78,8 +78,10 @@ const DialogNewRecord = ({
             <label htmlFor="address">Dirección</label>
             <InputText
               {...recordAdress}
+              value={selectedStore?.address}
               name="recordAdress"
               placeholder="ingresar Dirección"
+              readOnly
             />
           </div>
       </div>
