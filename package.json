@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma generate --schema=./src/backend/prisma/schema.prisma"
+    "postinstall": "prisma generate --schema=./src/backend/prisma/schema.prisma",
+    "db-cleanup":"ts-node -O '{\"module\": \"commonjs\"}' ./src/db-cleanup-script.ts"
   },
   "dependencies": {
     "@prisma/client": "^4.2.1",
