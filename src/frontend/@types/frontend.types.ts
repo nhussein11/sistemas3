@@ -69,7 +69,7 @@ export type StockUpdateData = {
   id: string
   storeId: string
   quantity: number
-  minQuantity: number
+  minQuantity?: number
   productId: string
 }
 
