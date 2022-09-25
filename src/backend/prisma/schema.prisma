@@ -15,7 +15,7 @@ model Product {
   category    CategoryEnum
   price       Float        @db.Real
 
-  Stock         Stock[]
+  Stock Stock[]
 
   @@map("product")
 }
@@ -56,8 +56,8 @@ model RecordDetails {
   Record   Record @relation(fields: [recordId], references: [id])
   recordId String
 
-  quantity  Int
-  subtotal  Float    @db.Real
+  quantity Int
+  subtotal Float @db.Real
 
   @@map("record_details")
 }
@@ -88,6 +88,36 @@ model RecordType {
   @@map("record_type")
 }
 
+model Course {
+  id   String @id @default(cuid())
+  name String
+
+  Enrollment Enrollment[]
+
+  @@map("course")
+}
+model Student {
+  id   String @id @default(cuid())
+  name String
+  address String
+
+  Enrollment Enrollment[]
+
+  @@map("student")
+}
+model Enrollment {
+  id   String @id @default(cuid())
+  name String
+  academicYear Int
+
+  Course Course @relation(fields: [courseId], references: [id])
+  courseId String
+
+  Student Student @relation(fields: [studentId], references: [id])
+  studentId String
+
+  @@map("enrollment")
+}
 enum CategoryEnum {
   IMPRESORA
   FILAMENTO
@@ -105,4 +135,3 @@ enum RecordNameEnum {
   ORDEN_DE_COMPRA
   ORDEN_DE_PAGO
 }
-
