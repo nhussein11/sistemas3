@@ -112,7 +112,6 @@ model Student {
 
 model Enrollment {
   id           String @id @default(cuid())
-  name         String
   academicYear Int
 
   Course   Course @relation(fields: [courseId], references: [id])
