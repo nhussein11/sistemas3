@@ -121,6 +121,7 @@ model Enrollment {
 enum CategoryEnum {
   IMPRESORA
   FILAMENTO
+  COURSE
 }
 
 enum RecordTypeEnum {
