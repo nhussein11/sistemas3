@@ -15,7 +15,8 @@ model Product {
   category    CategoryEnum
   price       Float        @db.Real
 
-  Stock Stock[]
+  Stock  Stock[]
+  Course Course?
 
   @@map("product")
 }
@@ -93,31 +94,36 @@ model Course {
   name String
 
   Enrollment Enrollment[]
+  Product    Product      @relation(fields: [productId], references: [id])
+  productId  String       @unique
 
   @@map("course")
 }
+
 model Student {
-  id   String @id @default(cuid())
-  name String
+  id      String @id @default(cuid())
+  name    String
   address String
 
   Enrollment Enrollment[]
 
   @@map("student")
 }
+
 model Enrollment {
-  id   String @id @default(cuid())
-  name String
+  id           String @id @default(cuid())
+  name         String
   academicYear Int
 
-  Course Course @relation(fields: [courseId], references: [id])
+  Course   Course @relation(fields: [courseId], references: [id])
   courseId String
 
-  Student Student @relation(fields: [studentId], references: [id])
+  Student   Student @relation(fields: [studentId], references: [id])
   studentId String
 
   @@map("enrollment")
 }
+
 enum CategoryEnum {
   IMPRESORA
   FILAMENTO
