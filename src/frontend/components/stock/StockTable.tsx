@@ -11,7 +11,10 @@ import { StockTableProps } from '../../@types/frontend.types'
 import StockTableHeader from './StockTableHeader'
 import useProductsQuery from '../../hooks/products/useProductsQuery'
 import useStoresQuery from '../../hooks/stores/useStoresQuery'
-import { showUpdateDialogState } from '../../atoms/showUpdateDialogAtom'
+import {
+  showUpdateDialogState,
+  UPDATE_MODES_ENUM
+} from '../../atoms/showUpdateDialogAtom'
 import { useRecoilState } from 'recoil'
 import { selectedStockState } from '../../atoms/stock/selectedStockAtom'
 const StockTable = ({ stocks }: StockTableProps) => {
@@ -60,21 +63,37 @@ const StockTable = ({ stocks }: StockTableProps) => {
             body={(rowData) => rowData.minQuantity}
             alignHeader={'center'}
           />
-              <Column
+          <Column
             field="options"
             header="Opciones"
             body={(rowData) => {
               return (
                 <div>
                   <Button
-                  icon="pi pi-pencil"
-                  iconPos="right"
-                  label="Editar"
-                  className="p-button-p-button-raised p-button-warning"
-                  onClick={() => {
-                    setSelectedStock(rowData)
-                    setShowUpdateDialog(true)
-                  }}
+                    icon="pi pi-box"
+                    iconPos="right"
+                    label="Mover Stock"
+                    className="p-button-p-button-raised p-button-warning"
+                    onClick={() => {
+                      setSelectedStock(rowData)
+                      setShowUpdateDialog({
+                        showUpdateDialog: true,
+                        updateMode: UPDATE_MODES_ENUM.STOCK_MOVEMENT
+                      })
+                    }}
+                  />
+                  <Button
+                    icon="pi pi-pencil"
+                    iconPos="right"
+                    label="Editar Stock"
+                    className="p-button-p-button-raised p-button-danger"
+                    onClick={() => {
+                      setSelectedStock(rowData)
+                      setShowUpdateDialog({
+                        showUpdateDialog: true,
+                        updateMode: UPDATE_MODES_ENUM.STOCK_UPDATE
+                      })
+                    }}
                   />
                 </div>
               )
