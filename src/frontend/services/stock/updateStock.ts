@@ -8,13 +8,6 @@ export const updateStock = async ({
   quantity,
   minQuantity
 }: StockUpdateData) => {
-  console.log({
-    id,
-    productId,
-    storeId,
-    quantity,
-    minQuantity
-  })
   const response = await publicAxiosInstance.put(`/stock/${id}`, {
     storeId,
     quantity,
