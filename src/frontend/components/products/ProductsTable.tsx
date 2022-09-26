@@ -11,7 +11,10 @@ import TableHeader from './TableHeader'
 import useDeleteProductMutation from '../../hooks/products/useDeleteProductMutation'
 import { useRecoilState } from 'recoil'
 import { selectedProductState } from '../../atoms/products/selectedProductAtom'
-import { showUpdateDialogState } from '../../atoms/showUpdateDialogAtom'
+import {
+  showUpdateDialogState,
+  UPDATE_MODES_ENUM
+} from '../../atoms/showUpdateDialogAtom'
 
 const ProductsTable = ({ products }: TableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
@@ -44,7 +47,7 @@ const ProductsTable = ({ products }: TableProps) => {
             body={(rowData) => rowData.description}
             alignHeader={'center'}
           />
-           <Column
+          <Column
             field="Category"
             header="Categoría"
             body={(rowData) => rowData.category}
@@ -66,32 +69,35 @@ const ProductsTable = ({ products }: TableProps) => {
             }}
             alignHeader={'center'}
           />
-           <Column
+          <Column
             field="options"
             header="Opciones"
             body={(rowData) => {
               return (
                 <div>
                   <Button
-                  icon="pi pi-pencil"
-                  iconPos="right"
-                  label="Editar"
-                  className="p-button-p-button-raised p-button-warning"
-                  onClick={() => {
-                    setSelectedProduct(rowData)
-                    setShowUpdateDialog(true)
-                  }}
+                    icon="pi pi-pencil"
+                    iconPos="right"
+                    label="Editar"
+                    className="p-button-p-button-raised p-button-warning"
+                    onClick={() => {
+                      setSelectedProduct(rowData)
+                      setShowUpdateDialog({
+                        showUpdateDialog: true,
+                        updateMode: UPDATE_MODES_ENUM.PRODUCT_UPDATE
+                      })
+                    }}
                   />
                   <Button
-                  icon="pi pi-trash"
-                  iconPos="right"
-                  label="Borrar"
-                  className="p-button-p-button-raised p-button-danger"
-                  onClick={() => {
-                    setSelectedProduct(rowData)
-                    handleDeleteProduct()
-                    setDisplayBasic(false)
-                  }}
+                    icon="pi pi-trash"
+                    iconPos="right"
+                    label="Borrar"
+                    className="p-button-p-button-raised p-button-danger"
+                    onClick={() => {
+                      setSelectedProduct(rowData)
+                      handleDeleteProduct()
+                      setDisplayBasic(false)
+                    }}
                   />
                 </div>
               )

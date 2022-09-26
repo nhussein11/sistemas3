@@ -10,7 +10,10 @@ import {
   defaultProduct,
   selectedProductState
 } from '../../atoms/products/selectedProductAtom'
-import { showUpdateDialogState } from '../../atoms/showUpdateDialogAtom'
+import {
+  showUpdateDialogDefaultState,
+  showUpdateDialogState
+} from '../../atoms/showUpdateDialogAtom'
 import useField from '../useField'
 import { updateProduct } from '../../services/products/updateProduct'
 import { defaultErrorState, ErrorState } from '../../atoms/error/ErrorAtom'
@@ -37,7 +40,7 @@ const useDialogUpdateProductMutation = (queryId: string) => {
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries([queryId])
-      setShowUpdateDialog(false)
+      setShowUpdateDialog(showUpdateDialogDefaultState)
       setSelectedProduct(defaultProduct)
       productName.onChange('')
       productDescription.onChange('')
