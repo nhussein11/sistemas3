@@ -3,6 +3,7 @@ export const UPDATE_MODES_ENUM = {
   STOCK_UPDATE: 'stockUpdate',
   STOCK_MOVEMENT: 'stockMovement',
   PRODUCT_UPDATE: 'productUpdate',
+  STORE_UPDATE: 'storeUpdate',
   DEFAULT: 'default'
 
 }
