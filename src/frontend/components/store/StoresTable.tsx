@@ -4,7 +4,7 @@ import { Button } from 'primereact/button'
 import { DataTable } from 'primereact/datatable'
 import DialogError from '../products/DialogError'
 import DialogNewStore from './DialogNewStore'
-import { showUpdateDialogState } from '../../atoms/showUpdateDialogAtom'
+import { showUpdateDialogState, UPDATE_MODES_ENUM } from '../../atoms/showUpdateDialogAtom'
 import DialogUpdateStore from './DialogUpdateStore'
 import { StoresTableProps } from '../../@types/frontend.types'
 import StoreTableHeader from './StoreTableHeader'
@@ -57,7 +57,10 @@ const StoresTable = ({ stores }:StoresTableProps) => {
                   className="p-button-p-button-raised p-button-warning"
                   onClick={() => {
                     setSelectedStore(rowData)
-                    setShowUpdateDialog(true)
+                    setShowUpdateDialog({
+                      showUpdateDialog: true,
+                      updateMode: UPDATE_MODES_ENUM.STORE_UPDATE
+                    })
                   }}
                   />
                   <Button

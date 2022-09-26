@@ -9,7 +9,7 @@ import {
 } from '../../atoms/stores/isStoreCheckedAtom'
 import { defaultStore, selectedStoreState } from '../../atoms/stores/selectedStoreAtom'
 import { showErrorDialogState } from '../../atoms/error/showErrorDialog'
-import { showUpdateDialogState } from '../../atoms/showUpdateDialogAtom'
+import { showUpdateDialogDefaultState, showUpdateDialogState } from '../../atoms/showUpdateDialogAtom'
 import { updateStore } from '../../services/stores/updateStore'
 import useField from '../useField'
 
@@ -32,7 +32,7 @@ const useDialogUpdateStoreMutation = (queryId: string) => {
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries([queryId])
-      setShowUpdateDialog(false)
+      setShowUpdateDialog(showUpdateDialogDefaultState)
       setSelectedStore(defaultStore)
       storeName.onChange('')
       storeAddress.onChange('')

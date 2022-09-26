@@ -4,6 +4,7 @@ import { Dialog } from 'primereact/dialog'
 import { Dropdown } from 'primereact/dropdown'
 import { InputText } from 'primereact/inputtext'
 import useDialogUpdateProductMutation from '../../hooks/products/useDialogUpdateProductMutation'
+import { showUpdateDialogDefaultState } from '../../atoms/showUpdateDialogAtom'
 
 const DialogUpdateProduct = () => {
   const {
@@ -19,10 +20,10 @@ const DialogUpdateProduct = () => {
   const CATEGORIES = ['IMPRESORA', 'FILAMENTO']
   return (
     <Dialog
-      visible={showUpdateDialog}
+      visible={showUpdateDialog.showUpdateDialog}
       header="Actualizar Producto"
       style={{ width: 'auto' }}
-      onHide={() => setShowUpdateDialog(false)}
+      onHide={() => setShowUpdateDialog(showUpdateDialogDefaultState)}
     >
        <div style={ { display: 'grid' } }>
           <div style={ { display: 'grid' } }>
