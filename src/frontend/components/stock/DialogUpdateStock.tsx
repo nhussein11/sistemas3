@@ -3,7 +3,6 @@ import { Button } from 'primereact/button'
 import { Dialog } from 'primereact/dialog'
 import { Dropdown } from 'primereact/dropdown'
 import { InputText } from 'primereact/inputtext'
-import { Store } from '@prisma/client'
 import useDialogUpdateStockMutation from '../../hooks/stock/useDialogUpdateStockMutation'
 import { showUpdateDialogDefaultState } from '../../atoms/showUpdateDialogAtom'
 
@@ -12,11 +11,11 @@ const DialogUpdateStock = () => {
     handleUpdateStock,
     quantity,
     minQuantity,
-    storesQuery,
     changeStore,
     showUpdateDialog,
     setShowUpdateDialog,
-    selectedStore
+    selectedStore,
+    storeOptions
   } = useDialogUpdateStockMutation('stocks')
   return (
     <Dialog
@@ -37,9 +36,7 @@ const DialogUpdateStock = () => {
                 <label htmlFor="id">Depositos Disponibles</label>
                 <Dropdown
                   value={selectedStore?.name}
-                  options={storesQuery?.data?.stores
-                    .filter((store: Store) => store.name !== selectedStore?.name)
-                    .map((store: Store) => store.name)}
+                  options={storeOptions}
                   onChange={(e) => changeStore(e.target.value)}
                   placeholder="seleccionar Depósito"
                 />
