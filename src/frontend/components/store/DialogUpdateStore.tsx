@@ -3,6 +3,7 @@ import { Button } from 'primereact/button'
 import { Dialog } from 'primereact/dialog'
 import { InputText } from 'primereact/inputtext'
 import useDialogUpdateStoreMutation from '../../hooks/stores/useDialogUpdateStoreMutation'
+import { showUpdateDialogDefaultState } from '../../atoms/showUpdateDialogAtom'
 
 const DialogUpdateStore = () => {
   const {
@@ -14,10 +15,10 @@ const DialogUpdateStore = () => {
   } = useDialogUpdateStoreMutation('stores')
   return (
     <Dialog
-    visible={showUpdateDialog}
+    visible={showUpdateDialog.showUpdateDialog}
     header="Actualizar Deposito"
     style={{ width: 'auto' }}
-    onHide={() => setShowUpdateDialog(false)}
+    onHide={() => setShowUpdateDialog(showUpdateDialogDefaultState)}
   >
      <div style={ { display: 'grid' } }>
           <div style={ { display: 'grid' } }>
