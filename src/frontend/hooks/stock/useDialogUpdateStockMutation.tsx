@@ -19,7 +19,6 @@ import {
   showUpdateDialogState
 } from '../../atoms/showUpdateDialogAtom'
 import { updateStock } from '../../services/stock/updateStock'
-import { findStore } from '../../services/stores/findStore'
 import useStoresQuery from '../stores/useStoresQuery'
 import useField from '../useField'
 
@@ -35,11 +34,7 @@ const useDialogUpdateStockMutation = (queryId: string) => {
   const minQuantity = useField({ initialValue: 0, type: 'number' })
   const queryClient = useQueryClient()
   const storesQuery = useStoresQuery('stores')
-  const [selectedStore, setSelectedStore] = useState({
-    id: '',
-    name: '',
-    address: ''
-  })
+  const [selectedStore, setSelectedStore] = useState(defaultStore)
   const updateQuery = ({
     id,
     storeId,
@@ -68,7 +63,6 @@ const useDialogUpdateStockMutation = (queryId: string) => {
   useEffect(() => {
     quantity.onChange(selectedStock.quantity)
     minQuantity.onChange(selectedStock.minQuantity)
-    setSelectedStore(findStore(selectedStock.storeId, storesQuery) as Store)
   }, [selectedStock])
   const handleUpdateStock = () => {
     let mutateOptions: StockUpdateData
@@ -88,10 +82,18 @@ const useDialogUpdateStockMutation = (queryId: string) => {
     mutate(mutateOptions)
   }
   const changeStore = (name: string) => {
-    setSelectedStore(
-      storesQuery.data?.stores.find((store: Store) => store.name === name)
+    const newStore = storesQuery.data?.stores.find(
+      (store: Store) => store.name === name
     )
+    console.log(newStore)
+    setSelectedStore(newStore)
   }
+  // eslint-disable-next-line array-callback-return
+  const storeOptions = storesQuery?.data?.stores.map((store: Store) => {
+    if (store.id !== selectedStock.storeId) {
+      return store.name
+    }
+  })
   return {
     handleUpdateStock,
     quantity,
@@ -100,7 +102,8 @@ const useDialogUpdateStockMutation = (queryId: string) => {
     changeStore,
     showUpdateDialog,
     setShowUpdateDialog,
-    selectedStore
+    selectedStore,
+    storeOptions
   }
 }
 
