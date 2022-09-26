@@ -72,6 +72,16 @@ const updateStockById = async (
     if (!storeId && !quantity && !minQuantity) {
       throw new Error('Store id or quantity or min quantity must be provided!')
     }
+    if (minQuantity) {
+      const updatedStock: Stock = await prisma.stock.update({
+        where: { id },
+        data: {
+          minQuantity
+        }
+      })
+      return updatedStock
+    }
+    console.log('storeId: ', storeId)
     const stockExisting = await getStockExisting(productId, storeId)
     if (stockExisting && stockExisting.id !== id) {
       quantityDeletedStock = stockExisting.quantity
@@ -82,8 +92,7 @@ const updateStockById = async (
       where: { id },
       data: {
         storeId,
-        quantity: quantity + quantityDeletedStock,
-        minQuantity
+        quantity: quantity + quantityDeletedStock
       }
     })
     // TODO: preguntar si este es el stockID que debo poner o es otro
