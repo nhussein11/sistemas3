@@ -8,10 +8,16 @@ import {
   defaultStockChecked,
   isStockCheckedState
 } from '../../atoms/stock/isStockSelectedAtom'
-import { defaultStock, selectedStockState } from '../../atoms/stock/selectedStockAtom'
+import {
+  defaultStock,
+  selectedStockState
+} from '../../atoms/stock/selectedStockAtom'
 import { defaultStore } from '../../atoms/stores/selectedStoreAtom'
 import { showErrorDialogState } from '../../atoms/error/showErrorDialog'
-import { showUpdateDialogState } from '../../atoms/showUpdateDialogAtom'
+import {
+  showUpdateDialogDefaultState,
+  showUpdateDialogState
+} from '../../atoms/showUpdateDialogAtom'
 import { updateStock } from '../../services/stock/updateStock'
 import { findStore } from '../../services/stores/findStore'
 import useStoresQuery from '../stores/useStoresQuery'
@@ -46,7 +52,7 @@ const useDialogUpdateStockMutation = (queryId: string) => {
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries([queryId])
-      setShowUpdateDialog(false)
+      setShowUpdateDialog(showUpdateDialogDefaultState)
       setSelectedStore(defaultStore)
       setSelectedStock(defaultStock)
       quantity.onChange(0)
@@ -65,13 +71,21 @@ const useDialogUpdateStockMutation = (queryId: string) => {
     setSelectedStore(findStore(selectedStock.storeId, storesQuery) as Store)
   }, [selectedStock])
   const handleUpdateStock = () => {
-    mutate({
-      id: selectedStock.id,
-      storeId: selectedStore.id as string,
-      quantity: quantity.value as number,
-      minQuantity: minQuantity.value as number,
-      productId: selectedStock.productId
-    })
+    let mutateOptions: StockUpdateData
+    if (showUpdateDialog.updateMode === 'stockUpdate') {
+      mutateOptions = {
+        id: selectedStock.id,
+        minQuantity: minQuantity.value as number
+      }
+    } else {
+      mutateOptions = {
+        id: selectedStock.id,
+        storeId: selectedStore.id as string,
+        quantity: quantity.value as number,
+        productId: selectedStock.productId
+      }
+    }
+    mutate(mutateOptions)
   }
   const changeStore = (name: string) => {
     setSelectedStore(

@@ -67,10 +67,10 @@ export type DialogNewStockProps = {
 
 export type StockUpdateData = {
   id: string
-  storeId: string
-  quantity: number
-  minQuantity: number
-  productId: string
+  storeId?: string
+  quantity?: number
+  minQuantity?: number
+  productId?: string
 }
 
 export type StockTableProps = { stocks: Stock[] }
