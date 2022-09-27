@@ -1,23 +1,20 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Button } from 'primereact/button'
 import { Dialog } from 'primereact/dialog'
-import { Dropdown } from 'primereact/dropdown'
 import { InputText } from 'primereact/inputtext'
-import useDialogUpdateProductMutation from '../../hooks/products/useDialogUpdateProductMutation'
 import { showUpdateDialogDefaultState } from '../../atoms/showUpdateDialogAtom'
+import useDialogUpdateCourseMutation from '../../hooks/products/useDialogUpdateProductMutation'
 
 const DialogUpdateCourse = () => {
   const {
-    handleUpdateProduct,
-    productName,
-    productPrice,
-    productDescription,
-    productCategory,
+    handleUpateCourse,
+    courseName,
+    coursePrice,
+    courseDescription,
+    courseHours,
     showUpdateDialog,
     setShowUpdateDialog
-  } = useDialogUpdateProductMutation('products')
-  const [category, setCategory] = useState('IMPRESORA')
-  const CATEGORIES = ['IMPRESORA', 'FILAMENTO']
+  } = useDialogUpdateCourseMutation('courses')
   return (
     <Dialog
       visible={showUpdateDialog.showUpdateDialog}
@@ -29,7 +26,7 @@ const DialogUpdateCourse = () => {
           <div style={ { display: 'grid' } }>
             <label htmlFor="id">Nombre</label>
             <InputText
-              {...productName}
+              {...courseName}
               name="productName"
               placeholder="nombre"
             />
@@ -37,7 +34,7 @@ const DialogUpdateCourse = () => {
           <div style={ { display: 'grid' } }>
             <label htmlFor="id">Descripción</label>
             <InputText
-              {...productDescription}
+              {...courseDescription}
               name="productDescription"
               placeholder="descripción"
             />
@@ -45,18 +42,17 @@ const DialogUpdateCourse = () => {
           <div style={ { display: 'grid' } }>
             <label htmlFor="id">Precio</label>
             <InputText
-              {...productPrice}
+              {...coursePrice}
               name="productPrice"
               placeholder="precio"
             />
           </div>
-          <div className="field-drop">
-            <label htmlFor="id">Categoría</label>
-            <Dropdown
-              value={productCategory}
-              options={CATEGORIES}
-              onChange={(e) => setCategory(e.value)}
-              placeholder={category}
+          <div style={ { display: 'grid' } }>
+            <label htmlFor="id">Carga Horaria</label>
+            <InputText
+              {...courseHours}
+              name="courseHours"
+              placeholder="horas"
             />
           </div>
       </div>
@@ -65,7 +61,7 @@ const DialogUpdateCourse = () => {
           label="Guardar"
           className="p-button-raised p-button-success"
           icon="pi pi-check"
-          onClick={handleUpdateProduct}
+          onClick={handleUpateCourse}
           autoFocus
         />
       </div>

@@ -1,10 +1,10 @@
 import React from 'react'
 import { Button } from 'primereact/button'
-import { DialogFooterProps } from '../../@types/frontend.types'
+import { DialogFooterCoursesProps } from '../../@types/frontend.types'
 
-const DialogFooter = ({ closeDialog, handleCreateNewProduct }:DialogFooterProps) => {
-  const createProduct = () => {
-    handleCreateNewProduct()
+const DialogFooter = ({ closeDialog, handleCreateNewCourse }:DialogFooterCoursesProps) => {
+  const createCourse = () => {
+    handleCreateNewCourse()
     closeDialog()
   }
   return (
@@ -19,7 +19,7 @@ const DialogFooter = ({ closeDialog, handleCreateNewProduct }:DialogFooterProps)
         label="Guardar"
         className="p-button-raised p-button-success"
         icon="pi pi-check"
-        onClick={createProduct}
+        onClick={createCourse}
         autoFocus
       />
     </div>
