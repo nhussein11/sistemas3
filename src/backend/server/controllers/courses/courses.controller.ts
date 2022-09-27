@@ -67,6 +67,7 @@ const getCourseById = async (id: string) => {
 const updateCourseById = async (
   id: string,
   name: string,
+  hoursQuantity: number,
   price: number,
   description: string,
   productId: string
@@ -89,7 +90,8 @@ const updateCourseById = async (
     const updatedCourse: Course = await prisma.course.update({
       where: { id },
       data: {
-        name
+        name,
+        hoursQuantity
       }
     })
 
