@@ -11,10 +11,10 @@ const getStudents = async () => {
   }
 }
 
-const createStudent = async (name: string, address: string) => {
+const createStudent = async (name: string, surname: string, identificationNumber: number) => {
   try {
     const studentCreated: Student = await prisma.student.create({
-      data: { name, address }
+      data: { name, surname, identificationNumber }
     })
 
     return studentCreated

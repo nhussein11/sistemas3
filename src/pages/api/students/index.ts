@@ -21,8 +21,8 @@ export default async function students (
 
     case 'POST':
       try {
-        const { name, address } = body
-        const studentCreated = await createStudent(name, address)
+        const { name, surname, identificationNumber } = body
+        const studentCreated = await createStudent(name, surname, identificationNumber)
         return res.status(201).send({ studentCreated })
       } catch (error) {
         return res.status(500).send({ error })

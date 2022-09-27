@@ -17,6 +17,7 @@ const getCourses = async () => {
 
 const createCourse = async (
   name: string,
+  hoursQuantity:number,
   price: number,
   description: string
 ) => {
@@ -28,7 +29,7 @@ const createCourse = async (
       CategoryEnum.COURSE
     )
     const courseCreated: Course = await prisma.course.create({
-      data: { name, productId: productCreatedByNewCourse.id }
+      data: { name, hoursQuantity, productId: productCreatedByNewCourse.id }
     })
 
     return courseCreated
