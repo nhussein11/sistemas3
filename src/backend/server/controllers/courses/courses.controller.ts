@@ -3,13 +3,26 @@ import { CategoryEnum, Course, Product } from '@prisma/client'
 import { prisma } from '../../../server/prisma-client/prisma-client'
 import {
   createProduct,
+  getProductById,
   updateProductById
 } from '../products/products.controller'
 
 const getCourses = async () => {
   try {
     const courses: Course[] = await prisma.course.findMany()
-    return courses
+    const coursesWithPriceAndDescriptionPendings = courses.map(
+      async (course) => {
+        const product: Product = await getProductById(course.productId)
+        const { price, description } = product
+        return { ...course, price, description }
+      }
+    )
+    const coursesWithPriceAndDescriptionResolved = Promise.all(
+      coursesWithPriceAndDescriptionPendings
+    ).then((course) => {
+      return course
+    })
+    return coursesWithPriceAndDescriptionResolved
   } catch (error) {
     throw error
   }
@@ -17,7 +30,7 @@ const getCourses = async () => {
 
 const createCourse = async (
   name: string,
-  hoursQuantity:number,
+  hoursQuantity: number,
   price: number,
   description: string
 ) => {
