@@ -1,45 +1,52 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
+import { CategoryEnum, Product } from '@prisma/client'
+import {
+  defaultProductChecked,
+  isProductCheckedState
+} from '../../atoms/products/isProductCheckedAtom'
+import {
+  defaultProduct,
+  selectedProductState
+} from '../../atoms/products/selectedProductAtom'
 import {
   showUpdateDialogDefaultState,
   showUpdateDialogState
 } from '../../atoms/showUpdateDialogAtom'
 import useField from '../useField'
+import { updateProduct } from '../../services/products/updateProduct'
 import { defaultErrorState, ErrorState } from '../../atoms/error/ErrorAtom'
 import { showErrorDialogState } from '../../atoms/error/showErrorDialog'
-import { defaultCourse, selectedCourseState } from '../../atoms/courses/selectedCourseAtom'
-import { defaultCourseChecked, isCourseCheckedState } from '../../atoms/courses/isCourseCheckedAtom'
-import { CourseFrontend } from '../../@types/frontend.types'
-import { updateCourse } from '../../services/courses/updateCourse'
 
-const useDialogUpdateCourseMutation = (queryId: string) => {
-  const [selectedCourse, setSelectedCourse] =
-    useRecoilState(selectedCourseState)
+const useDialogUpdateProductMutation = (queryId: string) => {
+  const [selectedProduct, setSelectedProduct] =
+    useRecoilState(selectedProductState)
   const [showUpdateDialog, setShowUpdateDialog] = useRecoilState(
     showUpdateDialogState
   )
   // eslint-disable-next-line no-unused-vars
   const [, setErrorState] = useRecoilState(ErrorState)
   const [, setShowErrorDialog] = useRecoilState(showErrorDialogState)
-  const [, setIsCourseChecked] = useRecoilState(isCourseCheckedState)
-  const courseName = useField({ initialValue: '', type: 'text' })
-  const courseDescription = useField({ initialValue: '', type: 'text' })
-  const coursePrice = useField({ initialValue: 0, type: 'number' })
-  const courseHours = useField({ initialValue: 0, type: 'number' })
+  const [, setIsProductChecked] = useRecoilState(isProductCheckedState)
+  const productName = useField({ initialValue: '', type: 'text' })
+  const productDescription = useField({ initialValue: '', type: 'text' })
+  const productPrice = useField({ initialValue: 0, type: 'number' })
+  const [productCategory, setProductCategory] = useState('IMPRESORA')
   const queryClient = useQueryClient()
-  const updateQuery = ({ id, name, price, description, hoursQuantity }: CourseFrontend) =>
-    updateCourse({ id, name, price, description, hoursQuantity })
+  const updateQuery = ({ id, name, price, description, category }: Product) =>
+    updateProduct({ id, name, price, description, category })
   const { mutate } = useMutation(updateQuery, {
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries([queryId])
       setShowUpdateDialog(showUpdateDialogDefaultState)
-      setSelectedCourse(defaultCourse)
-      courseName.onChange('')
-      courseDescription.onChange('')
-      coursePrice.onChange(0)
-      setIsCourseChecked(defaultCourseChecked)
+      setSelectedProduct(defaultProduct)
+      productName.onChange('')
+      productDescription.onChange('')
+      setProductCategory(CategoryEnum.IMPRESORA)
+      productPrice.onChange(0)
+      setIsProductChecked(defaultProductChecked)
       setErrorState(defaultErrorState)
     },
     onError: (error: any) => {
@@ -47,30 +54,30 @@ const useDialogUpdateCourseMutation = (queryId: string) => {
       setShowErrorDialog(true)
     }
   })
-  const handleUpateCourse = () => {
+  const handleUpdateProduct = () => {
     mutate({
-      id: selectedCourse.id,
-      name: courseName.value as string,
-      description: courseDescription.value as string,
-      hoursQuantity: courseHours.value as number,
-      price: coursePrice.value as number
+      id: selectedProduct.id,
+      name: productName.value as string,
+      description: productDescription.value as string,
+      category: productCategory as CategoryEnum,
+      price: productPrice.value as number
     })
   }
   useEffect(() => {
-    courseName.onChange(selectedCourse.name)
-    coursePrice.onChange(selectedCourse.price)
-    courseDescription.onChange(selectedCourse.description)
-    courseHours.onChange(selectedCourse.hoursQuantity)
-  }, [selectedCourse])
+    productName.onChange(selectedProduct.name)
+    productPrice.onChange(selectedProduct.price)
+    productDescription.onChange(selectedProduct.description)
+    setProductCategory(selectedProduct.category)
+  }, [selectedProduct])
   return {
-    handleUpateCourse,
-    courseName,
-    coursePrice,
-    courseDescription,
-    courseHours,
+    handleUpdateProduct,
+    productName,
+    productPrice,
+    productDescription,
+    productCategory,
     showUpdateDialog,
     setShowUpdateDialog
   }
 }
 
-export default useDialogUpdateCourseMutation
+export default useDialogUpdateProductMutation
