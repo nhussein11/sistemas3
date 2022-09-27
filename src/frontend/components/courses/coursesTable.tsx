@@ -4,28 +4,28 @@ import { DataTable } from 'primereact/datatable'
 import { Button } from 'primereact/button'
 import DialogError from './DialogError'
 import NumberFormat from 'react-number-format'
-import { TableProps } from '../../@types/frontend.types'
+import { CoursesTableProps } from '../../@types/frontend.types'
 import TableHeader from './TableHeader'
-import useDeleteProductMutation from '../../hooks/products/useDeleteProductMutation'
 import { useRecoilState } from 'recoil'
-import { selectedProductState } from '../../atoms/products/selectedProductAtom'
 import {
   showUpdateDialogState,
   UPDATE_MODES_ENUM
 } from '../../atoms/showUpdateDialogAtom'
 import DialogNewCourse from './DialogNewCourse'
 import DialogUpdateCourse from './DialogUpdateCourse'
+import { selectedCourseState } from '../../atoms/courses/selectedCourseAtom'
+import useDeleteCourseMutation from '../../hooks/courses/useDeleteCourseMutation'
 
-const CoursesTable = ({ products }: TableProps) => {
+const CoursesTable = ({ courses }: CoursesTableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
-  const { handleDeleteProduct } = useDeleteProductMutation('products')
-  const [, setSelectedProduct] = useRecoilState(selectedProductState)
+  const { handleDeleteCourse } = useDeleteCourseMutation('course')
+  const [, setSelectedCourse] = useRecoilState(selectedCourseState)
   const [, setShowUpdateDialog] = useRecoilState(showUpdateDialogState)
   return (
     <div className="datatable-filter">
       <div className="card">
         <DataTable
-          value={products}
+          value={courses}
           paginator
           className="p-datatable-customers"
           showGridlines
@@ -48,12 +48,6 @@ const CoursesTable = ({ products }: TableProps) => {
             alignHeader={'center'}
           />
           <Column
-            field="Category"
-            header="Categoría"
-            body={(rowData) => rowData.category}
-            alignHeader={'center'}
-          />
-          <Column
             field="Precio"
             header="Precio"
             body={(rowData) => {
@@ -69,6 +63,12 @@ const CoursesTable = ({ products }: TableProps) => {
             }}
             alignHeader={'center'}
           />
+           <Column
+            field="Carga Horaria"
+            header="Carga Horaria"
+            body={(rowData) => rowData.hoursQuantity}
+            alignHeader={'center'}
+          />
           <Column
             field="options"
             header="Opciones"
@@ -81,10 +81,10 @@ const CoursesTable = ({ products }: TableProps) => {
                     label="Editar"
                     className="p-button-p-button-raised p-button-warning"
                     onClick={() => {
-                      setSelectedProduct(rowData)
+                      setSelectedCourse(rowData)
                       setShowUpdateDialog({
                         showUpdateDialog: true,
-                        updateMode: UPDATE_MODES_ENUM.PRODUCT_UPDATE
+                        updateMode: UPDATE_MODES_ENUM.COURSE_UPDATE
                       })
                     }}
                   />
@@ -94,8 +94,8 @@ const CoursesTable = ({ products }: TableProps) => {
                     label="Borrar"
                     className="p-button-p-button-raised p-button-danger"
                     onClick={() => {
-                      setSelectedProduct(rowData)
-                      handleDeleteProduct()
+                      setSelectedCourse(rowData)
+                      handleDeleteCourse()
                       setDisplayBasic(false)
                     }}
                   />
