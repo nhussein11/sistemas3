@@ -3,13 +3,26 @@ import { CategoryEnum, Course, Product } from '@prisma/client'
 import { prisma } from '../../../server/prisma-client/prisma-client'
 import {
   createProduct,
+  getProductById,
   updateProductById
 } from '../products/products.controller'
 
 const getCourses = async () => {
   try {
     const courses: Course[] = await prisma.course.findMany()
-    return courses
+    const coursesWithPriceAndDescriptionPendings = courses.map(
+      async (course) => {
+        const product: Product = await getProductById(course.productId)
+        const { price, description } = product
+        return { ...course, price, description }
+      }
+    )
+    const coursesWithPriceAndDescriptionResolved = Promise.all(
+      coursesWithPriceAndDescriptionPendings
+    ).then((course) => {
+      return course
+    })
+    return coursesWithPriceAndDescriptionResolved
   } catch (error) {
     throw error
   }
@@ -17,6 +30,7 @@ const getCourses = async () => {
 
 const createCourse = async (
   name: string,
+  hoursQuantity: number,
   price: number,
   description: string
 ) => {
@@ -28,7 +42,7 @@ const createCourse = async (
       CategoryEnum.COURSE
     )
     const courseCreated: Course = await prisma.course.create({
-      data: { name, productId: productCreatedByNewCourse.id }
+      data: { name, hoursQuantity, productId: productCreatedByNewCourse.id }
     })
 
     return courseCreated
@@ -53,6 +67,7 @@ const getCourseById = async (id: string) => {
 const updateCourseById = async (
   id: string,
   name: string,
+  hoursQuantity: number,
   price: number,
   description: string,
   productId: string
@@ -75,7 +90,8 @@ const updateCourseById = async (
     const updatedCourse: Course = await prisma.course.update({
       where: { id },
       data: {
-        name
+        name,
+        hoursQuantity
       }
     })
 

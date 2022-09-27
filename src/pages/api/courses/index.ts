@@ -21,8 +21,8 @@ export default async function courses (
 
     case 'POST':
       try {
-        const { name, price, description } = body
-        const courseCreated = await createCourse(name, price, description)
+        const { name, hoursQuantity, price, description } = body
+        const courseCreated = await createCourse(name, hoursQuantity, price, description)
         return res.status(201).send({ courseCreated })
       } catch (error) {
         return res.status(500).send({ error })
