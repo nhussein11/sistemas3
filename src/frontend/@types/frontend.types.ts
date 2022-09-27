@@ -3,6 +3,7 @@ import { Dispatch } from 'react'
 export type CourseFrontend = {
   id: string
   name: string
+  hoursQuantity: number
   description: string
   price: number
 }
