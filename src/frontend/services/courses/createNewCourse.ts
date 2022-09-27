@@ -6,6 +6,7 @@ type CourseData = {
   hoursQuantity: number
 }
 export const createNewCourse = async (course: CourseData) => {
+  console.log(course)
   const response = await publicAxiosInstance.post('/courses', course)
   return response
 }

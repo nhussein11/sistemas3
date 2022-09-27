@@ -15,6 +15,13 @@ export const updateCourse = async ({
   description,
   hoursQuantity
 }: CourseUpdateData) => {
+  console.log({
+    id,
+    name,
+    price,
+    description,
+    hoursQuantity
+  })
   const response = await publicAxiosInstance.put(`/courses/${id}`, {
     name,
     price,
