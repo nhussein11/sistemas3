@@ -3,7 +3,7 @@ import { Button } from 'primereact/button'
 import { Dialog } from 'primereact/dialog'
 import { InputText } from 'primereact/inputtext'
 import { showUpdateDialogDefaultState } from '../../atoms/showUpdateDialogAtom'
-import useDialogUpdateCourseMutation from '../../hooks/products/useDialogUpdateProductMutation'
+import useDialogUpdateCourseMutation from '../../hooks/courses/useUpdateCourseMutation'
 
 const DialogUpdateCourse = () => {
   const {
