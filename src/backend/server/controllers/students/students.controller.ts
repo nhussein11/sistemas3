@@ -11,10 +11,10 @@ const getStudents = async () => {
   }
 }
 
-const createStudent = async (name: string, address: string) => {
+const createStudent = async (name: string, surname: string, identificationNumber: number) => {
   try {
     const studentCreated: Student = await prisma.student.create({
-      data: { name, address }
+      data: { name, surname, identificationNumber }
     })
 
     return studentCreated
@@ -36,19 +36,20 @@ const getStudentById = async (id: string) => {
   }
 }
 
-const updateStudentById = async (id: string, name: string, address: string) => {
+const updateStudentById = async (id: string, name: string, surname: string, identificationNumber: number) => {
   try {
     await prisma.student.findUniqueOrThrow({ where: { id } })
 
-    if (!name && !address) {
-      throw new Error('Name or address must be provided!')
+    if (!name && !surname && !identificationNumber) {
+      throw new Error('Name, surname or identification number must be provided!')
     }
 
     const updatedStudent: Student = await prisma.student.update({
       where: { id },
       data: {
         name,
-        address
+        surname,
+        identificationNumber
       }
     })
 
