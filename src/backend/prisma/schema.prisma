@@ -90,8 +90,9 @@ model RecordType {
 }
 
 model Course {
-  id   String @id @default(cuid())
-  name String
+  id            String @id @default(cuid())
+  name          String
+  hoursQuantity Int
 
   Enrollment Enrollment[]
   Product    Product      @relation(fields: [productId], references: [id])
@@ -101,9 +102,10 @@ model Course {
 }
 
 model Student {
-  id      String @id @default(cuid())
-  name    String
-  address String
+  id                   String @id @default(cuid())
+  name                 String
+  surname              String
+  identificationNumber Int
 
   Enrollment Enrollment[]
 
