@@ -1,6 +1,11 @@
 import { Product, Stock, Store, Record } from '@prisma/client'
 import { Dispatch } from 'react'
-
+export type CourseFrontend = {
+  id: number
+  name: string
+  description: string
+  price: number
+}
 export type TableProps = {
   products: Product[]
 }
@@ -9,6 +14,9 @@ export type RecordsTableProps = {
 }
 export type StoresTableProps = {
   stores: Store[]
+}
+export type CoursesTableProps = {
+  courses: CourseFrontend[]
 }
 export type SelectBodyTemplateProps = {
   rowData: Product
