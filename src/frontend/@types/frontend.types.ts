@@ -1,7 +1,7 @@
 import { Product, Stock, Store, Record } from '@prisma/client'
 import { Dispatch } from 'react'
 export type CourseFrontend = {
-  id: number
+  id: string
   name: string
   description: string
   price: number
