@@ -39,6 +39,13 @@ const NavBar = () => {
       command: () => {
         router.push('/records')
       }
+    },
+    {
+      label: 'Cursos',
+      icon: 'pi pi-fw pi-book',
+      command: () => {
+        router.push('/courses')
+      }
     }
   ]
 
