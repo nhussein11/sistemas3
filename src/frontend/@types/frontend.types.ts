@@ -34,10 +34,17 @@ export type DialogNewRecordProps = {
   displayBasic: boolean
   closeDialog: () => void
 }
-
+export type DialogNewCourseProps = {
+  displayBasic: boolean
+  closeDialog: () => void
+}
 export type DialogFooterProps = {
   closeDialog: () => void
   handleCreateNewProduct: () => void
+}
+export type DialogFooterCoursesProps = {
+  closeDialog: () => void
+  handleCreateNewCourse: () => void
 }
 export type DialogNewStoreProps = {
   displayBasic: boolean
