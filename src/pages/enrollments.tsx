@@ -3,7 +3,7 @@ import Head from 'next/head'
 import React from 'react'
 import EnrollmentsTable from '../frontend/components/enrollments/EnrollmentsTable'
 import useEnrollmentsQuery from '../frontend/hooks/enrollments/useEnrollmentsQuery'
-const Stock: NextPage = () => {
+const Home: NextPage = () => {
   const query = useEnrollmentsQuery('enrollments')
   return (
     <div>
@@ -19,4 +19,4 @@ const Stock: NextPage = () => {
   )
 }
 
-export default Stock
+export default Home
