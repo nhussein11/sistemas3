@@ -22,7 +22,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         return res.status(500).send({ error })
       }
     case 'PUT':
-      const { name, hoursQuantity, price, description, productId } = body
+      const { name, hoursQuantity, price, description } = body
 
       try {
         const updatedCourse = await updateCourseById(
@@ -30,8 +30,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           name,
           hoursQuantity,
           price,
-          description,
-          productId
+          description
         )
         return res.status(200).send({ updatedCourse })
       } catch (error) {
@@ -48,7 +47,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             return res.status(401).send({
               error,
               messageError:
-                "You cannot delete this product because it's belong to an existing stock"
+                "You cannot delete this course because it's belong to an existing product"
             })
           case 'P2025':
             return res.status(402).send({
