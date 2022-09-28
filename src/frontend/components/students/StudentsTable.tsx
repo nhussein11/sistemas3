@@ -97,9 +97,7 @@ const StudentsTable = ({ students, isEnrollment }: StudentsTableProps) => {
                     label="Borrar"
                     className="p-button-p-button-raised p-button-danger"
                     onClick={() => {
-                      setSelectedStudent(rowData)
-                      handleDeleteStudent()
-                      setDisplayBasic(false)
+                      handleDeleteStudent(rowData.id)
                     }}
                   />
                 </div>

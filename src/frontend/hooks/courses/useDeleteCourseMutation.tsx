@@ -15,9 +15,8 @@ import {
 } from '../../atoms/courses/selectedCourseAtom'
 
 const useDeleteCourseMutation = (queryId: string) => {
-  // eslint-disable-next-line no-unused-vars
-  const [_, setIsCourseChecked] = useRecoilState(isCourseCheckedState)
-  const [selectedCourse, setSelectedCourse] =
+  const [, setIsCourseChecked] = useRecoilState(isCourseCheckedState)
+  const [, setSelectedCourse] =
     useRecoilState(selectedCourseState)
   const [, setShowErrorDialog] = useRecoilState(showErrorDialogState)
   const [, setErrorState] = useRecoilState(ErrorState)
@@ -35,8 +34,8 @@ const useDeleteCourseMutation = (queryId: string) => {
       setShowErrorDialog(true)
     }
   })
-  const handleDeleteCourse = () => {
-    mutate(selectedCourse.id)
+  const handleDeleteCourse = (id:string) => {
+    mutate(id)
   }
   return {
     handleDeleteCourse

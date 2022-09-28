@@ -115,9 +115,7 @@ const CoursesTable = ({ courses, isEnrollment }: CoursesTableProps) => {
                     label="Borrar"
                     className="p-button-p-button-raised p-button-danger"
                     onClick={() => {
-                      setSelectedCourse(rowData)
-                      handleDeleteCourse()
-                      setDisplayBasic(false)
+                      handleDeleteCourse(rowData.id)
                     }}
                   />
                 </div>
