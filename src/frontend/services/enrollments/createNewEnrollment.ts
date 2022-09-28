@@ -5,7 +5,6 @@ type EnrollmentData = {
   academicYear: number
 }
 export const createNewEnrollment = async (enrollment: EnrollmentData) => {
-  console.log(enrollment)
   const response = await publicAxiosInstance.post('/enrollments', enrollment)
   return response
 }

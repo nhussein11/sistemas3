@@ -14,11 +14,13 @@ import DialogNewStudent from './DialogNewStudent'
 import DialogUpdateStudent from './DialogUpdateStudent'
 import { selectedStudentState } from '../../atoms/students/selectedStudentAtom'
 import useDeleteStudentMutation from '../../hooks/students/useDeleteStudentMutation'
+import { isStudentCheckedState } from '../../atoms/students/isStudentSelected'
 
-const StudentsTable = ({ students }: StudentsTableProps) => {
+const StudentsTable = ({ students, isEnrollment }: StudentsTableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
   const { handleDeleteStudent } = useDeleteStudentMutation('students')
   const [, setSelectedStudent] = useRecoilState(selectedStudentState)
+  const [isStudentChecked, setIsStudentChecked] = useRecoilState(isStudentCheckedState)
   const [, setShowUpdateDialog] = useRecoilState(showUpdateDialogState)
   return (
     <div className="datatable-filter">
@@ -46,7 +48,7 @@ const StudentsTable = ({ students }: StudentsTableProps) => {
             body={(rowData) => rowData.surname}
             alignHeader={'center'}
           />
-           <Column
+          <Column
             field="DNI"
             header="DNI"
             body={(rowData) => rowData.identificationNumber}
@@ -56,6 +58,24 @@ const StudentsTable = ({ students }: StudentsTableProps) => {
             field="options"
             header="Opciones"
             body={(rowData) => {
+              if (isEnrollment) {
+                return (
+                  <div>
+                    <input
+                      onChange={() =>
+                        setIsStudentChecked({
+                          id: rowData.id,
+                          checked: true
+                        })
+                      }
+                      value={rowData.id}
+                      checked={isStudentChecked.id === rowData.id}
+                      type="checkbox"
+                      name="check"
+                    />
+                  </div>
+                )
+              }
               return (
                 <div>
                   <Button

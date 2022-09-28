@@ -1,10 +1,10 @@
 import React from 'react'
 import { Button } from 'primereact/button'
-import { StockDialogFooterProps } from '../../@types/frontend.types'
+import { EnrollmentDialogFooterProps } from '../../@types/frontend.types'
 
-const EnrollmentDialogFooter = ({ closeDialog, handleCreateNewStock }:StockDialogFooterProps) => {
-  const createStock = () => {
-    handleCreateNewStock()
+const EnrollmentDialogFooter = ({ closeDialog, handleCreateNewEnrollment }:EnrollmentDialogFooterProps) => {
+  const createEnrollment = () => {
+    handleCreateNewEnrollment()
     closeDialog()
   }
   return (
@@ -18,7 +18,7 @@ const EnrollmentDialogFooter = ({ closeDialog, handleCreateNewStock }:StockDialo
     <Button
       label="Guardar"
       icon="pi pi-check"
-      onClick={createStock}
+      onClick={createEnrollment}
       autoFocus
     />
   </div>

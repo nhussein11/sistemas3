@@ -15,11 +15,14 @@ import DialogNewCourse from './DialogNewCourse'
 import DialogUpdateCourse from './DialogUpdateCourse'
 import { selectedCourseState } from '../../atoms/courses/selectedCourseAtom'
 import useDeleteCourseMutation from '../../hooks/courses/useDeleteCourseMutation'
+import { isCourseCheckedState } from '../../atoms/courses/isCourseCheckedAtom'
 
-const CoursesTable = ({ courses }: CoursesTableProps) => {
+const CoursesTable = ({ courses, isEnrollment }: CoursesTableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
   const { handleDeleteCourse } = useDeleteCourseMutation('course')
   const [, setSelectedCourse] = useRecoilState(selectedCourseState)
+  const [isCourseChecked, setIsCourseChecked] =
+    useRecoilState(isCourseCheckedState)
   const [, setShowUpdateDialog] = useRecoilState(showUpdateDialogState)
   return (
     <div className="datatable-filter">
@@ -63,7 +66,7 @@ const CoursesTable = ({ courses }: CoursesTableProps) => {
             }}
             alignHeader={'center'}
           />
-           <Column
+          <Column
             field="Carga Horaria"
             header="Carga Horaria"
             body={(rowData) => rowData.hoursQuantity}
@@ -73,6 +76,24 @@ const CoursesTable = ({ courses }: CoursesTableProps) => {
             field="options"
             header="Opciones"
             body={(rowData) => {
+              if (isEnrollment) {
+                return (
+                  <div>
+                    <input
+                      onChange={() =>
+                        setIsCourseChecked({
+                          id: rowData.id,
+                          checked: true
+                        })
+                      }
+                      value={rowData.id}
+                      checked={isCourseChecked.id === rowData.id}
+                      type="checkbox"
+                      name="check"
+                    />
+                  </div>
+                )
+              }
               return (
                 <div>
                   <Button

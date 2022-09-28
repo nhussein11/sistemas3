@@ -18,9 +18,11 @@ export type StoresTableProps = {
 }
 export type CoursesTableProps = {
   courses: CourseFrontend[]
+  isEnrollment?: boolean
 }
 export type StudentsTableProps = {
   students: Student[]
+  isEnrollment: boolean
 }
 export type SelectBodyTemplateProps = {
   rowData: Product
@@ -98,6 +100,11 @@ export type StockDialogFooterProps = {
   closeDialog: () => void
   handleCreateNewStock: () => void
 }
+export type EnrollmentDialogFooterProps = {
+  closeDialog: () => void
+  handleCreateNewEnrollment: () => void
+}
+
 export type StockTableHeaderProps = {
   setDisplayBasic: Dispatch<boolean>
 }
