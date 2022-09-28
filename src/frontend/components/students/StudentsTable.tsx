@@ -3,7 +3,6 @@ import { Column } from 'primereact/column'
 import { DataTable } from 'primereact/datatable'
 import { Button } from 'primereact/button'
 import DialogError from './DialogError'
-import NumberFormat from 'react-number-format'
 import { CoursesTableProps } from '../../@types/frontend.types'
 import TableHeader from './TableHeader'
 import { useRecoilState } from 'recoil'
@@ -42,31 +41,15 @@ const StudentsTable = ({ courses }: CoursesTableProps) => {
             alignHeader={'center'}
           />
           <Column
-            field="Descripcion"
-            header="Descripcion"
-            body={(rowData) => rowData.description}
-            alignHeader={'center'}
-          />
-          <Column
-            field="Precio"
-            header="Precio"
-            body={(rowData) => {
-              return (
-                <NumberFormat
-                  value={rowData.price}
-                  displayType={'text'}
-                  thousandSeparator={'.'}
-                  decimalSeparator={','}
-                  prefix={'$'}
-                ></NumberFormat>
-              )
-            }}
+            field="Apellido"
+            header="Apellido"
+            body={(rowData) => rowData.surname}
             alignHeader={'center'}
           />
            <Column
-            field="Carga Horaria"
-            header="Carga Horaria"
-            body={(rowData) => rowData.hoursQuantity}
+            field="DNI"
+            header="DNI"
+            body={(rowData) => rowData.identificationNumber}
             alignHeader={'center'}
           />
           <Column
