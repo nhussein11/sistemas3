@@ -3,6 +3,7 @@ import { CategoryEnum, Course, Product } from '@prisma/client'
 import { prisma } from '../../../server/prisma-client/prisma-client'
 import {
   createProduct,
+  deleteProductById,
   getProductById,
   updateProductById
 } from '../products/products.controller'
@@ -69,18 +70,17 @@ const updateCourseById = async (
   name: string,
   hoursQuantity: number,
   price: number,
-  description: string,
-  productId: string
+  description: string
 ) => {
   try {
-    await prisma.course.findUniqueOrThrow({ where: { id } })
+    const course : Course = await prisma.course.findUniqueOrThrow({ where: { id } })
 
     if (!name && !price && !description) {
       throw new Error('Name, price, description or category must be provided!')
     }
 
     await updateProductById(
-      productId,
+      course.productId,
       `Inscripcion - ${name}`,
       price,
       description,
@@ -97,22 +97,24 @@ const updateCourseById = async (
 
     return updatedCourse
   } catch (error) {
+    console.log(error)
     throw error
   }
 }
 
 const deleteCourseById = async (id: string) => {
   try {
+    const courseToDelete: Course = await getCourseById(id)
+
+    await deleteProductById(courseToDelete.productId)
+
     const deletedCourse: Course = await prisma.course.delete({
       where: { id }
     })
-    await prisma.product.delete({
-      where: {
-        id: deletedCourse.productId
-      }
-    })
+
     return deletedCourse
   } catch (error) {
+    console.log(error)
     throw error
   }
 }
