@@ -7,7 +7,10 @@ import {
   Store,
   Record,
   RecordDetails,
-  RecordType
+  RecordType,
+  Course,
+  Student,
+  Enrollment
 } from '@prisma/client'
 
 const deleteAllTables = async () => {
@@ -15,6 +18,9 @@ const deleteAllTables = async () => {
   await prisma.recordDetails.deleteMany()
   await prisma.record.deleteMany()
   await prisma.stock.deleteMany()
+  await prisma.enrollment.deleteMany()
+  await prisma.course.deleteMany()
+  await prisma.student.deleteMany()
   await prisma.product.deleteMany()
   await prisma.store.deleteMany()
   await prisma.recordType.deleteMany()
@@ -145,6 +151,120 @@ const createDefaultRecordDetails = async () => {
     data: fulFilledResults.map((res) => res.value)
   })
 }
+
+const createDefaultStudents = async () => {
+  const defaultStudents: Omit<Student, 'id'>[] = [
+    {
+      name: 'Choco',
+      surname: 'Villanueva',
+      identificationNumber: 4321345
+    },
+    {
+      name: 'Gonza',
+      surname: 'Guaimas',
+      identificationNumber: 2344563
+    },
+    {
+      name: 'Alejo',
+      surname: 'Torres',
+      identificationNumber: 32321321
+    },
+    {
+      name: 'Nico',
+      surname: 'Hussein',
+      identificationNumber: 43232145
+    }
+  ]
+
+  console.log('inserting default students...')
+  await prisma.student.createMany({
+    data: defaultStudents
+  })
+}
+// Este codigo esta re feo, pero cuando lo estoy haciendo ya tengo mucho sueno, despues llo refactoricemos pl
+const createDefaultCourses = async () => {
+  const defaultProductsByDefaultCourses: Omit<Product, 'id'>[] = [
+    {
+      name: 'Inscripcion - Curso de Front-End',
+      description: 'Curso de fundamenots de Front-End',
+      category: CategoryEnum.COURSE,
+      price: 4000
+    },
+    {
+      name: 'Inscripcion - Curso de Back-End',
+      description: 'Curso de fundamenots de Back-End',
+      category: CategoryEnum.COURSE,
+      price: 6000
+    },
+    {
+      name: 'Inscripcion - Curso de Testing',
+      description: 'Curso de fundamenots de Testing',
+      category: CategoryEnum.COURSE,
+      price: 2000
+    },
+    {
+      name: 'Inscripcion - Curso de Bases de Datos',
+      description: 'Curso de fundamentos de BDD',
+      category: CategoryEnum.COURSE,
+      price: 1500
+    }
+  ]
+  await prisma.product.createMany({ data: defaultProductsByDefaultCourses })
+  const products: Product[] = await prisma.product.findMany({
+    where: {
+      category: CategoryEnum.COURSE
+    }
+  })
+
+  const defaultCourses: Omit<Course, 'id'>[] = [
+    {
+      name: 'Curso de Front-End',
+      hoursQuantity: 3,
+      productId: ''
+    },
+    {
+      name: 'Curso de Back-End',
+      hoursQuantity: 2,
+      productId: ''
+    },
+    {
+      name: 'Curso de Testing',
+      hoursQuantity: 4,
+      productId: ''
+    },
+    {
+      name: 'Curso de Bases de Datos',
+      hoursQuantity: 1,
+      productId: ''
+    }
+  ]
+  const courses: Omit<Course, 'id'>[] = defaultCourses.map((course, index) => {
+    course.productId = products[index].id
+    return course
+  })
+
+  console.log('inserting default courses...')
+  await prisma.course.createMany({
+    data: courses
+  })
+}
+
+const createDefaultEnrollments = async () => {
+  const courses: Course[] = await prisma.course.findMany()
+  const students: Student[] = await prisma.student.findMany()
+
+  const defaultEnrollments: Omit<Enrollment, 'id'>[] = courses.map((course, index) => {
+    return {
+      academicYear: 2022,
+      courseId: course.id,
+      studentId: students[index].id
+    }
+  })
+  console.log('inserting default enrollments...')
+  await prisma.enrollment.createMany({
+    data: defaultEnrollments
+  })
+}
 const populateDatabase = async () => {
   try {
     await createDefaultProducts()
@@ -153,6 +273,9 @@ const populateDatabase = async () => {
     await createDefaultRecordTypes()
     await createDefaultRecords()
     await createDefaultRecordDetails()
+    await createDefaultStudents()
+    await createDefaultCourses()
+    await createDefaultEnrollments()
   } catch (error: any) {
     throw new Error(error)
   }
