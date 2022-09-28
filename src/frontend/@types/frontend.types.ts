@@ -22,7 +22,7 @@ export type CoursesTableProps = {
 }
 export type StudentsTableProps = {
   students: Student[]
-  isEnrollment: boolean
+  isEnrollment?: boolean
 }
 export type SelectBodyTemplateProps = {
   rowData: Product

@@ -7,23 +7,16 @@ import DialogNewEnrollment from './DialogNewEnrollment'
 import DialogUpdateEnrollment from './DialogUpdateEnrollment'
 import { EnrollmentsTableProps } from '../../@types/frontend.types'
 import EnrollmentsTableHeader from './EnrollmentsTableHeader'
-
-import {
-  showUpdateDialogState,
-  UPDATE_MODES_ENUM
-} from '../../atoms/showUpdateDialogAtom'
-import { useRecoilState } from 'recoil'
-import { selectedStockState } from '../../atoms/stock/selectedStockAtom'
 import { findCourseName } from '../../services/enrollments/findCourseName'
 import useCoursesQuery from '../../hooks/courses/useCoursesQuery'
 import useStudentsQuery from '../../hooks/students/useStudentsQuery'
 import { findStudentName } from '../../services/enrollments/findStudentName'
+import useDeleteEnrollmentMutation from '../../hooks/enrollments/useDeleteEnrollmentMutation'
 const EnrollmentsTable = ({ enrollments }: EnrollmentsTableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
   const coursesQuery = useCoursesQuery('courses')
   const studentsQuery = useStudentsQuery('students')
-  const [, setSelectedStock] = useRecoilState(selectedStockState)
-  const [, setShowUpdateDialog] = useRecoilState(showUpdateDialogState)
+  const { handleDeleteEnrollment } = useDeleteEnrollmentMutation('enrollments')
   return (
     <div className="datatable-filter">
       <div className="card">
@@ -70,11 +63,7 @@ const EnrollmentsTable = ({ enrollments }: EnrollmentsTableProps) => {
                     label="Borrar"
                     className="p-button-p-button-raised p-button-danger"
                     onClick={() => {
-                      setSelectedStock(rowData)
-                      setShowUpdateDialog({
-                        showUpdateDialog: true,
-                        updateMode: UPDATE_MODES_ENUM.STOCK_UPDATE
-                      })
+                      handleDeleteEnrollment(rowData.id)
                     }}
                   />
                 </div>
