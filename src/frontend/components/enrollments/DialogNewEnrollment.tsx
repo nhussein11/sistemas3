@@ -6,6 +6,8 @@ import EnrollmentDialogFooter from './EnrollmentDialogFooter'
 import StudentsTable from '../students/StudentsTable'
 import CoursesTable from '../courses/coursesTable'
 import useDialogNewEnrollmentMutation from '../../hooks/enrollments/useDialogNewEnrollmentMutation'
+import { filterStudents } from '../../services/students/filterStudents'
+import { filterCourses } from '../../services/courses/filterCourses'
 
 const DialogNewEnrollment = ({
   displayBasic,
@@ -15,7 +17,9 @@ const DialogNewEnrollment = ({
     handleCreateNewEnrollment,
     studentsQuery,
     coursesQuery,
-    academicYear
+    academicYear,
+    studentsFilterValue,
+    coursesFilterValue
   } = useDialogNewEnrollmentMutation('enrollments')
   return (
     <Dialog
@@ -28,8 +32,20 @@ const DialogNewEnrollment = ({
       onHide={() => closeDialog()}
     >
       <div className="form-container">
-        <StudentsTable isEnrollment students={studentsQuery.data?.students} />
-        <CoursesTable isEnrollment courses={coursesQuery.data?.courses} />
+        <StudentsTable
+          isEnrollment
+          students={filterStudents(
+            studentsQuery.data?.students,
+            studentsFilterValue
+          )}
+        />
+        <CoursesTable
+          isEnrollment
+          courses={filterCourses(
+            coursesQuery.data?.courses,
+            coursesFilterValue
+          )}
+        />
       </div>
       <div style={{ display: 'grid' }}>
         <label htmlFor="id">ciclo lectivo</label>

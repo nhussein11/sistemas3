@@ -3,11 +3,11 @@ import { Button } from 'primereact/button'
 import { InputText } from 'primereact/inputtext'
 import { useRecoilState } from 'recoil'
 import { TableHeaderProps } from '../../@types/frontend.types'
-import { globalFilterValueState } from '../../atoms/globalFilterValueAtom'
+import { StudentsFilterValueState } from '../../atoms/students/filterValueAtom'
 
 const TableHeader = ({ setDisplayBasic }: TableHeaderProps) => {
-  const [globalFilterValue, setGlobalFilterValue] = useRecoilState(
-    globalFilterValueState
+  const [studentsFilterValue, setStudentsFilterValue] = useRecoilState(
+    StudentsFilterValueState
   )
 
   return (
@@ -16,8 +16,8 @@ const TableHeader = ({ setDisplayBasic }: TableHeaderProps) => {
         <span className="p-input-icon-left">
           <i className="pi pi-search" />
           <InputText
-            value={globalFilterValue}
-            onChange={(e) => setGlobalFilterValue(e.target.value)}
+            value={studentsFilterValue}
+            onChange={(e) => setStudentsFilterValue(e.target.value)}
             placeholder="Buscar"
           />
         </span>

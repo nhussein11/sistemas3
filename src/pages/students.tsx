@@ -1,14 +1,14 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useRecoilState } from 'recoil'
-import { globalFilterValueState } from '../frontend/atoms/globalFilterValueAtom'
+import { StudentsFilterValueState } from '../frontend/atoms/students/filterValueAtom'
 import StudentsTable from '../frontend/components/students/StudentsTable'
 import useStudentsQuery from '../frontend/hooks/students/useStudentsQuery'
 import { filterStudents } from '../frontend/services/students/filterStudents'
 
 const Home: NextPage = () => {
   const query = useStudentsQuery('students')
-  const [globalFilterValue] = useRecoilState(globalFilterValueState)
+  const [StudentsFilterValue] = useRecoilState(StudentsFilterValueState)
   return (
     <div>
       <Head>
@@ -18,7 +18,7 @@ const Home: NextPage = () => {
       </Head>
       <div className="main-container">
         <StudentsTable
-        students={filterStudents(query?.data?.students, globalFilterValue)}
+        students={filterStudents(query?.data?.students, StudentsFilterValue)}
         />
       </div>
     </div>

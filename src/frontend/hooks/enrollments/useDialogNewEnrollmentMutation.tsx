@@ -1,11 +1,13 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRecoilState } from 'recoil'
+import { CoursesFilterValueState } from '../../atoms/courses/filterValueAtom'
 import {
   defaultCourseChecked,
   isCourseCheckedState
 } from '../../atoms/courses/isCourseCheckedAtom'
 import { defaultErrorState, ErrorState } from '../../atoms/error/ErrorAtom'
 import { showErrorDialogState } from '../../atoms/error/showErrorDialog'
+import { StudentsFilterValueState } from '../../atoms/students/filterValueAtom'
 import {
   defaultStudentChecked,
   isStudentCheckedState
@@ -25,6 +27,8 @@ const useDialogNewEnrollmentMutation = (queryId: string) => {
   const [isStudentChecked, setIsStudentChecked] = useRecoilState(
     isStudentCheckedState
   )
+  const [studentsFilterValue] = useRecoilState(StudentsFilterValueState)
+  const [coursesFilterValue] = useRecoilState(CoursesFilterValueState)
   const [isCourseChecked, setIsCourseChecked] =
     useRecoilState(isCourseCheckedState)
   const { mutate } = useMutation(createNewEnrollment, {
@@ -52,7 +56,9 @@ const useDialogNewEnrollmentMutation = (queryId: string) => {
     handleCreateNewEnrollment,
     studentsQuery,
     coursesQuery,
-    academicYear
+    academicYear,
+    studentsFilterValue,
+    coursesFilterValue
   }
 }
 
