@@ -53,6 +53,13 @@ const NavBar = () => {
       command: () => {
         router.push('/students')
       }
+    },
+    {
+      label: 'Inscripciones',
+      icon: 'pi pi-fw pi-dollar',
+      command: () => {
+        router.push('/enrollments')
+      }
     }
   ]
 
