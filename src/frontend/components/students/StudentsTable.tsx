@@ -3,7 +3,7 @@ import { Column } from 'primereact/column'
 import { DataTable } from 'primereact/datatable'
 import { Button } from 'primereact/button'
 import DialogError from './DialogError'
-import { CoursesTableProps } from '../../@types/frontend.types'
+import { StudentsTableProps } from '../../@types/frontend.types'
 import TableHeader from './TableHeader'
 import { useRecoilState } from 'recoil'
 import {
@@ -15,7 +15,7 @@ import DialogUpdateStudent from './DialogUpdateStudent'
 import { selectedCourseState } from '../../atoms/courses/selectedCourseAtom'
 import useDeleteCourseMutation from '../../hooks/courses/useDeleteCourseMutation'
 
-const StudentsTable = ({ courses }: CoursesTableProps) => {
+const StudentsTable = ({ students }: StudentsTableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
   const { handleDeleteCourse } = useDeleteCourseMutation('course')
   const [, setSelectedCourse] = useRecoilState(selectedCourseState)
@@ -24,7 +24,7 @@ const StudentsTable = ({ courses }: CoursesTableProps) => {
     <div className="datatable-filter">
       <div className="card">
         <DataTable
-          value={courses}
+          value={students}
           paginator
           className="p-datatable-customers"
           showGridlines
