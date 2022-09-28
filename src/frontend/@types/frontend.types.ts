@@ -1,4 +1,4 @@
-import { Product, Stock, Store, Record, Student } from '@prisma/client'
+import { Product, Stock, Store, Record, Student, Enrollment } from '@prisma/client'
 import { Dispatch } from 'react'
 export type CourseFrontend = {
   id: string
@@ -18,9 +18,11 @@ export type StoresTableProps = {
 }
 export type CoursesTableProps = {
   courses: CourseFrontend[]
+  isEnrollment?: boolean
 }
 export type StudentsTableProps = {
   students: Student[]
+  isEnrollment?: boolean
 }
 export type SelectBodyTemplateProps = {
   rowData: Product
@@ -93,11 +95,16 @@ export type StockUpdateData = {
 }
 
 export type StockTableProps = { stocks: Stock[] }
-
+export type EnrollmentsTableProps = {enrollments: Enrollment[]}
 export type StockDialogFooterProps = {
   closeDialog: () => void
   handleCreateNewStock: () => void
 }
+export type EnrollmentDialogFooterProps = {
+  closeDialog: () => void
+  handleCreateNewEnrollment: () => void
+}
+
 export type StockTableHeaderProps = {
   setDisplayBasic: Dispatch<boolean>
 }

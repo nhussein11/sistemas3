@@ -1,23 +1,21 @@
 import React from 'react'
-import { Button } from 'primereact/button'
 import { InputText } from 'primereact/inputtext'
+import { globalFilterValueState } from '../../atoms/globalFilterValueAtom'
+import { StockTableHeaderProps } from '../../@types/frontend.types'
 import { useRecoilState } from 'recoil'
-import { TableHeaderProps } from '../../@types/frontend.types'
-import { StudentsFilterValueState } from '../../atoms/students/filterValueAtom'
-
-const TableHeader = ({ setDisplayBasic }: TableHeaderProps) => {
-  const [studentsFilterValue, setStudentsFilterValue] = useRecoilState(
-    StudentsFilterValueState
+import { Button } from 'primereact/button'
+const EnrollmentsTableHeader = ({ setDisplayBasic }:StockTableHeaderProps) => {
+  const [globalFilterValue, setGlobalFilterValue] = useRecoilState(
+    globalFilterValueState
   )
-
   return (
     <div className="header-table">
       <div className="flex justify-content-between">
         <span className="p-input-icon-left">
           <i className="pi pi-search" />
           <InputText
-            value={studentsFilterValue}
-            onChange={(e) => setStudentsFilterValue(e.target.value)}
+            value={globalFilterValue}
+            onChange={(e) => setGlobalFilterValue(e.target.value)}
             placeholder="Buscar"
           />
         </span>
@@ -33,4 +31,4 @@ const TableHeader = ({ setDisplayBasic }: TableHeaderProps) => {
   )
 }
 
-export default TableHeader
+export default EnrollmentsTableHeader

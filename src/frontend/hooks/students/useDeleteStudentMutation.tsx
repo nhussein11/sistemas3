@@ -14,9 +14,8 @@ import {
 } from '../../atoms/students/isStudentSelected'
 
 const useDeleteStudentMutation = (queryId: string) => {
-  // eslint-disable-next-line no-unused-vars
-  const [_, setIsStudentChecked] = useRecoilState(isStudentCheckedState)
-  const [selectedStudent, setSelectedStudent] =
+  const [, setIsStudentChecked] = useRecoilState(isStudentCheckedState)
+  const [, setSelectedStudent] =
     useRecoilState(selectedStudentState)
   const [, setShowErrorDialog] = useRecoilState(showErrorDialogState)
   const [, setErrorState] = useRecoilState(ErrorState)
@@ -37,8 +36,8 @@ const useDeleteStudentMutation = (queryId: string) => {
       }
     }
   )
-  const handleDeleteStudent = () => {
-    mutate(selectedStudent.id)
+  const handleDeleteStudent = (id:string) => {
+    mutate(id)
   }
   return {
     handleDeleteStudent
