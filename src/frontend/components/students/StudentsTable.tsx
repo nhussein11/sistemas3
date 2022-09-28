@@ -67,7 +67,7 @@ const StudentsTable = ({ students }: StudentsTableProps) => {
                       setSelectedCourse(rowData)
                       setShowUpdateDialog({
                         showUpdateDialog: true,
-                        updateMode: UPDATE_MODES_ENUM.COURSE_UPDATE
+                        updateMode: UPDATE_MODES_ENUM.STUDENT_UPDATE
                       })
                     }}
                   />

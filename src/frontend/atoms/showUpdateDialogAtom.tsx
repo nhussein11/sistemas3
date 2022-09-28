@@ -5,6 +5,7 @@ export const UPDATE_MODES_ENUM = {
   PRODUCT_UPDATE: 'productUpdate',
   STORE_UPDATE: 'storeUpdate',
   COURSE_UPDATE: 'courseUpdate',
+  STUDENT_UPDATE: 'studentUpdate',
   DEFAULT: 'default'
 
 }
