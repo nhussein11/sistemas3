@@ -46,6 +46,13 @@ const NavBar = () => {
       command: () => {
         router.push('/courses')
       }
+    },
+    {
+      label: 'Alumnos',
+      icon: 'pi pi-fw pi-users',
+      command: () => {
+        router.push('/students')
+      }
     }
   ]
 
@@ -57,7 +64,7 @@ const NavBar = () => {
           label="Cerrar Sesión"
           icon="pi pi-fw pi-power-off"
           className="p-button-p-button-raised p-button-danger"
-          />
+        />
       }
     />
   )
