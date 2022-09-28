@@ -3,18 +3,17 @@ import { Button } from 'primereact/button'
 import { Dialog } from 'primereact/dialog'
 import { InputText } from 'primereact/inputtext'
 import { showUpdateDialogDefaultState } from '../../atoms/showUpdateDialogAtom'
-import useDialogUpdateCourseMutation from '../../hooks/courses/useUpdateCourseMutation'
+import useUpdateStudentMutation from '../../hooks/students/useUpdateStudentMutation'
 
 const DialogUpdateStudent = () => {
   const {
-    handleUpateCourse,
-    courseName,
-    coursePrice,
-    courseDescription,
-    courseHours,
+    handleUpateStudent,
+    studentName,
+    studentSurname,
+    studentIdentificationNumber,
     showUpdateDialog,
     setShowUpdateDialog
-  } = useDialogUpdateCourseMutation('courses')
+  } = useUpdateStudentMutation('students')
   return (
     <Dialog
       visible={showUpdateDialog.showUpdateDialog}
@@ -26,33 +25,25 @@ const DialogUpdateStudent = () => {
           <div style={ { display: 'grid' } }>
             <label htmlFor="id">Nombre</label>
             <InputText
-              {...courseName}
+              {...studentName}
               name="productName"
               placeholder="nombre"
             />
           </div>
           <div style={ { display: 'grid' } }>
-            <label htmlFor="id">Descripción</label>
+            <label htmlFor="id">Apellido</label>
             <InputText
-              {...courseDescription}
+              {...studentSurname}
               name="productDescription"
               placeholder="descripción"
             />
           </div>
           <div style={ { display: 'grid' } }>
-            <label htmlFor="id">Precio</label>
+            <label htmlFor="id">DNI</label>
             <InputText
-              {...coursePrice}
+              {...studentIdentificationNumber}
               name="productPrice"
               placeholder="precio"
-            />
-          </div>
-          <div style={ { display: 'grid' } }>
-            <label htmlFor="id">Carga Horaria</label>
-            <InputText
-              {...courseHours}
-              name="courseHours"
-              placeholder="horas"
             />
           </div>
       </div>
@@ -61,7 +52,7 @@ const DialogUpdateStudent = () => {
           label="Guardar"
           className="p-button-raised p-button-success"
           icon="pi pi-check"
-          onClick={handleUpateCourse}
+          onClick={handleUpateStudent}
           autoFocus
         />
       </div>

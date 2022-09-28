@@ -12,13 +12,13 @@ import {
 } from '../../atoms/showUpdateDialogAtom'
 import DialogNewStudent from './DialogNewStudent'
 import DialogUpdateStudent from './DialogUpdateStudent'
-import { selectedCourseState } from '../../atoms/courses/selectedCourseAtom'
 import useDeleteCourseMutation from '../../hooks/courses/useDeleteCourseMutation'
+import { selectedStudentState } from '../../atoms/students/selectedStudentAtom'
 
 const StudentsTable = ({ students }: StudentsTableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
   const { handleDeleteCourse } = useDeleteCourseMutation('course')
-  const [, setSelectedCourse] = useRecoilState(selectedCourseState)
+  const [, setSelectedStudent] = useRecoilState(selectedStudentState)
   const [, setShowUpdateDialog] = useRecoilState(showUpdateDialogState)
   return (
     <div className="datatable-filter">
@@ -64,7 +64,7 @@ const StudentsTable = ({ students }: StudentsTableProps) => {
                     label="Editar"
                     className="p-button-p-button-raised p-button-warning"
                     onClick={() => {
-                      setSelectedCourse(rowData)
+                      setSelectedStudent(rowData)
                       setShowUpdateDialog({
                         showUpdateDialog: true,
                         updateMode: UPDATE_MODES_ENUM.STUDENT_UPDATE
@@ -77,7 +77,7 @@ const StudentsTable = ({ students }: StudentsTableProps) => {
                     label="Borrar"
                     className="p-button-p-button-raised p-button-danger"
                     onClick={() => {
-                      setSelectedCourse(rowData)
+                      setSelectedStudent(rowData)
                       handleDeleteCourse()
                       setDisplayBasic(false)
                     }}
