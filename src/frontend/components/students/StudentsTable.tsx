@@ -12,12 +12,12 @@ import {
 } from '../../atoms/showUpdateDialogAtom'
 import DialogNewStudent from './DialogNewStudent'
 import DialogUpdateStudent from './DialogUpdateStudent'
-import useDeleteCourseMutation from '../../hooks/courses/useDeleteCourseMutation'
 import { selectedStudentState } from '../../atoms/students/selectedStudentAtom'
+import useDeleteStudentMutation from '../../hooks/students/useDeleteStudentMutation'
 
 const StudentsTable = ({ students }: StudentsTableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
-  const { handleDeleteCourse } = useDeleteCourseMutation('course')
+  const { handleDeleteStudent } = useDeleteStudentMutation('students')
   const [, setSelectedStudent] = useRecoilState(selectedStudentState)
   const [, setShowUpdateDialog] = useRecoilState(showUpdateDialogState)
   return (
@@ -78,7 +78,7 @@ const StudentsTable = ({ students }: StudentsTableProps) => {
                     className="p-button-p-button-raised p-button-danger"
                     onClick={() => {
                       setSelectedStudent(rowData)
-                      handleDeleteCourse()
+                      handleDeleteStudent()
                       setDisplayBasic(false)
                     }}
                   />
