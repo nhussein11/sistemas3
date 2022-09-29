@@ -11,18 +11,18 @@ import { Button } from 'primereact/button'
 import { useRecoilState } from 'recoil'
 import { selectedRecordState } from '../../atoms/records/selectedRecordAtom'
 
-const RecordsTable = ({ records }: RecordsTableProps) => {
-  const [, setDisplayBasic] = useState(false)
+const SalesTable = ({ records }: RecordsTableProps) => {
   const [displayRecordDetailsTable, setDisplayRecordDetailsTable] = useState(false)
   const [, setSelectedRecord] = useRecoilState(selectedRecordState)
   const recordTypesQuery = useRecordTypesQuery('record-types')
+
   return (
     <div className="datatable-filter">
       <div className="card">
         <DataTable value={records} paginator className="p-datatable-customers" showGridlines rows={10} dataKey="id" responsiveLayout="scroll"
           emptyMessage="No se encontraron Ventas"
           header={
-            <TableHeader setDisplayRecordDetailsTable={setDisplayRecordDetailsTable} setDisplayBasic={setDisplayBasic}/>
+            <TableHeader/>
           }>
           <Column field="Fecha" header="Fecha" body={(rowData) => parseDate(rowData?.datetime)} alignHeader={'center'}/>
           <Column field="Observación" header="Observación" body={(rowData) => rowData.observation} alignHeader={'center'}/>
@@ -49,4 +49,4 @@ const RecordsTable = ({ records }: RecordsTableProps) => {
     </div>
   )
 }
-export default RecordsTable
+export default SalesTable
