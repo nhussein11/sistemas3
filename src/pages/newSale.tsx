@@ -9,6 +9,7 @@ import { Panel } from 'primereact/panel'
 import DialogTableProducts from '../frontend/components/sales/newSale/DialogTableProducts'
 import ToolBarProducts from '../frontend/components/sales/newSale/ToolBarProducts'
 import SaleDataBar from '../frontend/components/sales/newSale/SaleDataBar'
+import PanelTotal from '../frontend/components/sales/newSale/PanelTotal'
 import { useRef, useState } from 'react'
 
 const NewSale: NextPage = () => {
@@ -50,7 +51,7 @@ const NewSale: NextPage = () => {
                 </div>
             </SplitterPanel>
             <SplitterPanel>
-                {/* <PanelTotal total={total} setResidue={setResidue} onInputNumberChange={onInputNumberChange} saveSaleDB={saveSaleDB} ></PanelTotal> */}
+                <PanelTotal/>
             </SplitterPanel>
         </Splitter>
       </div>
