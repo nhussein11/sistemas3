@@ -60,6 +60,13 @@ const NavBar = () => {
       command: () => {
         router.push('/enrollments')
       }
+    },
+    {
+      label: 'Ventas',
+      icon: 'pi pi-fw pi-check',
+      command: () => {
+        router.push('/sales')
+      }
     }
   ]
 
