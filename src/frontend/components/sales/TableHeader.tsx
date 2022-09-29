@@ -2,12 +2,12 @@ import React from 'react'
 import { Button } from 'primereact/button'
 import { InputText } from 'primereact/inputtext'
 import { useRecoilState } from 'recoil'
-import { RecordsTableHeaderProps } from '../../@types/frontend.types'
 import { globalFilterValueState } from '../../atoms/globalFilterValueAtom'
+import { useRouter } from 'next/router'
 
-const TableHeader = ({ setDisplayBasic, setDisplayRecordDetailsTable }: RecordsTableHeaderProps) => {
+const TableHeader = () => {
   const [globalFilterValue, setGlobalFilterValue] = useRecoilState(globalFilterValueState)
-
+  const router = useRouter()
   return (
     <div className="header-table">
       <div className="flex justify-content-between">
@@ -24,7 +24,7 @@ const TableHeader = ({ setDisplayBasic, setDisplayRecordDetailsTable }: RecordsT
         <Button
           label="Nuevo"
           className="p-button-raised p-button-success"
-          onClick={() => setDisplayBasic(true)}
+          onClick={() => router.push('/newSale')}
         />
       </div>
     </div>
