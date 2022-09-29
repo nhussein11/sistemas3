@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useRecoilState } from 'recoil'
 import { globalFilterValueState } from '../frontend/atoms/globalFilterValueAtom'
-import RecordsTable from '../frontend/components/records/RecordsTable'
+import SalesTable from '../frontend/components/sales/SalesTable'
 import useRecordsQuery from '../frontend/hooks/records/useRecordsQuery'
 import { filterRecords } from '../frontend/services/records/filterRecords'
 
@@ -16,7 +16,7 @@ const Sales: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="main-container">
-        <RecordsTable
+        <SalesTable
           records={filterRecords(query?.data?.records, globalFilterValue)}
         />
       </div>
