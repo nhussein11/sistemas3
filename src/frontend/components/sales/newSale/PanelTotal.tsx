@@ -15,9 +15,9 @@ export default function PanelTotal () {
             <div style={{ display: 'grid', gridTemplateColumns: 'auto auto', margin: '1rem', columnGap: '3rem' }}>
                 <InputNumber id='paid' placeholder='Ingresar Importe' mode="currency" currency="USD" locale="en-US" />
             </div>
-            <Button onClick={() => {
+            <Button style={{ width: '-webkit-fill-available', justifyContent: 'center' }} onClick={() => {
               alert('guardar venta')
-            }} className="p-button-success"><h2>GUARDAR</h2></Button>
+            }} className="p-button-success"><h2>GENERAR VENTA</h2></Button>
         </Panel>
     </div>
   )
