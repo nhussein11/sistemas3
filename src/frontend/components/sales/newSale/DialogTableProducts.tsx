@@ -8,13 +8,13 @@ import NumberFormat from 'react-number-format'
 import { newSaleTableProductProps } from '../../../@types/frontend.types'
 import { Product } from '@prisma/client'
 
-export default function DialogTableProducts ({ products, displayBasic, closeDialog, setProduct, setVisibleSelectorQuantity }: newSaleTableProductProps) {
+export default function DialogTableProducts ({ products, displayBasic, closeDialog, setVisibleSelectorQuantity }: newSaleTableProductProps) {
   const actionBodyTemplateListProducts = (rowData: Product) => {
     return (
     <React.Fragment>
         <Button icon="pi pi-plus" className="p-button-rounded p-button-success "
         onClick={() => {
-          setProduct(rowData)
+          // setProduct(rowData)
           setVisibleSelectorQuantity(true)
         }} />
     </React.Fragment>
