@@ -8,6 +8,7 @@ import { Splitter, SplitterPanel } from 'primereact/splitter'
 import { Panel } from 'primereact/panel'
 import DialogTableProducts from '../frontend/components/sales/newSale/DialogTableProducts'
 import ToolBarProducts from '../frontend/components/sales/newSale/ToolBarProducts'
+import SaleDataBar from '../frontend/components/sales/newSale/SaleDataBar'
 import { useRef, useState } from 'react'
 
 const NewSale: NextPage = () => {
@@ -37,7 +38,7 @@ const NewSale: NextPage = () => {
         displayBasic={displayBasic} closeDialog={() => setDisplayBasic(false)}></DialogTableProducts>
 
         <Panel header="DATOS VENTA">
-            {/* <SaleDataBar sale={sale} onInputChange={onInputChange} showClientDialog={() => setClientDialog(true)} clientsArray={clientsArray}></SaleDataBar> */}
+            <SaleDataBar/>
         </Panel>
         <Splitter style={{ height: '100%' }}>
             <SplitterPanel>
