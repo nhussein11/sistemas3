@@ -17,7 +17,6 @@ export type newSaleTableProductProps = {
   products: Product[]
   displayBasic: boolean
   closeDialog: () => void
-  setProduct: (product: Product) => Product
   setVisibleSelectorQuantity: Dispatch<boolean | ((prev: boolean) => boolean)>
 }
 export type StoresTableProps = {
