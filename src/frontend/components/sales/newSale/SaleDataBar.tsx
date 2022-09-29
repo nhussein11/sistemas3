@@ -8,7 +8,7 @@ export default function SaleDataBar () {
   const payments = ['EFECTIVO', 'LISTA']
 
   return (
-    <div className='container-data-sale'>
+    <div style={{ display: 'flex', justifyContent: 'space-around' }}>
         <span className="p-float-label">
             <InputText id="comment" />
             <label htmlFor="comment">Comentario</label>
