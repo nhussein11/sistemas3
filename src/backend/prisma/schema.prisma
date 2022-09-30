@@ -70,6 +70,7 @@ model Record {
   address      String
   letter       LetterEnum @default(A)
   recordNumber Int
+  paidFor         Boolean
 
   RecordDetails RecordDetails[]
 
