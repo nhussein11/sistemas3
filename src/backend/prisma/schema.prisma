@@ -70,7 +70,7 @@ model Record {
   address      String
   letter       LetterEnum @default(A)
   recordNumber Int
-  paidFor         Boolean
+  paidFor      Boolean
 
   RecordDetails RecordDetails[]
 
@@ -80,10 +80,20 @@ model Record {
   Supplier   Supplier @relation(fields: [supplierId], references: [id])
   supplierId String   @default("")
 
-  Customer   Customer @relation(fields: [customerId], references: [id])
-  customerId String   @default("")
+  Customer      Customer       @relation(fields: [customerId], references: [id])
+  customerId    String         @default("")
+  higherRecord  PreviousRecord? @relation("higherRecord")
+  paidForRecord PreviousRecord? @relation("paidForRecord")
 
   @@map("record")
+}
+
+model PreviousRecord {
+  id              String @id @default(cuid())
+  higherRecord    Record @relation("higherRecord", fields: [higherRecordId], references: [id])
+  higherRecordId  String @unique
+  paidForRecord   Record @relation("paidForRecord", fields: [paidForRecordId], references: [id])
+  paidForRecordId String @unique
 }
 
 model RecordType {
