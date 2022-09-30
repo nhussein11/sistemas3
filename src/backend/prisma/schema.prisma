@@ -125,6 +125,17 @@ model Enrollment {
   @@map("enrollment")
 }
 
+model Supplier {
+  id   String @id @default(cuid())
+  name String
+  debt Int
+}
+
+model Customer {
+  id String @id @default(cuid())
+  name String
+}
+
 enum CategoryEnum {
   IMPRESORA
   FILAMENTO
