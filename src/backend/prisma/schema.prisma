@@ -64,16 +64,23 @@ model RecordDetails {
 }
 
 model Record {
-  id          String   @id @default(cuid())
-  datetime    DateTime @default(now())
-  observation String   @default("")
-  senderName  String
-  address     String
+  id           String     @id @default(cuid())
+  datetime     DateTime   @default(now())
+  observation  String     @default("")
+  address      String
+  letter       LetterEnum @default(A)
+  recordNumber Int
 
   RecordDetails RecordDetails[]
 
   RecordType   RecordType @relation(fields: [recordTypeId], references: [id])
   recordTypeId String
+
+  Supplier   Supplier @relation(fields: [supplierId], references: [id])
+  supplierId String   @default("")
+
+  Customer   Customer @relation(fields: [customerId], references: [id])
+  customerId String   @default("")
 
   @@map("record")
 }
@@ -129,11 +136,15 @@ model Supplier {
   id   String @id @default(cuid())
   name String
   debt Int
+
+  Record Record[]
 }
 
 model Customer {
-  id String @id @default(cuid())
+  id   String @id @default(cuid())
   name String
+
+  Record Record[]
 }
 
 enum CategoryEnum {
@@ -153,4 +164,10 @@ enum RecordNameEnum {
   FACTURA_DUPLICADO
   ORDEN_DE_COMPRA
   ORDEN_DE_PAGO
+}
+
+enum LetterEnum {
+  A
+  B
+  C
 }
