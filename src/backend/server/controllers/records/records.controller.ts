@@ -1,11 +1,5 @@
 /* eslint-disable no-useless-catch */
-import {
-  LetterEnum,
-  Record,
-  RecordType,
-  RecordTypeEnum,
-  Supplier
-} from '@prisma/client'
+import { LetterEnum, Record, RecordType, RecordTypeEnum } from '@prisma/client'
 import { prisma } from '../../prisma-client/prisma-client'
 import { getRecordTypeById } from '../record-types/record-types.controller'
 import {
@@ -50,21 +44,20 @@ const createRecord = async (
     }
     const debt: number = await getDebt(details)
 
-    supplierId !== ''
-      ? await updateSupplierDebtById(supplierId, debt)
-      : await updateCustomerDebtById(customerId, debt)
+    await handleDebtByNewRecord(supplierId, debt, customerId)
 
+    const data = createDataOfRecord(
+      supplierId,
+      observation,
+      address,
+      letter,
+      recordNumber,
+      paidFor,
+      recordTypeId,
+      customerId
+    )
     const recordCreated: Record = await prisma.record.create({
-      data: createDataOfRecord(
-        supplierId,
-        observation,
-        address,
-        letter,
-        recordNumber,
-        paidFor,
-        recordTypeId,
-        customerId
-      )
+      data
     })
 
     await handleRecordDetailsCreation(recordType, recordCreated, details)
@@ -244,7 +237,17 @@ export {
   deleteRecordById
   // handleRecordChangesByStockMovement
 }
-function createDataOfRecord (
+async function handleDebtByNewRecord(
+  supplierId: string,
+  debt: number,
+  customerId: string
+) {
+  supplierId !== ''
+    ? await updateSupplierDebtById(supplierId, debt)
+    : await updateCustomerDebtById(customerId, debt)
+}
+
+function createDataOfRecord(
   supplierId: string,
   observation: string,
   address: string,
