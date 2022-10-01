@@ -1,9 +1,7 @@
 /* eslint-disable no-useless-catch */
 import { LetterEnum, Record, RecordType, RecordTypeEnum } from '@prisma/client'
 import { prisma } from '../../prisma-client/prisma-client'
-import {
-  getRecordTypeById
-} from '../record-types/record-types.controller'
+import { getRecordTypeById } from '../record-types/record-types.controller'
 import {
   createRecordDetails,
   deleteRecordsDetailsByRecordId
@@ -41,17 +39,28 @@ const createRecord = async (
     if (!recordType) {
       return
     }
+    const data =
+      supplierId !== ''
+        ? {
+            observation,
+            address,
+            letter,
+            recordNumber,
+            paidFor,
+            recordTypeId,
+            supplierId
+          }
+        : {
+            observation,
+            address,
+            letter,
+            recordNumber,
+            paidFor,
+            recordTypeId,
+            customerId
+          }
     const recordCreated: Record = await prisma.record.create({
-      data: {
-        observation,
-        address,
-        letter,
-        recordNumber,
-        paidFor,
-        recordTypeId,
-        supplierId,
-        customerId
-      }
+      data
     })
     await handleRecordDetailsCreation(recordType, recordCreated, details)
 
