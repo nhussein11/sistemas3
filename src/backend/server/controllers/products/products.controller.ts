@@ -87,10 +87,20 @@ const deleteProductById = async (id: string) => {
   }
 }
 
+const getProductPriceById = async (id: string) => {
+  try {
+    const product: Product = await getProductById(id)
+    return product.price
+  } catch (error) {
+    throw error
+  }
+}
+
 export {
   getProducts,
   createProduct,
   getProductById,
   updateProductById,
-  deleteProductById
+  deleteProductById,
+  getProductPriceById
 }
