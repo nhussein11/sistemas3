@@ -2,8 +2,7 @@
 import { LetterEnum, Record, RecordType, RecordTypeEnum } from '@prisma/client'
 import { prisma } from '../../prisma-client/prisma-client'
 import {
-  getRecordTypeById,
-  getRecordTypeByType
+  getRecordTypeById
 } from '../record-types/record-types.controller'
 import {
   createRecordDetails,
@@ -116,6 +115,30 @@ const deleteRecordById = async (id: string) => {
   }
 }
 
+const handleRecordDetailsCreation = async (
+  recordType: RecordType,
+  recordCreated: Record,
+  details: any[]
+) => {
+  for (const productIdAndQuantity of details) {
+    const { productId, quantity } = productIdAndQuantity
+    await handleStockChanges(productId, quantity, recordType.recordType)
+  }
+
+  const promiseArrayMovementsDetails = details.map(
+    (stockIdQuantityAndSubtotal: any) => {
+      const { stockId, quantity, subTotal } = stockIdQuantityAndSubtotal
+      return createRecordDetails(stockId, recordCreated.id, quantity, subTotal)
+    }
+  )
+  const allPromisesMovementsDetails = Promise.all(promiseArrayMovementsDetails)
+  allPromisesMovementsDetails.then((movementDetails) => {
+    movementDetails.map((results) => {
+      return console.log(results)
+    })
+  })
+}
+
 const handleStockChanges = async (
   productId: string,
   quantity: number,
@@ -157,63 +180,37 @@ const handleStockChanges = async (
   }
 }
 
-const handleRecordDetailsCreation = async (
-  recordType: RecordType,
-  recordCreated: Record,
-  details: any[]
-) => {
-  for (const productIdAndQuantity of details) {
-    const { productId, quantity } = productIdAndQuantity
-    await handleStockChanges(productId, quantity, recordType.recordType)
-  }
+// const handleRecordChangesByStockMovement = async (
+//   stockId: string,
+//   quantity: number
+// ) => {
+//   const recordTypePositive = await getRecordTypeByType(RecordTypeEnum.POSITIVE)
+//   const recordPositive:Record = await prisma.record.create({
+//     data: {
+//       observation: 'Deposit movement IN',
+//       address: 'Admin-Address',
+//       recordTypeId: recordTypePositive.id
+//     }
+//   })
+//   await createRecordDetails(stockId, recordPositive.id, quantity, 0)
 
-  const promiseArrayMovementsDetails = details.map(
-    (stockIdQuantityAndSubtotal: any) => {
-      const { stockId, quantity, subTotal } = stockIdQuantityAndSubtotal
-      return createRecordDetails(stockId, recordCreated.id, quantity, subTotal)
-    }
-  )
-  const allPromisesMovementsDetails = Promise.all(promiseArrayMovementsDetails)
-  allPromisesMovementsDetails.then((movementDetails) => {
-    movementDetails.map((results) => {
-      return console.log(results)
-    })
-  })
-}
-
-const handleRecordChangesByStockMovement = async (
-  stockId: string,
-  quantity: number
-) => {
-  const recordTypePositive = await getRecordTypeByType(RecordTypeEnum.POSITIVE)
-  const recordPositive = await prisma.record.create({
-    data: {
-      observation: 'Deposit movement IN',
-      senderName: 'Admin',
-      address: 'Admin-Address',
-      recordTypeId: recordTypePositive.id
-    }
-  })
-  await createRecordDetails(stockId, recordPositive.id, quantity, 0)
-
-  const recordTypeNegative = await getRecordTypeByType(RecordTypeEnum.NEGATIVE)
-  console.log(recordTypeNegative)
-  const recordNegative = await prisma.record.create({
-    data: {
-      observation: 'Deposit movement OUT',
-      senderName: 'Admin',
-      address: 'Admin-Address',
-      recordTypeId: recordTypeNegative.id
-    }
-  })
-  await createRecordDetails(stockId, recordNegative.id, quantity, 0)
-}
+//   const recordTypeNegative = await getRecordTypeByType(RecordTypeEnum.NEGATIVE)
+//   console.log(recordTypeNegative)
+//   const recordNegative = await prisma.record.create({
+//     data: {
+//       observation: 'Deposit movement OUT',
+//       address: 'Admin-Address',
+//       recordTypeId: recordTypeNegative.id
+//     }
+//   })
+//   await createRecordDetails(stockId, recordNegative.id, quantity, 0)
+// }
 
 export {
   getRecords,
   createRecord,
   getRecordById,
   updateRecordById,
-  deleteRecordById,
-  handleRecordChangesByStockMovement
+  deleteRecordById
+  // handleRecordChangesByStockMovement
 }

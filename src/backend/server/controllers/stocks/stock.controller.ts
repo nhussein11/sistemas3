@@ -1,7 +1,7 @@
 /* eslint-disable no-useless-catch */
 import { Stock } from '@prisma/client'
 import { prisma } from '../../../server/prisma-client/prisma-client'
-import { handleRecordChangesByStockMovement } from '../records/records.controller'
+// import { handleRecordChangesByStockMovement } from '../records/records.controller'
 
 const getStocks = async () => {
   try {
@@ -95,8 +95,8 @@ const updateStockById = async (
         quantity: quantity + quantityDeletedStock
       }
     })
-    // TODO: preguntar si este es el stockID que debo poner o es otro
-    await handleRecordChangesByStockMovement(updatedStock.id, quantity)
+    // TODO: preguntar en que queda esto
+    // await handleRecordChangesByStockMovement(updatedStock.id, quantity)
     return updatedStock
   } catch (error) {
     throw error
