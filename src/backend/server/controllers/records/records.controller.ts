@@ -1,5 +1,11 @@
 /* eslint-disable no-useless-catch */
-import { LetterEnum, Record, RecordType, RecordTypeEnum } from '@prisma/client'
+import {
+  LetterEnum,
+  Record,
+  RecordType,
+  RecordTypeEnum,
+  Supplier
+} from '@prisma/client'
 import { prisma } from '../../prisma-client/prisma-client'
 import { getRecordTypeById } from '../record-types/record-types.controller'
 import {
@@ -13,6 +19,9 @@ import {
   updateStockById
 } from '../stocks/stock.controller'
 import { getStoreByIndex } from '../stores/stores.controller'
+import { updateSupplierDebtById } from '../suppliers/suppliers.controller'
+import { updateCustomerDebtById } from '../customers/customers.controller'
+import { getProductPriceById } from '../products/products.controller'
 
 const getRecords = async () => {
   try {
@@ -39,6 +48,12 @@ const createRecord = async (
     if (!recordType) {
       return
     }
+    const debt: number = await getDebt(details)
+
+    supplierId !== ''
+      ? await updateSupplierDebtById(supplierId, debt)
+      : await updateCustomerDebtById(customerId, debt)
+
     const data =
       supplierId !== ''
         ? {
@@ -59,6 +74,7 @@ const createRecord = async (
             recordTypeId,
             customerId
           }
+
     const recordCreated: Record = await prisma.record.create({
       data
     })
@@ -214,6 +230,16 @@ const handleStockChanges = async (
 //   })
 //   await createRecordDetails(stockId, recordNegative.id, quantity, 0)
 // }
+
+const getDebt = async (details: any[]) => {
+  let debt : number = 0
+  for (const productIdAndQuantity of details) {
+    const { productId, quantity } = productIdAndQuantity
+    const price: number = await getProductPriceById(productId)
+    debt += price * quantity
+  }
+  return debt
+}
 
 export {
   getRecords,
