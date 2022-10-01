@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { prisma } from './backend/server/prisma-client/prisma-client'
 import {
   RecordNameEnum,
@@ -101,23 +102,23 @@ const createDefaultRecordTypes = async () => {
     data: defaultRecordTypes
   })
 }
-const createDefaultRecords = async () => {
-  const recordTypes = await prisma.recordType.findMany()
-  const defaultRecords: Omit<Record, 'id' | 'datetime'>[] = recordTypes.map(
-    (recordType) => {
-      return {
-        recordTypeId: recordType.id,
-        observation: 'Factura original de prueba',
-        senderName: 'Proveedor Juan Perez',
-        address: 'Zona Centro'
-      }
-    }
-  )
-  console.log('inserting default records...')
-  await prisma.record.createMany({
-    data: defaultRecords
-  })
-}
+// const createDefaultRecords = async () => {
+//   const recordTypes = await prisma.recordType.findMany()
+//   const defaultRecords: Omit<Record, 'id' | 'datetime'>[] = recordTypes.map(
+//     (recordType) => {
+//       return {
+//         recordTypeId: recordType.id,
+//         observation: 'Factura original de prueba',
+//         senderName: 'Proveedor Juan Perez',
+//         address: 'Zona Centro'
+//       }
+//     }
+//   )
+//   console.log('inserting default records...')
+//   await prisma.record.createMany({
+//     data: defaultRecords
+//   })
+// }
 
 const createDefaultRecordDetails = async () => {
   const stocks = await prisma.stock.findMany()
@@ -271,8 +272,8 @@ const populateDatabase = async () => {
     await createDefaultStores()
     await updateStocksQuantities()
     await createDefaultRecordTypes()
-    await createDefaultRecords()
-    await createDefaultRecordDetails()
+    // await createDefaultRecords()
+    // await createDefaultRecordDetails()
     await createDefaultStudents()
     await createDefaultCourses()
     await createDefaultEnrollments()
