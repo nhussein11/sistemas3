@@ -46,7 +46,7 @@ const createRecord = async (
 
     await handleDebtByNewRecord(supplierId, debt, customerId)
 
-    const data = createDataOfRecord(
+    const data = await createDataOfRecord(
       supplierId,
       observation,
       address,
@@ -98,7 +98,7 @@ const updateRecordById = async (
     if (!observation || !recordTypeId) {
       throw new Error('Observation or movementTypeId must be provided!')
     }
-    const data = createDataOfRecord(
+    const data = await createDataOfRecord(
       supplierId,
       observation,
       address,
