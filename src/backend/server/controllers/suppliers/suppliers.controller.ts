@@ -68,10 +68,20 @@ const deleteSupplierById = async (id: string) => {
   }
 }
 
+const updateSupplierDebtById = async (id: string, debt: number) => {
+  await prisma.supplier.update({
+    where: { id },
+    data: {
+      debt
+    }
+  })
+}
+
 export {
   getSuppliers,
   createSupplier,
   getSupplierById,
   updateSupplierById,
-  deleteSupplierById
+  deleteSupplierById,
+  updateSupplierDebtById
 }
