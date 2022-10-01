@@ -98,13 +98,19 @@ const updateRecordById = async (
     if (!observation || !recordTypeId) {
       throw new Error('Observation or movementTypeId must be provided!')
     }
-
+    const data = createDataOfRecord(
+      supplierId,
+      observation,
+      address,
+      letter,
+      recordNumber,
+      paidFor,
+      recordTypeId,
+      customerId
+    )
     const updatedMovement: Record = await prisma.record.update({
       where: { id },
-      data: {
-        observation,
-        recordTypeId
-      }
+      data
     })
 
     return updatedMovement
@@ -237,17 +243,17 @@ export {
   deleteRecordById
   // handleRecordChangesByStockMovement
 }
-async function handleDebtByNewRecord(
+const handleDebtByNewRecord = async (
   supplierId: string,
   debt: number,
   customerId: string
-) {
+) => {
   supplierId !== ''
     ? await updateSupplierDebtById(supplierId, debt)
     : await updateCustomerDebtById(customerId, debt)
 }
 
-function createDataOfRecord(
+const createDataOfRecord = async (
   supplierId: string,
   observation: string,
   address: string,
@@ -256,7 +262,7 @@ function createDataOfRecord(
   paidFor: boolean,
   recordTypeId: string,
   customerId: string
-) {
+) => {
   return supplierId !== ''
     ? {
         observation,
