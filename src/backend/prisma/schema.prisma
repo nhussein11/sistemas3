@@ -77,11 +77,11 @@ model Record {
   RecordType   RecordType @relation(fields: [recordTypeId], references: [id])
   recordTypeId String
 
-  Supplier   Supplier @relation(fields: [supplierId], references: [id])
-  supplierId String   @default("")
+  Supplier   Supplier? @relation(fields: [supplierId], references: [id])
+  supplierId String?
 
-  Customer      Customer       @relation(fields: [customerId], references: [id])
-  customerId    String         @default("")
+  Customer      Customer?       @relation(fields: [customerId], references: [id])
+  customerId    String?
   higherRecord  PreviousRecord? @relation("higherRecord")
   paidForRecord PreviousRecord? @relation("paidForRecord")
 
