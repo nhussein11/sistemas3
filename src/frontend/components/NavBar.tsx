@@ -36,31 +36,58 @@ const NavBar = () => {
     {
       label: 'Comprobantes',
       icon: 'pi pi-fw pi-file',
-      command: () => {
-        router.push('/records')
-      }
+      items: [
+        {
+          label: 'Comprobantes',
+          icon: 'pi pi-fw pi-file',
+          command: () => {
+            router.push('/records')
+          }
+        },
+        {
+          label: 'Ingresos',
+          icon: 'pi pi-fw pi-plus',
+          command: () => {
+            router.push('/students')
+          }
+        },
+        {
+          label: 'Egresos',
+          icon: 'pi pi-fw pi-minus',
+          command: () => {
+            router.push('/enrollments')
+          }
+        }
+      ]
     },
     {
-      label: 'Cursos',
+      label: 'Educación',
       icon: 'pi pi-fw pi-book',
-      command: () => {
-        router.push('/courses')
-      }
+      items: [
+        {
+          label: 'Cursos',
+          icon: 'pi pi-fw pi-book',
+          command: () => {
+            router.push('/courses')
+          }
+        },
+        {
+          label: 'Alumnos',
+          icon: 'pi pi-fw pi-users',
+          command: () => {
+            router.push('/students')
+          }
+        },
+        {
+          label: 'Inscripciones',
+          icon: 'pi pi-fw pi-dollar',
+          command: () => {
+            router.push('/enrollments')
+          }
+        }
+      ]
     },
-    {
-      label: 'Alumnos',
-      icon: 'pi pi-fw pi-users',
-      command: () => {
-        router.push('/students')
-      }
-    },
-    {
-      label: 'Inscripciones',
-      icon: 'pi pi-fw pi-dollar',
-      command: () => {
-        router.push('/enrollments')
-      }
-    },
+
     {
       label: 'Ventas',
       icon: 'pi pi-fw pi-check',
