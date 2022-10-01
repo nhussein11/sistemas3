@@ -54,30 +54,19 @@ const createRecord = async (
       ? await updateSupplierDebtById(supplierId, debt)
       : await updateCustomerDebtById(customerId, debt)
 
-    const data =
-      supplierId !== ''
-        ? {
-            observation,
-            address,
-            letter,
-            recordNumber,
-            paidFor,
-            recordTypeId,
-            supplierId
-          }
-        : {
-            observation,
-            address,
-            letter,
-            recordNumber,
-            paidFor,
-            recordTypeId,
-            customerId
-          }
-
     const recordCreated: Record = await prisma.record.create({
-      data
+      data: createDataOfRecord(
+        supplierId,
+        observation,
+        address,
+        letter,
+        recordNumber,
+        paidFor,
+        recordTypeId,
+        customerId
+      )
     })
+
     await handleRecordDetailsCreation(recordType, recordCreated, details)
 
     return recordCreated
@@ -102,7 +91,13 @@ const getRecordById = async (id: string) => {
 const updateRecordById = async (
   id: string,
   observation: string,
-  recordTypeId: string
+  address: string,
+  letter: LetterEnum,
+  recordNumber: number,
+  paidFor: boolean,
+  recordTypeId: string,
+  supplierId: string = '',
+  customerId: string = ''
 ) => {
   try {
     await prisma.record.findUniqueOrThrow({ where: { id } })
@@ -232,7 +227,7 @@ const handleStockChanges = async (
 // }
 
 const getDebt = async (details: any[]) => {
-  let debt : number = 0
+  let debt: number = 0
   for (const productIdAndQuantity of details) {
     const { productId, quantity } = productIdAndQuantity
     const price: number = await getProductPriceById(productId)
@@ -248,4 +243,34 @@ export {
   updateRecordById,
   deleteRecordById
   // handleRecordChangesByStockMovement
+}
+function createDataOfRecord (
+  supplierId: string,
+  observation: string,
+  address: string,
+  letter: LetterEnum,
+  recordNumber: number,
+  paidFor: boolean,
+  recordTypeId: string,
+  customerId: string
+) {
+  return supplierId !== ''
+    ? {
+        observation,
+        address,
+        letter,
+        recordNumber,
+        paidFor,
+        recordTypeId,
+        supplierId
+      }
+    : {
+        observation,
+        address,
+        letter,
+        recordNumber,
+        paidFor,
+        recordTypeId,
+        customerId
+      }
 }
