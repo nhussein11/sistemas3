@@ -23,19 +23,28 @@ export default async function records (
       try {
         const {
           observation,
-          senderName,
           address,
+          letter,
+          recordNumber,
+          paidFor,
           recordTypeId,
+          supplierId,
+          customerId,
           details
         } = body
-        console.log(body)
+
         const recordCreated = await createRecord(
           observation,
-          senderName,
           address,
+          letter,
+          recordNumber,
+          paidFor,
           recordTypeId,
+          supplierId,
+          customerId,
           details
         )
+
         return res.status(201).send({ recordCreated })
       } catch (error) {
         console.log('index record:', error)

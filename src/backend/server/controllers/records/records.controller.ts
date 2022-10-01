@@ -1,5 +1,5 @@
 /* eslint-disable no-useless-catch */
-import { Record, RecordType, RecordTypeEnum } from '@prisma/client'
+import { LetterEnum, Record, RecordType, RecordTypeEnum } from '@prisma/client'
 import { prisma } from '../../prisma-client/prisma-client'
 import {
   getRecordTypeById,
@@ -28,9 +28,13 @@ const getRecords = async () => {
 
 const createRecord = async (
   observation: string,
-  senderName: string,
   address: string,
+  letter: LetterEnum,
+  recordNumber: number,
+  paidFor: boolean,
   recordTypeId: string,
+  supplierId: string = '',
+  customerId: string = '',
   details: any[]
 ) => {
   try {
@@ -39,33 +43,18 @@ const createRecord = async (
       return
     }
     const recordCreated: Record = await prisma.record.create({
-      data: { observation, senderName, address, recordTypeId }
-    })
-
-    for (const productIdAndQuantity of details) {
-      const { productId, quantity } = productIdAndQuantity
-      await handleStockChanges(productId, quantity, recordType.recordType)
-    }
-
-    const promiseArrayMovementsDetails = details.map(
-      (stockIdQuantityAndSubtotal: any) => {
-        const { stockId, quantity, subTotal } = stockIdQuantityAndSubtotal
-        return createRecordDetails(
-          stockId,
-          recordCreated.id,
-          quantity,
-          subTotal
-        )
+      data: {
+        observation,
+        address,
+        letter,
+        recordNumber,
+        paidFor,
+        recordTypeId,
+        supplierId,
+        customerId
       }
-    )
-    const allPromisesMovementsDetails = Promise.all(
-      promiseArrayMovementsDetails
-    )
-    allPromisesMovementsDetails.then((movementDetails) => {
-      movementDetails.map((results) => {
-        return console.log(results)
-      })
     })
+    await handleRecordDetailsCreation(recordType, recordCreated, details)
 
     return recordCreated
   } catch (error) {
@@ -168,6 +157,30 @@ const handleStockChanges = async (
   }
 }
 
+const handleRecordDetailsCreation = async (
+  recordType: RecordType,
+  recordCreated: Record,
+  details: any[]
+) => {
+  for (const productIdAndQuantity of details) {
+    const { productId, quantity } = productIdAndQuantity
+    await handleStockChanges(productId, quantity, recordType.recordType)
+  }
+
+  const promiseArrayMovementsDetails = details.map(
+    (stockIdQuantityAndSubtotal: any) => {
+      const { stockId, quantity, subTotal } = stockIdQuantityAndSubtotal
+      return createRecordDetails(stockId, recordCreated.id, quantity, subTotal)
+    }
+  )
+  const allPromisesMovementsDetails = Promise.all(promiseArrayMovementsDetails)
+  allPromisesMovementsDetails.then((movementDetails) => {
+    movementDetails.map((results) => {
+      return console.log(results)
+    })
+  })
+}
+
 const handleRecordChangesByStockMovement = async (
   stockId: string,
   quantity: number
@@ -195,6 +208,7 @@ const handleRecordChangesByStockMovement = async (
   })
   await createRecordDetails(stockId, recordNegative.id, quantity, 0)
 }
+
 export {
   getRecords,
   createRecord,
