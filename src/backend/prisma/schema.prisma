@@ -154,6 +154,7 @@ model Supplier {
 model Customer {
   id   String @id @default(cuid())
   name String
+  debt Int
 
   Record Record[]
 }
