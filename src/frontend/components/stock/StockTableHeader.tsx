@@ -4,6 +4,7 @@ import { globalFilterValueState } from '../../atoms/globalFilterValueAtom'
 import { StockTableHeaderProps } from '../../@types/frontend.types'
 // import useDeleteStockMutation from '../../hooks/stock/useDeleteStockMutation'
 import { useRecoilState } from 'recoil'
+import { Button } from 'primereact/button'
 
 const StockTableHeader = ({ setDisplayBasic }:StockTableHeaderProps) => {
   const [globalFilterValue, setGlobalFilterValue] = useRecoilState(
@@ -21,6 +22,13 @@ const StockTableHeader = ({ setDisplayBasic }:StockTableHeaderProps) => {
             placeholder="Buscar"
           />
         </span>
+      </div>
+      <div className="actionsButtonsTable">
+        <Button
+          label="Nuevo"
+          className="p-button-raised p-button-success"
+          onClick={() => setDisplayBasic(true)}
+        />
       </div>
     </div>
   )
