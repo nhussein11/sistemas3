@@ -235,24 +235,6 @@ const getDebt = async (details: any[]) => {
   return debt
 }
 
-export {
-  getRecords,
-  createRecord,
-  getRecordById,
-  updateRecordById,
-  deleteRecordById
-  // handleRecordChangesByStockMovement
-}
-const handleDebtByNewRecord = async (
-  supplierId: string,
-  debt: number,
-  customerId: string
-) => {
-  supplierId !== ''
-    ? await updateSupplierDebtById(supplierId, debt)
-    : await updateCustomerDebtById(customerId, debt)
-}
-
 const createDataOfRecord = async (
   supplierId: string,
   observation: string,
@@ -282,4 +264,23 @@ const createDataOfRecord = async (
         recordTypeId,
         customerId
       }
+}
+
+export {
+  getRecords,
+  createRecord,
+  getRecordById,
+  updateRecordById,
+  deleteRecordById,
+  createDataOfRecord
+  // handleRecordChangesByStockMovement
+}
+const handleDebtByNewRecord = async (
+  supplierId: string,
+  debt: number,
+  customerId: string
+) => {
+  supplierId !== ''
+    ? await updateSupplierDebtById(supplierId, debt)
+    : await updateCustomerDebtById(customerId, debt)
 }
