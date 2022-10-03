@@ -1,10 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import {
-  createRecord,
-  getRecords
-} from '../../../backend/server/controllers/records/records.controller'
+import { createPreviousRecord, getPreviousRecord } from '../../../backend/server/controllers/previous-records/previous-record.controller'
 
-export default async function records (
+export default async function previousRecord (
   req: NextApiRequest,
   res: NextApiResponse
 ) {
@@ -13,8 +10,8 @@ export default async function records (
   switch (method) {
     case 'GET':
       try {
-        const records = await getRecords()
-        return res.status(200).send({ records })
+        const previousRecords = await getPreviousRecord()
+        return res.status(200).send({ previousRecords })
       } catch (error) {
         return res.status(500).send({ error })
       }
@@ -30,10 +27,9 @@ export default async function records (
           recordTypeId,
           supplierId,
           customerId,
-          details
+          paidForRecordIds
         } = body
-
-        const recordCreated = await createRecord(
+        const previousRecordCreated = await createPreviousRecord(
           observation,
           address,
           letter,
@@ -42,12 +38,10 @@ export default async function records (
           recordTypeId,
           supplierId,
           customerId,
-          details
+          paidForRecordIds
         )
-
-        return res.status(201).send({ recordCreated })
+        return res.status(201).send({ previousRecordCreated })
       } catch (error) {
-        console.log('index record:', error)
         return res.status(500).send({ error })
       }
 

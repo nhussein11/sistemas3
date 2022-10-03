@@ -1,10 +1,7 @@
 /* eslint-disable no-useless-catch */
-import { Record, RecordType, RecordTypeEnum } from '@prisma/client'
+import { LetterEnum, Record, RecordType, RecordTypeEnum } from '@prisma/client'
 import { prisma } from '../../prisma-client/prisma-client'
-import {
-  getRecordTypeById,
-  getRecordTypeByType
-} from '../record-types/record-types.controller'
+import { getRecordTypeById } from '../record-types/record-types.controller'
 import {
   createRecordDetails,
   deleteRecordsDetailsByRecordId
@@ -16,6 +13,9 @@ import {
   updateStockById
 } from '../stocks/stock.controller'
 import { getStoreByIndex } from '../stores/stores.controller'
+import { updateSupplierDebtById } from '../suppliers/suppliers.controller'
+import { updateCustomerDebtById } from '../customers/customers.controller'
+import { getProductPriceById } from '../products/products.controller'
 
 const getRecords = async () => {
   try {
@@ -28,9 +28,13 @@ const getRecords = async () => {
 
 const createRecord = async (
   observation: string,
-  senderName: string,
   address: string,
+  letter: LetterEnum,
+  recordNumber: number,
+  paidFor: boolean,
   recordTypeId: string,
+  supplierId: string = '',
+  customerId: string = '',
   details: any[]
 ) => {
   try {
@@ -38,34 +42,25 @@ const createRecord = async (
     if (!recordType) {
       return
     }
+    const debt: number = await getDebt(details)
+
+    await handleDebtByNewRecord(supplierId, debt, customerId)
+
+    const data = await createDataOfRecord(
+      supplierId,
+      observation,
+      address,
+      letter,
+      recordNumber,
+      paidFor,
+      recordTypeId,
+      customerId
+    )
     const recordCreated: Record = await prisma.record.create({
-      data: { observation, senderName, address, recordTypeId }
+      data
     })
 
-    for (const productIdAndQuantity of details) {
-      const { productId, quantity } = productIdAndQuantity
-      await handleStockChanges(productId, quantity, recordType.recordType)
-    }
-
-    const promiseArrayMovementsDetails = details.map(
-      (stockIdQuantityAndSubtotal: any) => {
-        const { stockId, quantity, subTotal } = stockIdQuantityAndSubtotal
-        return createRecordDetails(
-          stockId,
-          recordCreated.id,
-          quantity,
-          subTotal
-        )
-      }
-    )
-    const allPromisesMovementsDetails = Promise.all(
-      promiseArrayMovementsDetails
-    )
-    allPromisesMovementsDetails.then((movementDetails) => {
-      movementDetails.map((results) => {
-        return console.log(results)
-      })
-    })
+    await handleRecordDetailsCreation(recordType, recordCreated, details)
 
     return recordCreated
   } catch (error) {
@@ -89,7 +84,13 @@ const getRecordById = async (id: string) => {
 const updateRecordById = async (
   id: string,
   observation: string,
-  recordTypeId: string
+  address: string,
+  letter: LetterEnum,
+  recordNumber: number,
+  paidFor: boolean,
+  recordTypeId: string,
+  supplierId: string = '',
+  customerId: string = ''
 ) => {
   try {
     await prisma.record.findUniqueOrThrow({ where: { id } })
@@ -97,13 +98,19 @@ const updateRecordById = async (
     if (!observation || !recordTypeId) {
       throw new Error('Observation or movementTypeId must be provided!')
     }
-
+    const data = await createDataOfRecord(
+      supplierId,
+      observation,
+      address,
+      letter,
+      recordNumber,
+      paidFor,
+      recordTypeId,
+      customerId
+    )
     const updatedMovement: Record = await prisma.record.update({
       where: { id },
-      data: {
-        observation,
-        recordTypeId
-      }
+      data
     })
 
     return updatedMovement
@@ -125,6 +132,30 @@ const deleteRecordById = async (id: string) => {
   } catch (error) {
     throw error
   }
+}
+
+const handleRecordDetailsCreation = async (
+  recordType: RecordType,
+  recordCreated: Record,
+  details: any[]
+) => {
+  for (const productIdAndQuantity of details) {
+    const { productId, quantity } = productIdAndQuantity
+    await handleStockChanges(productId, quantity, recordType.recordType)
+  }
+
+  const promiseArrayMovementsDetails = details.map(
+    (stockIdQuantityAndSubtotal: any) => {
+      const { stockId, quantity, subTotal } = stockIdQuantityAndSubtotal
+      return createRecordDetails(stockId, recordCreated.id, quantity, subTotal)
+    }
+  )
+  const allPromisesMovementsDetails = Promise.all(promiseArrayMovementsDetails)
+  allPromisesMovementsDetails.then((movementDetails) => {
+    movementDetails.map((results) => {
+      return console.log(results)
+    })
+  })
 }
 
 const handleStockChanges = async (
@@ -168,38 +199,88 @@ const handleStockChanges = async (
   }
 }
 
-const handleRecordChangesByStockMovement = async (
-  stockId: string,
-  quantity: number
-) => {
-  const recordTypePositive = await getRecordTypeByType(RecordTypeEnum.POSITIVE)
-  const recordPositive = await prisma.record.create({
-    data: {
-      observation: 'Deposit movement IN',
-      senderName: 'Admin',
-      address: 'Admin-Address',
-      recordTypeId: recordTypePositive.id
-    }
-  })
-  await createRecordDetails(stockId, recordPositive.id, quantity, 0)
+// const handleRecordChangesByStockMovement = async (
+//   stockId: string,
+//   quantity: number
+// ) => {
+//   const recordTypePositive = await getRecordTypeByType(RecordTypeEnum.POSITIVE)
+//   const recordPositive:Record = await prisma.record.create({
+//     data: {
+//       observation: 'Deposit movement IN',
+//       address: 'Admin-Address',
+//       recordTypeId: recordTypePositive.id
+//     }
+//   })
+//   await createRecordDetails(stockId, recordPositive.id, quantity, 0)
 
-  const recordTypeNegative = await getRecordTypeByType(RecordTypeEnum.NEGATIVE)
-  console.log(recordTypeNegative)
-  const recordNegative = await prisma.record.create({
-    data: {
-      observation: 'Deposit movement OUT',
-      senderName: 'Admin',
-      address: 'Admin-Address',
-      recordTypeId: recordTypeNegative.id
-    }
-  })
-  await createRecordDetails(stockId, recordNegative.id, quantity, 0)
+//   const recordTypeNegative = await getRecordTypeByType(RecordTypeEnum.NEGATIVE)
+//   console.log(recordTypeNegative)
+//   const recordNegative = await prisma.record.create({
+//     data: {
+//       observation: 'Deposit movement OUT',
+//       address: 'Admin-Address',
+//       recordTypeId: recordTypeNegative.id
+//     }
+//   })
+//   await createRecordDetails(stockId, recordNegative.id, quantity, 0)
+// }
+
+const getDebt = async (details: any[]) => {
+  let debt: number = 0
+  for (const productIdAndQuantity of details) {
+    const { productId, quantity } = productIdAndQuantity
+    const price: number = await getProductPriceById(productId)
+    debt += price * quantity
+  }
+  return debt
 }
+
+const createDataOfRecord = async (
+  supplierId: string,
+  observation: string,
+  address: string,
+  letter: LetterEnum,
+  recordNumber: number,
+  paidFor: boolean,
+  recordTypeId: string,
+  customerId: string
+) => {
+  return supplierId !== ''
+    ? {
+        observation,
+        address,
+        letter,
+        recordNumber,
+        paidFor,
+        recordTypeId,
+        supplierId
+      }
+    : {
+        observation,
+        address,
+        letter,
+        recordNumber,
+        paidFor,
+        recordTypeId,
+        customerId
+      }
+}
+
 export {
   getRecords,
   createRecord,
   getRecordById,
   updateRecordById,
   deleteRecordById,
-  handleRecordChangesByStockMovement
+  createDataOfRecord
+  // handleRecordChangesByStockMovement
+}
+const handleDebtByNewRecord = async (
+  supplierId: string,
+  debt: number,
+  customerId: string
+) => {
+  supplierId !== ''
+    ? await updateSupplierDebtById(supplierId, debt)
+    : await updateCustomerDebtById(customerId, debt)
 }

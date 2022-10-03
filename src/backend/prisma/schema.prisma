@@ -64,18 +64,36 @@ model RecordDetails {
 }
 
 model Record {
-  id          String   @id @default(cuid())
-  datetime    DateTime @default(now())
-  observation String   @default("")
-  senderName  String
-  address     String
+  id           String     @id @default(cuid())
+  datetime     DateTime   @default(now())
+  observation  String     @default("")
+  address      String
+  letter       LetterEnum @default(A)
+  recordNumber Int
+  paidFor      Boolean
 
   RecordDetails RecordDetails[]
 
   RecordType   RecordType @relation(fields: [recordTypeId], references: [id])
   recordTypeId String
 
+  Supplier   Supplier? @relation(fields: [supplierId], references: [id])
+  supplierId String?
+
+  Customer      Customer?       @relation(fields: [customerId], references: [id])
+  customerId    String?
+  higherRecord  PreviousRecord? @relation("higherRecord")
+  paidForRecord PreviousRecord? @relation("paidForRecord")
+
   @@map("record")
+}
+
+model PreviousRecord {
+  id              String @id @default(cuid())
+  higherRecord    Record @relation("higherRecord", fields: [higherRecordId], references: [id])
+  higherRecordId  String @unique
+  paidForRecord   Record @relation("paidForRecord", fields: [paidForRecordId], references: [id])
+  paidForRecordId String @unique
 }
 
 model RecordType {
@@ -125,6 +143,22 @@ model Enrollment {
   @@map("enrollment")
 }
 
+model Supplier {
+  id   String @id @default(cuid())
+  name String
+  debt Int
+
+  Record Record[]
+}
+
+model Customer {
+  id   String @id @default(cuid())
+  name String
+  debt Int
+
+  Record Record[]
+}
+
 enum CategoryEnum {
   IMPRESORA
   FILAMENTO
@@ -142,4 +176,10 @@ enum RecordNameEnum {
   FACTURA_DUPLICADO
   ORDEN_DE_COMPRA
   ORDEN_DE_PAGO
+}
+
+enum LetterEnum {
+  A
+  B
+  C
 }
