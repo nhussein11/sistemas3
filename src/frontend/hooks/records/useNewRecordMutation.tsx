@@ -65,11 +65,13 @@ const useDialogNewRecordMutation = (queryId: string) => {
   const handleCreateNewRecord = () => {
     mutate({
       observation: recordObservation.value as string,
-      senderName: recordAdress.value as string,
-      address: recordLetter.value as string,
+      address: recordAdress.value as string,
+      letter: recordLetter.value as string,
       recordNumber: recordNumber.value as number,
       recordPaidFor: recordPaidFor.value as boolean,
       recordTypeId: selectedRecordType.id,
+      supplierId: selectedSupplier.id,
+      customerId: selectedCustomer.id,
       details: ParseRecordDetails(selectedRecordDetails, productsQuery)
     })
   }
