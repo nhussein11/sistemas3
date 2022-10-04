@@ -23,8 +23,6 @@ export default function DialogTableProducts ({ products, displayBasic, closeDial
     </React.Fragment>
     )
   }
-  console.log('PRODUCTOS STOCK')
-  console.log(products)
   return (
     <Dialog header={'Tabla de Productos'} visible={displayBasic} onHide={() => closeDialog()}>
           <DataTable value={products} paginator className="p-datatable-customers" showGridlines rows={10} dataKey="id" responsiveLayout="scroll"
@@ -32,19 +30,11 @@ export default function DialogTableProducts ({ products, displayBasic, closeDial
             <Column field="ProductName" header="Nombre" body={(rowData) => findProductName(rowData.productId, productsQuery)} style={{ minWidth: '2rem' }}></Column>
             <Column field="StoreName" header="Depósito" body={(rowData) => findStoreName(rowData.storeId, storesQuery)} style={{ minWidth: '1rem' }}></Column>
             <Column field="Quantity" header="Cantidad en Stock" body={(rowData) => rowData.quantity} style={{ minWidth: '1rem' }}></Column>
-            <Column field="Precio" header="Precio" body={(rowData) => {
+            <Column field="Precio" header="Precio" alignHeader={'center'} body={(rowData) => {
               return (
-                  <NumberFormat
-                    value={findProductPrice(rowData.productId, productsQuery)}
-                    displayType={'text'}
-                    thousandSeparator={'.'}
-                    decimalSeparator={','}
-                    prefix={'$'}
-                  ></NumberFormat>
+                  <NumberFormat value={findProductPrice(rowData.productId, productsQuery)} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'$'}></NumberFormat>
               )
-            }}
-              alignHeader={'center'}
-            />
+            }}/>
             <Column body={actionBodyTemplateListProducts} exportable={false} style={{ minWidth: '8rem' }}></Column>
         </DataTable>
     </Dialog>
