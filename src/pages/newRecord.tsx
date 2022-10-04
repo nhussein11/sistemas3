@@ -55,8 +55,8 @@ const NewRecord: NextPage = () => {
         setVisibleSelectorQuantity={setVisibleSelectorQuantity}
         displayBasic={displayBasic} closeDialog={() => setDisplayBasic(false)}></DialogTableProducts>
 
-        <Panel header="DATOS VENTA">
-            <SaleDataBar customers={customerOptions} suppliers={suppliersOptions} selectedCustomer={selectedCustomer} selectedSupplier={selectedSupplier}/>
+        <Panel header="DATOS COMPROBANTE">
+            <SaleDataBar customers={customerOptions} suppliers={suppliersOptions} selectedCustomer={selectedCustomer} selectedSupplier={selectedSupplier} changeCustomer={changeCustomer} changeSupplier={changeSupplier}/>
         </Panel>
         <Splitter style={{ height: '100%' }}>
             <SplitterPanel>
