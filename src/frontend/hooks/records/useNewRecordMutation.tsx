@@ -21,7 +21,7 @@ const useNewRecordMutation = (queryId: string) => {
   // Queries
   const recordTypesQuery = useRecordTypesQuery('record-types')
   const storesQuery = useStoresQuery('stores')
-  const stocksQuery = useStocksQuery('stocks')
+  const stocksQuery = useStocksQuery('stock')
   const productsQuery = useProductsQuery('products')
   const customerQuery = useCustomerQuery('customers')
   const supplierQuery = useSupplierQuery('suppliers')
@@ -115,7 +115,9 @@ const useNewRecordMutation = (queryId: string) => {
     recordAdress,
     recordLetter,
     recordNumber,
-    recordPaidFor
+    recordPaidFor,
+    productsQuery,
+    storesQuery
   }
 }
 
