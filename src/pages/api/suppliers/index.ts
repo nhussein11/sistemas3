@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { createSupplier, getSuppliers } from '../../../backend/server/controllers/suppliers/suppliers.controller'
 
-export default async function students (
+export default async function suppliers (
   req: NextApiRequest,
   res: NextApiResponse
 ) {
@@ -10,8 +10,8 @@ export default async function students (
   switch (method) {
     case 'GET':
       try {
-        const students = await getSuppliers()
-        return res.status(200).send({ students })
+        const suppliers = await getSuppliers()
+        return res.status(200).send({ suppliers })
       } catch (error) {
         return res.status(500).send({ error })
       }
