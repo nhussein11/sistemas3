@@ -1,14 +1,14 @@
 import React from 'react'
 import { Dialog } from 'primereact/dialog'
-import DialogFooter from './DialogFooter'
 import { Dropdown } from 'primereact/dropdown'
-import { DialogNewRecordProps } from '../../@types/frontend.types'
 import { InputText } from 'primereact/inputtext'
-import useDialogNewRecordMutation from '../../hooks/records/useDialogNewRecordMutation'
-import { useRecoilState } from 'recoil'
-import QuantitySelectorDialog from './QuantitySelectorDialog'
-import { selectedRecordDetailsState } from '../../atoms/records/selectedRecordDetails'
+import { DialogNewRecordProps } from '../../@types/frontend.types'
+import DialogFooter from './DialogFooter'
 import RecordsStocksTable from './RecordsStocksTable'
+import useDialogNewRecordMutation from '../../hooks/records/useDialogNewRecordMutation'
+import QuantitySelectorDialog from './QuantitySelectorDialog'
+import { useRecoilState } from 'recoil'
+import { selectedRecordDetailsState } from '../../atoms/records/selectedRecordDetails'
 
 const DialogNewRecord = ({ displayBasic, closeDialog }: DialogNewRecordProps) => {
   const {
