@@ -2,13 +2,13 @@
 import React from 'react'
 import { Dropdown } from 'primereact/dropdown'
 import { InputText } from 'primereact/inputtext'
-import { Customer, RecordType, Supplier, Store } from '@prisma/client'
+import { Customer, Supplier, Store } from '@prisma/client'
 
 const SaleDataBar = ({
-  customers, suppliers, selectedCustomer, selectedSupplier, selectedStore, selectedRecordType, changeCustomer, changeSupplier, changeStore, changeRecordType,
+  customers, suppliers, recordTypes, stores, selectedCustomer, selectedSupplier, selectedStore, selectedRecordType, changeCustomer, changeSupplier, changeStore, changeRecordType,
   recordObservation, recordAdress, recordLetter, recordNumber, recordPaidFor
 }:
-  {customers: Object[]; suppliers: Object[]; selectedCustomer: Customer; selectedSupplier: Supplier; selectedStore: Store; selectedRecordType: RecordType;
+  {customers: Object[]; suppliers: Object[]; recordTypes: Object[]; stores: Object[]; selectedCustomer: Customer; selectedSupplier: Supplier; selectedStore: Store; selectedRecordType: any;
     changeCustomer: any; changeSupplier: any; changeStore: any; changeRecordType: any; recordObservation: any; recordAdress: any; recordLetter: any; recordNumber: any; recordPaidFor: any }) => {
   return (
     <div>
@@ -37,10 +37,10 @@ const SaleDataBar = ({
       </div>
       <div style={{ display: 'flex', justifyContent: 'space-around' }}>
       <div className="field">
-            <Dropdown options={customers} value={selectedCustomer?.name} onChange={(e) => changeCustomer(e.target.value)} placeholder="Seleccionar Cliente"/>
+            <Dropdown options={recordTypes} value={selectedRecordType?.name} onChange={(e) => changeRecordType(e.target.value)} placeholder="Seleccionar Tipo Comp"/>
           </div>
           <div className="field">
-              <Dropdown options={suppliers} value={selectedSupplier?.name} onChange={(e) => changeSupplier(e.target.value)} placeholder="Seleccionar Proveedor"/>
+              <Dropdown options={stores} value={selectedStore?.name} onChange={(e) => changeStore(e.target.value)} placeholder="Seleccionar Depósito"/>
           </div>
       </div>
     </div>
