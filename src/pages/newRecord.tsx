@@ -1,21 +1,37 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { useRecoilState } from 'recoil'
-import { globalFilterValueState } from '../frontend/atoms/globalFilterValueAtom'
-import useRecordsQuery from '../frontend/hooks/records/useRecordsQuery'
-import { filterProducts } from '../frontend/services/products/filterProducts'
 import { Splitter, SplitterPanel } from 'primereact/splitter'
 import { Panel } from 'primereact/panel'
-import DialogTableProducts from '../frontend/components/sales/newSale/DialogTableProducts'
-import ToolBarProducts from '../frontend/components/sales/newSale/ToolBarProducts'
-import SaleDataBar from '../frontend/components/sales/newSale/SaleDataBar'
-import PanelTotal from '../frontend/components/sales/newSale/PanelTotal'
+import DialogTableProducts from '../frontend/components/records/newRecord/DialogTableProducts'
+import ToolBarProducts from '../frontend/components/records/newRecord/ToolBarProducts'
+import SaleDataBar from '../frontend/components/records/newRecord/SaleDataBar'
+import PanelTotal from '../frontend/components/records/newRecord/PanelTotal'
 import { useRef, useState } from 'react'
+import useDialogNewRecordMutation from '../frontend/hooks/records/useNewRecordMutation'
 
 const NewSale: NextPage = () => {
-  // aca tengo que definir el mutation
-  const query = useRecordsQuery('products')
-  const [globalFilterValue] = useRecoilState(globalFilterValueState)
+  const {
+    handleCreateNewRecord,
+    changeStore,
+    changeRecordType,
+    changeSupplier,
+    changeCustomer,
+    selectedRecordType,
+    selectedStore,
+    selectedCustomer,
+    selectedSupplier,
+    recordTypesOptions,
+    storesOptions,
+    stockOptions,
+    customerOptions,
+    suppliersOptions,
+    recordObservation,
+    recordAdress,
+    recordLetter,
+    recordNumber,
+    recordPaidFor
+  } = useDialogNewRecordMutation('records')
+
   const [displayBasic, setDisplayBasic] = useState(false)
   const [, setVisibleSelectorQuantity] = useState(false)
   const idRef = useRef('')
@@ -35,7 +51,7 @@ const NewSale: NextPage = () => {
         {/* <QuantitySelector product={product} visibleSelectorQuantity={visibleSelectorQuantity} closeDialog={() => setVisibleSelectorQuantity(false)} showQuantitySelector={showQuantitySelector} quantityRef={quantityRef}></QuantitySelector> */}
 
         {/* <ClientFormComponent clientDialog={clientDialog} closeDialog={() => setClientDialog(false)} saveClient={saveClient}></ClientFormComponent> */}
-        <DialogTableProducts products={filterProducts(query?.data?.products, globalFilterValue)}
+        <DialogTableProducts products={stockOptions}
         setVisibleSelectorQuantity={setVisibleSelectorQuantity}
         displayBasic={displayBasic} closeDialog={() => setDisplayBasic(false)}></DialogTableProducts>
 
