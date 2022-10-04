@@ -15,8 +15,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   switch (method) {
     case 'GET':
       try {
-        const student = await getSupplierById(id)
-        return res.status(200).send({ student })
+        const supplier = await getSupplierById(id)
+        return res.status(200).send({ supplier })
       } catch (error) {
         return res.status(500).send({ error })
       }
