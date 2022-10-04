@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Column } from 'primereact/column'
 import { DataTable } from 'primereact/datatable'
-import DialogNewRecord from './DialogNewRecord'
+// import DialogNewRecord from './DialogNewRecord'
 import DialogError from './DialogError'
 import { RecordsTableProps } from '../../@types/frontend.types'
 import TableHeader from './TableHeader'
@@ -20,7 +20,7 @@ import useDeleteRecordMutation from '../../hooks/records/useDeleteRecordMutation
 import { resolveRecordCustomerName } from '../../services/records/resolveRecordCustomerName'
 
 const RecordsTable = ({ records }: RecordsTableProps) => {
-  const [displayBasic, setDisplayBasic] = useState(false)
+  const [, setDisplayBasic] = useState(false)
   const [displayRecordDetailsTable, setDisplayRecordDetailsTable] = useState(false)
   const [, setSelectedRecord] = useRecoilState(selectedRecordState)
   const { handleDeleteRecord } = useDeleteRecordMutation('records')
@@ -63,7 +63,7 @@ const RecordsTable = ({ records }: RecordsTableProps) => {
                   onClick={() => {
                     setSelectedRecord(rowData)
                     handleDeleteRecord()
-                    setDisplayBasic(false)
+                    // setDisplayBasic(false)
                   }}
                   />
                 </div>
@@ -72,7 +72,7 @@ const RecordsTable = ({ records }: RecordsTableProps) => {
           />
         </DataTable>
       </div>
-      <DialogNewRecord displayBasic={displayBasic} closeDialog={() => setDisplayBasic(false)}/>
+      {/* <DialogNewRecord displayBasic={displayBasic} closeDialog={() => setDisplayBasic(false)}/> */}
       <RecordDetailsTable setDisplayRecordDetailsTable={setDisplayRecordDetailsTable} displayRecordDetailsTable={displayRecordDetailsTable}/>
       <DialogError></DialogError>
     </div>
