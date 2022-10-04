@@ -3,8 +3,6 @@ import useField from '../useField'
 import { RecordType, Store, Stock, Customer, Supplier } from '@prisma/client'
 import { useRecoilState } from 'recoil'
 import { createNewRecord } from '../../services/records/createNewRecord'
-import useRecordTypesQuery from './useRecordTypesQuery'
-import useStoresQuery from '../stores/useStoresQuery'
 import { defaultStore, selectedStoreState } from '../../atoms/stores/selectedStoreAtom'
 import { defaultCustomer, selectedCustomerState } from '../../atoms/customers/selectedCustomerAtom'
 import { defaultSupplier, selectedSupplierState } from '../../atoms/suppliers/selectedSupplierAtom'
@@ -15,6 +13,8 @@ import { ParseRecordDetails } from '../../services/records/parseRecordDetails'
 import useProductsQuery from '../products/useProductsQuery'
 import useCustomerQuery from '../customers/useCustomersQuery'
 import useSupplierQuery from '../suppliers/useSuppliersQuery'
+import useRecordTypesQuery from './useRecordTypesQuery'
+import useStoresQuery from '../stores/useStoresQuery'
 
 const useNewRecordMutation = (queryId: string) => {
   const queryClient = useQueryClient()
@@ -87,14 +87,14 @@ const useNewRecordMutation = (queryId: string) => {
   const storesOptions = storesQuery?.data?.stores.map(
     (store: Store) => store.name
   )
-  const stockOptions = stocksQuery?.data?.stocks.filter(
-    (stock: Stock) => stock.storeId === selectedStore.id
+  const stockOptions = stocksQuery?.data?.stocks.map(
+    (stock: Stock) => stock.storeId
   )
-  const customerOptions = customerQuery?.data?.customers.filter(
-    (customer: Customer) => customer.id === selectedCustomer.id
+  const customerOptions = customerQuery?.data?.customers.map(
+    (customer: Customer) => customer.name
   )
-  const suppliersOptions = supplierQuery?.data?.suppliers.filter(
-    (supplier: Supplier) => supplier.id === selectedSupplier.id
+  const suppliersOptions = supplierQuery?.data?.suppliers.map(
+    (supplier: Supplier) => supplier.name
   )
   return {
     handleCreateNewRecord,
