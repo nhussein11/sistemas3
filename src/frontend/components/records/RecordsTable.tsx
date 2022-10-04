@@ -7,13 +7,17 @@ import { RecordsTableProps } from '../../@types/frontend.types'
 import TableHeader from './TableHeader'
 import { parseDate } from '../../services/records/parseDate'
 import { resolveRecordName } from '../../services/records/resolveRecordName'
+import { resolveRecordSupplierName } from '../../services/records/resolveRecordSupplierName'
 import useRecordTypesQuery from '../../hooks/records/useRecordTypesQuery'
+import useRecordsSupplierQuery from '../../hooks/records/useRecordsSupplierQuery'
+import useRecordsCustomerQuery from '../../hooks/records/useRecordsCustomerQuery'
 import { resolveRecordType } from '../../services/records/resolveRecordType'
 import RecordDetailsTable from './RecordDetailsTable'
 import { Button } from 'primereact/button'
 import { useRecoilState } from 'recoil'
 import { selectedRecordState } from '../../atoms/records/selectedRecordAtom'
 import useDeleteRecordMutation from '../../hooks/records/useDeleteRecordMutation'
+import { resolveRecordCustomerName } from '../../services/records/resolveRecordCustomerName'
 
 const RecordsTable = ({ records }: RecordsTableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
@@ -21,17 +25,24 @@ const RecordsTable = ({ records }: RecordsTableProps) => {
   const [, setSelectedRecord] = useRecoilState(selectedRecordState)
   const { handleDeleteRecord } = useDeleteRecordMutation('records')
   const recordTypesQuery = useRecordTypesQuery('record-types')
+  const recordSupplierQuery = useRecordsSupplierQuery('suppliers')
+  const recordCustomerQuery = useRecordsCustomerQuery('customers')
+
   return (
     <div className="datatable-filter">
       <div className="card">
         <DataTable value={records} paginator className="p-datatable-customers" showGridlines rows={10} dataKey="id" responsiveLayout="scroll"
           emptyMessage="No se encontraron Comprobantes"
           header={<TableHeader setDisplayRecordDetailsTable={setDisplayRecordDetailsTable} setDisplayBasic={setDisplayBasic}/>}>
+          <Column field="ID" header="Codigo" body={(rowData) => (rowData.recordNumber)} alignHeader={'center'} />
           <Column field="Fecha" header="Fecha" body={(rowData) => parseDate(rowData?.datetime)} alignHeader={'center'} />
           <Column field="Observación" header="Observación" body={(rowData) => rowData.observation} alignHeader={'center'}/>
           <Column field="NombreComprobante" header="Comprobante" body={(rowData) => resolveRecordName(rowData.recordTypeId, recordTypesQuery)} alignHeader={'center'}/>
-           <Column field="recordSenderName" header="Nombre Emisor" body={(rowData) => rowData.senderName} alignHeader={'center'} />
+          <Column field="Nombre Proveedor" header="Proveedor" body={(rowData) => resolveRecordSupplierName(rowData.supplierId, recordSupplierQuery)} alignHeader={'center'}/>
+          <Column field="Nombre Cliente" header="Cliente" body={(rowData) => resolveRecordCustomerName(rowData.customerId, recordCustomerQuery)} alignHeader={'center'}/>
           <Column field="recordAdress" header="Dirección" body={(rowData) => rowData.address} alignHeader={'center'} />
+          <Column field="tipo" header="Tipo" body={(rowData) => rowData.letter} alignHeader={'center'} />
+          <Column field="pagado" header="Pagado" body={(rowData) => (rowData.paidFor ? 'PAGADO' : '-')} alignHeader={'center'} />
           <Column field="TipoComprobante" header="Tipo Comprobante" alignHeader={'center'}
             body={(rowData) =>
               resolveRecordType(rowData.recordTypeId, recordTypesQuery) === 'POSITIVE'
