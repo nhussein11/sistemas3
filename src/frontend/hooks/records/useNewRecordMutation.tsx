@@ -87,8 +87,8 @@ const useNewRecordMutation = (queryId: string) => {
   const storesOptions = storesQuery?.data?.stores.map(
     (store: Store) => store.name
   )
-  const stockOptions = stocksQuery?.data?.stocks.map(
-    (stock: Stock) => stock.storeId
+  const stockOptions = stocksQuery?.data?.stocks.filter(
+    (stock: Stock) => stock.storeId === selectedStore.id
   )
   const customerOptions = customerQuery?.data?.customers.map(
     (customer: Customer) => customer.name
