@@ -7,9 +7,9 @@ import ToolBarProducts from '../frontend/components/records/newRecord/ToolBarPro
 import SaleDataBar from '../frontend/components/records/newRecord/SaleDataBar'
 import PanelTotal from '../frontend/components/records/newRecord/PanelTotal'
 import { useRef, useState } from 'react'
-import useDialogNewRecordMutation from '../frontend/hooks/records/useNewRecordMutation'
+import useNewRecordMutation from '../frontend/hooks/records/useNewRecordMutation'
 
-const NewSale: NextPage = () => {
+const NewRecord: NextPage = () => {
   const {
     handleCreateNewRecord,
     changeStore,
@@ -30,7 +30,7 @@ const NewSale: NextPage = () => {
     recordLetter,
     recordNumber,
     recordPaidFor
-  } = useDialogNewRecordMutation('records')
+  } = useNewRecordMutation('records')
 
   const [displayBasic, setDisplayBasic] = useState(false)
   const [, setVisibleSelectorQuantity] = useState(false)
@@ -56,7 +56,7 @@ const NewSale: NextPage = () => {
         displayBasic={displayBasic} closeDialog={() => setDisplayBasic(false)}></DialogTableProducts>
 
         <Panel header="DATOS VENTA">
-            <SaleDataBar/>
+            <SaleDataBar customers={customerOptions} suppliers={suppliersOptions} selectedCustomer={selectedCustomer} selectedSupplier={selectedSupplier}/>
         </Panel>
         <Splitter style={{ height: '100%' }}>
             <SplitterPanel>
@@ -76,4 +76,4 @@ const NewSale: NextPage = () => {
   )
 }
 
-export default NewSale
+export default NewRecord
