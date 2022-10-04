@@ -29,8 +29,11 @@ const NewRecord: NextPage = () => {
     recordAdress,
     recordLetter,
     recordNumber,
-    recordPaidFor
+    recordPaidFor,
+    productsQuery,
+    storesQuery
   } = useNewRecordMutation('records')
+  // const [selectedRecordDetails] = useRecoilState(selectedRecordDetailsState)
 
   const [displayBasic, setDisplayBasic] = useState(false)
   const [, setVisibleSelectorQuantity] = useState(false)
@@ -41,6 +44,10 @@ const NewRecord: NextPage = () => {
       // esto abre el dialog quantity
     }
   }
+  console.log('PRODUCTOS STOCK NR')
+  console.log(stockOptions)
+  console.log('')
+  console.log(storesOptions)
   return (
     <div>
       <Head>
@@ -50,13 +57,14 @@ const NewRecord: NextPage = () => {
       <div className="main-container">
         {/* <QuantitySelector product={product} visibleSelectorQuantity={visibleSelectorQuantity} closeDialog={() => setVisibleSelectorQuantity(false)} showQuantitySelector={showQuantitySelector} quantityRef={quantityRef}></QuantitySelector> */}
 
-        {/* <ClientFormComponent clientDialog={clientDialog} closeDialog={() => setClientDialog(false)} saveClient={saveClient}></ClientFormComponent> */}
-        <DialogTableProducts products={stockOptions}
-        setVisibleSelectorQuantity={setVisibleSelectorQuantity}
-        displayBasic={displayBasic} closeDialog={() => setDisplayBasic(false)}></DialogTableProducts>
+        <DialogTableProducts products={stockOptions} productsQuery={productsQuery} storesQuery={storesQuery}
+        setVisibleSelectorQuantity={setVisibleSelectorQuantity} displayBasic={displayBasic} closeDialog={() => setDisplayBasic(false)}></DialogTableProducts>
 
         <Panel header="DATOS COMPROBANTE">
-            <SaleDataBar customers={customerOptions} suppliers={suppliersOptions} selectedCustomer={selectedCustomer} selectedSupplier={selectedSupplier} changeCustomer={changeCustomer} changeSupplier={changeSupplier}/>
+            <SaleDataBar customers={customerOptions} suppliers={suppliersOptions} recordTypes={recordTypesOptions} stores={storesOptions}
+            selectedCustomer={selectedCustomer} selectedSupplier={selectedSupplier} selectedRecordType={selectedRecordType} selectedStore={selectedStore}
+            changeCustomer={changeCustomer} changeSupplier={changeSupplier} changeStore={changeStore} changeRecordType={changeRecordType}
+            recordObservation={recordObservation} recordAdress={recordAdress} recordLetter={recordLetter} recordNumber={recordNumber} recordPaidFor={recordPaidFor}/>
         </Panel>
         <Splitter style={{ height: '100%' }}>
             <SplitterPanel>
@@ -68,7 +76,7 @@ const NewRecord: NextPage = () => {
                 </div>
             </SplitterPanel>
             <SplitterPanel>
-                <PanelTotal/>
+                <PanelTotal handleCreateNewRecord={handleCreateNewRecord}/>
             </SplitterPanel>
         </Splitter>
       </div>
