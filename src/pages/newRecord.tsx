@@ -5,9 +5,12 @@ import { Panel } from 'primereact/panel'
 import DialogTableProducts from '../frontend/components/records/newRecord/DialogTableProducts'
 import ToolBarProducts from '../frontend/components/records/newRecord/ToolBarProducts'
 import SaleDataBar from '../frontend/components/records/newRecord/SaleDataBar'
+import TableAddedProducts from '../frontend/components/records/newRecord/TableAddedProducts'
 import PanelTotal from '../frontend/components/records/newRecord/PanelTotal'
 import { useRef, useState } from 'react'
 import useNewRecordMutation from '../frontend/hooks/records/useNewRecordMutation'
+import { selectedRecordDetailsState } from '../frontend/atoms/records/selectedRecordDetails'
+import { useRecoilState } from 'recoil'
 
 const NewRecord: NextPage = () => {
   const {
@@ -33,7 +36,7 @@ const NewRecord: NextPage = () => {
     productsQuery,
     storesQuery
   } = useNewRecordMutation('records')
-  // const [selectedRecordDetails] = useRecoilState(selectedRecordDetailsState)
+  const [selectedRecordDetails] = useRecoilState(selectedRecordDetailsState)
 
   const [displayBasic, setDisplayBasic] = useState(false)
   const [, setVisibleSelectorQuantity] = useState(false)
@@ -44,10 +47,6 @@ const NewRecord: NextPage = () => {
       // esto abre el dialog quantity
     }
   }
-  console.log('PRODUCTOS STOCK NR')
-  console.log(stockOptions)
-  console.log('')
-  console.log(storesOptions)
   return (
     <div>
       <Head>
@@ -72,7 +71,7 @@ const NewRecord: NextPage = () => {
                     <ToolBarProducts idRef={idRef} addProductBarCode={addProductBarCode} setVisibleTableProducts={() => setDisplayBasic(true)} ></ToolBarProducts>
                 </div>
                 <div className='card'>
-                    {/* <TableAddedProducts data={addedProducts} remove={deleteProduct}></TableAddedProducts> */}
+                    <TableAddedProducts products={selectedRecordDetails} productsQuery={productsQuery} storesQuery={storesQuery} ></TableAddedProducts>
                 </div>
             </SplitterPanel>
             <SplitterPanel>
