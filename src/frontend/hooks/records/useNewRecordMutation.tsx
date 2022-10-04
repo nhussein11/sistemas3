@@ -16,7 +16,7 @@ import useProductsQuery from '../products/useProductsQuery'
 import useCustomerQuery from '../customers/useCustomersQuery'
 import useSupplierQuery from '../suppliers/useSuppliersQuery'
 
-const useDialogNewRecordMutation = (queryId: string) => {
+const useNewRecordMutation = (queryId: string) => {
   const queryClient = useQueryClient()
   // Queries
   const recordTypesQuery = useRecordTypesQuery('record-types')
@@ -119,4 +119,4 @@ const useDialogNewRecordMutation = (queryId: string) => {
   }
 }
 
-export default useDialogNewRecordMutation
+export default useNewRecordMutation
