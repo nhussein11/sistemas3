@@ -4,17 +4,21 @@ import { Dropdown } from 'primereact/dropdown'
 import { InputText } from 'primereact/inputtext'
 import { Customer, Supplier } from '@prisma/client'
 
-const SaleDataBar = ({ customers, suppliers, selectedCustomer, selectedSupplier, changeCustomer, changeSupplier }:
-  {customers: Object[]; suppliers: Object[]; selectedCustomer: Customer; selectedSupplier: Supplier; changeCustomer: any; changeSupplier: any }) => {
+const SaleDataBar = ({
+  customers, suppliers, selectedCustomer, selectedSupplier, changeCustomer, changeSupplier,
+  recordObservation, recordAdress, recordLetter, recordNumber, recordPaidFor
+}:
+  {customers: Object[]; suppliers: Object[]; selectedCustomer: Customer; selectedSupplier: Supplier;
+    changeCustomer: any; changeSupplier: any; recordObservation: any; recordAdress: any; recordLetter: any; recordNumber: any; recordPaidFor: any }) => {
   return (
     <div style={{ display: 'flex', justifyContent: 'space-around' }}>
         <span className="p-float-label">
-            <InputText id="obeservation" />
+            <InputText {...recordObservation} id="obeservation" />
             <label htmlFor="obeservation">Observación</label>
         </span>
         <span className="p-float-label">
-            <InputText id="adress" />
-            <label htmlFor="adress">Adress</label>
+            <InputText {...recordAdress} id="adress" />
+            <label htmlFor="adress">Dirección</label>
         </span>
         <span className="p-float-label">
             <InputText id="recordNumber" />
