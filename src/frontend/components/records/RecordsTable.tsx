@@ -25,75 +25,21 @@ const RecordsTable = ({ records }: RecordsTableProps) => {
   return (
     <div className="datatable-filter">
       <div className="card">
-        <DataTable
-          value={records}
-          paginator
-          className="p-datatable-customers"
-          showGridlines
-          rows={10}
-          dataKey="id"
-          responsiveLayout="scroll"
-          header={
-            <TableHeader
-              setDisplayRecordDetailsTable={setDisplayRecordDetailsTable}
-              setDisplayBasic={setDisplayBasic}
-            />
-          }
+        <DataTable value={records} paginator className="p-datatable-customers" showGridlines rows={10} dataKey="id" responsiveLayout="scroll"
           emptyMessage="No se encontraron Comprobantes"
-        >
-          <Column
-            field="Fecha"
-            header="Fecha"
-            body={(rowData) => parseDate(rowData?.datetime)}
-            alignHeader={'center'}
-          />
-          <Column
-            field="Observación"
-            header="Observación"
-            body={(rowData) => rowData.observation}
-            alignHeader={'center'}
-          />
-          <Column
-            field="NombreComprobante"
-            header="Comprobante"
+          header={<TableHeader setDisplayRecordDetailsTable={setDisplayRecordDetailsTable} setDisplayBasic={setDisplayBasic}/>}>
+          <Column field="Fecha" header="Fecha" body={(rowData) => parseDate(rowData?.datetime)} alignHeader={'center'} />
+          <Column field="Observación" header="Observación" body={(rowData) => rowData.observation} alignHeader={'center'}/>
+          <Column field="NombreComprobante" header="Comprobante" body={(rowData) => resolveRecordName(rowData.recordTypeId, recordTypesQuery)} alignHeader={'center'}/>
+           <Column field="recordSenderName" header="Nombre Emisor" body={(rowData) => rowData.senderName} alignHeader={'center'} />
+          <Column field="recordAdress" header="Dirección" body={(rowData) => rowData.address} alignHeader={'center'} />
+          <Column field="TipoComprobante" header="Tipo Comprobante" alignHeader={'center'}
             body={(rowData) =>
-              resolveRecordName(rowData.recordTypeId, recordTypesQuery)
-            }
-            alignHeader={'center'}
-          />
-           <Column
-            field="recordSenderName"
-            header="Nombre Emisor"
-            body={(rowData) => rowData.senderName}
-            alignHeader={'center'}
-          />
-          <Column
-            field="recordAdress"
-            header="Dirección"
-            body={(rowData) => rowData.address}
-            alignHeader={'center'}
-          />
-          <Column
-            field="TipoComprobante"
-            header="Tipo Comprobante"
-            body={(rowData) =>
-              resolveRecordType(
-                rowData.recordTypeId,
-                recordTypesQuery
-              ) === 'POSITIVE'
-                ? (
-                <h2 style={{ color: 'green' }}>ENTRADA</h2>
-                  )
-                : (
-                <h2 style={{ color: 'red' }}>SALIDA</h2>
-                  )
-            }
-            alignHeader={'center'}
-          />
-          {/* !esto es una posible fuente de bugs!! */}
-          <Column
-            field="options"
-            header="Opciones"
+              resolveRecordType(rowData.recordTypeId, recordTypesQuery) === 'POSITIVE'
+                ? (<h2 style={{ color: 'green' }}>ENTRADA</h2>)
+                : (<h2 style={{ color: 'red' }}>SALIDA</h2>)
+            }/>
+          <Column field="options" header="Opciones" alignHeader={'center'}
             body={(rowData) => {
               return (
                 <div>
@@ -121,19 +67,11 @@ const RecordsTable = ({ records }: RecordsTableProps) => {
                 </div>
               )
             }}
-            alignHeader={'center'}
           />
         </DataTable>
       </div>
-      <DialogNewRecord
-        displayBasic={displayBasic}
-        closeDialog={() => setDisplayBasic(false)}
-      />
-      <RecordDetailsTable
-        setDisplayRecordDetailsTable={setDisplayRecordDetailsTable}
-        displayRecordDetailsTable={displayRecordDetailsTable}
-      />
-
+      <DialogNewRecord displayBasic={displayBasic} closeDialog={() => setDisplayBasic(false)}/>
+      <RecordDetailsTable setDisplayRecordDetailsTable={setDisplayRecordDetailsTable} displayRecordDetailsTable={displayRecordDetailsTable}/>
       <DialogError></DialogError>
     </div>
   )
