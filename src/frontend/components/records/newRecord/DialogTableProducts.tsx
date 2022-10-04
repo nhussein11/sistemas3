@@ -7,8 +7,11 @@ import TableHeader from './TableHeader'
 import NumberFormat from 'react-number-format'
 import { newSaleTableProductProps } from '../../../@types/frontend.types'
 import { Product } from '@prisma/client'
+import { findProductName } from '../../../services/products/findProductName'
+import { findStoreName } from '../../../services/stores/findStoreName'
+import { findProductPrice } from '../../../services/products/findProductPrice'
 
-export default function DialogTableProducts ({ products, displayBasic, closeDialog, setVisibleSelectorQuantity }: newSaleTableProductProps) {
+export default function DialogTableProducts ({ products, displayBasic, closeDialog, setVisibleSelectorQuantity, productsQuery, storesQuery }: newSaleTableProductProps) {
   const actionBodyTemplateListProducts = (rowData: Product) => {
     return (
     <React.Fragment>
@@ -20,27 +23,29 @@ export default function DialogTableProducts ({ products, displayBasic, closeDial
     </React.Fragment>
     )
   }
+  console.log('PRODUCTOS STOCK')
+  console.log(products)
   return (
     <Dialog header={'Tabla de Productos'} visible={displayBasic} onHide={() => closeDialog()}>
-           <DataTable value={products} paginator className="p-datatable-customers" showGridlines rows={10} dataKey="id" responsiveLayout="scroll"
+          <DataTable value={products} paginator className="p-datatable-customers" showGridlines rows={10} dataKey="id" responsiveLayout="scroll"
            header={<TableHeader/>} emptyMessage="No se encontraron Productos">
-          <Column field="Nombre" header="Nombre" body={(rowData) => rowData.name} alignHeader={'center'}/>
-          <Column field="Descripcion" header="Descripcion" body={(rowData) => rowData.description} alignHeader={'center'}/>
-          <Column field="Category" header="Categoría" body={(rowData) => rowData.category} alignHeader={'center'}/>
-          <Column field="Precio" header="Precio" body={(rowData) => {
-            return (
-                <NumberFormat
-                  value={rowData.price}
-                  displayType={'text'}
-                  thousandSeparator={'.'}
-                  decimalSeparator={','}
-                  prefix={'$'}
-                ></NumberFormat>
-            )
-          }}
-            alignHeader={'center'}
-          />
-           <Column body={actionBodyTemplateListProducts} exportable={false} style={{ minWidth: '8rem' }}></Column>
+            <Column field="ProductName" header="Nombre" body={(rowData) => findProductName(rowData.productId, productsQuery)} style={{ minWidth: '2rem' }}></Column>
+            <Column field="StoreName" header="Depósito" body={(rowData) => findStoreName(rowData.storeId, storesQuery)} style={{ minWidth: '1rem' }}></Column>
+            <Column field="Quantity" header="Cantidad en Stock" body={(rowData) => rowData.quantity} style={{ minWidth: '1rem' }}></Column>
+            <Column field="Precio" header="Precio" body={(rowData) => {
+              return (
+                  <NumberFormat
+                    value={findProductPrice(rowData.productId, productsQuery)}
+                    displayType={'text'}
+                    thousandSeparator={'.'}
+                    decimalSeparator={','}
+                    prefix={'$'}
+                  ></NumberFormat>
+              )
+            }}
+              alignHeader={'center'}
+            />
+            <Column body={actionBodyTemplateListProducts} exportable={false} style={{ minWidth: '8rem' }}></Column>
         </DataTable>
     </Dialog>
   )
