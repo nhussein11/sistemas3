@@ -4,7 +4,8 @@ import { Dropdown } from 'primereact/dropdown'
 import { InputText } from 'primereact/inputtext'
 import { Customer, Supplier } from '@prisma/client'
 
-const SaleDataBar = ({ customers, suppliers, selectedCustomer, selectedSupplier }: {customers: Object[]; suppliers: Object[]; selectedCustomer: Customer; selectedSupplier: Supplier }) => {
+const SaleDataBar = ({ customers, suppliers, selectedCustomer, selectedSupplier }:
+  {customers: Object[]; suppliers: Object[]; selectedCustomer: Customer; selectedSupplier: Supplier }) => {
   return (
     <div style={{ display: 'flex', justifyContent: 'space-around' }}>
         <span className="p-float-label">
