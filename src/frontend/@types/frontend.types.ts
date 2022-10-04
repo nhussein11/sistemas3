@@ -18,6 +18,8 @@ export type newSaleTableProductProps = {
   displayBasic: boolean
   closeDialog: () => void
   setVisibleSelectorQuantity: Dispatch<boolean | ((prev: boolean) => boolean)>
+  productsQuery: any
+  storesQuery: any
 }
 export type StoresTableProps = {
   stores: Store[]
