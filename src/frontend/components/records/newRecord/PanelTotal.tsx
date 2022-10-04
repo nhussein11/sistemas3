@@ -5,7 +5,7 @@ import { Card } from 'primereact/card'
 import { InputNumber } from 'primereact/inputnumber'
 import { Button } from 'primereact/button'
 
-export default function PanelTotal () {
+const PanelTotal = ({ handleCreateNewRecord }: {handleCreateNewRecord: any}) => {
   return (
     <div className='container-total'>
         <Panel>
@@ -16,9 +16,10 @@ export default function PanelTotal () {
                 <InputNumber id='paid' placeholder='Ingresar Importe' mode="currency" currency="USD" locale="en-US" />
             </div>
             <Button style={{ width: '-webkit-fill-available', justifyContent: 'center' }} onClick={() => {
-              alert('guardar venta')
+              handleCreateNewRecord()
             }} className="p-button-success"><h2>GENERAR VENTA</h2></Button>
         </Panel>
     </div>
   )
 }
+export default PanelTotal
