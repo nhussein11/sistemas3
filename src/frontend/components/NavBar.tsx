@@ -48,7 +48,7 @@ const NavBar = () => {
           label: 'Ingresos',
           icon: 'pi pi-fw pi-plus',
           command: () => {
-            router.push('/students')
+            router.push('/newRecord')
           }
         },
         {
