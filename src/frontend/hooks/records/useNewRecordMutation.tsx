@@ -37,6 +37,12 @@ const useDialogNewRecordMutation = (queryId: string) => {
   const changeStore = (name: string) => {
     setSelectedStore(storesQuery.data?.stores.find((store: Store) => store.name === name))
   }
+  const changeSupplier = (name: string) => {
+    setSelectedSupplier(supplierQuery.data?.suppliers.find((supplier: Supplier) => supplier.name === name))
+  }
+  const changeCustomer = (name: string) => {
+    setSelectedCustomer(customerQuery.data?.customers.find((customer: Customer) => customer.name === name))
+  }
   const { mutate } = useMutation(createNewRecord, {
     onSuccess: (data) => {
       // Limpio campos
@@ -94,6 +100,8 @@ const useDialogNewRecordMutation = (queryId: string) => {
     handleCreateNewRecord,
     changeStore,
     changeRecordType,
+    changeSupplier,
+    changeCustomer,
     selectedRecordType,
     selectedStore,
     selectedCustomer,
