@@ -4,16 +4,19 @@ type RecordData = {
   address: string,
   letter: string,
   recordNumber: number,
-  recordPaidFor: boolean,
+  paidFor: boolean,
   recordTypeId: string,
   supplierId: string,
   customerId: string,
   details: {
     stockId: string
+    productId: string
     quantity: number
+    subtotal: number
   }[]
 }
 export const createNewRecord = async (record: RecordData) => {
+  console.log(record.details[0].subtotal)
   const response = await publicAxiosInstance.post('/records', record)
   return response
 }
