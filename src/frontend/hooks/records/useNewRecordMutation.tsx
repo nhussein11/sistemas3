@@ -13,6 +13,7 @@ import { ParseRecordDetails } from '../../services/records/parseRecordDetails'
 import useProductsQuery from '../products/useProductsQuery'
 import useCustomerQuery from '../customers/useCustomersQuery'
 import useSupplierQuery from '../suppliers/useSuppliersQuery'
+import useRecordsQuery from '../records/useRecordsQuery'
 import useRecordTypesQuery from './useRecordTypesQuery'
 import useStoresQuery from '../stores/useStoresQuery'
 
@@ -25,6 +26,7 @@ const useNewRecordMutation = (queryId: string) => {
   const productsQuery = useProductsQuery('products')
   const customerQuery = useCustomerQuery('customers')
   const supplierQuery = useSupplierQuery('suppliers')
+  const recordsQuery = useRecordsQuery('records')
   // hooks
   const [selectedRecordDetails, setSelectedRecordDetails] = useRecoilState(selectedRecordDetailsState)
   const [selectedStore, setSelectedStore] = useRecoilState(selectedStoreState)
@@ -90,6 +92,7 @@ const useNewRecordMutation = (queryId: string) => {
   const stockOptions = stocksQuery?.data?.stocks.filter(
     (stock: Stock) => stock.storeId === selectedStore.id
   )
+  const recordsOptions = recordsQuery?.data?.records
   const customerOptions = customerQuery?.data?.customers.map(
     (customer: Customer) => customer.name
   )
@@ -111,13 +114,16 @@ const useNewRecordMutation = (queryId: string) => {
     stockOptions,
     customerOptions,
     suppliersOptions,
+    recordsOptions,
     recordObservation,
     recordAdress,
     recordLetter,
     recordNumber,
     recordPaidFor,
     productsQuery,
-    storesQuery
+    storesQuery,
+    customerQuery,
+    supplierQuery
   }
 }
 
