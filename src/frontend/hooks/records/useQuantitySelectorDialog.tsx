@@ -2,9 +2,14 @@ import { useRecoilState } from 'recoil'
 import { selectedRecordDetailsState } from '../../atoms/records/selectedRecordDetails'
 import { showQuantitySelectorDialogDefaultState, showQuantitySelectorDialogState } from '../../atoms/records/showQuantitySelectorDialog'
 import useField from '../useField'
+import { ammountRecordAtomState } from '../../../frontend/atoms/records/ammountRecordAtom'
+import useProductsQuery from '../../hooks/products/useProductsQuery'
+import { findProductPrice } from '../../services/products/findProductPrice'
 
 const useQuantitySelectorDialog = () => {
+  const productsQuery = useProductsQuery('products')
   const [showQuantitySelectorDialog, setShowQuantitySelectorDialog] = useRecoilState(showQuantitySelectorDialogState)
+  const [, setAmmount] = useRecoilState(ammountRecordAtomState)
   const quantity = useField({ type: 'number', initialValue: 0 })
   const [, setSelectedRecordDetails] = useRecoilState(selectedRecordDetailsState)
   const addDetail = () => {
@@ -17,6 +22,7 @@ const useQuantitySelectorDialog = () => {
         quantity: quantity.value as number
       }
     ])
+    setAmmount((prev) => ({ ammount: prev.ammount + (findProductPrice(showQuantitySelectorDialog.productId, productsQuery) * parseFloat(quantity.value?.toString())) }))
   }
   return {
     showQuantitySelectorDialog,
