@@ -12,7 +12,7 @@ const SaleDataBar = ({
     changeCustomer: any; changeSupplier: any; changeStore: any; changeRecordType: any; recordObservation: any; recordAdress: any; recordLetter: any; recordNumber: any; recordPaidFor: any }) => {
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'auto auto auto auto auto', justifyContent: 'left', columnGap: '10px' }}>
           <span className="p-float-label">
               <InputText {...recordObservation} id="obeservation" />
               <label htmlFor="obeservation">Observación</label>
@@ -26,21 +26,21 @@ const SaleDataBar = ({
               <label htmlFor="recordNumber">Número Comprobante</label>
           </span>
           <div className="field">
-            <Dropdown options={['A', 'B', 'C']} placeholder="Tipo Factura"/>
-          </div>
-          <div className="field">
             <Dropdown options={customers} value={selectedCustomer?.name} onChange={(e) => changeCustomer(e.target.value)} placeholder="Seleccionar Cliente"/>
           </div>
           <div className="field">
               <Dropdown options={suppliers} value={selectedSupplier?.name} onChange={(e) => changeSupplier(e.target.value)} placeholder="Seleccionar Proveedor"/>
           </div>
       </div>
-      <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-      <div className="field">
+      <div style={{ display: 'grid', gridTemplateColumns: 'auto auto auto', justifyContent: 'left', columnGap: '10px', marginTop: '5px' }}>
+          <div className="field">
             <Dropdown options={recordTypes} value={selectedRecordType?.recordName} onChange={(e) => changeRecordType(e.target.value)} placeholder="Seleccionar Tipo Comp"/>
           </div>
           <div className="field">
               <Dropdown options={stores} value={selectedStore?.name} onChange={(e) => changeStore(e.target.value)} placeholder="Seleccionar Depósito"/>
+          </div>
+          <div className="field">
+            <Dropdown options={['A', 'B', 'C']} value={recordLetter} onChange={(e) => (console.log(e.value))} placeholder="Tipo Factura"/>
           </div>
       </div>
     </div>
