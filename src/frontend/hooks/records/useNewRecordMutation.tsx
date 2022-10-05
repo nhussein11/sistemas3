@@ -19,7 +19,7 @@ import useStoresQuery from '../stores/useStoresQuery'
 const useNewRecordMutation = (queryId: string) => {
   const queryClient = useQueryClient()
   // Queries
-  const recordTypesQuery = useRecordTypesQuery('record-types')
+  const recordTypesQuery = useRecordTypesQuery('record-type')
   const storesQuery = useStoresQuery('stores')
   const stocksQuery = useStocksQuery('stock')
   const productsQuery = useProductsQuery('products')
