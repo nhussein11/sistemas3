@@ -68,7 +68,7 @@ const useNewRecordMutation = (queryId: string) => {
   const recordAdress = useField({ initialValue: '', type: 'text' })
   const recordLetter = useField({ initialValue: '', type: 'text' })
   const recordNumber = useField({ initialValue: '', type: 'number' })
-  const recordPaidFor = useField({ initialValue: '', type: 'boolean' })
+  const recordPaidFor = useField({ initialValue: true, type: 'boolean' })
 
   const handleCreateNewRecord = () => {
     mutate({
@@ -76,7 +76,7 @@ const useNewRecordMutation = (queryId: string) => {
       address: recordAdress.value as string,
       letter: recordLetter.value as string,
       recordNumber: recordNumber.value as number,
-      recordPaidFor: recordPaidFor.value as boolean,
+      paidFor: recordPaidFor.value as boolean,
       recordTypeId: selectedRecordType.id,
       supplierId: selectedSupplier.id,
       customerId: selectedCustomer.id,
