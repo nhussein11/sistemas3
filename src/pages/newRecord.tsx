@@ -6,12 +6,14 @@ import DialogTableProducts from '../frontend/components/records/newRecord/Dialog
 import ToolBarProducts from '../frontend/components/records/newRecord/ToolBarProducts'
 import SaleDataBar from '../frontend/components/records/newRecord/SaleDataBar'
 import TableAddedProducts from '../frontend/components/records/newRecord/TableAddedProducts'
+import TableAddedRecords from '../frontend/components/records/newRecord/TableAddedRecords'
 import PanelTotal from '../frontend/components/records/newRecord/PanelTotal'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import useNewRecordMutation from '../frontend/hooks/records/useNewRecordMutation'
 import { selectedRecordDetailsState } from '../frontend/atoms/records/selectedRecordDetails'
 import { useRecoilState } from 'recoil'
 import QuantitySelectorDialog from '../frontend/components/records/newRecord/QuantitySelectorDialog'
+import { RecordNameEnum } from '@prisma/client'
 
 const NewRecord: NextPage = () => {
   const {
@@ -40,11 +42,12 @@ const NewRecord: NextPage = () => {
   const [selectedRecordDetails] = useRecoilState(selectedRecordDetailsState)
   const [displayBasic, setDisplayBasic] = useState(false)
   const [, setVisibleSelectorQuantity] = useState(false)
-  const idRef = useRef('')
-  const addProductBarCode = async (e: any) => {
-    if (e.key === 'Enter') {
-      alert('buscar prod x cod barra')
-      // esto abre el dialog quantity
+  function tableRecord () {
+    switch (selectedRecordType.recordName) {
+      case RecordNameEnum.FACTURA_ORIGINAL:
+        return (<TableAddedProducts products={selectedRecordDetails} productsQuery={productsQuery} storesQuery={storesQuery} ></TableAddedProducts>)
+      case RecordNameEnum.ORDEN_DE_PAGO:
+        return (<TableAddedRecords records={selectedRecordDetails} productsQuery={productsQuery} storesQuery={storesQuery} ></TableAddedRecords>)
     }
   }
   return (
@@ -62,19 +65,19 @@ const NewRecord: NextPage = () => {
             <SaleDataBar customers={customerOptions} suppliers={suppliersOptions} recordTypes={recordTypesOptions} stores={storesOptions}
             selectedCustomer={selectedCustomer} selectedSupplier={selectedSupplier} selectedRecordType={selectedRecordType} selectedStore={selectedStore}
             changeCustomer={changeCustomer} changeSupplier={changeSupplier} changeStore={changeStore} changeRecordType={changeRecordType}
-            recordObservation={recordObservation} recordAdress={recordAdress} recordLetter={recordLetter} recordNumber={recordNumber} recordPaidFor={recordPaidFor}/>
+            recordLetter={recordLetter} recordNumber={recordNumber} recordPaidFor={recordPaidFor}/>
         </Panel>
         <Splitter style={{ height: '100%' }}>
             <SplitterPanel>
                 <div className="card">
-                    <ToolBarProducts idRef={idRef} addProductBarCode={addProductBarCode} setVisibleTableProducts={() => setDisplayBasic(true)} ></ToolBarProducts>
+                    <ToolBarProducts recordName={selectedRecordType.recordName} setVisibleTableProducts={() => setDisplayBasic(true)} ></ToolBarProducts>
                 </div>
                 <div className='card'>
-                    <TableAddedProducts products={selectedRecordDetails} productsQuery={productsQuery} storesQuery={storesQuery} ></TableAddedProducts>
+                    {tableRecord()}
                 </div>
             </SplitterPanel>
             <SplitterPanel style={{ width: '90%' }}>
-                <PanelTotal handleCreateNewRecord={handleCreateNewRecord}/>
+                <PanelTotal recordObservation={recordObservation} recordAdress={recordAdress} handleCreateNewRecord={handleCreateNewRecord}/>
             </SplitterPanel>
         </Splitter>
       </div>
