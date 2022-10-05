@@ -38,7 +38,6 @@ const NewRecord: NextPage = () => {
     storesQuery
   } = useNewRecordMutation('records')
   const [selectedRecordDetails] = useRecoilState(selectedRecordDetailsState)
-
   const [displayBasic, setDisplayBasic] = useState(false)
   const [, setVisibleSelectorQuantity] = useState(false)
   const idRef = useRef('')
@@ -51,10 +50,10 @@ const NewRecord: NextPage = () => {
   return (
     <div>
       <Head>
-        <title>Nueva Venta</title>
+        <title>Nuevo Comprobante</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="main-container">
+      <div style={{ marginTop: '5px' }}>
         <QuantitySelectorDialog />
         <DialogTableProducts products={stockOptions} productsQuery={productsQuery} storesQuery={storesQuery}
         setVisibleSelectorQuantity={setVisibleSelectorQuantity} displayBasic={displayBasic} closeDialog={() => setDisplayBasic(false)}></DialogTableProducts>
@@ -74,7 +73,7 @@ const NewRecord: NextPage = () => {
                     <TableAddedProducts products={selectedRecordDetails} productsQuery={productsQuery} storesQuery={storesQuery} ></TableAddedProducts>
                 </div>
             </SplitterPanel>
-            <SplitterPanel>
+            <SplitterPanel style={{ width: '90%' }}>
                 <PanelTotal handleCreateNewRecord={handleCreateNewRecord}/>
             </SplitterPanel>
         </Splitter>
