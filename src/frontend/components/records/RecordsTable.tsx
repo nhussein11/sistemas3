@@ -11,7 +11,6 @@ import { resolveRecordSupplierName } from '../../services/records/resolveRecordS
 import useRecordTypesQuery from '../../hooks/records/useRecordTypesQuery'
 import useRecordsSupplierQuery from '../../hooks/records/useRecordsSupplierQuery'
 import useRecordsCustomerQuery from '../../hooks/records/useRecordsCustomerQuery'
-import { resolveRecordType } from '../../services/records/resolveRecordType'
 import RecordDetailsTable from './RecordDetailsTable'
 import { Button } from 'primereact/button'
 import { useRecoilState } from 'recoil'
@@ -43,12 +42,6 @@ const RecordsTable = ({ records }: RecordsTableProps) => {
           <Column field="recordAdress" header="Dirección" body={(rowData) => rowData.address} alignHeader={'center'} />
           <Column field="tipo" header="Tipo" body={(rowData) => rowData.letter} alignHeader={'center'} />
           <Column field="pagado" header="Pagado" body={(rowData) => (rowData.paidFor ? 'PAGADO' : '-')} alignHeader={'center'} />
-          <Column field="TipoComprobante" header="Tipo Comprobante" alignHeader={'center'}
-            body={(rowData) =>
-              resolveRecordType(rowData.recordTypeId, recordTypesQuery) === 'POSITIVE'
-                ? (<h2 style={{ color: 'green' }}>ENTRADA</h2>)
-                : (<h2 style={{ color: 'red' }}>SALIDA</h2>)
-            }/>
           <Column field="options" header="Opciones" alignHeader={'center'}
             body={(rowData) => {
               return (
