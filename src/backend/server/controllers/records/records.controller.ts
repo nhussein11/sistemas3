@@ -38,12 +38,20 @@ const createRecord = async (
   details: any[]
 ) => {
   try {
+    console.log(supplierId,
+      observation,
+      address,
+      letter,
+      recordNumber,
+      paidFor,
+      recordTypeId,
+      customerId)
     const recordType: RecordType | null = await getRecordTypeById(recordTypeId)
     if (!recordType) {
       return
     }
     const debt: number = await getDebt(details)
-
+    console.log(debt)
     await handleDebtByNewRecord(supplierId, debt, customerId)
 
     const data = await createDataOfRecord(
@@ -146,8 +154,8 @@ const handleRecordDetailsCreation = async (
 
   const promiseArrayMovementsDetails = details.map(
     (stockIdQuantityAndSubtotal: any) => {
-      const { stockId, quantity, subTotal } = stockIdQuantityAndSubtotal
-      return createRecordDetails(stockId, recordCreated.id, quantity, subTotal)
+      const { stockId, quantity, subtotal } = stockIdQuantityAndSubtotal
+      return createRecordDetails(stockId, recordCreated.id, quantity, subtotal)
     }
   )
   const allPromisesMovementsDetails = Promise.all(promiseArrayMovementsDetails)
