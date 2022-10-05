@@ -15,7 +15,7 @@ import { useRecoilState } from 'recoil'
 export default function DialogTableProducts ({ products, displayBasic, closeDialog, setVisibleSelectorQuantity, productsQuery, storesQuery }: newSaleTableProductProps) {
   const [, setShowQuantitySelectorDialog] = useRecoilState(showQuantitySelectorDialogState)
   const actionBodyTemplateListProducts = (rowData: any) => {
-    const stockId = rowData.stockId
+    const stockId = rowData.id
     const productId = rowData.productId
     const storeId = rowData.storeId
     return (
