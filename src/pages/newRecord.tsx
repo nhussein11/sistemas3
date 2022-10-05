@@ -12,6 +12,7 @@ import PanelTotal from '../frontend/components/records/newRecord/PanelTotal'
 import { useState } from 'react'
 import useNewRecordMutation from '../frontend/hooks/records/useNewRecordMutation'
 import { selectedRecordDetailsState } from '../frontend/atoms/records/selectedRecordDetails'
+import { selectedRecordsState } from '../frontend/atoms/records/selectedRecords'
 import { useRecoilState } from 'recoil'
 import QuantitySelectorDialog from '../frontend/components/records/newRecord/QuantitySelectorDialog'
 import { RecordNameEnum } from '@prisma/client'
@@ -44,6 +45,7 @@ const NewRecord: NextPage = () => {
     supplierQuery
   } = useNewRecordMutation('records')
   const [selectedRecordDetails] = useRecoilState(selectedRecordDetailsState)
+  const [selectedRecords] = useRecoilState(selectedRecordsState)
   const [showTableProducts, setShowTableProducts] = useState(false)
   const [showTableRecords, setShowTableRecords] = useState(false)
   const [, setVisibleSelectorQuantity] = useState(false)
@@ -52,7 +54,7 @@ const NewRecord: NextPage = () => {
       case RecordNameEnum.FACTURA_ORIGINAL:
         return (<TableAddedProducts products={selectedRecordDetails} productsQuery={productsQuery} storesQuery={storesQuery} ></TableAddedProducts>)
       case RecordNameEnum.ORDEN_DE_PAGO:
-        return (<TableAddedRecords records={selectedRecordDetails} customerQuery={customerQuery} supplierQuery={supplierQuery} ></TableAddedRecords>)
+        return (<TableAddedRecords records={selectedRecords} customerQuery={customerQuery} supplierQuery={supplierQuery} ></TableAddedRecords>)
     }
   }
   return (
