@@ -5,22 +5,34 @@ import { Button } from 'primereact/button'
 import { Dialog } from 'primereact/dialog'
 import TableHeader from './TableHeader'
 import NumberFormat from 'react-number-format'
-import { showQuantitySelectorDialogState } from '../../../atoms/records/showQuantitySelectorDialog'
-import { useRecoilState } from 'recoil'
 import { resolveRecordSupplierName } from '../../../services/records/resolveRecordSupplierName'
 import { resolveRecordCustomerName } from '../../../services/records/resolveRecordCustomerName'
+import { useRecoilState } from 'recoil'
+import { selectedRecordsState } from '../../../atoms/records/selectedRecords'
+import { ammountRecordAtomState } from '../../../atoms/records/ammountRecordAtom'
 
 export default function DialogTableRecords ({ records, displayBasic, closeDialog, setVisibleSelectorQuantity, customerQuery, supplierQuery }:
     { records: Object[]; displayBasic: boolean; closeDialog: () => void; setVisibleSelectorQuantity: any; customerQuery: any; supplierQuery: any }) {
-  const [, setShowQuantitySelectorDialog] = useRecoilState(showQuantitySelectorDialogState)
+  const [, setSelectedRecords] = useRecoilState(selectedRecordsState)
+  const [, setAmmount] = useRecoilState(ammountRecordAtomState)
   const actionBodyTemplateListProducts = (rowData: any) => {
-    const stockId = rowData.stockId
-    const productId = rowData.productId
-    const storeId = rowData.storeId
     return (
     <React.Fragment>
         <Button icon="pi pi-plus" className="p-button p-button-success "
-        onClick={() => { setShowQuantitySelectorDialog({ show: true, stockId, productId, storeId }) }} />
+        onClick={() => {
+          setSelectedRecords((prev) => [
+            ...prev,
+            {
+              recordId: rowData.recordId,
+              recordNumber: rowData.recordNumber,
+              observation: rowData.observation,
+              letter: rowData.letter,
+              supplierId: rowData.supplierId,
+              customerId: rowData.customerId
+            }
+          ])
+          setAmmount((prev) => ({ ammount: prev.ammount + 10 }))
+        }} />
     </React.Fragment>
     )
   }
