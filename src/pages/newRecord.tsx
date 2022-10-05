@@ -11,6 +11,7 @@ import { useRef, useState } from 'react'
 import useNewRecordMutation from '../frontend/hooks/records/useNewRecordMutation'
 import { selectedRecordDetailsState } from '../frontend/atoms/records/selectedRecordDetails'
 import { useRecoilState } from 'recoil'
+import QuantitySelectorDialog from '../frontend/components/records/newRecord/QuantitySelectorDialog'
 
 const NewRecord: NextPage = () => {
   const {
@@ -54,8 +55,7 @@ const NewRecord: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="main-container">
-        {/* <QuantitySelector product={product} visibleSelectorQuantity={visibleSelectorQuantity} closeDialog={() => setVisibleSelectorQuantity(false)} showQuantitySelector={showQuantitySelector} quantityRef={quantityRef}></QuantitySelector> */}
-
+        <QuantitySelectorDialog />
         <DialogTableProducts products={stockOptions} productsQuery={productsQuery} storesQuery={storesQuery}
         setVisibleSelectorQuantity={setVisibleSelectorQuantity} displayBasic={displayBasic} closeDialog={() => setDisplayBasic(false)}></DialogTableProducts>
 
