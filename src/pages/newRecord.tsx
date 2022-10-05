@@ -11,6 +11,7 @@ import TableAddedRecords from '../frontend/components/records/newRecord/TableAdd
 import PanelTotal from '../frontend/components/records/newRecord/PanelTotal'
 import { useState } from 'react'
 import useNewRecordMutation from '../frontend/hooks/records/useNewRecordMutation'
+import useNewRecordForFacturasMutation from '../frontend/hooks/records/useNewRecordForFacturasMutation'
 import { selectedRecordDetailsState } from '../frontend/atoms/records/selectedRecordDetails'
 import { selectedRecordsState } from '../frontend/atoms/records/selectedRecords'
 import { useRecoilState } from 'recoil'
@@ -44,6 +45,7 @@ const NewRecord: NextPage = () => {
     customerQuery,
     supplierQuery
   } = useNewRecordMutation('records')
+  const { handleCreateNewRecordForFacturas } = useNewRecordForFacturasMutation('previous-record')
   const [selectedRecordDetails] = useRecoilState(selectedRecordDetailsState)
   const [selectedRecords] = useRecoilState(selectedRecordsState)
   const [showTableProducts, setShowTableProducts] = useState(false)
@@ -85,7 +87,7 @@ const NewRecord: NextPage = () => {
                 </div>
             </SplitterPanel>
             <SplitterPanel style={{ width: '90%' }}>
-                <PanelTotal selectedSupplier={selectedSupplier} recordObservation={recordObservation} recordAdress={recordAdress} handleCreateNewRecord={handleCreateNewRecord} />
+                <PanelTotal recordName={selectedRecordType.recordName} recordObservation={recordObservation} recordAdress={recordAdress} handleCreateNewRecord={handleCreateNewRecord} handleCreateNewRecordForFacturas={handleCreateNewRecordForFacturas}/>
             </SplitterPanel>
         </Splitter>
       </div>
