@@ -7,8 +7,9 @@ import { defaultAmmount, ammountRecordAtomState } from '../../../../frontend/ato
 import { useRecoilState } from 'recoil'
 import NumberFormat from 'react-number-format'
 import { InputText } from 'primereact/inputtext'
+import { RecordNameEnum } from '@prisma/client'
 
-const PanelTotal = ({ handleCreateNewRecord, recordObservation, recordAdress, selectedSupplier }: {handleCreateNewRecord: any; recordObservation: any; recordAdress: any; selectedSupplier: any}) => {
+const PanelTotal = ({ handleCreateNewRecord, handleCreateNewRecordForFacturas, recordObservation, recordAdress, recordName }: {handleCreateNewRecordForFacturas: any; handleCreateNewRecord: any; recordObservation: any; recordAdress: any; recordName: any}) => {
   const [ammount, setAmmount] = useRecoilState(ammountRecordAtomState)
   return (
     <div className='container-total'>
@@ -27,7 +28,18 @@ const PanelTotal = ({ handleCreateNewRecord, recordObservation, recordAdress, se
                 <h1>TOTAL: <NumberFormat value={ammount.ammount} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'$'}></NumberFormat></h1>
             </Card>
             <Button style={{ width: '-webkit-fill-available', justifyContent: 'center' }} onClick={() => {
-              handleCreateNewRecord()
+              switch (recordName) {
+                case RecordNameEnum.FACTURA_DUPLICADO:
+                case RecordNameEnum.FACTURA_ORIGINAL:
+                  console.log('PRODUCTOS')
+                  handleCreateNewRecord()
+                  break
+                case RecordNameEnum.ORDEN_DE_COMPRA:
+                case RecordNameEnum.ORDEN_DE_PAGO:
+                  console.log('FACTURAS')
+                  handleCreateNewRecordForFacturas()
+                  break
+              }
               setAmmount(defaultAmmount)
             }} className="p-button-success"><h2>GENERAR COMPROBANTE</h2></Button>
         </Panel>
