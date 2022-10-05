@@ -38,20 +38,11 @@ const createRecord = async (
   details: any[]
 ) => {
   try {
-    console.log(supplierId,
-      observation,
-      address,
-      letter,
-      recordNumber,
-      paidFor,
-      recordTypeId,
-      customerId)
     const recordType: RecordType | null = await getRecordTypeById(recordTypeId)
     if (!recordType) {
       return
     }
     const debt: number = await getDebt(details)
-    console.log(debt)
     await handleDebtByNewRecord(supplierId, debt, customerId)
 
     const data = await createDataOfRecord(
