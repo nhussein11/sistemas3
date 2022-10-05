@@ -12,7 +12,7 @@ const TableAddedProducts = ({ products, productsQuery, storesQuery }: {products:
   const actionBodyTemplateListProducts = (rowData: Product) => {
     return (
     <React.Fragment>
-        <Button icon="pi pi-plus" className="p-button-rounded p-button-success "
+        <Button icon="pi pi-trash" className="p-button p-button-danger "
         onClick={() => {
           // setProduct(rowData)
           // setVisibleSelectorQuantity(true)
