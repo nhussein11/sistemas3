@@ -37,7 +37,7 @@ const SaleDataBar = ({
       </div>
       <div style={{ display: 'flex', justifyContent: 'space-around' }}>
       <div className="field">
-            <Dropdown options={recordTypes} value={selectedRecordType?.name} onChange={(e) => changeRecordType(e.target.value)} placeholder="Seleccionar Tipo Comp"/>
+            <Dropdown options={recordTypes} value={selectedRecordType?.recordName} onChange={(e) => changeRecordType(e.target.value)} placeholder="Seleccionar Tipo Comp"/>
           </div>
           <div className="field">
               <Dropdown options={stores} value={selectedStore?.name} onChange={(e) => changeStore(e.target.value)} placeholder="Seleccionar Depósito"/>
