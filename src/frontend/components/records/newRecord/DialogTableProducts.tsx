@@ -6,20 +6,22 @@ import { Dialog } from 'primereact/dialog'
 import TableHeader from './TableHeader'
 import NumberFormat from 'react-number-format'
 import { newSaleTableProductProps } from '../../../@types/frontend.types'
-import { Product } from '@prisma/client'
 import { findProductName } from '../../../services/products/findProductName'
 import { findStoreName } from '../../../services/stores/findStoreName'
 import { findProductPrice } from '../../../services/products/findProductPrice'
+import { showQuantitySelectorDialogState } from '../../../atoms/records/showQuantitySelectorDialog'
+import { useRecoilState } from 'recoil'
 
 export default function DialogTableProducts ({ products, displayBasic, closeDialog, setVisibleSelectorQuantity, productsQuery, storesQuery }: newSaleTableProductProps) {
-  const actionBodyTemplateListProducts = (rowData: Product) => {
+  const [, setShowQuantitySelectorDialog] = useRecoilState(showQuantitySelectorDialogState)
+  const actionBodyTemplateListProducts = (rowData: any) => {
+    const stockId = rowData.stockId
+    const productId = rowData.productId
+    const storeId = rowData.storeId
     return (
     <React.Fragment>
         <Button icon="pi pi-plus" className="p-button-rounded p-button-success "
-        onClick={() => {
-          // setProduct(rowData)
-          setVisibleSelectorQuantity(true)
-        }} />
+        onClick={() => { setShowQuantitySelectorDialog({ show: true, stockId, productId, storeId }) }} />
     </React.Fragment>
     )
   }
