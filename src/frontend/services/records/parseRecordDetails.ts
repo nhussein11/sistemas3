@@ -10,10 +10,13 @@ export const ParseRecordDetails = (
     const productPrice = productsQuery?.data?.products?.find(
       (product: Product) => product.id === record.productId
     )?.price
+    console.log('PRECIO:')
+    console.log(productPrice)
     return {
       stockId: record.stockId,
+      productId: record.productId,
       quantity: record.quantity,
-      subTotal: productPrice ? productPrice * record.quantity : 0
+      subtotal: productPrice ? productPrice * record.quantity : 0
     }
   })
 }
