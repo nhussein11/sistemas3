@@ -27,6 +27,7 @@ const SaleDataBar = ({
       default:
     }
   }
+  recordPaidFor = true
   return (
     <div>
       <div style={{ display: 'grid', gridTemplateColumns: 'auto auto auto auto auto auto auto', justifyContent: 'left', columnGap: '10px' }}>
@@ -34,11 +35,12 @@ const SaleDataBar = ({
             <Dropdown options={recordTypes} value={selectedRecordType?.recordName} onChange={(e) => changeRecordType(e.target.value)} placeholder="Seleccionar Tipo Comp"/>
           </div>
           <span className="p-float-label">
-              <InputText id="recordNumber" />
+              <InputText {...recordNumber} id="recordNumber" />
               <label htmlFor="recordNumber">Número</label>
           </span>
           <div className="field">
-            <Dropdown options={['A', 'B', 'C']} value={recordLetter} onChange={(e) => (console.log(e.value))} placeholder="Tipo Factura"/>
+              <InputText {...recordLetter} id="recordLetter" />
+              <label htmlFor="recordLetter">Número</label>
           </div>
           <div className="field">
               {dropStore()}
