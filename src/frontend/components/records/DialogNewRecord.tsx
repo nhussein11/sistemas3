@@ -6,7 +6,7 @@ import { DialogNewRecordProps } from '../../@types/frontend.types'
 import DialogFooter from './DialogFooter'
 import RecordsStocksTable from './RecordsStocksTable'
 import useDialogNewRecordMutation from '../../hooks/records/useDialogNewRecordMutation'
-import QuantitySelectorDialog from './QuantitySelectorDialog'
+import QuantitySelectorDialog from './newRecord/QuantitySelectorDialog'
 import { useRecoilState } from 'recoil'
 import { selectedRecordDetailsState } from '../../atoms/records/selectedRecordDetails'
 
