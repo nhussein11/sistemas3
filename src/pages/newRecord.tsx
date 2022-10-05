@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { Splitter, SplitterPanel } from 'primereact/splitter'
 import { Panel } from 'primereact/panel'
 import DialogTableProducts from '../frontend/components/records/newRecord/DialogTableProducts'
+import DialogTableRecords from '../frontend/components/records/newRecord/DialogTableRecords'
 import ToolBarProducts from '../frontend/components/records/newRecord/ToolBarProducts'
 import SaleDataBar from '../frontend/components/records/newRecord/SaleDataBar'
 import TableAddedProducts from '../frontend/components/records/newRecord/TableAddedProducts'
@@ -31,23 +32,27 @@ const NewRecord: NextPage = () => {
     stockOptions,
     customerOptions,
     suppliersOptions,
+    recordsOptions,
     recordObservation,
     recordAdress,
     recordLetter,
     recordNumber,
     recordPaidFor,
     productsQuery,
-    storesQuery
+    storesQuery,
+    customerQuery,
+    supplierQuery
   } = useNewRecordMutation('records')
   const [selectedRecordDetails] = useRecoilState(selectedRecordDetailsState)
-  const [displayBasic, setDisplayBasic] = useState(false)
+  const [showTableProducts, setShowTableProducts] = useState(false)
+  const [showTableRecords, setShowTableRecords] = useState(false)
   const [, setVisibleSelectorQuantity] = useState(false)
   function tableRecord () {
     switch (selectedRecordType.recordName) {
       case RecordNameEnum.FACTURA_ORIGINAL:
         return (<TableAddedProducts products={selectedRecordDetails} productsQuery={productsQuery} storesQuery={storesQuery} ></TableAddedProducts>)
       case RecordNameEnum.ORDEN_DE_PAGO:
-        return (<TableAddedRecords records={selectedRecordDetails} productsQuery={productsQuery} storesQuery={storesQuery} ></TableAddedRecords>)
+        return (<TableAddedRecords records={selectedRecordDetails} customerQuery={customerQuery} supplierQuery={supplierQuery} ></TableAddedRecords>)
     }
   }
   return (
@@ -59,8 +64,9 @@ const NewRecord: NextPage = () => {
       <div style={{ marginTop: '5px' }}>
         <QuantitySelectorDialog />
         <DialogTableProducts products={stockOptions} productsQuery={productsQuery} storesQuery={storesQuery}
-        setVisibleSelectorQuantity={setVisibleSelectorQuantity} displayBasic={displayBasic} closeDialog={() => setDisplayBasic(false)}></DialogTableProducts>
-
+        setVisibleSelectorQuantity={setVisibleSelectorQuantity} displayBasic={showTableProducts} closeDialog={() => setShowTableProducts(false)}></DialogTableProducts>
+        <DialogTableRecords records={recordsOptions} supplierQuery={supplierQuery} customerQuery={customerQuery}
+        setVisibleSelectorQuantity={setVisibleSelectorQuantity} displayBasic={showTableRecords} closeDialog={() => setShowTableRecords(false)}></DialogTableRecords>
         <Panel>
             <SaleDataBar customers={customerOptions} suppliers={suppliersOptions} recordTypes={recordTypesOptions} stores={storesOptions}
             selectedCustomer={selectedCustomer} selectedSupplier={selectedSupplier} selectedRecordType={selectedRecordType} selectedStore={selectedStore}
@@ -70,7 +76,7 @@ const NewRecord: NextPage = () => {
         <Splitter style={{ height: '100%' }}>
             <SplitterPanel>
                 <div className="card">
-                    <ToolBarProducts recordName={selectedRecordType.recordName} setVisibleTableProducts={() => setDisplayBasic(true)} ></ToolBarProducts>
+                    <ToolBarProducts recordName={selectedRecordType.recordName} setVisibleTableProducts={() => setShowTableProducts(true)} setVisibleTableRecords={() => setShowTableRecords(true)}></ToolBarProducts>
                 </div>
                 <div className='card'>
                     {tableRecord()}
