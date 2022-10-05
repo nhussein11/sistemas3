@@ -1,6 +1,5 @@
 import { atom } from 'recoil'
-import { RecordsDetailData } from '../../@types/frontend.types'
-export const defaultRecords :Array<RecordsDetailData> = []
+export const defaultRecords :Array<String> = []
 
 export const selectedRecordsState = atom({
   key: 'selectedRecordsState',
