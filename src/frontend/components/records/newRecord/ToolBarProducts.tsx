@@ -5,11 +5,13 @@ import { InputText } from 'primereact/inputtext'
 import { RecordNameEnum } from '@prisma/client'
 
 // eslint-disable-next-line react/prop-types
-export default function ToolBarProducts ({ setVisibleTableProducts, recordName }: { setVisibleTableProducts: any; recordName: string }) {
+export default function ToolBarProducts ({ setVisibleTableProducts, setVisibleTableRecords, recordName }: { setVisibleTableRecords:any; setVisibleTableProducts: any; recordName: string }) {
   const leftToolbarTemplate = () => {
     return (
     <React.Fragment>
-        <Button label={getSearchName()} icon="pi pi-search" className="p-button-success mr-2" onClick={() => setVisibleTableProducts()} />
+        {recordName.includes('FACTURA')
+          ? (<Button label={getSearchName()} icon="pi pi-search" className="p-button-success mr-2" onClick={() => setVisibleTableProducts()} />)
+          : (<Button label={getSearchName()} icon="pi pi-search" className="p-button-success mr-2" onClick={() => setVisibleTableRecords()} />)}
     </React.Fragment>
     )
   }
