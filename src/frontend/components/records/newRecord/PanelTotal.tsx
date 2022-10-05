@@ -8,7 +8,7 @@ import { useRecoilState } from 'recoil'
 import NumberFormat from 'react-number-format'
 import { InputText } from 'primereact/inputtext'
 
-const PanelTotal = ({ handleCreateNewRecord, recordObservation, recordAdress }: {handleCreateNewRecord: any; recordObservation: any; recordAdress: any}) => {
+const PanelTotal = ({ handleCreateNewRecord, handleCreateNewRecordFactura, recordObservation, recordAdress, selectedSupplier }: {handleCreateNewRecord: any; handleCreateNewRecordFactura: any; recordObservation: any; recordAdress: any; selectedSupplier: any}) => {
   const [ammount, setAmmount] = useRecoilState(ammountRecordAtomState)
   return (
     <div className='container-total'>
@@ -27,7 +27,11 @@ const PanelTotal = ({ handleCreateNewRecord, recordObservation, recordAdress }: 
                 <h1>TOTAL: <NumberFormat value={ammount.ammount} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'$'}></NumberFormat></h1>
             </Card>
             <Button style={{ width: '-webkit-fill-available', justifyContent: 'center' }} onClick={() => {
-              handleCreateNewRecord()
+              if (selectedSupplier != null) {
+                handleCreateNewRecord()
+              } else {
+                handleCreateNewRecordFactura()
+              }
               setAmmount(defaultAmmount)
             }} className="p-button-success"><h2>GENERAR COMPROBANTE</h2></Button>
         </Panel>
