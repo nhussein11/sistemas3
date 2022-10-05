@@ -16,7 +16,6 @@ type RecordData = {
   }[]
 }
 export const createNewRecord = async (record: RecordData) => {
-  console.log(record.details[0].subtotal)
   const response = await publicAxiosInstance.post('/records', record)
   return response
 }
