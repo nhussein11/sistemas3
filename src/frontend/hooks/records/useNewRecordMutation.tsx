@@ -3,7 +3,6 @@ import useField from '../useField'
 import { RecordType, Store, Stock, Customer, Supplier } from '@prisma/client'
 import { useRecoilState } from 'recoil'
 import { createNewRecord } from '../../services/records/createNewRecord'
-import { createNewRecordFactura } from '../../services/records/createNewRecordFactura'
 import { defaultStore, selectedStoreState } from '../../atoms/stores/selectedStoreAtom'
 import { defaultCustomer, selectedCustomerState } from '../../atoms/customers/selectedCustomerAtom'
 import { defaultSupplier, selectedSupplierState } from '../../atoms/suppliers/selectedSupplierAtom'
@@ -11,14 +10,12 @@ import { defaultRecordDetails, selectedRecordDetailsState } from '../../atoms/re
 import { defaultRecordType, selectedRecordTypeState } from '../../atoms/records/selectedRecordType'
 import useStocksQuery from '../stock/useStocksQuery'
 import { ParseRecordDetails } from '../../services/records/parseRecordDetails'
-import { ParseRecordDetailsFactura } from '../../services/records/parseRecordDetailsFactura'
 import useProductsQuery from '../products/useProductsQuery'
 import useCustomerQuery from '../customers/useCustomersQuery'
 import useSupplierQuery from '../suppliers/useSuppliersQuery'
 import useRecordsQuery from '../records/useRecordsQuery'
 import useRecordTypesQuery from './useRecordTypesQuery'
 import useStoresQuery from '../stores/useStoresQuery'
-import { selectedRecordsState } from '../../atoms/records/selectedRecords'
 
 const useNewRecordMutation = (queryId: string) => {
   const queryClient = useQueryClient()
@@ -49,45 +46,25 @@ const useNewRecordMutation = (queryId: string) => {
     setSelectedCustomer(customerQuery.data?.customers.find((customer: Customer) => customer.name === name))
   }
 
-  const { mutate } = (selectedSupplier.id != null)
-    ? useMutation(createNewRecord, {
-      onSuccess: (data) => {
-      // Limpio campos
-        queryClient.invalidateQueries([queryId])
-        recordObservation.onChange('')
-        recordAdress.onChange('')
-        recordLetter.onChange('')
-        recordNumber.onChange('')
-        recordPaidFor.onChange(false)
-        setSelectedRecordType(defaultRecordType)
-        setSelectedRecordDetails(defaultRecordDetails)
-        setSelectedStore(defaultStore)
-        setSelectedSupplier(defaultSupplier)
-        setSelectedCustomer(defaultCustomer)
-      },
-      onError: (error: any) => {
-        console.log(error.message)
-      }
-    })
-    : useMutation(createNewRecordFactura, {
-      onSuccess: (data) => {
-      // Limpio campos
-        queryClient.invalidateQueries([queryId])
-        recordObservation.onChange('')
-        recordAdress.onChange('')
-        recordLetter.onChange('')
-        recordNumber.onChange('')
-        recordPaidFor.onChange(false)
-        setSelectedRecordType(defaultRecordType)
-        setSelectedRecordDetails(defaultRecordDetails)
-        setSelectedStore(defaultStore)
-        setSelectedSupplier(defaultSupplier)
-        setSelectedCustomer(defaultCustomer)
-      },
-      onError: (error: any) => {
-        console.log(error.message)
-      }
-    })
+  const { mutate } = useMutation(createNewRecord, {
+    onSuccess: (data) => {
+    // Limpio campos
+      queryClient.invalidateQueries([queryId])
+      recordObservation.onChange('')
+      recordAdress.onChange('')
+      recordLetter.onChange('')
+      recordNumber.onChange('')
+      recordPaidFor.onChange(false)
+      setSelectedRecordType(defaultRecordType)
+      setSelectedRecordDetails(defaultRecordDetails)
+      setSelectedStore(defaultStore)
+      setSelectedSupplier(defaultSupplier)
+      setSelectedCustomer(defaultCustomer)
+    },
+    onError: (error: any) => {
+      console.log(error.message)
+    }
+  })
   const recordObservation = useField({ initialValue: '', type: 'text' })
   const recordAdress = useField({ initialValue: '', type: 'text' })
   const recordLetter = useField({ initialValue: '', type: 'text' })
@@ -104,19 +81,6 @@ const useNewRecordMutation = (queryId: string) => {
       supplierId: selectedSupplier.id,
       customerId: selectedCustomer.id,
       details: ParseRecordDetails(selectedRecordDetails, productsQuery)
-    })
-  }
-  const handleCreateNewRecordFactura = () => {
-    mutate({
-      observation: recordObservation.value as string,
-      address: recordAdress.value as string,
-      letter: recordLetter.value as string,
-      recordNumber: recordNumber.value as number,
-      paidFor: recordPaidFor.value as boolean,
-      recordTypeId: selectedRecordType.id,
-      supplierId: selectedSupplier.id,
-      customerId: selectedCustomer.id,
-      details: ParseRecordDetailsFactura(selectedRecordsState)
     })
   }
   const recordTypesOptions = recordTypesQuery?.data?.recordsTypes.map(
@@ -137,7 +101,6 @@ const useNewRecordMutation = (queryId: string) => {
   )
   return {
     handleCreateNewRecord,
-    handleCreateNewRecordFactura,
     changeStore,
     changeRecordType,
     changeSupplier,

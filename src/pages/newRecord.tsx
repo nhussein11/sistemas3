@@ -20,7 +20,6 @@ import { RecordNameEnum } from '@prisma/client'
 const NewRecord: NextPage = () => {
   const {
     handleCreateNewRecord,
-    handleCreateNewRecordFactura,
     changeStore,
     changeRecordType,
     changeSupplier,
@@ -86,7 +85,7 @@ const NewRecord: NextPage = () => {
                 </div>
             </SplitterPanel>
             <SplitterPanel style={{ width: '90%' }}>
-                <PanelTotal selectedSupplier={selectedSupplier} recordObservation={recordObservation} recordAdress={recordAdress} handleCreateNewRecord={handleCreateNewRecord} handleCreateNewRecordFactura={handleCreateNewRecordFactura}/>
+                <PanelTotal selectedSupplier={selectedSupplier} recordObservation={recordObservation} recordAdress={recordAdress} handleCreateNewRecord={handleCreateNewRecord} />
             </SplitterPanel>
         </Splitter>
       </div>
