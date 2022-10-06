@@ -1,17 +1,15 @@
+/* eslint-disable */
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useRecoilState } from 'recoil'
 import { globalFilterValueState } from '../frontend/atoms/globalFilterValueAtom'
 import useRecordsQuery from '../frontend/hooks/records/useRecordsQuery'
-import { filterProducts } from '../frontend/services/products/filterProducts'
 import { Splitter, SplitterPanel } from 'primereact/splitter'
 import { Panel } from 'primereact/panel'
-import DialogTableProducts from '../frontend/components/sales/newSale/DialogTableProducts'
 import ToolBarProducts from '../frontend/components/sales/newSale/ToolBarProducts'
 import SaleDataBar from '../frontend/components/sales/newSale/SaleDataBar'
 import PanelTotal from '../frontend/components/sales/newSale/PanelTotal'
 import { useRef, useState } from 'react'
-
 const NewSale: NextPage = () => {
   const query = useRecordsQuery('records')
   const [globalFilterValue] = useRecoilState(globalFilterValueState)

@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-// import useField from '../useField'
 import { RecordType, Store, Stock, Customer, Supplier } from '@prisma/client'
 import { useRecoilState } from 'recoil'
 import { createNewRecord } from '../../services/records/createNewRecord'
@@ -22,7 +21,6 @@ import { useRouter } from 'next/router'
 const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdress: any, recordLetter: any, recordNumber: any, recordPaidFor: any, toast: any) => {
   const queryClient = useQueryClient()
   const router = useRouter()
-  // Queries
   const recordTypesQuery = useRecordTypesQuery('record-type')
   const storesQuery = useStoresQuery('stores')
   const stocksQuery = useStocksQuery('stock')
@@ -60,7 +58,7 @@ const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdr
       setSelectedSupplier(defaultSupplier)
       setSelectedCustomer(defaultCustomer)
       toast.current.show({ severity: 'success', summary: 'Realizado', detail: 'Comprobante Generado', life: 3000 })
-      // router.push('/records')
+      router.push('/records')
     },
     onError: (error: any) => {
       console.log(error.message)

@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-// import useField from '../useField'
 import { useRecoilState } from 'recoil'
 import { defaultCustomer, selectedCustomerState } from '../../atoms/customers/selectedCustomerAtom'
 import { defaultSupplier, selectedSupplierState } from '../../atoms/suppliers/selectedSupplierAtom'
@@ -26,7 +25,7 @@ const useNewRecordForFacturasMutation = (queryId: string, recordObservation: any
       setSelectedSupplier(defaultSupplier)
       setSelectedCustomer(defaultCustomer)
       toast.current.show({ severity: 'success', summary: 'Realizado', detail: 'Comprobante Generado', life: 3000 })
-      // router.push('/records')
+      router.push('/records')
     },
     onError: (error: any) => {
       console.log(error.message)
