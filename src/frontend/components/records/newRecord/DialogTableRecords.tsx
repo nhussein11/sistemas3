@@ -20,17 +20,18 @@ export default function DialogTableRecords ({ records, displayBasic, closeDialog
     <React.Fragment>
         <Button icon="pi pi-plus" className="p-button p-button-success "
         onClick={() => {
-          setSelectedRecords((prev) => [
-            ...prev,
-            {
-              recordId: rowData.recordId,
-              recordNumber: rowData.recordNumber,
-              observation: rowData.observation,
-              letter: rowData.letter,
-              supplierId: rowData.supplierId,
-              customerId: rowData.customerId
-            }
-          ])
+          // setSelectedRecords((prev) => [
+          //   ...prev,
+          //   {
+          //     recordId: rowData.recordId,
+          //     recordNumber: rowData.recordNumber,
+          //     observation: rowData.observation,
+          //     letter: rowData.letter,
+          //     supplierId: rowData.supplierId,
+          //     customerId: rowData.customerId
+          //   }
+          // ])
+          setSelectedRecords((prev) => [...prev, rowData.id])
           setAmmount((prev) => ({ ammount: prev.ammount + 10 }))
         }} />
     </React.Fragment>
