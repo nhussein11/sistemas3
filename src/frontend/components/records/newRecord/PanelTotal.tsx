@@ -9,7 +9,7 @@ import NumberFormat from 'react-number-format'
 import { InputText } from 'primereact/inputtext'
 import { RecordNameEnum } from '@prisma/client'
 
-const PanelTotal = ({ handleCreateNewRecord, handleCreateNewRecordForFacturas, recordObservation, recordAdress, recordName }: {handleCreateNewRecordForFacturas: any; handleCreateNewRecord: any; recordObservation: any; recordAdress: any; recordName: any}) => {
+const PanelTotal = ({ handleCreateNewRecord, handleCreateNewRecordForFacturas, recordObservation, recordAdress, recordName, refresh }: {handleCreateNewRecordForFacturas: any; handleCreateNewRecord: any; recordObservation: any; recordAdress: any; recordName: any; refresh: any}) => {
   const [ammount, setAmmount] = useRecoilState(ammountRecordAtomState)
   return (
     <div className='container-total'>
@@ -40,6 +40,7 @@ const PanelTotal = ({ handleCreateNewRecord, handleCreateNewRecordForFacturas, r
                   handleCreateNewRecordForFacturas()
                   break
               }
+              refresh()
               setAmmount(defaultAmmount)
             }} className="p-button-success"><h2>GENERAR COMPROBANTE</h2></Button>
         </Panel>

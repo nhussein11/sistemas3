@@ -60,6 +60,13 @@ const NewRecord: NextPage = () => {
         return (<TableAddedRecords records={selectedRecords} customerQuery={customerQuery} supplierQuery={supplierQuery} ></TableAddedRecords>)
     }
   }
+  function refresh () {
+    recordObservation.onChange('')
+    recordAdress.onChange('')
+    recordLetter.onChange('')
+    recordNumber.onChange('')
+    recordPaidFor.onChange(false)
+  }
   return (
     <div>
       <Head>
@@ -88,7 +95,7 @@ const NewRecord: NextPage = () => {
                 </div>
             </SplitterPanel>
             <SplitterPanel style={{ width: '90%' }}>
-                <PanelTotal recordName={selectedRecordType.recordName} recordObservation={recordObservation} recordAdress={recordAdress} handleCreateNewRecord={handleCreateNewRecord} handleCreateNewRecordForFacturas={handleCreateNewRecordForFacturas}/>
+                <PanelTotal recordName={selectedRecordType.recordName} recordObservation={recordObservation} recordAdress={recordAdress} handleCreateNewRecord={handleCreateNewRecord} handleCreateNewRecordForFacturas={handleCreateNewRecordForFacturas} refresh={refresh}/>
             </SplitterPanel>
         </Splitter>
       </div>
