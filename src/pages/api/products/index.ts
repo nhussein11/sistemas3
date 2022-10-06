@@ -3,6 +3,7 @@ import {
   getProducts,
   createProduct
 } from '../../../backend/server/controllers/products/products.controller'
+import { errorHandler } from '../../utils/errorResponseHandler'
 
 export default async function products (
   req: NextApiRequest,
@@ -15,18 +16,13 @@ export default async function products (
       try {
         const products = await getProducts()
         return res.status(200).send({ products })
-      } catch (error) {
-        return res.status(500).send({ error })
+      } catch (error: any) {
+        return errorHandler(res, error)
       }
 
     case 'POST':
       try {
-        const {
-          name,
-          price,
-          description,
-          category
-        } = body
+        const { name, price, description, category } = body
         const productCreated = await createProduct(
           name,
           price,
@@ -34,8 +30,8 @@ export default async function products (
           category
         )
         return res.status(201).send({ productCreated })
-      } catch (error) {
-        return res.status(500).send({ error })
+      } catch (error: any) {
+        return errorHandler(res, error)
       }
 
     default:
