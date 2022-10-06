@@ -23,6 +23,8 @@ export default function ToolBarProducts ({ setVisibleTableProducts, setVisibleTa
       case RecordNameEnum.ORDEN_DE_COMPRA:
       case RecordNameEnum.ORDEN_DE_PAGO:
         return 'Facturas'
+      default:
+        return 'Buscar'
     }
   }
 
