@@ -12,8 +12,9 @@ export const ParseRecordDetails = (
     )?.price
     return {
       stockId: record.stockId,
+      productId: record.productId,
       quantity: record.quantity,
-      subTotal: productPrice ? productPrice * record.quantity : 0
+      subtotal: productPrice ? productPrice * record.quantity : 0
     }
   })
 }

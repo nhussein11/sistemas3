@@ -8,17 +8,12 @@ import { defaultErrorState, ErrorState } from '../../atoms/error/ErrorAtom'
 import { createNewRecord } from '../../services/records/createNewRecord'
 import useRecordTypesQuery from './useRecordTypesQuery'
 import useStoresQuery from '../stores/useStoresQuery'
-import {
-  defaultStore,
-  selectedStoreState
-} from '../../atoms/stores/selectedStoreAtom'
-import {
-  defaultRecordDetails,
-  selectedRecordDetailsState
-} from '../../atoms/records/selectedRecordDetails'
+import { defaultStore, selectedStoreState } from '../../atoms/stores/selectedStoreAtom'
+import { defaultRecordDetails, selectedRecordDetailsState } from '../../atoms/records/selectedRecordDetails'
 import useStocksQuery from '../stock/useStocksQuery'
 import { ParseRecordDetails } from '../../services/records/parseRecordDetails'
 import useProductsQuery from '../products/useProductsQuery'
+
 const useDialogNewRecordMutation = (queryId: string) => {
   const [, setShowErrorDialog] = useRecoilState(showErrorDialogState)
   const [, setErrorState] = useRecoilState(ErrorState)
@@ -27,9 +22,7 @@ const useDialogNewRecordMutation = (queryId: string) => {
   const storesQuery = useStoresQuery('stores')
   const stocksQuery = useStocksQuery('stocks')
   const productsQuery = useProductsQuery('products')
-  const [selectedRecordDetails, setSelectedRecordDetails] = useRecoilState(
-    selectedRecordDetailsState
-  )
+  const [selectedRecordDetails, setSelectedRecordDetails] = useRecoilState(selectedRecordDetailsState)
   const [selectedStore, setSelectedStore] = useRecoilState(selectedStoreState)
   const [selectedRecordType, setSelectedRecordType] = useState({
     id: '',
