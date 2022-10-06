@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { Splitter, SplitterPanel } from 'primereact/splitter'
+import { Toast } from 'primereact/toast'
 import { Panel } from 'primereact/panel'
 import DialogTableProducts from '../frontend/components/records/newRecord/DialogTableProducts'
 import DialogTableRecords from '../frontend/components/records/newRecord/DialogTableRecords'
@@ -9,7 +10,7 @@ import SaleDataBar from '../frontend/components/records/newRecord/SaleDataBar'
 import TableAddedProducts from '../frontend/components/records/newRecord/TableAddedProducts'
 import TableAddedRecords from '../frontend/components/records/newRecord/TableAddedRecords'
 import PanelTotal from '../frontend/components/records/newRecord/PanelTotal'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import useNewRecordMutation from '../frontend/hooks/records/useNewRecordMutation'
 import useNewRecordForFacturasMutation from '../frontend/hooks/records/useNewRecordForFacturasMutation'
 import { selectedRecordDetailsState } from '../frontend/atoms/records/selectedRecordDetails'
@@ -25,6 +26,7 @@ const NewRecord: NextPage = () => {
   const recordLetter = useField({ initialValue: '', type: 'text' })
   const recordNumber = useField({ initialValue: '', type: 'number' })
   const recordPaidFor = useField({ initialValue: true, type: 'boolean' })
+  const toast = useRef(null)
   const {
     handleCreateNewRecord,
     changeStore,
@@ -46,13 +48,14 @@ const NewRecord: NextPage = () => {
     customerQuery,
     supplierQuery,
     detailsQuery
-  } = useNewRecordMutation('records', recordObservation, recordAdress, recordLetter, recordNumber, recordPaidFor)
-  const { handleCreateNewRecordForFacturas } = useNewRecordForFacturasMutation('previous-record', recordObservation, recordAdress, recordLetter, recordNumber, recordPaidFor)
+  } = useNewRecordMutation('records', recordObservation, recordAdress, recordLetter, recordNumber, recordPaidFor, toast)
+  const { handleCreateNewRecordForFacturas } = useNewRecordForFacturasMutation('previous-record', recordObservation, recordAdress, recordLetter, recordNumber, recordPaidFor, toast)
   const [selectedRecordDetails] = useRecoilState(selectedRecordDetailsState)
   const [selectedRecords] = useRecoilState(selectedRecordsState)
   const [showTableProducts, setShowTableProducts] = useState(false)
   const [showTableRecords, setShowTableRecords] = useState(false)
   const [, setVisibleSelectorQuantity] = useState(false)
+
   function tableRecord () {
     switch (selectedRecordType.recordName) {
       case RecordNameEnum.FACTURA_ORIGINAL:
@@ -75,6 +78,7 @@ const NewRecord: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div style={{ marginTop: '5px' }}>
+        <Toast ref={toast} />
         <QuantitySelectorDialog />
         <DialogTableProducts products={stockOptions} productsQuery={productsQuery} storesQuery={storesQuery}
         setVisibleSelectorQuantity={setVisibleSelectorQuantity} displayBasic={showTableProducts} closeDialog={() => setShowTableProducts(false)}></DialogTableProducts>
