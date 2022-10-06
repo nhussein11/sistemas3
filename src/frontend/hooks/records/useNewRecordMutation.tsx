@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import useField from '../useField'
+// import useField from '../useField'
 import { RecordType, Store, Stock, Customer, Supplier } from '@prisma/client'
 import { useRecoilState } from 'recoil'
 import { createNewRecord } from '../../services/records/createNewRecord'
@@ -17,7 +17,7 @@ import useRecordsQuery from '../records/useRecordsQuery'
 import useRecordTypesQuery from './useRecordTypesQuery'
 import useStoresQuery from '../stores/useStoresQuery'
 
-const useNewRecordMutation = (queryId: string) => {
+const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdress: any, recordLetter: any, recordNumber: any, recordPaidFor: any) => {
   const queryClient = useQueryClient()
   // Queries
   const recordTypesQuery = useRecordTypesQuery('record-type')
@@ -50,11 +50,11 @@ const useNewRecordMutation = (queryId: string) => {
     onSuccess: (data) => {
     // Limpio campos
       queryClient.invalidateQueries([queryId])
-      recordObservation.onChange('')
-      recordAdress.onChange('')
-      recordLetter.onChange('')
-      recordNumber.onChange('')
-      recordPaidFor.onChange(false)
+      // recordObservation.onChange('')
+      // recordAdress.onChange('')
+      // recordLetter.onChange('')
+      // recordNumber.onChange('')
+      // recordPaidFor.onChange(false)
       setSelectedRecordType(defaultRecordType)
       setSelectedRecordDetails(defaultRecordDetails)
       setSelectedStore(defaultStore)
@@ -65,11 +65,6 @@ const useNewRecordMutation = (queryId: string) => {
       console.log(error.message)
     }
   })
-  const recordObservation = useField({ initialValue: '', type: 'text' })
-  const recordAdress = useField({ initialValue: '', type: 'text' })
-  const recordLetter = useField({ initialValue: '', type: 'text' })
-  const recordNumber = useField({ initialValue: '', type: 'number' })
-  const recordPaidFor = useField({ initialValue: true, type: 'boolean' })
   const handleCreateNewRecord = () => {
     mutate({
       observation: recordObservation.value as string,
