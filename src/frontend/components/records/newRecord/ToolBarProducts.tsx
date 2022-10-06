@@ -32,7 +32,7 @@ export default function ToolBarProducts ({ setVisibleTableProducts, setVisibleTa
     return (
     <span className="p-input-icon-left">
         <i className="pi pi-plus" />
-        <InputText type="search" placeholder="Codigo Barras" autoFocus/>
+        <InputText type="search" placeholder="Codigo" autoFocus/>
     </span>
     )
   }
