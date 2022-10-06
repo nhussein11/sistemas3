@@ -5,7 +5,7 @@ import {
 } from '../../../backend/server/controllers/students/students.controller'
 import { errorHandler } from '../../utils/errorResponseHandler'
 
-export default async function students(
+export default async function students (
   req: NextApiRequest,
   res: NextApiResponse
 ) {
