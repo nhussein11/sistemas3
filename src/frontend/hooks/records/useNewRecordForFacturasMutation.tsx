@@ -19,11 +19,6 @@ const useNewRecordForFacturasMutation = (queryId: string, recordObservation: any
     onSuccess: (data) => {
     // Limpio campos
       queryClient.invalidateQueries([queryId])
-      // recordObservation.onChange('')
-      // recordAdress.onChange('')
-      // recordLetter.onChange('')
-      // recordNumber.onChange('')
-      // recordPaidFor.onChange(false)
       setSelectedRecordType(defaultRecordType)
       setSelectedRecords(defaultRecords)
       setSelectedSupplier(defaultSupplier)
