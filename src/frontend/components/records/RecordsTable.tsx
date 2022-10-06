@@ -34,7 +34,7 @@ const RecordsTable = ({ records }: RecordsTableProps) => {
   return (
     <div className="datatable-filter">
       <div className="card">
-        <DataTable value={records} paginator className="p-datatable-customers" showGridlines rows={10} dataKey="id" responsiveLayout="scroll"
+        <DataTable value={records} paginator className="p-datatable-customers" showGridlines rows={5} dataKey="id" responsiveLayout="scroll"
           emptyMessage="No se encontraron Comprobantes"
           header={<TableHeader setDisplayRecordDetailsTable={setDisplayRecordDetailsTable} setDisplayBasic={setDisplayBasic}/>}>
           <Column field="ID" header="Codigo" body={(rowData) => (rowData.recordNumber)} alignHeader={'center'} />
