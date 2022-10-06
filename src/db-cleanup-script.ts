@@ -298,9 +298,8 @@ const populateDatabase = async () => {
 }
 const main = async () => {
   try {
-    // await deleteAllTables()
-    // await populateDatabase()
-    await createDefaultStudents()
+    await deleteAllTables()
+    await populateDatabase()
   } catch (error: any) {
     throw new Error(error)
   }
