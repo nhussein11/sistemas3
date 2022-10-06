@@ -17,9 +17,11 @@ import useRecordsQuery from '../records/useRecordsQuery'
 import useRecordTypesQuery from './useRecordTypesQuery'
 import useStoresQuery from '../stores/useStoresQuery'
 import useDetailsQuery from '../details/useDetailsQuery'
+import { useRouter } from 'next/router'
 
-const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdress: any, recordLetter: any, recordNumber: any, recordPaidFor: any) => {
+const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdress: any, recordLetter: any, recordNumber: any, recordPaidFor: any, toast: any) => {
   const queryClient = useQueryClient()
+  const router = useRouter()
   // Queries
   const recordTypesQuery = useRecordTypesQuery('record-type')
   const storesQuery = useStoresQuery('stores')
@@ -57,6 +59,8 @@ const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdr
       setSelectedStore(defaultStore)
       setSelectedSupplier(defaultSupplier)
       setSelectedCustomer(defaultCustomer)
+      toast.current.show({ severity: 'success', summary: 'Realizado', detail: 'Comprobante Generado', life: 3000 })
+      // router.push('/records')
     },
     onError: (error: any) => {
       console.log(error.message)

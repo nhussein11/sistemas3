@@ -6,9 +6,11 @@ import { defaultSupplier, selectedSupplierState } from '../../atoms/suppliers/se
 import { defaultRecords, selectedRecordsState } from '../../atoms/records/selectedRecords'
 import { defaultRecordType, selectedRecordTypeState } from '../../atoms/records/selectedRecordType'
 import { createNewRecordFactura } from '../../services/records/createNewRecordFactura'
+import { useRouter } from 'next/router'
 
-const useNewRecordForFacturasMutation = (queryId: string, recordObservation: any, recordAdress: any, recordLetter: any, recordNumber: any, recordPaidFor: any) => {
+const useNewRecordForFacturasMutation = (queryId: string, recordObservation: any, recordAdress: any, recordLetter: any, recordNumber: any, recordPaidFor: any, toast: any) => {
   const queryClient = useQueryClient()
+  const router = useRouter()
   // Queries
   // hooks
   const [selectedRecord, setSelectedRecords] = useRecoilState(selectedRecordsState)
@@ -23,6 +25,8 @@ const useNewRecordForFacturasMutation = (queryId: string, recordObservation: any
       setSelectedRecords(defaultRecords)
       setSelectedSupplier(defaultSupplier)
       setSelectedCustomer(defaultCustomer)
+      toast.current.show({ severity: 'success', summary: 'Realizado', detail: 'Comprobante Generado', life: 3000 })
+      // router.push('/records')
     },
     onError: (error: any) => {
       console.log(error.message)
