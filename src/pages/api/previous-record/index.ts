@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { createPreviousRecord, getPreviousRecord } from '../../../backend/server/controllers/previous-records/previous-record.controller'
+import { errorHandler } from '../../utils/errorResponseHandler'
 
 export default async function previousRecord (
   req: NextApiRequest,
@@ -13,7 +14,7 @@ export default async function previousRecord (
         const previousRecords = await getPreviousRecord()
         return res.status(200).send({ previousRecords })
       } catch (error) {
-        return res.status(500).send({ error })
+        return errorHandler(res, error)
       }
 
     case 'POST':
@@ -42,7 +43,7 @@ export default async function previousRecord (
         )
         return res.status(201).send({ previousRecordCreated })
       } catch (error) {
-        return res.status(500).send({ error })
+        return errorHandler(res, error)
       }
 
     default:
