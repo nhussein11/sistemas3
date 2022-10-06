@@ -27,10 +27,18 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         return errorHandler(res, error)
       }
     case 'PUT':
-      const { name, surname, identificationNumber } = body
+      const { name, surname, identificationNumber, birth, phone, email } = body
 
       try {
-        const updatedStudent = await updateStudentById(id, name, surname, identificationNumber)
+        const updatedStudent = await updateStudentById(
+          id,
+          name,
+          surname,
+          identificationNumber,
+          birth,
+          phone,
+          email
+        )
         return res.status(200).send({ updatedStudent })
       } catch (error) {
         return errorHandler(res, error)

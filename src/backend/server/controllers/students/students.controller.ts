@@ -47,14 +47,17 @@ const updateStudentById = async (
   id: string,
   name: string,
   surname: string,
-  identificationNumber: number
+  identificationNumber: number,
+  birth: Date,
+  phone: number,
+  email: string
 ) => {
   try {
     await prisma.student.findUniqueOrThrow({ where: { id } })
 
-    if (!name && !surname && !identificationNumber) {
+    if (!name && !surname && !identificationNumber && !phone && !birth && !email) {
       throw new Error(
-        'Name, surname or identification number must be provided!'
+        'Name, surname, identification number, phone, birth or email must be provided!'
       )
     }
 
@@ -63,7 +66,10 @@ const updateStudentById = async (
       data: {
         name,
         surname,
-        identificationNumber
+        identificationNumber,
+        birth,
+        phone,
+        email
       }
     })
 
