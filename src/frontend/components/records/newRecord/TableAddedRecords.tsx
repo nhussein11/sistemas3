@@ -21,11 +21,11 @@ const TableAddedRecords = ({ records, customerQuery, supplierQuery }: {records: 
   return (
     <DataTable value={records} paginator className="p-datatable-customers" showGridlines rows={3} dataKey="id" responsiveLayout="scroll" emptyMessage="No se agregó ningun producto">
            {/* <Column field="RecordNumber" header="Numero" body={(rowData) => rowData.recordNumber} style={{ minWidth: '2rem' }}></Column> */}
-           <Column field="RecordNumber" header="Numero" body={(rowData) => rowData} style={{ minWidth: '2rem' }}></Column>
-            <Column field="Observation" header="Observación" body={(rowData) => rowData} style={{ minWidth: '2rem' }}></Column>
-            <Column field="letter" header="Tipo" body={(rowData) => rowData} style={{ minWidth: '2rem' }}></Column>
+            <Column field="RecordNumber" header="Numero" body={(rowData) => rowData.recordNumber} style={{ minWidth: '2rem' }}></Column>
+            <Column field="Observation" header="Observación" body={(rowData) => rowData.observation} style={{ minWidth: '2rem' }}></Column>
+            <Column field="letter" header="Tipo" body={(rowData) => rowData.observation} style={{ minWidth: '2rem' }}></Column>
             <Column field="SupplierClient" header="Cliente/Prov" body={(rowData) => (
-              rowData.supplierId != null ? resolveRecordCustomerName(rowData.supplierId, customerQuery) : resolveRecordSupplierName(rowData.customerId, supplierQuery)
+              rowData.supplierId != null ? resolveRecordSupplierName(rowData.supplierId, supplierQuery) : resolveRecordCustomerName(rowData.customerId, customerQuery)
             )} style={{ minWidth: '2rem' }}></Column>
             <Column field="Ammount" header="Monto" alignHeader={'center'} body={(rowData) => {
               return (

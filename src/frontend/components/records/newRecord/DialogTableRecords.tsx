@@ -20,10 +20,10 @@ export default function DialogTableRecords ({ records, displayBasic, closeDialog
     <React.Fragment>
         <Button icon="pi pi-plus" className="p-button p-button-success "
         onClick={() => {
-          // setSelectedRecords((prev) => [
+          // setSelectedRecordsForTable((prev) => [
           //   ...prev,
           //   {
-          //     recordId: rowData.recordId,
+          //     recordId: rowData.id,
           //     recordNumber: rowData.recordNumber,
           //     observation: rowData.observation,
           //     letter: rowData.letter,
@@ -31,7 +31,16 @@ export default function DialogTableRecords ({ records, displayBasic, closeDialog
           //     customerId: rowData.customerId
           //   }
           // ])
-          setSelectedRecords((prev) => [...prev, rowData.id])
+          setSelectedRecords((prev) => [...prev,
+            {
+              recordId: rowData.id,
+              recordNumber: rowData.recordNumber,
+              observation: rowData.observation,
+              letter: rowData.letter,
+              supplierId: rowData.supplierId,
+              customerId: rowData.customerId
+            }
+          ])
           setAmmount((prev) => ({ ammount: prev.ammount + 10 }))
         }} />
     </React.Fragment>
@@ -45,7 +54,7 @@ export default function DialogTableRecords ({ records, displayBasic, closeDialog
             <Column field="Observation" header="Observación" body={(rowData) => rowData.observation} style={{ minWidth: '2rem' }}></Column>
             <Column field="letter" header="Tipo" body={(rowData) => rowData.letter} style={{ minWidth: '2rem' }}></Column>
             <Column field="SupplierClient" header="Cliente/Prov" body={(rowData) => (
-              rowData.supplierId != null ? resolveRecordSupplierName(rowData.supplierId, customerQuery) : resolveRecordCustomerName(rowData.customerId, supplierQuery)
+              rowData.supplierId != null ? resolveRecordSupplierName(rowData.supplierId, supplierQuery) : resolveRecordCustomerName(rowData.customerId, customerQuery)
             )} style={{ minWidth: '2rem' }}></Column>
             <Column field="Ammount" header="Monto" alignHeader={'center'} body={(rowData) => {
               return (

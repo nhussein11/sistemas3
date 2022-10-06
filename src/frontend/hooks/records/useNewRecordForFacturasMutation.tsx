@@ -43,7 +43,7 @@ const useNewRecordForFacturasMutation = (queryId: string, recordObservation: any
       recordTypeId: selectedRecordType.id,
       supplierId: selectedSupplier.id,
       customerId: selectedCustomer.id,
-      paidForRecordIds: selectedRecord.map((element) => element)
+      paidForRecordIds: selectedRecord.map((element) => element.recordId)
     })
   }
   return {
