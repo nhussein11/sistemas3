@@ -120,10 +120,13 @@ model Course {
 }
 
 model Student {
-  id                   String @id @default(cuid())
+  id                   String   @id @default(cuid())
   name                 String
   surname              String
   identificationNumber Int
+  birth                DateTime
+  phone                Int
+  email                String
 
   Enrollment Enrollment[]
 
