@@ -2,6 +2,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { getRecordTypeById, updateRecordTypeById } from '../../../backend/server/controllers/record-types/record-types.controller'
 import { deleteRecordById } from '../../../backend/server/controllers/records/records.controller'
+import { errorHandler } from '../../utils/errorResponseHandler'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const {
@@ -20,7 +21,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         const recordType = await getRecordTypeById(id)
         return res.status(200).send({ recordType })
       } catch (error) {
-        return res.status(500).send({ error })
+        return errorHandler(res, error)
       }
     case 'PUT':
       const { recordType, recordName, cause } = body
@@ -34,7 +35,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         )
         return res.status(200).send({ updatedRecordType })
       } catch (error) {
-        return res.status(500).send({ error })
+        return errorHandler(res, error)
       }
 
     case 'DELETE':
@@ -42,7 +43,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         const deletedRecordType = await deleteRecordById(id)
         return res.status(200).send({ deletedRecordType })
       } catch (error) {
-        return res.status(500).send({ error })
+        return errorHandler(res, error)
       }
 
     default:

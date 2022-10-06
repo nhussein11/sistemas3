@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { createRecordType, getRecordsTypes } from '../../../backend/server/controllers/record-types/record-types.controller'
+import { errorHandler } from '../../utils/errorResponseHandler'
 
 export default async function recordType (
   req: NextApiRequest,
@@ -13,7 +14,7 @@ export default async function recordType (
         const recordsTypes = await getRecordsTypes()
         return res.status(200).send({ recordsTypes })
       } catch (error) {
-        return res.status(500).send({ error })
+        return errorHandler(res, error)
       }
 
     case 'POST':
@@ -26,7 +27,7 @@ export default async function recordType (
         )
         return res.status(201).send({ recordTypeCreated })
       } catch (error) {
-        return res.status(500).send({ error })
+        return errorHandler(res, error)
       }
 
     default:
