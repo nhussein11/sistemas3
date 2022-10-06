@@ -5,6 +5,7 @@ import {
   getStockById,
   updateStockById
 } from '../../../backend/server/controllers/stocks/stock.controller'
+import { errorHandler } from '../../utils/errorResponseHandler'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const {
@@ -23,7 +24,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         const stock = await getStockById(id)
         return res.status(200).send({ stock })
       } catch (error) {
-        return res.status(500).send({ error })
+        return errorHandler(res, error)
       }
     case 'PUT':
       const { productId, storeId, quantity, minQuantity } = body
@@ -38,7 +39,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         )
         return res.status(200).send({ updatedStock })
       } catch (error) {
-        return res.status(500).send({ error })
+        return errorHandler(res, error)
       }
 
     case 'DELETE':
@@ -46,7 +47,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         const deletedStock = await deleteStockById(id)
         return res.status(200).send({ deletedStock })
       } catch (error) {
-        return res.status(500).send({ error })
+        return errorHandler(res, error)
       }
 
     default:
