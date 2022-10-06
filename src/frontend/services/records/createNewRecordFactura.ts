@@ -6,11 +6,13 @@ type RecordData = {
   recordNumber: number,
   paidFor: boolean,
   recordTypeId: string,
-  supplierId: string,
-  customerId: string,
+  supplierId: string | null,
+  customerId: string | null,
   paidForRecordIds: {}[]
 }
 export const createNewRecordFactura = async (record: RecordData) => {
+  record.customerId = null
+  record.supplierId = null
   console.log(record)
   const response = await publicAxiosInstance.post('/previous-record', record)
   return response
