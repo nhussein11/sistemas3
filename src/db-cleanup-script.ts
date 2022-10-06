@@ -159,22 +159,34 @@ const createDefaultStudents = async () => {
     {
       name: 'Choco',
       surname: 'Villanueva',
-      identificationNumber: 4321345
+      identificationNumber: 4321345,
+      birth: new Date(),
+      phone: 38767890,
+      email: 'choco@gmail.com'
     },
     {
       name: 'Gonza',
       surname: 'Guaimas',
-      identificationNumber: 2344563
+      identificationNumber: 2344563,
+      birth: new Date(),
+      phone: 765756553,
+      email: 'gonza@gmail.com'
     },
     {
       name: 'Alejo',
       surname: 'Torres',
-      identificationNumber: 32321321
+      identificationNumber: 32321321,
+      birth: new Date(),
+      phone: 323221233,
+      email: 'alejo@gmail.com'
     },
     {
       name: 'Nico',
       surname: 'Hussein',
-      identificationNumber: 43232145
+      identificationNumber: 43232145,
+      birth: new Date(),
+      phone: 321312321,
+      email: 'nico@gmail.com'
     }
   ]
 
@@ -255,13 +267,15 @@ const createDefaultEnrollments = async () => {
   const courses: Course[] = await prisma.course.findMany()
   const students: Student[] = await prisma.student.findMany()
 
-  const defaultEnrollments: Omit<Enrollment, 'id'>[] = courses.map((course, index) => {
-    return {
-      academicYear: 2022,
-      courseId: course.id,
-      studentId: students[index].id
+  const defaultEnrollments: Omit<Enrollment, 'id'>[] = courses.map(
+    (course, index) => {
+      return {
+        academicYear: 2022,
+        courseId: course.id,
+        studentId: students[index].id
+      }
     }
-  })
+  )
   console.log('inserting default enrollments...')
   await prisma.enrollment.createMany({
     data: defaultEnrollments
@@ -284,8 +298,9 @@ const populateDatabase = async () => {
 }
 const main = async () => {
   try {
-    await deleteAllTables()
+    // await deleteAllTables()
     // await populateDatabase()
+    await createDefaultStudents()
   } catch (error: any) {
     throw new Error(error)
   }
