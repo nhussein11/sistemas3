@@ -16,7 +16,10 @@ import { Button } from 'primereact/button'
 import { useRecoilState } from 'recoil'
 import { selectedRecordState } from '../../atoms/records/selectedRecordAtom'
 import useDeleteRecordMutation from '../../hooks/records/useDeleteRecordMutation'
+import useDetailsQuery from '../../hooks/details/useDetailsQuery'
 import { resolveRecordCustomerName } from '../../services/records/resolveRecordCustomerName'
+import getRecordTotal from '../../services/records/getRecordTotal'
+import NumberFormat from 'react-number-format'
 
 const RecordsTable = ({ records }: RecordsTableProps) => {
   const [, setDisplayBasic] = useState(false)
@@ -26,6 +29,7 @@ const RecordsTable = ({ records }: RecordsTableProps) => {
   const recordTypesQuery = useRecordTypesQuery('record-types')
   const recordSupplierQuery = useRecordsSupplierQuery('suppliers')
   const recordCustomerQuery = useRecordsCustomerQuery('customers')
+  const detailsQuery = useDetailsQuery('details')
 
   return (
     <div className="datatable-filter">
@@ -37,11 +41,14 @@ const RecordsTable = ({ records }: RecordsTableProps) => {
           <Column field="Fecha" header="Fecha" body={(rowData) => parseDate(rowData?.datetime)} alignHeader={'center'} />
           <Column field="Observación" header="Observación" body={(rowData) => rowData.observation} alignHeader={'center'}/>
           <Column field="NombreComprobante" header="Comprobante" body={(rowData) => resolveRecordName(rowData.recordTypeId, recordTypesQuery)} alignHeader={'center'}/>
+          <Column field="pagado" header="Pagado" body={(rowData) => (rowData.paidFor ? 'PAGADO' : '-')} alignHeader={'center'} />
+          <Column field="Ammount" header="Monto" alignHeader={'center'} body={(rowData) => {
+            return (<NumberFormat value={getRecordTotal(rowData.id, detailsQuery).totalAmmount} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'$'}></NumberFormat>)
+          }}/>
           <Column field="Nombre Proveedor" header="Proveedor" body={(rowData) => resolveRecordSupplierName(rowData.supplierId, recordSupplierQuery)} alignHeader={'center'}/>
           <Column field="Nombre Cliente" header="Cliente" body={(rowData) => resolveRecordCustomerName(rowData.customerId, recordCustomerQuery)} alignHeader={'center'}/>
-          <Column field="recordAdress" header="Dirección" body={(rowData) => rowData.address} alignHeader={'center'} />
+          {/* <Column field="recordAdress" header="Dirección" body={(rowData) => rowData.address} alignHeader={'center'} /> */}
           <Column field="tipo" header="Tipo" body={(rowData) => rowData.letter} alignHeader={'center'} />
-          <Column field="pagado" header="Pagado" body={(rowData) => (rowData.paidFor ? 'PAGADO' : '-')} alignHeader={'center'} />
           <Column field="options" header="Opciones" alignHeader={'center'}
             body={(rowData) => {
               return (
