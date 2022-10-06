@@ -27,7 +27,7 @@ const SaleDataBar = ({
       default:
     }
   }
-  recordPaidFor = true
+  recordPaidFor = false
   return (
     <div>
       <div style={{ display: 'grid', gridTemplateColumns: 'auto auto auto auto auto auto auto', justifyContent: 'left', columnGap: '10px' }}>
