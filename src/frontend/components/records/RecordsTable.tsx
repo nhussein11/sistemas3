@@ -53,13 +53,13 @@ const RecordsTable = ({ records }: RecordsTableProps) => {
             body={(rowData) => {
               return (
                 <div>
-                  <Button icon="pi pi-eye" iconPos="right" label="Ver Detalle" className="p-button-p-button-raised p-button-warning"
+                  <Button icon="pi pi-eye" iconPos="right" className="p-button-p-button-raised p-button-warning"
                   onClick={() => {
                     setSelectedRecord(rowData)
                     setDisplayRecordDetailsTable((prev: boolean) => !prev)
                   }}
                   />
-                  <Button icon="pi pi-trash" iconPos="right" label="Borrar" className="p-button-p-button-raised p-button-danger"
+                  <Button icon="pi pi-trash" iconPos="right" className="p-button-p-button-raised p-button-danger"
                   onClick={() => {
                     setSelectedRecord(rowData)
                     handleDeleteRecord()
