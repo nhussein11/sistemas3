@@ -5,6 +5,7 @@ import {
   getStudentById,
   updateStudentById
 } from '../../../backend/server/controllers/students/students.controller'
+import { errorHandler } from '../../utils/errorResponseHandler'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const {
@@ -23,7 +24,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         const student = await getStudentById(id)
         return res.status(200).send({ student })
       } catch (error) {
-        return res.status(500).send({ error })
+        return errorHandler(res, error)
       }
     case 'PUT':
       const { name, surname, identificationNumber } = body
@@ -32,7 +33,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         const updatedStudent = await updateStudentById(id, name, surname, identificationNumber)
         return res.status(200).send({ updatedStudent })
       } catch (error) {
-        return res.status(500).send({ error })
+        return errorHandler(res, error)
       }
 
     case 'DELETE':
@@ -40,24 +41,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         const deletedStudent = await deleteStudentById(id)
         return res.status(200).send({ deletedStudent })
       } catch (error: any) {
-        switch (error.code) {
-          case 'P2003':
-            return res.status(401).send({
-              error,
-              messageError:
-                "You cannot delete this product because it's belong to an existing stock"
-            })
-          case 'P2025':
-            return res.status(402).send({
-              error,
-              messageError: 'Id not provided'
-            })
-          default:
-            return res.status(450).send({
-              error,
-              messageError: 'Something failed'
-            })
-        }
+        return errorHandler(res, error)
       }
 
     default:
