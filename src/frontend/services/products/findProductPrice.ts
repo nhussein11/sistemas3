@@ -8,5 +8,5 @@ export const findProductPrice = (
   const product = productsQuery.data?.products?.find(
     (product: Product) => product.id === id
   )
-  return product?.price
+  return product?.price ? product.price : 0
 }
