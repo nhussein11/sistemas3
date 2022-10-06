@@ -4,10 +4,10 @@ import { InputText } from 'primereact/inputtext'
 import { useRecoilState } from 'recoil'
 import { RecordsTableHeaderProps } from '../../@types/frontend.types'
 import { globalFilterValueState } from '../../atoms/globalFilterValueAtom'
-
+import { useRouter } from 'next/router'
 const TableHeader = ({ setDisplayBasic, setDisplayRecordDetailsTable }: RecordsTableHeaderProps) => {
   const [globalFilterValue, setGlobalFilterValue] = useRecoilState(globalFilterValueState)
-
+  const router = useRouter()
   return (
     <div className="header-table">
       <div className="flex justify-content-between">
@@ -17,7 +17,7 @@ const TableHeader = ({ setDisplayBasic, setDisplayRecordDetailsTable }: RecordsT
         </span>
       </div>
       <div className="actionsButtonsTable">
-        <Button label="Nuevo" className="p-button-raised p-button-success" onClick={() => setDisplayBasic(true)}/>
+        <Button label="Nuevo" className="p-button-raised p-button-success" onClick={() => router.push('/newRecord')}/>
       </div>
     </div>
   )
