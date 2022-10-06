@@ -44,7 +44,8 @@ const NewRecord: NextPage = () => {
     productsQuery,
     storesQuery,
     customerQuery,
-    supplierQuery
+    supplierQuery,
+    detailsQuery
   } = useNewRecordMutation('records', recordObservation, recordAdress, recordLetter, recordNumber, recordPaidFor)
   const { handleCreateNewRecordForFacturas } = useNewRecordForFacturasMutation('previous-record', recordObservation, recordAdress, recordLetter, recordNumber, recordPaidFor)
   const [selectedRecordDetails] = useRecoilState(selectedRecordDetailsState)
@@ -57,7 +58,7 @@ const NewRecord: NextPage = () => {
       case RecordNameEnum.FACTURA_ORIGINAL:
         return (<TableAddedProducts products={selectedRecordDetails} productsQuery={productsQuery} storesQuery={storesQuery} ></TableAddedProducts>)
       case RecordNameEnum.ORDEN_DE_PAGO:
-        return (<TableAddedRecords records={selectedRecords} customerQuery={customerQuery} supplierQuery={supplierQuery} ></TableAddedRecords>)
+        return (<TableAddedRecords records={selectedRecords} customerQuery={customerQuery} supplierQuery={supplierQuery} detailsQuery={detailsQuery} ></TableAddedRecords>)
     }
   }
   function refresh () {
@@ -77,7 +78,7 @@ const NewRecord: NextPage = () => {
         <QuantitySelectorDialog />
         <DialogTableProducts products={stockOptions} productsQuery={productsQuery} storesQuery={storesQuery}
         setVisibleSelectorQuantity={setVisibleSelectorQuantity} displayBasic={showTableProducts} closeDialog={() => setShowTableProducts(false)}></DialogTableProducts>
-        <DialogTableRecords records={recordsOptions} supplierQuery={supplierQuery} customerQuery={customerQuery}
+        <DialogTableRecords records={recordsOptions} supplierQuery={supplierQuery} customerQuery={customerQuery} detailsQuery={detailsQuery}
         setVisibleSelectorQuantity={setVisibleSelectorQuantity} displayBasic={showTableRecords} closeDialog={() => setShowTableRecords(false)}></DialogTableRecords>
         <Panel>
             <SaleDataBar customers={customerOptions} suppliers={suppliersOptions} recordTypes={recordTypesOptions} stores={storesOptions}

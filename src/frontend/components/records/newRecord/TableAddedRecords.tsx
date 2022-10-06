@@ -6,8 +6,9 @@ import NumberFormat from 'react-number-format'
 import { Product } from '@prisma/client'
 import { resolveRecordCustomerName } from '../../../services/records/resolveRecordCustomerName'
 import { resolveRecordSupplierName } from '../../../services/records/resolveRecordSupplierName'
+import getRecordTotal from '../../../services/records/getRecordTotal'
 
-const TableAddedRecords = ({ records, customerQuery, supplierQuery }: {records: Object[]; customerQuery: any; supplierQuery: any }) => {
+const TableAddedRecords = ({ records, customerQuery, supplierQuery, detailsQuery }: {records: Object[]; customerQuery: any; supplierQuery: any; detailsQuery: any }) => {
   const actionBodyTemplateListProducts = (rowData: Product) => {
     return (
     <React.Fragment>
@@ -29,8 +30,7 @@ const TableAddedRecords = ({ records, customerQuery, supplierQuery }: {records: 
             )} style={{ minWidth: '2rem' }}></Column>
             <Column field="Ammount" header="Monto" alignHeader={'center'} body={(rowData) => {
               return (
-                  <NumberFormat value={'123'} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'$'}></NumberFormat>
-              )
+                <NumberFormat value={getRecordTotal(rowData.recordId, detailsQuery).totalAmmount} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'$'}></NumberFormat>              )
             }}/>
             <Column body={actionBodyTemplateListProducts} exportable={false} style={{ minWidth: '8rem' }}></Column>
     </DataTable>

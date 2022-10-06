@@ -16,6 +16,7 @@ import useSupplierQuery from '../suppliers/useSuppliersQuery'
 import useRecordsQuery from '../records/useRecordsQuery'
 import useRecordTypesQuery from './useRecordTypesQuery'
 import useStoresQuery from '../stores/useStoresQuery'
+import useDetailsQuery from '../details/useDetailsQuery'
 
 const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdress: any, recordLetter: any, recordNumber: any, recordPaidFor: any) => {
   const queryClient = useQueryClient()
@@ -27,6 +28,7 @@ const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdr
   const customerQuery = useCustomerQuery('customers')
   const supplierQuery = useSupplierQuery('suppliers')
   const recordsQuery = useRecordsQuery('records')
+  const detailsQuery = useDetailsQuery('details')
   // hooks
   const [selectedRecordDetails, setSelectedRecordDetails] = useRecoilState(selectedRecordDetailsState)
   const [selectedStore, setSelectedStore] = useRecoilState(selectedStoreState)
@@ -118,7 +120,8 @@ const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdr
     productsQuery,
     storesQuery,
     customerQuery,
-    supplierQuery
+    supplierQuery,
+    detailsQuery
   }
 }
 

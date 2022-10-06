@@ -10,9 +10,10 @@ import { resolveRecordCustomerName } from '../../../services/records/resolveReco
 import { useRecoilState } from 'recoil'
 import { selectedRecordsState } from '../../../atoms/records/selectedRecords'
 import { ammountRecordAtomState } from '../../../atoms/records/ammountRecordAtom'
+import getRecordTotal from '../../../services/records/getRecordTotal'
 
-export default function DialogTableRecords ({ records, displayBasic, closeDialog, setVisibleSelectorQuantity, customerQuery, supplierQuery }:
-    { records: Object[]; displayBasic: boolean; closeDialog: () => void; setVisibleSelectorQuantity: any; customerQuery: any; supplierQuery: any }) {
+export default function DialogTableRecords ({ records, displayBasic, closeDialog, setVisibleSelectorQuantity, customerQuery, supplierQuery, detailsQuery }:
+    { records: Object[]; displayBasic: boolean; closeDialog: () => void; setVisibleSelectorQuantity: any; customerQuery: any; supplierQuery: any, detailsQuery: any }) {
   const [, setSelectedRecords] = useRecoilState(selectedRecordsState)
   const [, setAmmount] = useRecoilState(ammountRecordAtomState)
   const actionBodyTemplateListProducts = (rowData: any) => {
@@ -20,17 +21,6 @@ export default function DialogTableRecords ({ records, displayBasic, closeDialog
     <React.Fragment>
         <Button icon="pi pi-plus" className="p-button p-button-success "
         onClick={() => {
-          // setSelectedRecordsForTable((prev) => [
-          //   ...prev,
-          //   {
-          //     recordId: rowData.id,
-          //     recordNumber: rowData.recordNumber,
-          //     observation: rowData.observation,
-          //     letter: rowData.letter,
-          //     supplierId: rowData.supplierId,
-          //     customerId: rowData.customerId
-          //   }
-          // ])
           setSelectedRecords((prev) => [...prev,
             {
               recordId: rowData.id,
@@ -41,7 +31,7 @@ export default function DialogTableRecords ({ records, displayBasic, closeDialog
               customerId: rowData.customerId
             }
           ])
-          setAmmount((prev) => ({ ammount: prev.ammount + 10 }))
+          setAmmount((prev) => ({ ammount: prev.ammount + getRecordTotal(rowData.id, detailsQuery).totalAmmount }))
         }} />
     </React.Fragment>
     )
@@ -58,7 +48,7 @@ export default function DialogTableRecords ({ records, displayBasic, closeDialog
             )} style={{ minWidth: '2rem' }}></Column>
             <Column field="Ammount" header="Monto" alignHeader={'center'} body={(rowData) => {
               return (
-                  <NumberFormat value={'123'} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'$'}></NumberFormat>
+                  <NumberFormat value={getRecordTotal(rowData.id, detailsQuery).totalAmmount} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'$'}></NumberFormat>
               )
             }}/>
             <Column body={actionBodyTemplateListProducts} exportable={false} style={{ minWidth: '8rem' }}></Column>
