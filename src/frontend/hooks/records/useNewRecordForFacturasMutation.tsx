@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import useField from '../useField'
+// import useField from '../useField'
 import { useRecoilState } from 'recoil'
 import { defaultCustomer, selectedCustomerState } from '../../atoms/customers/selectedCustomerAtom'
 import { defaultSupplier, selectedSupplierState } from '../../atoms/suppliers/selectedSupplierAtom'
@@ -7,7 +7,7 @@ import { defaultRecords, selectedRecordsState } from '../../atoms/records/select
 import { defaultRecordType, selectedRecordTypeState } from '../../atoms/records/selectedRecordType'
 import { createNewRecordFactura } from '../../services/records/createNewRecordFactura'
 
-const useNewRecordForFacturasMutation = (queryId: string) => {
+const useNewRecordForFacturasMutation = (queryId: string, recordObservation: any, recordAdress: any, recordLetter: any, recordNumber: any, recordPaidFor: any) => {
   const queryClient = useQueryClient()
   // Queries
   // hooks
@@ -19,14 +19,13 @@ const useNewRecordForFacturasMutation = (queryId: string) => {
     onSuccess: (data) => {
     // Limpio campos
       queryClient.invalidateQueries([queryId])
-      recordObservation.onChange('')
-      recordAdress.onChange('')
-      recordLetter.onChange('')
-      recordNumber.onChange('')
-      recordPaidFor.onChange(false)
+      // recordObservation.onChange('')
+      // recordAdress.onChange('')
+      // recordLetter.onChange('')
+      // recordNumber.onChange('')
+      // recordPaidFor.onChange(false)
       setSelectedRecordType(defaultRecordType)
       setSelectedRecords(defaultRecords)
-      //   setSelectedStore(defaultStore)
       setSelectedSupplier(defaultSupplier)
       setSelectedCustomer(defaultCustomer)
     },
@@ -34,11 +33,6 @@ const useNewRecordForFacturasMutation = (queryId: string) => {
       console.log(error.message)
     }
   })
-  const recordObservation = useField({ initialValue: '', type: 'text' })
-  const recordAdress = useField({ initialValue: '', type: 'text' })
-  const recordLetter = useField({ initialValue: '', type: 'text' })
-  const recordNumber = useField({ initialValue: '', type: 'number' })
-  const recordPaidFor = useField({ initialValue: true, type: 'boolean' })
   const handleCreateNewRecordForFacturas = () => {
     mutate({
       observation: recordObservation.value as string,
