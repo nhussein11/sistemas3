@@ -17,8 +17,14 @@ import { selectedRecordsState } from '../frontend/atoms/records/selectedRecords'
 import { useRecoilState } from 'recoil'
 import QuantitySelectorDialog from '../frontend/components/records/newRecord/QuantitySelectorDialog'
 import { RecordNameEnum } from '@prisma/client'
+import useField from '../frontend/hooks/useField'
 
 const NewRecord: NextPage = () => {
+  const recordObservation = useField({ initialValue: '', type: 'text' })
+  const recordAdress = useField({ initialValue: '', type: 'text' })
+  const recordLetter = useField({ initialValue: '', type: 'text' })
+  const recordNumber = useField({ initialValue: '', type: 'number' })
+  const recordPaidFor = useField({ initialValue: true, type: 'boolean' })
   const {
     handleCreateNewRecord,
     changeStore,
@@ -35,17 +41,12 @@ const NewRecord: NextPage = () => {
     customerOptions,
     suppliersOptions,
     recordsOptions,
-    recordObservation,
-    recordAdress,
-    recordLetter,
-    recordNumber,
-    recordPaidFor,
     productsQuery,
     storesQuery,
     customerQuery,
     supplierQuery
-  } = useNewRecordMutation('records')
-  const { handleCreateNewRecordForFacturas } = useNewRecordForFacturasMutation('previous-record')
+  } = useNewRecordMutation('records', recordObservation, recordAdress, recordLetter, recordNumber, recordPaidFor)
+  const { handleCreateNewRecordForFacturas } = useNewRecordForFacturasMutation('previous-record', recordObservation, recordAdress, recordLetter, recordNumber, recordPaidFor)
   const [selectedRecordDetails] = useRecoilState(selectedRecordDetailsState)
   const [selectedRecords] = useRecoilState(selectedRecordsState)
   const [showTableProducts, setShowTableProducts] = useState(false)
