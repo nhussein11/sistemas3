@@ -34,9 +34,9 @@ const NewSale: NextPage = () => {
         {/* <QuantitySelector product={product} visibleSelectorQuantity={visibleSelectorQuantity} closeDialog={() => setVisibleSelectorQuantity(false)} showQuantitySelector={showQuantitySelector} quantityRef={quantityRef}></QuantitySelector> */}
 
         {/* <ClientFormComponent clientDialog={clientDialog} closeDialog={() => setClientDialog(false)} saveClient={saveClient}></ClientFormComponent> */}
-        <DialogTableProducts products={filterProducts(query?.data?.products, globalFilterValue)}
+        {/* <DialogTableProducts products={filterProducts(query?.data?.products, globalFilterValue)}
         setVisibleSelectorQuantity={setVisibleSelectorQuantity}
-        displayBasic={displayBasic} closeDialog={() => setDisplayBasic(false)}></DialogTableProducts>
+        displayBasic={displayBasic} closeDialog={() => setDisplayBasic(false)}></DialogTableProducts> */}
 
         <Panel header="DATOS VENTA">
             <SaleDataBar/>

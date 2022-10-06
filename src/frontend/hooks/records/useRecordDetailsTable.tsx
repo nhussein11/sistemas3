@@ -2,6 +2,7 @@ import { RecordDetails, Stock } from '@prisma/client'
 import { useRecoilState } from 'recoil'
 import { selectedRecordState } from '../../atoms/records/selectedRecordAtom'
 import { findProductName } from '../../services/products/findProductName'
+import { findProductPrice } from '../../services/products/findProductPrice'
 import { findStoreName } from '../../services/stores/findStoreName'
 import useDetailsQuery from '../details/useDetailsQuery'
 import useProductsQuery from '../products/useProductsQuery'
@@ -28,7 +29,9 @@ const useRecordDetailsTable = () => {
       stockId: detail.stockId,
       productName: findProductName(productId, productsQuery),
       storeName: findStoreName(storeId, storesQuery),
-      quantity: detail.quantity
+      quantity: detail.quantity,
+      price: findProductPrice(productId, productsQuery),
+      subtotal: detail.subtotal
     }
   })
   return { filteredDetailsTableData }

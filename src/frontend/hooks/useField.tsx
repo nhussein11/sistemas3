@@ -3,9 +3,10 @@ type FieldEvent =
   | React.ChangeEvent<HTMLInputElement>
   | string
   | number
+  | boolean
   | undefined
 type FieldProps = {
-  initialValue: string | number | undefined
+  initialValue: string | number | undefined | boolean
   handleChange?: (e: FieldEvent) => void | undefined
   type: string
 }
@@ -23,6 +24,10 @@ const useField = ({
     }
     if (typeof e === 'number') {
       setValue(Number(e).valueOf())
+      return
+    }
+    if (typeof e === 'boolean') {
+      setValue(e)
       return
     }
     if (typeof e === 'object') {
