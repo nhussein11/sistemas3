@@ -38,9 +38,9 @@ const SaleDataBar = ({
               <InputText {...recordNumber} id="recordNumber" />
               <label htmlFor="recordNumber">Número</label>
           </span>
-          <div className="field">
+          <div className="p-float-label">
               <InputText {...recordLetter} id="recordLetter" />
-              <label htmlFor="recordLetter">Número</label>
+              <label htmlFor="recordLetter">Tipo Factura</label>
           </div>
           <div className="field">
               {dropStore()}
