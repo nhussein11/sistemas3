@@ -26,6 +26,8 @@ const deleteAllTables = async () => {
   await prisma.product.deleteMany()
   await prisma.store.deleteMany()
   await prisma.recordType.deleteMany()
+  await prisma.customer.deleteMany()
+  await prisma.supplier.deleteMany()
 }
 
 const createDefaultProducts = async () => {
