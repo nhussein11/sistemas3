@@ -13,7 +13,8 @@ import {
   Student,
   Enrollment,
   Customer,
-  Supplier
+  Supplier,
+  LetterEnum
 } from '@prisma/client'
 
 const deleteAllTables = async () => {
@@ -87,7 +88,46 @@ const updateStocksQuantities = async () => {
     }
   })
 }
-
+const createDefaultCustomers = async () => {
+  const defaultCustomers: Omit<Customer, 'id'>[] = [
+    {
+      name: 'Juan Perez',
+      debt: 0
+    },
+    {
+      name: 'Maria Lopez',
+      debt: 0
+    },
+    {
+      name: 'Pedro Gomez',
+      debt: 0
+    }
+  ]
+  console.log('inserting default customers...')
+  await prisma.customer.createMany({
+    data: defaultCustomers
+  })
+}
+const createDefaultSuppliers = async () => {
+  const defaultSuppliers: Omit<Supplier, 'id'>[] = [
+    {
+      name: 'Luis Juarez',
+      debt: 0
+    },
+    {
+      name: 'Jose Rodriguez',
+      debt: 0
+    },
+    {
+      name: 'Maria Fernandez',
+      debt: 0
+    }
+  ]
+  console.log('inserting default suppliers...')
+  await prisma.supplier.createMany({
+    data: defaultSuppliers
+  })
+}
 const createDefaultRecordTypes = async () => {
   const defaultRecordTypes: Omit<RecordType, 'id'>[] = [
     {
@@ -119,22 +159,57 @@ const createDefaultRecordTypes = async () => {
 }
 const createDefaultRecords = async () => {
   const recordTypes = await prisma.recordType.findMany()
-  const defaultRecords: Omit<Record, 'id' | 'datetime'>[] = recordTypes.map(
-    (recordType) => {
-      return {
-        recordTypeId: recordType.id,
-        observation: 'Factura original de prueba',
-        senderName: 'Proveedor Juan Perez',
-        address: 'Zona Centro'
-      }
+  const customers = await prisma.customer.findMany()
+  const suppliers = await prisma.supplier.findMany()
+  const defaultRecordsofCustomers: Omit<Record, 'id' | 'datetime'>[] = [
+    {
+      observation: 'Factura original de prueba',
+      address: 'Zona Centro',
+      letter: LetterEnum.A,
+      recordNumber: 1,
+      paidFor: false,
+      recordTypeId: recordTypes[0].id,
+      customerId: customers[0].id,
+      supplierId: null
+    },
+    {
+      observation: 'Factura original de prueba',
+      address: 'Zona Norte',
+      letter: LetterEnum.A,
+      recordNumber: 2,
+      paidFor: false,
+      recordTypeId: recordTypes[0].id,
+      customerId: customers[1].id,
+      supplierId: null
     }
-  )
+  ]
+  const defaultRecordsofSuppliers: Omit<Record, 'id' | 'datetime'>[] = [
+    {
+      observation: 'Factura original de prueba',
+      address: 'Zona Centro',
+      letter: LetterEnum.A,
+      recordNumber: 3,
+      paidFor: false,
+      recordTypeId: recordTypes[1].id,
+      customerId: null,
+      supplierId: suppliers[0].id
+    },
+    {
+      observation: 'Factura original de prueba',
+      address: 'Zona Norte',
+      letter: LetterEnum.A,
+      recordNumber: 4,
+      paidFor: false,
+      recordTypeId: recordTypes[1].id,
+      customerId: null,
+      supplierId: suppliers[1].id
+    }
+  ]
   console.log('inserting default records...')
   await prisma.record.createMany({
-    data: defaultRecords
+    data: [...defaultRecordsofCustomers, ...defaultRecordsofSuppliers]
   })
 }
-
 const createDefaultRecordDetails = async () => {
   const stocks = await prisma.stock.findMany()
   const records = await prisma.record.findMany()
@@ -167,7 +242,6 @@ const createDefaultRecordDetails = async () => {
     data: fulFilledResults.map((res) => res.value)
   })
 }
-
 const createDefaultStudents = async () => {
   const defaultStudents: Omit<Student, 'id' | 'customerId'>[] = [
     {
@@ -230,7 +304,6 @@ const createDefaultStudents = async () => {
     data: fulFilledStudentsPromises.map((res) => res.value)
   })
 }
-// Este codigo esta re feo, pero cuando lo estoy haciendo ya tengo mucho sueno, despues llo refactoricemos pl
 const createDefaultCourses = async () => {
   const defaultProductsByDefaultCourses: Omit<Product, 'id'>[] = [
     {
@@ -297,7 +370,6 @@ const createDefaultCourses = async () => {
     data: courses
   })
 }
-
 const createDefaultEnrollments = async () => {
   const courses: Course[] = await prisma.course.findMany()
   const students: Student[] = await prisma.student.findMany()
@@ -316,60 +388,20 @@ const createDefaultEnrollments = async () => {
     data: defaultEnrollments
   })
 }
-const createDefaultCustomers = async () => {
-  const defaultCustomers: Omit<Customer, 'id'>[] = [
-    {
-      name: 'Juan Perez',
-      debt: 0
-    },
-    {
-      name: 'Maria Lopez',
-      debt: 0
-    },
-    {
-      name: 'Pedro Gomez',
-      debt: 0
-    }
-  ]
-  console.log('inserting default customers...')
-  await prisma.customer.createMany({
-    data: defaultCustomers
-  })
-}
-const createDefaultSuppliers = async () => {
-  const defaultSuppliers: Omit<Supplier, 'id'>[] = [
-    {
-      name: 'Luis Juarez',
-      debt: 0
-    },
-    {
-      name: 'Jose Rodriguez',
-      debt: 0
-    },
-    {
-      name: 'Maria Fernandez',
-      debt: 0
-    }
-  ]
-  console.log('inserting default suppliers...')
-  await prisma.supplier.createMany({
-    data: defaultSuppliers
-  })
-}
 
 const populateDatabase = async () => {
   try {
     await createDefaultProducts()
     await createDefaultStores()
     await updateStocksQuantities()
+    await createDefaultCustomers()
+    await createDefaultSuppliers()
     await createDefaultRecordTypes()
-    // await createDefaultRecords()
-    // await createDefaultRecordDetails()
+    await createDefaultRecords()
+    await createDefaultRecordDetails()
     await createDefaultStudents()
     await createDefaultCourses()
     await createDefaultEnrollments()
-    await createDefaultCustomers()
-    await createDefaultSuppliers()
   } catch (error: any) {
     throw new Error(error)
   }
@@ -377,7 +409,7 @@ const populateDatabase = async () => {
 const main = async () => {
   try {
     await deleteAllTables()
-    // await populateDatabase()
+    await populateDatabase()
   } catch (error: any) {
     throw new Error(error)
   }
