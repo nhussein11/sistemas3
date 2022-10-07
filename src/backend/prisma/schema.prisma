@@ -129,7 +129,8 @@ model Student {
   email                String
 
   Enrollment Enrollment[]
-  Customer   Customer?
+  Customer   Customer     @relation(fields: [customerId], references: [id])
+  customerId String       @unique
 
   @@map("student")
 }
@@ -160,8 +161,7 @@ model Customer {
   name String
   debt Int
 
-  Student   Student @relation(fields: [studentId], references: [id])
-  studentId String  @unique
+  Student Student?
 
   Record Record[]
 }

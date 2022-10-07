@@ -19,13 +19,13 @@ const deleteAllTables = async () => {
   await prisma.recordDetails.deleteMany()
   await prisma.previousRecord.deleteMany()
   await prisma.record.deleteMany()
-  // await prisma.stock.deleteMany()
-  // await prisma.enrollment.deleteMany()
-  // await prisma.course.deleteMany()
-  // await prisma.student.deleteMany()
-  // await prisma.product.deleteMany()
-  // await prisma.store.deleteMany()
-  // await prisma.recordType.deleteMany()
+  await prisma.stock.deleteMany()
+  await prisma.enrollment.deleteMany()
+  await prisma.course.deleteMany()
+  await prisma.student.deleteMany()
+  await prisma.product.deleteMany()
+  await prisma.store.deleteMany()
+  await prisma.recordType.deleteMany()
 }
 
 const createDefaultProducts = async () => {
@@ -299,7 +299,7 @@ const populateDatabase = async () => {
 const main = async () => {
   try {
     await deleteAllTables()
-    await populateDatabase()
+    // await populateDatabase()
   } catch (error: any) {
     throw new Error(error)
   }
