@@ -99,6 +99,16 @@ const createDefaultRecordTypes = async () => {
       recordType: RecordTypeEnum.NEGATIVE,
       recordName: RecordNameEnum.FACTURA_DUPLICADO,
       cause: 'Factura Duplicado'
+    },
+    {
+      recordType: RecordTypeEnum.NEUTRAL,
+      recordName: RecordNameEnum.ORDEN_DE_PAGO,
+      cause: 'Orden de Pago'
+    },
+    {
+      recordType: RecordTypeEnum.NEUTRAL,
+      recordName: RecordNameEnum.ORDEN_DE_COMPRA,
+      cause: 'Orden de Compra'
     }
   ]
 
@@ -107,23 +117,23 @@ const createDefaultRecordTypes = async () => {
     data: defaultRecordTypes
   })
 }
-// const createDefaultRecords = async () => {
-//   const recordTypes = await prisma.recordType.findMany()
-//   const defaultRecords: Omit<Record, 'id' | 'datetime'>[] = recordTypes.map(
-//     (recordType) => {
-//       return {
-//         recordTypeId: recordType.id,
-//         observation: 'Factura original de prueba',
-//         senderName: 'Proveedor Juan Perez',
-//         address: 'Zona Centro'
-//       }
-//     }
-//   )
-//   console.log('inserting default records...')
-//   await prisma.record.createMany({
-//     data: defaultRecords
-//   })
-// }
+const createDefaultRecords = async () => {
+  const recordTypes = await prisma.recordType.findMany()
+  const defaultRecords: Omit<Record, 'id' | 'datetime'>[] = recordTypes.map(
+    (recordType) => {
+      return {
+        recordTypeId: recordType.id,
+        observation: 'Factura original de prueba',
+        senderName: 'Proveedor Juan Perez',
+        address: 'Zona Centro'
+      }
+    }
+  )
+  console.log('inserting default records...')
+  await prisma.record.createMany({
+    data: defaultRecords
+  })
+}
 
 const createDefaultRecordDetails = async () => {
   const stocks = await prisma.stock.findMany()
