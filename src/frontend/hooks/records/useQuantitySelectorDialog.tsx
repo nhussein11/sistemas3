@@ -22,7 +22,7 @@ const useQuantitySelectorDialog = () => {
         quantity: quantity.value as number
       }
     ])
-    setAmmount((prev) => ({ ammount: prev.ammount + (findProductPrice(showQuantitySelectorDialog.productId, productsQuery) * parseFloat(quantity.value?.toString())) }))
+    setAmmount((prev) => ({ ammount: prev.ammount + (findProductPrice(showQuantitySelectorDialog.productId, productsQuery) * parseFloat(quantity.value?.toString() ? quantity.value?.toString() : '0')) }))
   }
   return {
     showQuantitySelectorDialog,

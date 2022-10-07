@@ -1,5 +1,6 @@
-export const ParseRecordDetailsFactura = (records: Object[]) => {
-  console.log('ENTRA POR DETAILS FACTURA')
+import { Record } from '.prisma/client'
+
+export const ParseRecordDetailsFactura = (records: Record[]) => {
   return records.map((record) => {
     return record.id
   })
