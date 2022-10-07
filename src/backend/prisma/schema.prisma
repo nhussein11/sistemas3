@@ -175,6 +175,7 @@ enum CategoryEnum {
 enum RecordTypeEnum {
   POSITIVE
   NEGATIVE
+  NEUTRAL
 }
 
 enum RecordNameEnum {
