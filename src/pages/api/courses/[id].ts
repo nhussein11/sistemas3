@@ -1,6 +1,7 @@
 /* eslint-disable no-case-declarations */
 import { NextApiRequest, NextApiResponse } from 'next'
 import { deleteCourseById, getCourseById, updateCourseById } from '../../../backend/server/controllers/courses/courses.controller'
+import { errorHandler } from '../../utils/errorResponseHandler'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const {
@@ -19,7 +20,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         const course = await getCourseById(id)
         return res.status(200).send({ course })
       } catch (error) {
-        return res.status(500).send({ error })
+        return errorHandler(res, error)
       }
     case 'PUT':
       const { name, hoursQuantity, price, description } = body
@@ -34,7 +35,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         )
         return res.status(200).send({ updatedCourse })
       } catch (error) {
-        return res.status(500).send({ error })
+        return errorHandler(res, error)
       }
 
     case 'DELETE':
@@ -42,24 +43,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         const deletedCourse = await deleteCourseById(id)
         return res.status(200).send({ deletedCourse })
       } catch (error: any) {
-        switch (error.code) {
-          case 'P2003':
-            return res.status(401).send({
-              error,
-              messageError:
-                "You cannot delete this course because it's belong to an existing product"
-            })
-          case 'P2025':
-            return res.status(402).send({
-              error,
-              messageError: 'Id not provided'
-            })
-          default:
-            return res.status(450).send({
-              error,
-              messageError: 'Something failed'
-            })
-        }
+        return errorHandler(res, error)
       }
 
     default:

@@ -3,6 +3,7 @@ import {
   createEnrollment,
   getEnrollments
 } from '../../../backend/server/controllers/enrollments/enrollements.controller'
+import { errorHandler } from '../../utils/errorResponseHandler'
 
 export default async function enrollments (
   req: NextApiRequest,
@@ -16,7 +17,7 @@ export default async function enrollments (
         const enrollments = await getEnrollments()
         return res.status(200).send({ enrollments })
       } catch (error) {
-        return res.status(500).send({ error })
+        return errorHandler(res, error)
       }
 
     case 'POST':
@@ -29,7 +30,7 @@ export default async function enrollments (
         )
         return res.status(201).send({ enrollmentCreated })
       } catch (error) {
-        return res.status(500).send({ error })
+        return errorHandler(res, error)
       }
 
     default:

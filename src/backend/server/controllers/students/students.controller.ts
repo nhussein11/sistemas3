@@ -1,6 +1,7 @@
 /* eslint-disable no-useless-catch */
-import { Student } from '@prisma/client'
+import { Customer, Student } from '@prisma/client'
 import { prisma } from '../../../server/prisma-client/prisma-client'
+import { createCustomer } from '../customers/customers.controller'
 
 const getStudents = async () => {
   try {
@@ -11,10 +12,27 @@ const getStudents = async () => {
   }
 }
 
-const createStudent = async (name: string, surname: string, identificationNumber: number) => {
+const createStudent = async (
+  name: string,
+  surname: string,
+  identificationNumber: number,
+  birth: Date,
+  phone: number,
+  email: string
+) => {
   try {
-    const studentCreated: Student = await prisma.student.create({
-      data: { name, surname, identificationNumber }
+    const customerCreatedByNewStudent: Customer = await createCustomer(name, 0)
+    const { id: customerId } = customerCreatedByNewStudent
+    const studentCreated = await prisma.student.create({
+      data: {
+        name,
+        surname,
+        identificationNumber,
+        birth,
+        phone,
+        email,
+        customerId
+      }
     })
 
     return studentCreated
@@ -36,12 +54,29 @@ const getStudentById = async (id: string) => {
   }
 }
 
-const updateStudentById = async (id: string, name: string, surname: string, identificationNumber: number) => {
+const updateStudentById = async (
+  id: string,
+  name: string,
+  surname: string,
+  identificationNumber: number,
+  birth: Date,
+  phone: number,
+  email: string
+) => {
   try {
     await prisma.student.findUniqueOrThrow({ where: { id } })
 
-    if (!name && !surname && !identificationNumber) {
-      throw new Error('Name, surname or identification number must be provided!')
+    if (
+      !name &&
+      !surname &&
+      !identificationNumber &&
+      !phone &&
+      !birth &&
+      !email
+    ) {
+      throw new Error(
+        'Name, surname, identification number, phone, birth or email must be provided!'
+      )
     }
 
     const updatedStudent: Student = await prisma.student.update({
@@ -49,7 +84,10 @@ const updateStudentById = async (id: string, name: string, surname: string, iden
       data: {
         name,
         surname,
-        identificationNumber
+        identificationNumber,
+        birth,
+        phone,
+        email
       }
     })
 

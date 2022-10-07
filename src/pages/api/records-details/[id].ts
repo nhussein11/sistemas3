@@ -5,6 +5,7 @@ import {
   getRecordDetailsById,
   updateRecordDetailsById
 } from '../../../backend/server/controllers/record-details/record-details.controller'
+import { errorHandler } from '../../utils/errorResponseHandler'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const {
@@ -23,7 +24,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         const recordDetails = await getRecordDetailsById(id)
         return res.status(200).send({ recordDetails })
       } catch (error) {
-        return res.status(500).send({ error })
+        return errorHandler(res, error)
       }
     case 'PUT':
       const { recordId, quantity } = body
@@ -36,7 +37,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         )
         return res.status(200).send({ updatedRecordDetails })
       } catch (error) {
-        return res.status(500).send({ error })
+        return errorHandler(res, error)
       }
 
     case 'DELETE':
@@ -44,7 +45,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         const deletedRecordDetails = await deleteRecordDetailsById(id)
         return res.status(200).send({ deletedRecordDetails })
       } catch (error) {
-        return res.status(500).send({ error })
+        return errorHandler(res, error)
       }
 
     default:

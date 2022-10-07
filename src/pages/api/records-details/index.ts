@@ -3,6 +3,7 @@ import {
   createRecordDetails,
   getRecordsDetails
 } from '../../../backend/server/controllers/record-details/record-details.controller'
+import { errorHandler } from '../../utils/errorResponseHandler'
 
 export default async function recordsDetails (
   req: NextApiRequest,
@@ -16,7 +17,7 @@ export default async function recordsDetails (
         const recordsDetails = await getRecordsDetails()
         return res.status(200).send({ recordsDetails })
       } catch (error) {
-        return res.status(500).send({ error })
+        return errorHandler(res, error)
       }
 
     case 'POST':
@@ -30,7 +31,7 @@ export default async function recordsDetails (
         )
         return res.status(201).send({ recordDetailsCreated })
       } catch (error) {
-        return res.status(500).send({ error })
+        return errorHandler(res, error)
       }
 
     default:

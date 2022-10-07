@@ -3,6 +3,7 @@ import {
   createStudent,
   getStudents
 } from '../../../backend/server/controllers/students/students.controller'
+import { errorHandler } from '../../utils/errorResponseHandler'
 
 export default async function students (
   req: NextApiRequest,
@@ -16,16 +17,23 @@ export default async function students (
         const students = await getStudents()
         return res.status(200).send({ students })
       } catch (error) {
-        return res.status(500).send({ error })
+        return errorHandler(res, error)
       }
 
     case 'POST':
       try {
-        const { name, surname, identificationNumber } = body
-        const studentCreated = await createStudent(name, surname, identificationNumber)
+        const { name, surname, identificationNumber, birth, phone, email } = body
+        const studentCreated = await createStudent(
+          name,
+          surname,
+          identificationNumber,
+          birth,
+          phone,
+          email
+        )
         return res.status(201).send({ studentCreated })
       } catch (error) {
-        return res.status(500).send({ error })
+        return errorHandler(res, error)
       }
 
     default:

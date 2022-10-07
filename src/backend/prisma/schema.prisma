@@ -120,12 +120,17 @@ model Course {
 }
 
 model Student {
-  id                   String @id @default(cuid())
+  id                   String   @id @default(cuid())
   name                 String
   surname              String
   identificationNumber Int
+  birth                DateTime
+  phone                Int
+  email                String
 
   Enrollment Enrollment[]
+  Customer   Customer     @relation(fields: [customerId], references: [id])
+  customerId String       @unique
 
   @@map("student")
 }
@@ -156,6 +161,8 @@ model Customer {
   name String
   debt Int
 
+  Student Student?
+
   Record Record[]
 }
 
@@ -168,6 +175,7 @@ enum CategoryEnum {
 enum RecordTypeEnum {
   POSITIVE
   NEGATIVE
+  NEUTRAL
 }
 
 enum RecordNameEnum {

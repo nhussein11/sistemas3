@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { createStock, getStocks } from '../../../backend/server/controllers/stocks/stock.controller'
+import { errorHandler } from '../../utils/errorResponseHandler'
 
 export default async function stocks (
   req: NextApiRequest,
@@ -13,7 +14,7 @@ export default async function stocks (
         const stocks = await getStocks()
         return res.status(200).send({ stocks })
       } catch (error) {
-        return res.status(500).send({ error })
+        return errorHandler(res, error)
       }
 
     case 'POST':
@@ -22,7 +23,7 @@ export default async function stocks (
         const stockCreated = await createStock(productId, storeId, quantity, minQuantity)
         return res.status(201).send({ stockCreated })
       } catch (error) {
-        return res.status(500).send({ error })
+        return errorHandler(res, error)
       }
 
     default:
