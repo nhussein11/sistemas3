@@ -11,7 +11,8 @@ import {
   RecordType,
   Course,
   Student,
-  Enrollment
+  Enrollment,
+  Customer
 } from '@prisma/client'
 
 const deleteAllTables = async () => {
@@ -283,6 +284,27 @@ const createDefaultEnrollments = async () => {
     data: defaultEnrollments
   })
 }
+const createDefaultCustomers = async () => {
+  const defaultCustomers: Omit<Customer, 'id'>[] = [
+    {
+      name: 'Juan Perez',
+      debt: 0
+    },
+    {
+      name: 'Maria Lopez',
+      debt: 0
+    },
+    {
+      name: 'Pedro Gomez',
+      debt: 0
+    }
+  ]
+  console.log('inserting default customers...')
+  await prisma.customer.createMany({
+    data: defaultCustomers
+  })
+}
+
 const populateDatabase = async () => {
   try {
     await createDefaultProducts()
@@ -294,6 +316,7 @@ const populateDatabase = async () => {
     await createDefaultStudents()
     await createDefaultCourses()
     await createDefaultEnrollments()
+    await createDefaultCustomers()
   } catch (error: any) {
     throw new Error(error)
   }
