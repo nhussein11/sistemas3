@@ -159,7 +159,7 @@ const createDefaultRecordDetails = async () => {
 }
 
 const createDefaultStudents = async () => {
-  const defaultStudents: Omit<Student, 'id'>[] = [
+  const defaultStudents: Omit<Student, 'id' | 'customerId'>[] = [
     {
       name: 'Choco',
       surname: 'Villanueva',
@@ -193,10 +193,31 @@ const createDefaultStudents = async () => {
       email: 'nico@gmail.com'
     }
   ]
+  const defaultStudentsWithCustomerId: Promise<Omit<Student, 'id'>>[] =
+    defaultStudents.map(async (student) => {
+      const customer: Customer = await prisma.customer.create({
+        data: {
+          name: student.name,
+          debt: 0
+        }
+      })
+
+      return {
+        ...student,
+        customerId: customer.id
+      }
+    })
+
+  const studentPromises = await Promise.allSettled(
+    defaultStudentsWithCustomerId
+  )
+  const fulFilledStudentsPromises = studentPromises.filter(
+    (res) => res.status === 'fulfilled'
+  ) as PromiseFulfilledResult<Omit<Student, 'id'>>[]
 
   console.log('inserting default students...')
   await prisma.student.createMany({
-    data: defaultStudents
+    data: fulFilledStudentsPromises.map((res) => res.value)
   })
 }
 // Este codigo esta re feo, pero cuando lo estoy haciendo ya tengo mucho sueno, despues llo refactoricemos pl
