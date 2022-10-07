@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+/* eslint-disable no-trailing-spaces */
 import { prisma } from './backend/server/prisma-client/prisma-client'
 import {
   RecordNameEnum,
@@ -397,7 +398,7 @@ const createDefaultEnrollments = async () => {
       }
     }
   )
-  
+
   console.log('inserting default enrollments...')
   await prisma.enrollment.createMany({
     data: defaultEnrollments
