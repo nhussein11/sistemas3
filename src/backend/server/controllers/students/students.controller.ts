@@ -1,6 +1,7 @@
 /* eslint-disable no-useless-catch */
-import { Student } from '@prisma/client'
+import { Customer, Student } from '@prisma/client'
 import { prisma } from '../../../server/prisma-client/prisma-client'
+import { createCustomer } from '../customers/customers.controller'
 
 const getStudents = async () => {
   try {
@@ -20,9 +21,18 @@ const createStudent = async (
   email: string
 ) => {
   try {
-    const customer
+    const customerCreatedByNewStudent: Customer = await createCustomer(name, 0)
+    const { id: customerId } = customerCreatedByNewStudent
     const studentCreated = await prisma.student.create({
-      data: { name, surname, identificationNumber, birth, phone, email }
+      data: {
+        name,
+        surname,
+        identificationNumber,
+        birth,
+        phone,
+        email,
+        customerId
+      }
     })
 
     return studentCreated
