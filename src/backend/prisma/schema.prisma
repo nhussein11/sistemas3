@@ -129,6 +129,7 @@ model Student {
   email                String
 
   Enrollment Enrollment[]
+  Customer   Customer?
 
   @@map("student")
 }
@@ -158,6 +159,9 @@ model Customer {
   id   String @id @default(cuid())
   name String
   debt Int
+
+  Student   Student @relation(fields: [studentId], references: [id])
+  studentId String  @unique
 
   Record Record[]
 }
