@@ -3,7 +3,7 @@ type StudentData = {
   name: string
   surname: string
   identificationNumber: number
-  birth: Date,
+  birth: string,
   phone: number,
   email: string,
 }

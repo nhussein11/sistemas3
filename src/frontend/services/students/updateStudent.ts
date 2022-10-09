@@ -5,7 +5,7 @@ export type StudentUpdateData = {
   name?: string
   surname?: string
   identificationNumber?: number
-  birth?: Date
+  birth?: string
   phone?: number
   email?: string
 }
@@ -19,6 +19,7 @@ export const updateStudent = async ({
   phone,
   email
 }: StudentUpdateData) => {
+  console.log({ id, name, surname, identificationNumber, birth, phone, email })
   const response = await publicAxiosInstance.put(`/students/${id}`, {
     name,
     surname,
