@@ -16,7 +16,8 @@ import DialogUpdateCourse from './DialogUpdateCourse'
 import { selectedCourseState } from '../../atoms/courses/selectedCourseAtom'
 import useDeleteCourseMutation from '../../hooks/courses/useDeleteCourseMutation'
 import { isCourseCheckedState } from '../../atoms/courses/isCourseCheckedAtom'
-
+import EnrollmentsDialog from './EnrollmentsDialog'
+import { showEnrollmentsDialogState } from '../../atoms/courses/showEnrollmentsDialog'
 const CoursesTable = ({ courses, isEnrollment }: CoursesTableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
   const { handleDeleteCourse } = useDeleteCourseMutation('course')
@@ -24,6 +25,9 @@ const CoursesTable = ({ courses, isEnrollment }: CoursesTableProps) => {
   const [isCourseChecked, setIsCourseChecked] =
     useRecoilState(isCourseCheckedState)
   const [, setShowUpdateDialog] = useRecoilState(showUpdateDialogState)
+  const [, setShowEnrollmentsDialog] = useRecoilState(
+    showEnrollmentsDialogState
+  )
   return (
     <div className="datatable-filter">
       <div className="card">
@@ -99,7 +103,6 @@ const CoursesTable = ({ courses, isEnrollment }: CoursesTableProps) => {
                   <Button
                     icon="pi pi-pencil"
                     iconPos="right"
-                    label="Editar"
                     className="p-button-p-button-raised p-button-warning"
                     onClick={() => {
                       setSelectedCourse(rowData)
@@ -112,10 +115,18 @@ const CoursesTable = ({ courses, isEnrollment }: CoursesTableProps) => {
                   <Button
                     icon="pi pi-trash"
                     iconPos="right"
-                    label="Borrar"
                     className="p-button-p-button-raised p-button-danger"
                     onClick={() => {
                       handleDeleteCourse(rowData.id)
+                    }}
+                  />
+                  <Button
+                    icon="pi pi-eye"
+                    iconPos="right"
+                    className="p-button-p-button-raised p-button-info"
+                    onClick={() => {
+                      setSelectedCourse(rowData)
+                      setShowEnrollmentsDialog(true)
                     }}
                   />
                 </div>
@@ -130,6 +141,8 @@ const CoursesTable = ({ courses, isEnrollment }: CoursesTableProps) => {
         closeDialog={() => setDisplayBasic(false)}
       />
       <DialogUpdateCourse />
+      <EnrollmentsDialog />
+
       <DialogError></DialogError>
     </div>
   )

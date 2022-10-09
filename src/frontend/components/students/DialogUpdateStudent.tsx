@@ -7,10 +7,13 @@ import useUpdateStudentMutation from '../../hooks/students/useUpdateStudentMutat
 
 const DialogUpdateStudent = () => {
   const {
-    handleUpateStudent,
+    handleUpdateStudent,
     studentName,
     studentSurname,
     studentIdentificationNumber,
+    studentEmail,
+    studentPhone,
+    studentBirthDate,
     showUpdateDialog,
     setShowUpdateDialog
   } = useUpdateStudentMutation('students')
@@ -46,13 +49,37 @@ const DialogUpdateStudent = () => {
               placeholder="precio"
             />
           </div>
+          <div style={ { display: 'grid' } }>
+            <label htmlFor="id">email</label>
+            <InputText
+              {...studentEmail}
+              name="productPrice"
+              placeholder="email"
+            />
+          </div>
+          <div style={ { display: 'grid' } }>
+            <label htmlFor="id">telefono</label>
+            <InputText
+              {...studentPhone}
+              name="productPrice"
+              placeholder="phone"
+            />
+          </div>
+          <div style={ { display: 'grid' } }>
+            <label htmlFor="id">fecha de nacimiento</label>
+            <InputText
+              {...studentBirthDate}
+              name="productPrice"
+              placeholder="fecha de nacimiento"
+            />
+          </div>
       </div>
       <div className="footer-button-updateDialog">
         <Button
           label="Guardar"
           className="p-button-raised p-button-success"
           icon="pi pi-check"
-          onClick={handleUpateStudent}
+          onClick={handleUpdateStudent}
           autoFocus
         />
       </div>

@@ -15,12 +15,14 @@ import DialogUpdateStudent from './DialogUpdateStudent'
 import { selectedStudentState } from '../../atoms/students/selectedStudentAtom'
 import useDeleteStudentMutation from '../../hooks/students/useDeleteStudentMutation'
 import { isStudentCheckedState } from '../../atoms/students/isStudentSelected'
-
+import { parseDate } from '../../services/records/parseDate'
 const StudentsTable = ({ students, isEnrollment }: StudentsTableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
   const { handleDeleteStudent } = useDeleteStudentMutation('students')
   const [, setSelectedStudent] = useRecoilState(selectedStudentState)
-  const [isStudentChecked, setIsStudentChecked] = useRecoilState(isStudentCheckedState)
+  const [isStudentChecked, setIsStudentChecked] = useRecoilState(
+    isStudentCheckedState
+  )
   const [, setShowUpdateDialog] = useRecoilState(showUpdateDialogState)
   return (
     <div className="datatable-filter">
@@ -55,6 +57,24 @@ const StudentsTable = ({ students, isEnrollment }: StudentsTableProps) => {
             alignHeader={'center'}
           />
           <Column
+            field="email"
+            header="email"
+            body={(rowData) => rowData.email}
+            alignHeader={'center'}
+          />
+          <Column
+            field="birth"
+            header="birthDate"
+            body={(rowData) => parseDate(rowData.birth)}
+            alignHeader={'center'}
+          />
+          <Column
+            field="phone"
+            header="Telefono"
+            body={(rowData) => rowData.phone}
+            alignHeader={'center'}
+          />
+          <Column
             field="options"
             header="Opciones"
             body={(rowData) => {
@@ -81,7 +101,6 @@ const StudentsTable = ({ students, isEnrollment }: StudentsTableProps) => {
                   <Button
                     icon="pi pi-pencil"
                     iconPos="right"
-                    label="Editar"
                     className="p-button-p-button-raised p-button-warning"
                     onClick={() => {
                       setSelectedStudent(rowData)
@@ -94,7 +113,6 @@ const StudentsTable = ({ students, isEnrollment }: StudentsTableProps) => {
                   <Button
                     icon="pi pi-trash"
                     iconPos="right"
-                    label="Borrar"
                     className="p-button-p-button-raised p-button-danger"
                     onClick={() => {
                       handleDeleteStudent(rowData.id)

@@ -12,7 +12,7 @@ import useCoursesQuery from '../../hooks/courses/useCoursesQuery'
 import useStudentsQuery from '../../hooks/students/useStudentsQuery'
 import { findStudentName } from '../../services/enrollments/findStudentName'
 import useDeleteEnrollmentMutation from '../../hooks/enrollments/useDeleteEnrollmentMutation'
-const EnrollmentsTable = ({ enrollments }: EnrollmentsTableProps) => {
+const EnrollmentsTable = ({ enrollments, isDialog }: EnrollmentsTableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
   const coursesQuery = useCoursesQuery('courses')
   const studentsQuery = useStudentsQuery('students')
@@ -28,7 +28,12 @@ const EnrollmentsTable = ({ enrollments }: EnrollmentsTableProps) => {
           rows={10}
           dataKey="id"
           responsiveLayout="scroll"
-          header={<EnrollmentsTableHeader setDisplayBasic={setDisplayBasic} />}
+          header={
+            <EnrollmentsTableHeader
+              isDialog={isDialog}
+              setDisplayBasic={setDisplayBasic}
+            />
+          }
           emptyMessage="No se encontraron Productos"
         >
           <Column
@@ -51,26 +56,28 @@ const EnrollmentsTable = ({ enrollments }: EnrollmentsTableProps) => {
             body={(rowData) => rowData.academicYear}
             alignHeader={'center'}
           />
-          <Column
-            field="options"
-            header="Opciones"
-            body={(rowData) => {
-              return (
-                <div>
-                  <Button
-                    icon="pi pi-pencil"
-                    iconPos="right"
-                    label="Borrar"
-                    className="p-button-p-button-raised p-button-danger"
-                    onClick={() => {
-                      handleDeleteEnrollment(rowData.id)
-                    }}
-                  />
-                </div>
-              )
-            }}
-            alignHeader={'center'}
-          />
+          {!isDialog && (
+            <Column
+              field="options"
+              header="Opciones"
+              body={(rowData) => {
+                return (
+                  <div>
+                    <Button
+                      icon="pi pi-pencil"
+                      iconPos="right"
+                      label="Borrar"
+                      className="p-button-p-button-raised p-button-danger"
+                      onClick={() => {
+                        handleDeleteEnrollment(rowData.id)
+                      }}
+                    />
+                  </div>
+                )
+              }}
+              alignHeader={'center'}
+            />
+          )}
         </DataTable>
       </div>
       <DialogNewEnrollment
