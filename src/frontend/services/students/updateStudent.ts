@@ -24,7 +24,7 @@ export const updateStudent = async ({
     name,
     surname,
     identificationNumber,
-    birth,
+    birth: new Date(birth || ''),
     phone,
     email
   })
