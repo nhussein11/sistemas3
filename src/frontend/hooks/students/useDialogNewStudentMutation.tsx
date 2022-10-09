@@ -25,18 +25,28 @@ const useDialogNewStudentMutation = (queryId: string) => {
   const studentName = useField({ initialValue: '', type: 'text' })
   const studentSurname = useField({ initialValue: '', type: 'text' })
   const studentIdentificationNumber = useField({ initialValue: 0, type: 'number' })
-  const handleCreateNewCourse = () => {
+  const studentEmail = useField({ initialValue: '', type: 'email' })
+  const studentPhone = useField({ initialValue: 0, type: 'number' })
+  const studentBirthDate = useField({ initialValue: '', type: 'date' })
+
+  const handleCreateNewStudent = () => {
     mutate({
       name: studentName.value as string,
       surname: studentSurname.value as string,
-      identificationNumber: studentIdentificationNumber.value as number
+      identificationNumber: studentIdentificationNumber.value as number,
+      email: studentEmail.value as string,
+      phone: studentPhone.value as number,
+      birth: studentBirthDate.value as string
     })
   }
   return {
-    handleCreateNewCourse,
+    handleCreateNewStudent,
     studentName,
     studentSurname,
-    studentIdentificationNumber
+    studentIdentificationNumber,
+    studentEmail,
+    studentPhone,
+    studentBirthDate
   }
 }
 
