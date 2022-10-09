@@ -15,6 +15,7 @@ import DialogUpdateStudent from './DialogUpdateStudent'
 import { selectedStudentState } from '../../atoms/students/selectedStudentAtom'
 import useDeleteStudentMutation from '../../hooks/students/useDeleteStudentMutation'
 import { isStudentCheckedState } from '../../atoms/students/isStudentSelected'
+import { parseDate } from '../../services/records/parseDate'
 const StudentsTable = ({ students, isEnrollment }: StudentsTableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
   const { handleDeleteStudent } = useDeleteStudentMutation('students')
@@ -53,6 +54,24 @@ const StudentsTable = ({ students, isEnrollment }: StudentsTableProps) => {
             field="DNI"
             header="DNI"
             body={(rowData) => rowData.identificationNumber}
+            alignHeader={'center'}
+          />
+          <Column
+            field="email"
+            header="email"
+            body={(rowData) => rowData.email}
+            alignHeader={'center'}
+          />
+          <Column
+            field="birth"
+            header="birthDate"
+            body={(rowData) => parseDate(rowData.birth)}
+            alignHeader={'center'}
+          />
+          <Column
+            field="phone"
+            header="Telefono"
+            body={(rowData) => rowData.phone}
             alignHeader={'center'}
           />
           <Column
