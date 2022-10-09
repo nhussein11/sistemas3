@@ -67,6 +67,10 @@ export type DialogFooterCoursesProps = {
   closeDialog: () => void
   handleCreateNewCourse: () => void
 }
+export type DialogFooterStudentsProps = {
+  closeDialog: () => void
+  handleCreateNewStudent: () => void
+}
 export type DialogNewStoreProps = {
   displayBasic: boolean
   closeDialog: () => void
