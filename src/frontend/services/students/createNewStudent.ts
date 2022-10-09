@@ -3,11 +3,14 @@ type StudentData = {
   name: string
   surname: string
   identificationNumber: number
-  birth: string,
-  phone: number,
-  email: string,
+  birth: string
+  phone: number
+  email: string
 }
 export const createNewStudent = async (student: StudentData) => {
-  const response = await publicAxiosInstance.post('/students', student)
+  const response = await publicAxiosInstance.post('/students', {
+    ...student,
+    birth: new Date(student.birth)
+  })
   return response
 }
