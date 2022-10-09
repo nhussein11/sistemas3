@@ -4,11 +4,9 @@ import { InputText } from 'primereact/inputtext'
 import { useRecoilState } from 'recoil'
 import { RecordsTableHeaderProps } from '../../@types/frontend.types'
 import { globalFilterValueState } from '../../atoms/globalFilterValueAtom'
-import { selectedFilterSupplierState } from '../../atoms/records/selectedFilterSupplier'
 import { useRouter } from 'next/router'
-import useSuppliersQuery from '../../hooks/suppliers/useSuppliersQuery'
 import { Dropdown } from 'primereact/dropdown'
-import { Supplier } from '@prisma/client'
+import useSuppliersFilter from '../../hooks/records/useSuppliersFilter'
 const TableHeader = ({
   setDisplayBasic,
   setDisplayRecordDetailsTable
@@ -17,19 +15,8 @@ const TableHeader = ({
   const [globalFilterValue, setGlobalFilterValue] = useRecoilState(
     globalFilterValueState
   )
-  const SuppliersQuery = useSuppliersQuery('suppliers')
-  const parsedSuppliers = SuppliersQuery?.data?.suppliers.map(
-    (supplier: Supplier) => supplier.name
-  )
-  const [selectedFilterSupplier, setSelectedFilterSupplier] = useRecoilState(
-    selectedFilterSupplierState
-  )
-  const changeSupplier = (supplierName:string) => {
-    const supplier = SuppliersQuery?.data?.suppliers.find(
-      (supplier: Supplier) => supplier.name === supplierName
-    )
-    setSelectedFilterSupplier(supplier)
-  }
+  const { parsedSuppliers, changeSupplier, selectedFilterSupplier } =
+    useSuppliersFilter()
   console.log(selectedFilterSupplier)
   const router = useRouter()
   return (
