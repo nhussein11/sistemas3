@@ -17,7 +17,6 @@ const TableHeader = ({
   )
   const { parsedSuppliers, changeSupplier, selectedFilterSupplier } =
     useSuppliersFilter()
-  console.log(selectedFilterSupplier)
   const router = useRouter()
   return (
     <div className="header-table">

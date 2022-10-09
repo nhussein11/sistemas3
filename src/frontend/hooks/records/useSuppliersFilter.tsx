@@ -8,14 +8,19 @@ const useSuppliersFilter = () => {
   const parsedSuppliers = SuppliersQuery?.data?.suppliers.map(
     (supplier: Supplier) => supplier.name
   )
+  parsedSuppliers?.push('Todos')
   const [selectedFilterSupplier, setSelectedFilterSupplier] = useRecoilState(
     selectedFilterSupplierState
   )
-  const changeSupplier = (supplierName:string) => {
+  const changeSupplier = (supplierName: string) => {
     const supplier = SuppliersQuery?.data?.suppliers.find(
       (supplier: Supplier) => supplier.name === supplierName
     )
-    setSelectedFilterSupplier(supplier)
+    if (supplier) {
+      setSelectedFilterSupplier(supplier)
+      return
+    }
+    setSelectedFilterSupplier({ id: '', name: 'Todos' })
   }
   return {
     parsedSuppliers,
