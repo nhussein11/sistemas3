@@ -8,24 +8,25 @@ import {
 import useField from '../useField'
 import { defaultErrorState, ErrorState } from '../../atoms/error/ErrorAtom'
 import { showErrorDialogState } from '../../atoms/error/showErrorDialog'
-import { updateStudent } from '../../services/students/updateStudent'
+import {
+  StudentUpdateData,
+  updateStudent
+} from '../../services/students/updateStudent'
 import {
   defaultStudent,
   selectedStudentState
 } from '../../atoms/students/selectedStudentAtom'
-import { Student } from '@prisma/client'
 import {
   defaultStudentChecked,
   isStudentCheckedState
 } from '../../atoms/students/isStudentSelected'
-
+import { parseDate } from '../../services/records/parseDate'
 const useUpdateStudentMutation = (queryId: string) => {
   const [selectedStudent, setSelectedStudent] =
     useRecoilState(selectedStudentState)
   const [showUpdateDialog, setShowUpdateDialog] = useRecoilState(
     showUpdateDialogState
   )
-  // eslint-disable-next-line no-unused-vars
   const [, setErrorState] = useRecoilState(ErrorState)
   const [, setShowErrorDialog] = useRecoilState(showErrorDialogState)
   const [, setIsStudentChecked] = useRecoilState(isStudentCheckedState)
@@ -35,9 +36,29 @@ const useUpdateStudentMutation = (queryId: string) => {
     initialValue: 0,
     type: 'number'
   })
+  const studentEmail = useField({ initialValue: '', type: 'email' })
+  const studentPhone = useField({ initialValue: 0, type: 'number' })
+  const studentBirthDate = useField({ initialValue: '', type: 'date' })
   const queryClient = useQueryClient()
-  const updateQuery = ({ id, name, surname, identificationNumber }: Student) =>
-    updateStudent({ id, name, surname, identificationNumber })
+  console.log(parseDate(selectedStudent.birth.toString(), true))
+  const updateQuery = ({
+    id,
+    name,
+    surname,
+    identificationNumber,
+    birth,
+    phone,
+    email
+  }: StudentUpdateData) =>
+    updateStudent({
+      id,
+      name,
+      surname,
+      identificationNumber,
+      birth,
+      phone,
+      email
+    })
   const { mutate } = useMutation(updateQuery, {
     onSuccess: () => {
       // Invalidate and refetch
@@ -55,24 +76,33 @@ const useUpdateStudentMutation = (queryId: string) => {
       setShowErrorDialog(true)
     }
   })
-  const handleUpateStudent = () => {
+  const handleUpdateStudent = () => {
     mutate({
       id: selectedStudent.id,
       name: studentName.value as string,
       surname: studentSurname.value as string,
-      identificationNumber: studentIdentificationNumber.value as number
+      identificationNumber: studentIdentificationNumber.value as number,
+      email: studentEmail.value as string,
+      phone: studentPhone.value as number,
+      birth: studentBirthDate.value as string
     })
   }
   useEffect(() => {
     studentName.onChange(selectedStudent.name)
     studentSurname.onChange(selectedStudent.surname)
     studentIdentificationNumber.onChange(selectedStudent.identificationNumber)
+    studentEmail.onChange(selectedStudent.email)
+    studentPhone.onChange(selectedStudent.phone)
+    studentBirthDate.onChange(parseDate(selectedStudent.birth.toString(), true))
   }, [selectedStudent])
   return {
-    handleUpateStudent,
+    handleUpdateStudent,
     studentName,
     studentSurname,
     studentIdentificationNumber,
+    studentEmail,
+    studentPhone,
+    studentBirthDate,
     showUpdateDialog,
     setShowUpdateDialog
   }
