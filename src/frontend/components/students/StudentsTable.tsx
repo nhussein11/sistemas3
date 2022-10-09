@@ -15,12 +15,13 @@ import DialogUpdateStudent from './DialogUpdateStudent'
 import { selectedStudentState } from '../../atoms/students/selectedStudentAtom'
 import useDeleteStudentMutation from '../../hooks/students/useDeleteStudentMutation'
 import { isStudentCheckedState } from '../../atoms/students/isStudentSelected'
-
 const StudentsTable = ({ students, isEnrollment }: StudentsTableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
   const { handleDeleteStudent } = useDeleteStudentMutation('students')
   const [, setSelectedStudent] = useRecoilState(selectedStudentState)
-  const [isStudentChecked, setIsStudentChecked] = useRecoilState(isStudentCheckedState)
+  const [isStudentChecked, setIsStudentChecked] = useRecoilState(
+    isStudentCheckedState
+  )
   const [, setShowUpdateDialog] = useRecoilState(showUpdateDialogState)
   return (
     <div className="datatable-filter">
