@@ -81,7 +81,6 @@ const StudentsTable = ({ students, isEnrollment }: StudentsTableProps) => {
                   <Button
                     icon="pi pi-pencil"
                     iconPos="right"
-                    label="Editar"
                     className="p-button-p-button-raised p-button-warning"
                     onClick={() => {
                       setSelectedStudent(rowData)
@@ -94,7 +93,6 @@ const StudentsTable = ({ students, isEnrollment }: StudentsTableProps) => {
                   <Button
                     icon="pi pi-trash"
                     iconPos="right"
-                    label="Borrar"
                     className="p-button-p-button-raised p-button-danger"
                     onClick={() => {
                       handleDeleteStudent(rowData.id)
