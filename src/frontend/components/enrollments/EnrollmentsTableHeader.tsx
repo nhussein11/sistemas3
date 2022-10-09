@@ -4,7 +4,10 @@ import { globalFilterValueState } from '../../atoms/globalFilterValueAtom'
 import { StockTableHeaderProps } from '../../@types/frontend.types'
 import { useRecoilState } from 'recoil'
 import { Button } from 'primereact/button'
-const EnrollmentsTableHeader = ({ setDisplayBasic }:StockTableHeaderProps) => {
+const EnrollmentsTableHeader = ({
+  setDisplayBasic,
+  isDialog
+}: StockTableHeaderProps) => {
   const [globalFilterValue, setGlobalFilterValue] = useRecoilState(
     globalFilterValueState
   )
@@ -20,13 +23,15 @@ const EnrollmentsTableHeader = ({ setDisplayBasic }:StockTableHeaderProps) => {
           />
         </span>
       </div>
-      <div className="actionsButtonsTable">
-        <Button
-          label="Nuevo"
-          className="p-button-raised p-button-success"
-          onClick={() => setDisplayBasic(true)}
-        />
-      </div>
+      {!isDialog && (
+        <div className="actionsButtonsTable">
+          <Button
+            label="Nuevo"
+            className="p-button-raised p-button-success"
+            onClick={() => setDisplayBasic(true)}
+          />
+        </div>
+      )}
     </div>
   )
 }
