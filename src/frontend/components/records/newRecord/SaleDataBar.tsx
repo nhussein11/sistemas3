@@ -6,10 +6,10 @@ import { Customer, Supplier, Store, RecordNameEnum } from '@prisma/client'
 
 const SaleDataBar = ({
   customers, suppliers, recordTypes, stores, selectedCustomer, selectedSupplier, selectedStore, selectedRecordType, changeCustomer, changeSupplier, changeStore, changeRecordType,
-  recordLetter, recordNumber, recordPaidFor
+  recordLetter, recordNumber
 }:
   {customers: Object[]; suppliers: Object[]; recordTypes: Object[]; stores: Object[]; selectedCustomer: Customer; selectedSupplier: Supplier; selectedStore: Store; selectedRecordType: any;
-    changeCustomer: any; changeSupplier: any; changeStore: any; changeRecordType: any; recordLetter: any; recordNumber: any; recordPaidFor: any }) => {
+    changeCustomer: any; changeSupplier: any; changeStore: any; changeRecordType: any; recordLetter: any; recordNumber: any;}) => {
   function dropPerson () {
     switch (selectedRecordType.recordName) {
       case RecordNameEnum.FACTURA_ORIGINAL:
@@ -27,7 +27,6 @@ const SaleDataBar = ({
       default:
     }
   }
-  recordPaidFor = false
   return (
     <div>
       <div style={{ display: 'grid', gridTemplateColumns: 'auto auto auto auto auto auto auto', justifyContent: 'left', columnGap: '10px' }}>

@@ -18,7 +18,7 @@ import useStoresQuery from '../stores/useStoresQuery'
 import useDetailsQuery from '../details/useDetailsQuery'
 import { useRouter } from 'next/router'
 
-const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdress: any, recordLetter: any, recordNumber: any, recordPaidFor: any, toast: any) => {
+const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdress: any, recordLetter: any, recordNumber: any, toast: any) => {
   const queryClient = useQueryClient()
   const router = useRouter()
   const recordTypesQuery = useRecordTypesQuery('record-type')
@@ -70,7 +70,7 @@ const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdr
       address: recordAdress.value as string,
       letter: recordLetter.value as string,
       recordNumber: recordNumber.value as number,
-      paidFor: recordPaidFor.value as boolean,
+      paidFor: false,
       recordTypeId: selectedRecordType.id,
       supplierId: selectedSupplier.id,
       customerId: selectedCustomer.id,
@@ -113,7 +113,6 @@ const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdr
     recordAdress,
     recordLetter,
     recordNumber,
-    recordPaidFor,
     productsQuery,
     storesQuery,
     customerQuery,

@@ -25,7 +25,7 @@ const NewRecord: NextPage = () => {
   const recordAdress = useField({ initialValue: '', type: 'text' })
   const recordLetter = useField({ initialValue: '', type: 'text' })
   const recordNumber = useField({ initialValue: '', type: 'number' })
-  const recordPaidFor = useField({ initialValue: true, type: 'boolean' })
+
   const toast = useRef(null)
   const {
     handleCreateNewRecord,
@@ -48,8 +48,8 @@ const NewRecord: NextPage = () => {
     customerQuery,
     supplierQuery,
     detailsQuery
-  } = useNewRecordMutation('records', recordObservation, recordAdress, recordLetter, recordNumber, recordPaidFor, toast)
-  const { handleCreateNewRecordForFacturas } = useNewRecordForFacturasMutation('previous-record', recordObservation, recordAdress, recordLetter, recordNumber, recordPaidFor, toast)
+  } = useNewRecordMutation('records', recordObservation, recordAdress, recordLetter, recordNumber, toast)
+  const { handleCreateNewRecordForFacturas } = useNewRecordForFacturasMutation('previous-record', recordObservation, recordAdress, recordLetter, recordNumber, toast)
   const [selectedRecordDetails] = useRecoilState(selectedRecordDetailsState)
   const [selectedRecords] = useRecoilState(selectedRecordsState)
   const [showTableProducts, setShowTableProducts] = useState(false)
@@ -69,7 +69,6 @@ const NewRecord: NextPage = () => {
     recordAdress.onChange('')
     recordLetter.onChange('')
     recordNumber.onChange('')
-    recordPaidFor.onChange(false)
   }
   return (
     <div>
@@ -88,7 +87,7 @@ const NewRecord: NextPage = () => {
             <SaleDataBar customers={customerOptions} suppliers={suppliersOptions} recordTypes={recordTypesOptions} stores={storesOptions}
             selectedCustomer={selectedCustomer} selectedSupplier={selectedSupplier} selectedRecordType={selectedRecordType} selectedStore={selectedStore}
             changeCustomer={changeCustomer} changeSupplier={changeSupplier} changeStore={changeStore} changeRecordType={changeRecordType}
-            recordLetter={recordLetter} recordNumber={recordNumber} recordPaidFor={recordPaidFor}/>
+            recordLetter={recordLetter} recordNumber={recordNumber}/>
         </Panel>
         <Splitter style={{ height: '100%' }}>
             <SplitterPanel>

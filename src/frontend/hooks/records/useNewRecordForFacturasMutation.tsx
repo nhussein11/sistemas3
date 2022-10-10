@@ -7,7 +7,7 @@ import { defaultRecordType, selectedRecordTypeState } from '../../atoms/records/
 import { createNewRecordFactura } from '../../services/records/createNewRecordFactura'
 import { useRouter } from 'next/router'
 
-const useNewRecordForFacturasMutation = (queryId: string, recordObservation: any, recordAdress: any, recordLetter: any, recordNumber: any, recordPaidFor: any, toast: any) => {
+const useNewRecordForFacturasMutation = (queryId: string, recordObservation: any, recordAdress: any, recordLetter: any, recordNumber: any, toast: any) => {
   const queryClient = useQueryClient()
   const router = useRouter()
   // Queries
@@ -37,7 +37,7 @@ const useNewRecordForFacturasMutation = (queryId: string, recordObservation: any
       address: recordAdress.value as string,
       letter: recordLetter.value as string,
       recordNumber: recordNumber.value as number,
-      paidFor: recordPaidFor.value as boolean,
+      paidFor: false,
       recordTypeId: selectedRecordType.id,
       supplierId: selectedSupplier.id,
       customerId: selectedCustomer.id,
