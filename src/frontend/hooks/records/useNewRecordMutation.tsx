@@ -50,7 +50,6 @@ const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdr
 
   const { mutate } = useMutation(createNewRecord, {
     onSuccess: (data) => {
-    // Limpio campos
       queryClient.invalidateQueries([queryId])
       setSelectedRecordType(defaultRecordType)
       setSelectedRecordDetails(defaultRecordDetails)
