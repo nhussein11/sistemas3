@@ -2,7 +2,7 @@ import { atom } from 'recoil'
 export const defaultEnrollment = {
   id: '',
   courseId: '',
-  studentId: '',
+  studentIds: [],
   AcademicYear: 0
 }
 export const selectedEnrollmentState = atom({
