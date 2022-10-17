@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { createRecordType, getRecordsTypes } from '../../../backend/server/controllers/record-types/record-types.controller'
-import { errorHandler } from '../../utils/errorResponseHandler'
+import { errorHandler } from '../../../backend/server/controllers/errors/errorResponseHandler'
 
 export default async function recordType (
   req: NextApiRequest,

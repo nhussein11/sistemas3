@@ -3,7 +3,7 @@ import {
   getProducts,
   createProduct
 } from '../../../backend/server/controllers/products/products.controller'
-import { errorHandler } from '../../utils/errorResponseHandler'
+import { errorHandler } from '../../../backend/server/controllers/errors/errorResponseHandler'
 
 export default async function products (
   req: NextApiRequest,

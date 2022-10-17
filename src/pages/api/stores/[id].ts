@@ -5,7 +5,7 @@ import {
   getStoreById,
   updateStoreById
 } from '../../../backend/server/controllers/stores/stores.controller'
-import { errorHandler } from '../../utils/errorResponseHandler'
+import { errorHandler } from '../../../backend/server/controllers/errors/errorResponseHandler'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const {

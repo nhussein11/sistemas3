@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { createPreviousRecord, getPreviousRecord } from '../../../backend/server/controllers/previous-records/previous-record.controller'
-import { errorHandler } from '../../utils/errorResponseHandler'
+import { errorHandler } from '../../../backend/server/controllers/errors/errorResponseHandler'
 
 export default async function previousRecord (
   req: NextApiRequest,

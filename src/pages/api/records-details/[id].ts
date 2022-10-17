@@ -5,7 +5,7 @@ import {
   getRecordDetailsById,
   updateRecordDetailsById
 } from '../../../backend/server/controllers/record-details/record-details.controller'
-import { errorHandler } from '../../utils/errorResponseHandler'
+import { errorHandler } from '../../../backend/server/controllers/errors/errorResponseHandler'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const {
