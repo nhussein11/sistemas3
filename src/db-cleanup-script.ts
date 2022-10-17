@@ -178,7 +178,7 @@ const createDefaultRecords = async () => {
       paidFor: false,
       recordTypeId: recordTypes[0].id,
       customerId: customers[0].id,
-      supplierId: null
+      supplierId: ''
     },
     {
       observation: 'Factura original de prueba',
@@ -188,7 +188,7 @@ const createDefaultRecords = async () => {
       paidFor: false,
       recordTypeId: recordTypes[0].id,
       customerId: customers[1].id,
-      supplierId: null
+      supplierId: ''
     }
   ]
   const defaultRecordsofSuppliers: Omit<Record, 'id' | 'datetime'>[] = [
@@ -199,7 +199,7 @@ const createDefaultRecords = async () => {
       recordNumber: 3,
       paidFor: false,
       recordTypeId: recordTypes[1].id,
-      customerId: null,
+      customerId: '',
       supplierId: suppliers[0].id
     },
     {
@@ -209,7 +209,7 @@ const createDefaultRecords = async () => {
       recordNumber: 4,
       paidFor: false,
       recordTypeId: recordTypes[1].id,
-      customerId: null,
+      customerId: '',
       supplierId: suppliers[1].id
     }
   ]
