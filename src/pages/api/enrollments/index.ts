@@ -22,11 +22,11 @@ export default async function enrollments (
 
     case 'POST':
       try {
-        const { academicYear, courseId, studentId } = body
+        const { academicYear, courseId, studentIds } = body
         const enrollmentCreated = await createEnrollment(
           academicYear,
           courseId,
-          studentId
+          studentIds
         )
         return res.status(201).send({ enrollmentCreated })
       } catch (error) {
