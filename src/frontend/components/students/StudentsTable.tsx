@@ -14,16 +14,16 @@ import DialogNewStudent from './DialogNewStudent'
 import DialogUpdateStudent from './DialogUpdateStudent'
 import { selectedStudentState } from '../../atoms/students/selectedStudentAtom'
 import useDeleteStudentMutation from '../../hooks/students/useDeleteStudentMutation'
-import { isStudentCheckedState } from '../../atoms/students/isStudentSelected'
 import { parseDate } from '../../services/records/parseDate'
+import { selectedStudentsState } from '../../atoms/enrollments/selectedStudents'
 const StudentsTable = ({ students, isEnrollment }: StudentsTableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
   const { handleDeleteStudent } = useDeleteStudentMutation('students')
   const [, setSelectedStudent] = useRecoilState(selectedStudentState)
-  const [isStudentChecked, setIsStudentChecked] = useRecoilState(
-    isStudentCheckedState
-  )
   const [, setShowUpdateDialog] = useRecoilState(showUpdateDialogState)
+  const [selectedStudents, setSelectedStudents] = useRecoilState(
+    selectedStudentsState
+  )
   return (
     <div className="datatable-filter">
       <div className="card">
@@ -82,14 +82,25 @@ const StudentsTable = ({ students, isEnrollment }: StudentsTableProps) => {
                 return (
                   <div>
                     <input
-                      onChange={() =>
-                        setIsStudentChecked({
-                          id: rowData.id,
-                          checked: true
+                      onChange={() => {
+                        if (selectedStudents.studentIds.includes(rowData.id)) {
+                          const filteredArray =
+                            selectedStudents.studentIds.filter(
+                              (id) => id !== rowData.id
+                            )
+                          setSelectedStudents((prev) => {
+                            return { studentIds: filteredArray }
+                          })
+                          return
+                        }
+                        setSelectedStudents((prev) => {
+                          return {
+                            studentIds: [...prev.studentIds, rowData.id]
+                          }
                         })
-                      }
+                      }}
                       value={rowData.id}
-                      checked={isStudentChecked.id === rowData.id}
+                      checked={selectedStudents.studentIds.includes(rowData.id)}
                       type="checkbox"
                       name="check"
                     />

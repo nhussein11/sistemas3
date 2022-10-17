@@ -5,13 +5,10 @@ import {
   defaultCourseChecked,
   isCourseCheckedState
 } from '../../atoms/courses/isCourseCheckedAtom'
+import { defaultSelectedStudents, selectedStudentsState } from '../../atoms/enrollments/selectedStudents'
 import { defaultErrorState, ErrorState } from '../../atoms/error/ErrorAtom'
 import { showErrorDialogState } from '../../atoms/error/showErrorDialog'
 import { StudentsFilterValueState } from '../../atoms/students/filterValueAtom'
-import {
-  defaultStudentChecked,
-  isStudentCheckedState
-} from '../../atoms/students/isStudentSelected'
 import { createNewEnrollment } from '../../services/enrollments/createNewEnrollment'
 import useCoursesQuery from '../courses/useCoursesQuery'
 import useStudentsQuery from '../students/useStudentsQuery'
@@ -24,8 +21,8 @@ const useDialogNewEnrollmentMutation = (queryId: string) => {
   const queryClient = useQueryClient()
   const studentsQuery = useStudentsQuery('students')
   const coursesQuery = useCoursesQuery('courses')
-  const [isStudentChecked, setIsStudentChecked] = useRecoilState(
-    isStudentCheckedState
+  const [selectedStudents, setSelectedStudents] = useRecoilState(
+    selectedStudentsState
   )
   const [studentsFilterValue] = useRecoilState(StudentsFilterValueState)
   const [coursesFilterValue] = useRecoilState(CoursesFilterValueState)
@@ -35,19 +32,21 @@ const useDialogNewEnrollmentMutation = (queryId: string) => {
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries([queryId])
-      academicYear.onChange(0)
-      setIsStudentChecked(defaultStudentChecked)
-      setIsCourseChecked(defaultCourseChecked)
       setErrorState(defaultErrorState)
     },
     onError: (error: any) => {
       setErrorState({ status: error.response.status, message: error.message })
       setShowErrorDialog(true)
+    },
+    onSettled: () => {
+      setSelectedStudents(defaultSelectedStudents)
+      setIsCourseChecked(defaultCourseChecked)
+      academicYear.onChange(0)
     }
   })
   const handleCreateNewEnrollment = () => {
     mutate({
-      studentId: isStudentChecked.id,
+      studentIds: selectedStudents.studentIds,
       courseId: isCourseChecked.id,
       academicYear: academicYear.value as number
     })
