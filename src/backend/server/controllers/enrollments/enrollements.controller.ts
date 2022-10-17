@@ -14,14 +14,21 @@ const getEnrollments = async () => {
 const createEnrollment = async (
   academicYear: number,
   courseId: string,
-  studentId: string
+  studentIds: string[]
 ) => {
   try {
-    const enrollmentCreated: Enrollment = await prisma.enrollment.create({
-      data: { academicYear, courseId, studentId }
-    })
+    const enrollmentData = studentIds.map((studentId) => ({
+      academicYear,
+      courseId,
+      studentId
+    }))
 
-    return enrollmentCreated
+    const enrollmentsCreated = await prisma.enrollment.createMany(
+      {
+        data: enrollmentData
+      }
+    )
+    return enrollmentsCreated
   } catch (error) {
     throw error
   }
