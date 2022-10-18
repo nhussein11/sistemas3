@@ -346,10 +346,28 @@ const createDefaultCourses = async () => {
   ]
 
   await prisma.product.createMany({ data: defaultProductsByDefaultCourses })
+
   const products: Product[] = await prisma.product.findMany({
     where: {
       category: CategoryEnum.COURSE
     }
+  })
+  
+  const virtualStore : Store = await prisma.store.findFirstOrThrow({
+    where: {
+      name: 'Deposito Virtual'
+    }
+  })
+
+  products.forEach(async (product:Product) => {
+    await prisma.stock.create({
+      data: {
+        productId: product.id,
+        storeId: virtualStore.id,
+        quantity: 1,
+        minQuantity: 1
+      }
+    })
   })
 
   const defaultCourses: Omit<Course, 'id'>[] = [
