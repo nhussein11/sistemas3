@@ -39,14 +39,14 @@ const NavBar = () => {
       items: [
         {
           label: 'Ingresos',
-          icon: 'pi pi-fw pi-file',
+          icon: 'pi pi-fw pi-plus',
           command: () => {
             router.push('/records?type=ing')
           }
         },
         {
           label: 'Egresos',
-          icon: 'pi pi-fw pi-file',
+          icon: 'pi pi-fw pi-minus',
           command: () => {
             router.push('/records?type=egr')
           }
