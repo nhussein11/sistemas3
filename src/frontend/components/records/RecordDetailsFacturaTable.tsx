@@ -12,13 +12,11 @@ const RecordDetailsFacturaTable = ({ previousRecordQuery, recordsQuery, setDispl
     previousRecordQuery.data?.previousRecords?.filter(
       (d: PreviousRecord) => d.higherRecordId === selectedRecord.id
     )
-  console.log(filteredDetails)
   const filteredRecords: Record[] =
   recordsQuery.data?.records?.filter(
-    (r: Record) => filteredDetails.map((fr: PreviousRecord) => r.id === fr.paidForRecordId)
+    (r: Record) => filteredDetails?.map((fr: PreviousRecord) => r.id === fr.paidForRecordId)
   )
 
-  console.log(filteredRecords)
   if (displayRecordFacturasDetailsTable) {
     return (
       <Dialog header="Detalles de Comprobante Fact" visible={displayRecordFacturasDetailsTable} style={{ width: '50vw' }} onHide={() => setDisplayRecordFacturasDetailsTable(false)}>
