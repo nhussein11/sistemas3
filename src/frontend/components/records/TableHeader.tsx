@@ -9,6 +9,7 @@ import { Dropdown } from 'primereact/dropdown'
 import useSuppliersFilter from '../../hooks/records/useSuppliersFilter'
 import { RecordNameEnum } from '@prisma/client'
 import useCustomerFilter from '../../hooks/records/useCustomersFilter'
+import { ToggleButton } from 'primereact/togglebutton'
 const TableHeader = ({
   setDisplayBasic,
   setDisplayRecordDetailsTable,
@@ -46,7 +47,6 @@ const TableHeader = ({
         placeholder="Selec Proveedor"
       />
         }
-
          <Dropdown
           value={selectedFilterSupplier.name}
           options={[RecordNameEnum.FACTURA_DUPLICADO, RecordNameEnum.FACTURA_ORIGINAL, RecordNameEnum.ORDEN_DE_COMPRA, RecordNameEnum.ORDEN_DE_PAGO]}
@@ -54,7 +54,11 @@ const TableHeader = ({
           placeholder="Tipo Factura"
         />
       </div>
-      <div className="actionsButtonsTable">
+      <div className="actionsButtonsTable" style={{ display: 'contents' }}>
+      {type === 'ing'
+        ? <ToggleButton offLabel="INGRESOS"/>
+
+        : <ToggleButton offLabel="EGRESOS"/>}
         <Button
           label="Nuevo"
           className="p-button-raised p-button-success"
