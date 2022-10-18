@@ -50,13 +50,6 @@ const NavBar = () => {
           command: () => {
             router.push('/records?type=egr')
           }
-        },
-        {
-          label: 'Inscripciones',
-          icon: 'pi pi-fw pi-dollar',
-          command: () => {
-            router.push('/enrollments')
-          }
         }
       ]
     },
@@ -92,7 +85,7 @@ const NavBar = () => {
       label: 'Ventas',
       icon: 'pi pi-fw pi-check',
       command: () => {
-        router.push('/sales')
+        router.push('/newRecord')
       }
     }
   ]
