@@ -8,7 +8,7 @@ const RecordDetailsTable = ({ setDisplayRecordDetailsTable, displayRecordDetails
   const { filteredDetailsTableData } = useRecordDetailsTable()
   if (displayRecordDetailsTable) {
     return (
-      <Dialog header="Detalles del Movimiento" visible={displayRecordDetailsTable} style={{ width: '50vw' }} onHide={() => setDisplayRecordDetailsTable(false)}>
+      <Dialog header="Detalles de Comprobante" visible={displayRecordDetailsTable} style={{ width: '50vw' }} onHide={() => setDisplayRecordDetailsTable(false)}>
         <DataTable value={filteredDetailsTableData} paginator className="p-datatable-customers" showGridlines rows={5} dataKey="id" responsiveLayout="scroll" emptyMessage="No se encontraron Detalles">
           <Column field="Product" header="Producto" body={(rowData) => rowData.productName} alignHeader={'center'} />
           <Column field="Deposito" header="Deposito" body={(rowData) => rowData.storeName} alignHeader={'center'} />
