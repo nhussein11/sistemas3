@@ -23,6 +23,7 @@ import NumberFormat from 'react-number-format'
 import usePreviousRecordsQuery from '../../hooks/previous-records/usePreviousRecordQuery'
 import RecordDetailsFacturaTable from './RecordDetailsFacturaTable'
 import useRecordsQuery from '../../hooks/records/useRecordsQuery'
+import { RecordNameEnum } from '@prisma/client'
 const RecordsTable = ({ records, type }: RecordsTableProps) => {
   const [, setDisplayBasic] = useState(false)
   const [displayRecordDetailsTable, setDisplayRecordDetailsTable] = useState(false)
@@ -63,9 +64,16 @@ const RecordsTable = ({ records, type }: RecordsTableProps) => {
                   <Button icon="pi pi-eye" iconPos="right" className="p-button-p-button-raised p-button-warning"
                   onClick={() => {
                     setSelectedRecord(rowData)
-                    type === 'ing'
-                      ? setDisplayRecordDetailsTable((prev: boolean) => !prev)
-                      : setDisplayRecordFacturasDetailsTable((prev: boolean) => !prev)
+                    switch (resolveRecordName(rowData.recordTypeId, recordTypesQuery)) {
+                      case RecordNameEnum.FACTURA_DUPLICADO:
+                      case RecordNameEnum.FACTURA_ORIGINAL:
+                        setDisplayRecordDetailsTable((prev: boolean) => !prev)
+                        break
+                      case RecordNameEnum.ORDEN_DE_COMPRA:
+                      case RecordNameEnum.ORDEN_DE_PAGO:
+                        setDisplayRecordFacturasDetailsTable((prev: boolean) => !prev)
+                        break
+                    }
                   }}
                   />
                   <Button icon="pi pi-trash" iconPos="right" className="p-button-p-button-raised p-button-danger"
