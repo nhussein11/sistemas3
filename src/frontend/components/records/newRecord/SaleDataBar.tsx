@@ -13,6 +13,7 @@ const SaleDataBar = ({
   function dropPerson () {
     switch (selectedRecordType.recordName) {
       case RecordNameEnum.FACTURA_ORIGINAL:
+      case RecordNameEnum.ORDEN_DE_PAGO:
         return (<Dropdown options={suppliers} value={selectedSupplier?.name} onChange={(e) => changeSupplier(e.target.value)} placeholder="Selec. Proveedor"/>)
       case RecordNameEnum.FACTURA_DUPLICADO:
         return (<Dropdown options={customers} value={selectedCustomer?.name} onChange={(e) => changeCustomer(e.target.value)} placeholder="Selec. Cliente"/>)
@@ -21,8 +22,7 @@ const SaleDataBar = ({
   }
   function dropStore () {
     switch (selectedRecordType.recordName) {
-      case RecordNameEnum.FACTURA_ORIGINAL:
-      case RecordNameEnum.FACTURA_DUPLICADO:
+      case 'xd':
         return (<Dropdown options={stores} value={selectedStore?.name} onChange={(e) => changeStore(e.target.value)} placeholder="Selec. Depósito"/>)
       default:
     }

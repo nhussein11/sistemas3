@@ -35,10 +35,23 @@ const NavBar = () => {
     },
     {
       label: 'Comprobantes',
-      icon: 'pi pi-fw pi-file',
-      command: () => {
-        router.push('/records')
-      }
+      icon: 'pi pi-fw pi-book',
+      items: [
+        {
+          label: 'Ingresos',
+          icon: 'pi pi-fw pi-plus',
+          command: () => {
+            router.push('/records?type=ing')
+          }
+        },
+        {
+          label: 'Egresos',
+          icon: 'pi pi-fw pi-minus',
+          command: () => {
+            router.push('/records?type=egr')
+          }
+        }
+      ]
     },
     {
       label: 'Educación',
@@ -72,7 +85,7 @@ const NavBar = () => {
       label: 'Ventas',
       icon: 'pi pi-fw pi-check',
       command: () => {
-        router.push('/sales')
+        router.push('/newRecord')
       }
     }
   ]

@@ -19,6 +19,7 @@ export type TableProps = {
 }
 export type RecordsTableProps = {
   records: Record[]
+  type: string | undefined
 }
 export type newSaleTableProductProps = {
   products: Product[]
@@ -152,8 +153,15 @@ export type RecordsDetailData = {
 export type RecordsTableHeaderProps = {
   setDisplayBasic: Dispatch<boolean>
   setDisplayRecordDetailsTable: Dispatch<boolean | ((prev: boolean) => boolean)>
+  type: string | undefined
 }
 export type DialogRecordDetailsProps = {
   setDisplayRecordDetailsTable: Dispatch<boolean | ((prev: boolean) => boolean)>
   displayRecordDetailsTable: boolean
+}
+export type DialogRecordFacturaDetailsProps = {
+  setDisplayRecordFacturasDetailsTable: Dispatch<boolean | ((prev: boolean) => boolean)>
+  displayRecordFacturasDetailsTable: boolean
+  previousRecordQuery: any
+  recordsQuery: any
 }

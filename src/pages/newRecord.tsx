@@ -25,7 +25,6 @@ const NewRecord: NextPage = () => {
   const recordAdress = useField({ initialValue: '', type: 'text' })
   const recordLetter = useField({ initialValue: '', type: 'text' })
   const recordNumber = useField({ initialValue: '', type: 'number' })
-
   const toast = useRef(null)
   const {
     handleCreateNewRecord,
@@ -55,12 +54,13 @@ const NewRecord: NextPage = () => {
   const [showTableProducts, setShowTableProducts] = useState(false)
   const [showTableRecords, setShowTableRecords] = useState(false)
   const [, setVisibleSelectorQuantity] = useState(false)
-
   function tableRecord () {
     switch (selectedRecordType.recordName) {
       case RecordNameEnum.FACTURA_ORIGINAL:
+      case RecordNameEnum.FACTURA_DUPLICADO:
         return (<TableAddedProducts products={selectedRecordDetails} productsQuery={productsQuery} storesQuery={storesQuery} ></TableAddedProducts>)
       case RecordNameEnum.ORDEN_DE_PAGO:
+      case RecordNameEnum.ORDEN_DE_COMPRA:
         return (<TableAddedRecords records={selectedRecords} customerQuery={customerQuery} supplierQuery={supplierQuery} detailsQuery={detailsQuery} ></TableAddedRecords>)
     }
   }
@@ -92,7 +92,7 @@ const NewRecord: NextPage = () => {
         <Splitter style={{ height: '100%' }}>
             <SplitterPanel>
                 <div className="card">
-                    <ToolBarProducts recordName={selectedRecordType.recordName} setVisibleTableProducts={() => setShowTableProducts(true)} setVisibleTableRecords={() => setShowTableRecords(true)}></ToolBarProducts>
+                    <ToolBarProducts recordName={selectedRecordType?.recordName} setVisibleTableProducts={() => setShowTableProducts(true)} setVisibleTableRecords={() => setShowTableRecords(true)}></ToolBarProducts>
                 </div>
                 <div className='card'>
                     {tableRecord()}

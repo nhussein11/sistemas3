@@ -82,8 +82,8 @@ const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdr
   const storesOptions = storesQuery?.data?.stores.map(
     (store: Store) => store.name
   )
-  const stockOptions = stocksQuery?.data?.stocks.filter(
-    (stock: Stock) => stock.storeId === selectedStore.id
+  const stockOptions = stocksQuery?.data?.stocks.map(
+    (stock: Stock) => stock
   )
   const recordsOptions = recordsQuery?.data?.records
   const customerOptions = customerQuery?.data?.customers.map(
