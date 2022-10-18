@@ -8,6 +8,7 @@ import { selectedFilterSupplierState } from '../frontend/atoms/records/selectedF
 import RecordsTable from '../frontend/components/records/RecordsTable'
 import useRecordsQuery from '../frontend/hooks/records/useRecordsQuery'
 import { filterRecords } from '../frontend/services/records/filterRecords'
+import { filterTypeRecord } from '../frontend/services/records/filterTypeRecord'
 
 const Home: NextPage = () => {
   const query2 = useRecordsQuery('records')
@@ -16,18 +17,19 @@ const Home: NextPage = () => {
   const [selectedFilterCustomer] = useRecoilState(selectedFilterCustomerState)
   let filteredRecords = filterRecords(query2?.data?.records, globalFilterValue)
   const { query } = useRouter()
-  if (query.type?.toString() === 'ing') {
-    filteredRecords =
-    selectedFilterSupplier.id === ''
-      ? filterRecords(query2?.data?.records, globalFilterValue)
-      : filterRecords(query2?.data?.records, globalFilterValue)?.filter(
-        (record) => record.supplierId === selectedFilterSupplier.id
-      )
-  } else {
-    selectedFilterCustomer.id === ''
-      ? filterRecords(query2?.data?.records, globalFilterValue)
+  const type = query.type?.toString()
+  if (type === 'ing') {
+    filteredRecords = selectedFilterCustomer.id === ''
+      ? filterTypeRecord(query2?.data?.records, type)
       : filterRecords(query2?.data?.records, globalFilterValue)?.filter(
         (record) => record.customerId === selectedFilterCustomer.id
+      )
+  } else {
+    filteredRecords =
+    selectedFilterSupplier.id === ''
+      ? filterTypeRecord(query2?.data?.records, 'egr')
+      : filterRecords(query2?.data?.records, globalFilterValue)?.filter(
+        (record) => record.supplierId === selectedFilterSupplier.id
       )
   }
 
@@ -38,7 +40,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="main-container">
-        <RecordsTable records={filteredRecords} type={query.type?.toString()} />
+        <RecordsTable records={filteredRecords} type={type} />
       </div>
     </div>
   )

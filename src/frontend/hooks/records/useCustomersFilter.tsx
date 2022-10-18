@@ -13,7 +13,7 @@ const useCustomerFilter = () => {
     selectedFilterCustomerState
   )
   const changeCustomer = (customerName: string) => {
-    const customer = parsedCustomers?.data?.customers.find(
+    const customer = CustomerQuery?.data?.customers.find(
       (c: Customer) => c.name === customerName
     )
     if (customer) {
