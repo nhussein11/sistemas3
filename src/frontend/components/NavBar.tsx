@@ -35,10 +35,30 @@ const NavBar = () => {
     },
     {
       label: 'Comprobantes',
-      icon: 'pi pi-fw pi-file',
-      command: () => {
-        router.push('/records')
-      }
+      icon: 'pi pi-fw pi-book',
+      items: [
+        {
+          label: 'Ingresos',
+          icon: 'pi pi-fw pi-file',
+          command: () => {
+            router.push('/records?type=ing')
+          }
+        },
+        {
+          label: 'Egresos',
+          icon: 'pi pi-fw pi-file',
+          command: () => {
+            router.push('/records?type=egr')
+          }
+        },
+        {
+          label: 'Inscripciones',
+          icon: 'pi pi-fw pi-dollar',
+          command: () => {
+            router.push('/enrollments')
+          }
+        }
+      ]
     },
     {
       label: 'Educación',
