@@ -31,12 +31,10 @@ const PanelTotal = ({ handleCreateNewRecord, handleCreateNewRecordForFacturas, r
               switch (recordName) {
                 case RecordNameEnum.FACTURA_DUPLICADO:
                 case RecordNameEnum.FACTURA_ORIGINAL:
-                  console.log('PRODUCTOS')
                   handleCreateNewRecord()
                   break
                 case RecordNameEnum.ORDEN_DE_COMPRA:
                 case RecordNameEnum.ORDEN_DE_PAGO:
-                  console.log('FACTURAS')
                   handleCreateNewRecordForFacturas()
                   break
               }
