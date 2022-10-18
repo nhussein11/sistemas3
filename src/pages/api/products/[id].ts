@@ -5,7 +5,7 @@ import {
   updateProductById,
   deleteProductById
 } from '../../../backend/server/controllers/products/products.controller'
-import { errorHandler } from '../../utils/errorResponseHandler'
+import { errorHandler } from '../../../backend/server/controllers/errors/errorResponseHandler'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const {

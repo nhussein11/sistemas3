@@ -3,7 +3,7 @@ import {
   createRecordDetails,
   getRecordsDetails
 } from '../../../backend/server/controllers/record-details/record-details.controller'
-import { errorHandler } from '../../utils/errorResponseHandler'
+import { errorHandler } from '../../../backend/server/controllers/errors/errorResponseHandler'
 
 export default async function recordsDetails (
   req: NextApiRequest,

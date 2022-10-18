@@ -3,7 +3,7 @@ import {
   createCourse,
   getCourses
 } from '../../../backend/server/controllers/courses/courses.controller'
-import { errorHandler } from '../../utils/errorResponseHandler'
+import { errorHandler } from '../../../backend/server/controllers/errors/errorResponseHandler'
 
 export default async function courses (
   req: NextApiRequest,

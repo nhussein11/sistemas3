@@ -5,7 +5,7 @@ import {
   getStudentById,
   updateStudentById
 } from '../../../backend/server/controllers/students/students.controller'
-import { errorHandler } from '../../utils/errorResponseHandler'
+import { errorHandler } from '../../../backend/server/controllers/errors/errorResponseHandler'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const {

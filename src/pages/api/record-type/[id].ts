@@ -2,7 +2,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { getRecordTypeById, updateRecordTypeById } from '../../../backend/server/controllers/record-types/record-types.controller'
 import { deleteRecordById } from '../../../backend/server/controllers/records/records.controller'
-import { errorHandler } from '../../utils/errorResponseHandler'
+import { errorHandler } from '../../../backend/server/controllers/errors/errorResponseHandler'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const {
