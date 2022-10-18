@@ -7,16 +7,19 @@ import { globalFilterValueState } from '../../atoms/globalFilterValueAtom'
 import { useRouter } from 'next/router'
 import { Dropdown } from 'primereact/dropdown'
 import useSuppliersFilter from '../../hooks/records/useSuppliersFilter'
+import { RecordNameEnum } from '@prisma/client'
+import useCustomerFilter from '../../hooks/records/useCustomersFilter'
 const TableHeader = ({
   setDisplayBasic,
-  setDisplayRecordDetailsTable
+  setDisplayRecordDetailsTable,
+  type
 }: RecordsTableHeaderProps) => {
   // eslint-disable-next-line no-unused-vars
   const [globalFilterValue, setGlobalFilterValue] = useRecoilState(
     globalFilterValueState
   )
-  const { parsedSuppliers, changeSupplier, selectedFilterSupplier } =
-    useSuppliersFilter()
+  const { parsedSuppliers, changeSupplier, selectedFilterSupplier } = useSuppliersFilter()
+  const { parsedCustomers, changeCustomer, selectedFilterCustomer } = useCustomerFilter()
   const router = useRouter()
   return (
     <div className="header-table">
@@ -29,11 +32,26 @@ const TableHeader = ({
             placeholder="Buscar"
           />
         </span>
-        <Dropdown
+        {type === 'ing'
+          ? <Dropdown
+        value={selectedFilterCustomer.name}
+        options={parsedCustomers}
+        onChange={(e) => changeCustomer(e.target.value)}
+        placeholder="Selec Cliente"
+      />
+          : <Dropdown
+        value={selectedFilterSupplier.name}
+        options={parsedSuppliers}
+        onChange={(e) => changeSupplier(e.target.value)}
+        placeholder="Selec Proveedor"
+      />
+        }
+
+         <Dropdown
           value={selectedFilterSupplier.name}
-          options={parsedSuppliers}
+          options={[RecordNameEnum.FACTURA_DUPLICADO, RecordNameEnum.FACTURA_ORIGINAL, RecordNameEnum.ORDEN_DE_COMPRA, RecordNameEnum.ORDEN_DE_PAGO]}
           onChange={(e) => changeSupplier(e.target.value)}
-          placeholder="Buscar"
+          placeholder="Tipo Factura"
         />
       </div>
       <div className="actionsButtonsTable">
