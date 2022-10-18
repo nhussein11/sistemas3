@@ -70,6 +70,7 @@ const createDefaultProducts = async () => {
 
 const createDefaultStores = async () => {
   const defaultStores: Omit<Store, 'id'>[] = [
+    { name: 'Deposito Virtual', address: 'Online' },
     { name: 'Deposito 1', address: 'Zona Centro' },
     { name: 'Deposito 2', address: 'Zona Sur' },
     { name: 'Deposito 3', address: 'Zona Norte' }
@@ -178,7 +179,7 @@ const createDefaultRecords = async () => {
       paidFor: false,
       recordTypeId: recordTypes[0].id,
       customerId: customers[0].id,
-      supplierId: ''
+      supplierId: null
     },
     {
       observation: 'Factura original de prueba',
@@ -188,7 +189,7 @@ const createDefaultRecords = async () => {
       paidFor: false,
       recordTypeId: recordTypes[0].id,
       customerId: customers[1].id,
-      supplierId: ''
+      supplierId: null
     }
   ]
   const defaultRecordsofSuppliers: Omit<Record, 'id' | 'datetime'>[] = [
@@ -199,7 +200,7 @@ const createDefaultRecords = async () => {
       recordNumber: 3,
       paidFor: false,
       recordTypeId: recordTypes[1].id,
-      customerId: '',
+      customerId: null,
       supplierId: suppliers[0].id
     },
     {
@@ -209,7 +210,7 @@ const createDefaultRecords = async () => {
       recordNumber: 4,
       paidFor: false,
       recordTypeId: recordTypes[1].id,
-      customerId: '',
+      customerId: null,
       supplierId: suppliers[1].id
     }
   ]
@@ -345,10 +346,28 @@ const createDefaultCourses = async () => {
   ]
 
   await prisma.product.createMany({ data: defaultProductsByDefaultCourses })
+
   const products: Product[] = await prisma.product.findMany({
     where: {
       category: CategoryEnum.COURSE
     }
+  })
+  
+  const virtualStore : Store = await prisma.store.findFirstOrThrow({
+    where: {
+      name: 'Deposito Virtual'
+    }
+  })
+
+  products.forEach(async (product:Product) => {
+    await prisma.stock.create({
+      data: {
+        productId: product.id,
+        storeId: virtualStore.id,
+        quantity: 1,
+        minQuantity: 1
+      }
+    })
   })
 
   const defaultCourses: Omit<Course, 'id'>[] = [

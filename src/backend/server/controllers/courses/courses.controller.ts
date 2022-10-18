@@ -1,5 +1,5 @@
 /* eslint-disable no-useless-catch */
-import { CategoryEnum, Course, Product } from '@prisma/client'
+import { CategoryEnum, Course, Product, Store } from '@prisma/client'
 import { prisma } from '../../../server/prisma-client/prisma-client'
 import {
   createProduct,
@@ -7,6 +7,8 @@ import {
   getProductById,
   updateProductById
 } from '../products/products.controller'
+import { createStock } from '../stocks/stock.controller'
+import { getStoreByIndex } from '../stores/stores.controller'
 
 const getCourses = async () => {
   try {
@@ -42,6 +44,15 @@ const createCourse = async (
       description,
       CategoryEnum.COURSE
     )
+
+    const storeCreatedToHandleCourses: Store = await getStoreByIndex(0)
+    await createStock(
+      productCreatedByNewCourse.id,
+      storeCreatedToHandleCourses.id,
+      1,
+      1
+    )
+
     const courseCreated: Course = await prisma.course.create({
       data: { name, hoursQuantity, productId: productCreatedByNewCourse.id }
     })
