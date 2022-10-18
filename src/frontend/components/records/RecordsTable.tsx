@@ -20,16 +20,21 @@ import useDetailsQuery from '../../hooks/details/useDetailsQuery'
 import { resolveRecordCustomerName } from '../../services/records/resolveRecordCustomerName'
 import getRecordTotal from '../../services/records/getRecordTotal'
 import NumberFormat from 'react-number-format'
-
-const RecordsTable = ({ records }: RecordsTableProps) => {
+import usePreviousRecordsQuery from '../../hooks/previous-records/usePreviousRecordQuery'
+import RecordDetailsFacturaTable from './RecordDetailsFacturaTable'
+import useRecordsQuery from '../../hooks/records/useRecordsQuery'
+const RecordsTable = ({ records, type }: RecordsTableProps) => {
   const [, setDisplayBasic] = useState(false)
   const [displayRecordDetailsTable, setDisplayRecordDetailsTable] = useState(false)
+  const [displayRecordFacturasDetailsTable, setDisplayRecordFacturasDetailsTable] = useState(false)
   const [, setSelectedRecord] = useRecoilState(selectedRecordState)
   const { handleDeleteRecord } = useDeleteRecordMutation('records')
   const recordTypesQuery = useRecordTypesQuery('record-types')
   const recordSupplierQuery = useRecordsSupplierQuery('suppliers')
   const recordCustomerQuery = useRecordsCustomerQuery('customers')
   const detailsQuery = useDetailsQuery('details')
+  const recordsQuery = useRecordsQuery('records')
+  const previousRecordQuery = usePreviousRecordsQuery('previous-record')
 
   return (
     <div className="datatable-filter">
@@ -45,8 +50,10 @@ const RecordsTable = ({ records }: RecordsTableProps) => {
           <Column field="Ammount" header="Monto" alignHeader={'center'} body={(rowData) => {
             return (<NumberFormat value={getRecordTotal(rowData.id, detailsQuery).totalAmmount} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'$'}></NumberFormat>)
           }}/>
-          <Column field="Nombre Proveedor" header="Proveedor" body={(rowData) => resolveRecordSupplierName(rowData.supplierId, recordSupplierQuery)} alignHeader={'center'}/>
-          <Column field="Nombre Cliente" header="Cliente" body={(rowData) => resolveRecordCustomerName(rowData.customerId, recordCustomerQuery)} alignHeader={'center'}/>
+          {type === 'ing'
+            ? <Column field="Nombre Cliente" header="Cliente" body={(rowData) => resolveRecordCustomerName(rowData.customerId, recordCustomerQuery)} alignHeader={'center'}/>
+            : <Column field="Nombre Proveedor" header="Proveedor" body={(rowData) => resolveRecordSupplierName(rowData.supplierId, recordSupplierQuery)} alignHeader={'center'}/>
+          }
           {/* <Column field="recordAdress" header="Dirección" body={(rowData) => rowData.address} alignHeader={'center'} /> */}
           <Column field="tipo" header="Tipo" body={(rowData) => rowData.letter} alignHeader={'center'} />
           <Column field="options" header="Opciones" alignHeader={'center'}
@@ -56,7 +63,9 @@ const RecordsTable = ({ records }: RecordsTableProps) => {
                   <Button icon="pi pi-eye" iconPos="right" className="p-button-p-button-raised p-button-warning"
                   onClick={() => {
                     setSelectedRecord(rowData)
-                    setDisplayRecordDetailsTable((prev: boolean) => !prev)
+                    type === 'ing'
+                      ? setDisplayRecordDetailsTable((prev: boolean) => !prev)
+                      : setDisplayRecordFacturasDetailsTable((prev: boolean) => !prev)
                   }}
                   />
                   <Button icon="pi pi-trash" iconPos="right" className="p-button-p-button-raised p-button-danger"
@@ -72,8 +81,9 @@ const RecordsTable = ({ records }: RecordsTableProps) => {
           />
         </DataTable>
       </div>
-      {/* <DialogNewRecord displayBasic={displayBasic} closeDialog={() => setDisplayBasic(false)}/> */}
       <RecordDetailsTable setDisplayRecordDetailsTable={setDisplayRecordDetailsTable} displayRecordDetailsTable={displayRecordDetailsTable}/>
+      <RecordDetailsFacturaTable previousRecordQuery={previousRecordQuery} recordsQuery={recordsQuery} setDisplayRecordFacturasDetailsTable={setDisplayRecordFacturasDetailsTable}
+      displayRecordFacturasDetailsTable={displayRecordFacturasDetailsTable}/>
       <DialogError></DialogError>
     </div>
   )
