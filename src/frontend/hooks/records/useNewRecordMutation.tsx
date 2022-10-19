@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { RecordType, Store, Stock, Customer, Supplier } from '@prisma/client'
+import { RecordType, Store, Stock, Customer, Supplier, RecordNameEnum, Record } from '@prisma/client'
 import { useRecoilState } from 'recoil'
 import { createNewRecord } from '../../services/records/createNewRecord'
 import { defaultStore, selectedStoreState } from '../../atoms/stores/selectedStoreAtom'
@@ -17,6 +17,7 @@ import useRecordTypesQuery from './useRecordTypesQuery'
 import useStoresQuery from '../stores/useStoresQuery'
 import useDetailsQuery from '../details/useDetailsQuery'
 import { useRouter } from 'next/router'
+import { findStoreName } from '../../services/stores/findStoreName'
 
 const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdress: any, recordLetter: any, recordNumber: any, toast: any) => {
   const queryClient = useQueryClient()
@@ -82,10 +83,37 @@ const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdr
   const storesOptions = storesQuery?.data?.stores.map(
     (store: Store) => store.name
   )
-  const stockOptions = stocksQuery?.data?.stocks.map(
-    (stock: Stock) => stock
-  )
-  const recordsOptions = recordsQuery?.data?.records
+  // const stockOptions = stocksQuery?.data?.stocks.map(
+  //   (stock: Stock) => stock
+  // )
+  let stockOptions = stocksQuery?.data?.stocks
+  switch (selectedRecordType.recordName) {
+    case RecordNameEnum.FACTURA_DUPLICADO:
+      stockOptions = stocksQuery?.data?.stocks.filter((stock: Stock) => {
+        return findStoreName(stock.storeId, storesQuery) === 'Deposito Virtual'
+      })
+      break
+    case RecordNameEnum.FACTURA_ORIGINAL:
+      stockOptions = stocksQuery?.data?.stocks.filter((stock: Stock) => {
+        return findStoreName(stock.storeId, storesQuery) !== 'Deposito Virtual'
+      })
+      break
+  }
+
+  let recordsOptions = recordsQuery?.data?.records
+  switch (selectedRecordType.recordName) {
+    case RecordNameEnum.ORDEN_DE_PAGO:
+      recordsOptions = recordsQuery?.data?.records.filter((record: Record) => {
+        return record.supplierId === selectedSupplier.id
+      })
+      break
+    case RecordNameEnum.ORDEN_DE_COMPRA:
+      recordsOptions = recordsQuery?.data?.records.filter((record: Record) => {
+        return record.customerId === selectedCustomer.id
+      })
+      break
+  }
+
   const customerOptions = customerQuery?.data?.customers.map(
     (customer: Customer) => customer.name
   )
