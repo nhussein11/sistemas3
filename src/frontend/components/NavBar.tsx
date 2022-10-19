@@ -80,7 +80,7 @@ const NavBar = () => {
         },
         {
           label: 'Inscripciones',
-          icon: 'pi pi-fw pi-dollar',
+          icon: 'pi pi-fw pi-file-edit',
           command: () => {
             router.push('/enrollments')
           }
