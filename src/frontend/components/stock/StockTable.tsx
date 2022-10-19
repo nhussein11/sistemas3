@@ -70,7 +70,7 @@ const StockTable = ({ stocks }: StockTableProps) => {
               return (
                 <div>
                   <Button
-                    icon="pi pi-truck"
+                    icon="pi pi-box"
                     iconPos="right"
                     className="p-button-p-button-raised p-button-warning"
                     onClick={() => {
