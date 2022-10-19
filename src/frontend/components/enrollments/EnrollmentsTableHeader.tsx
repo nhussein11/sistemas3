@@ -26,7 +26,7 @@ const EnrollmentsTableHeader = ({
       {!isDialog && (
         <div className="actionsButtonsTable">
           <Button
-            label="Nuevo"
+            label="Nueva Inscripción"
             className="p-button-raised p-button-success"
             onClick={() => setDisplayBasic(true)}
           />

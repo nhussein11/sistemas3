@@ -25,7 +25,7 @@ const StockTableHeader = ({ setDisplayBasic }:StockTableHeaderProps) => {
       </div>
       <div className="actionsButtonsTable">
         <Button
-          label="Nuevo"
+          label="Nuevo Stock"
           className="p-button-raised p-button-success"
           onClick={() => setDisplayBasic(true)}
         />

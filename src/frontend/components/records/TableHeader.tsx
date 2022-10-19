@@ -60,7 +60,7 @@ const TableHeader = ({
 
         : <ToggleButton offLabel="EGRESOS"/>}
         <Button
-          label="Nuevo"
+          label="Nuevo Comprobante"
           className="p-button-raised p-button-success"
           onClick={() => router.push('/newRecord')}
         />
