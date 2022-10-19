@@ -3,19 +3,21 @@ import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import { Button } from 'primereact/button'
 import NumberFormat from 'react-number-format'
-import { Product } from '@prisma/client'
+import { Stock } from '@prisma/client'
 import { findProductName } from '../../../services/products/findProductName'
 import { findStoreName } from '../../../services/stores/findStoreName'
 import { findProductPrice } from '../../../services/products/findProductPrice'
+import { useRecoilState } from 'recoil'
+import { selectedRecordDetailsState } from '../../../atoms/records/selectedRecordDetails'
 
 const TableAddedProducts = ({ products, productsQuery, storesQuery }: {products: Object[]; productsQuery: any; storesQuery: any }) => {
-  const actionBodyTemplateListProducts = (rowData: Product) => {
+  const [, setSelectedRecordDetails] = useRecoilState(selectedRecordDetailsState)
+  const actionBodyTemplateListProducts = (rowData: Stock) => {
     return (
     <React.Fragment>
         <Button icon="pi pi-trash" className="p-button p-button-danger "
         onClick={() => {
-          // setProduct(rowData)
-          // setVisibleSelectorQuantity(true)
+          setSelectedRecordDetails((details) => details.filter((d) => d.productId !== rowData.productId))
         }} />
     </React.Fragment>
     )
