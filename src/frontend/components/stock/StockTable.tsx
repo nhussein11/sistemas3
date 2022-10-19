@@ -31,7 +31,7 @@ const StockTable = ({ stocks }: StockTableProps) => {
           paginator
           className="p-datatable-customers"
           showGridlines
-          rows={10}
+          rows={5}
           dataKey="id"
           responsiveLayout="scroll"
           header={<StockTableHeader setDisplayBasic={setDisplayBasic} />}
@@ -70,9 +70,8 @@ const StockTable = ({ stocks }: StockTableProps) => {
               return (
                 <div>
                   <Button
-                    icon="pi pi-box"
+                    icon="pi pi-truck"
                     iconPos="right"
-                    label="Mover Stock"
                     className="p-button-p-button-raised p-button-warning"
                     onClick={() => {
                       setSelectedStock(rowData)
@@ -85,7 +84,6 @@ const StockTable = ({ stocks }: StockTableProps) => {
                   <Button
                     icon="pi pi-pencil"
                     iconPos="right"
-                    label="Editar Stock"
                     className="p-button-p-button-raised p-button-danger"
                     onClick={() => {
                       setSelectedStock(rowData)

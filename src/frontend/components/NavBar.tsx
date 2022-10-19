@@ -35,7 +35,7 @@ const NavBar = () => {
     },
     {
       label: 'Comprobantes',
-      icon: 'pi pi-fw pi-book',
+      icon: 'pi pi-fw pi-file',
       items: [
         {
           label: 'Ingresos',
@@ -49,6 +49,13 @@ const NavBar = () => {
           icon: 'pi pi-fw pi-minus',
           command: () => {
             router.push('/records?type=egr')
+          }
+        },
+        {
+          label: 'Nuevo',
+          icon: 'pi pi-fw pi-file',
+          command: () => {
+            router.push('/newRecord')
           }
         }
       ]
@@ -83,7 +90,7 @@ const NavBar = () => {
 
     {
       label: 'Ventas',
-      icon: 'pi pi-fw pi-check',
+      icon: 'pi pi-fw pi-dollar',
       command: () => {
         router.push('/newRecord')
       }

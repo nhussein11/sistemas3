@@ -66,7 +66,6 @@ const EnrollmentsTable = ({ enrollments, isDialog }: EnrollmentsTableProps) => {
                     <Button
                       icon="pi pi-pencil"
                       iconPos="right"
-                      label="Borrar"
                       className="p-button-p-button-raised p-button-danger"
                       onClick={() => {
                         handleDeleteEnrollment(rowData.id)

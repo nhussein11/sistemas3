@@ -29,7 +29,7 @@ const ProductsTable = ({ products }: TableProps) => {
           paginator
           className="p-datatable-customers"
           showGridlines
-          rows={10}
+          rows={4}
           dataKey="id"
           responsiveLayout="scroll"
           header={<TableHeader setDisplayBasic={setDisplayBasic} />}
@@ -78,7 +78,6 @@ const ProductsTable = ({ products }: TableProps) => {
                   <Button
                     icon="pi pi-pencil"
                     iconPos="right"
-                    label="Editar"
                     className="p-button-p-button-raised p-button-warning"
                     onClick={() => {
                       setSelectedProduct(rowData)
@@ -91,7 +90,6 @@ const ProductsTable = ({ products }: TableProps) => {
                   <Button
                     icon="pi pi-trash"
                     iconPos="right"
-                    label="Borrar"
                     className="p-button-p-button-raised p-button-danger"
                     onClick={() => {
                       setSelectedProduct(rowData)

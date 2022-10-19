@@ -26,7 +26,7 @@ const StoresTable = ({ stores }:StoresTableProps) => {
           paginator
           className="p-datatable-customers"
           showGridlines
-          rows={10}
+          rows={5}
           dataKey="id"
           responsiveLayout="scroll"
           header={<StoreTableHeader setDisplayBasic={setDisplayBasic} />}
@@ -53,7 +53,6 @@ const StoresTable = ({ stores }:StoresTableProps) => {
                   <Button
                   icon="pi pi-pencil"
                   iconPos="right"
-                  label="Editar"
                   className="p-button-p-button-raised p-button-warning"
                   onClick={() => {
                     setSelectedStore(rowData)
@@ -66,7 +65,6 @@ const StoresTable = ({ stores }:StoresTableProps) => {
                   <Button
                   icon="pi pi-trash"
                   iconPos="right"
-                  label="Borrar"
                   className="p-button-p-button-raised p-button-danger"
                   onClick={() => {
                     setSelectedStore(rowData)
