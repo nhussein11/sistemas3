@@ -7,28 +7,29 @@ import { selectedFilterCustomerState } from '../frontend/atoms/records/selectedF
 import { selectedFilterSupplierState } from '../frontend/atoms/records/selectedFilterSupplier'
 import RecordsTable from '../frontend/components/records/RecordsTable'
 import useRecordsQuery from '../frontend/hooks/records/useRecordsQuery'
+import useRecordTypesQuery from '../frontend/hooks/records/useRecordTypesQuery'
 import { filterRecords } from '../frontend/services/records/filterRecords'
 import { filterTypeRecord } from '../frontend/services/records/filterTypeRecord'
 
 const Home: NextPage = () => {
   const query2 = useRecordsQuery('records')
+  const recordTypesQuery = useRecordTypesQuery('record-types')
   const [globalFilterValue] = useRecoilState(globalFilterValueState)
   const [selectedFilterSupplier] = useRecoilState(selectedFilterSupplierState)
   const [selectedFilterCustomer] = useRecoilState(selectedFilterCustomerState)
   let filteredRecords = filterRecords(query2?.data?.records, globalFilterValue)
-  console.log('RECORDS', filteredRecords)
   const { query } = useRouter()
   const type = query.type?.toString()
   if (type === 'ing') {
     filteredRecords = selectedFilterCustomer.id === ''
-      ? filterTypeRecord(query2?.data?.records, type)
+      ? filterTypeRecord(query2?.data?.records, type, recordTypesQuery)
       : filterRecords(query2?.data?.records, globalFilterValue)?.filter(
         (record) => record.customerId === selectedFilterCustomer.id
       )
   } else {
     filteredRecords =
     selectedFilterSupplier.id === ''
-      ? filterTypeRecord(query2?.data?.records, 'egr')
+      ? filterTypeRecord(query2?.data?.records, 'egr', recordTypesQuery)
       : filterRecords(query2?.data?.records, globalFilterValue)?.filter(
         (record) => record.supplierId === selectedFilterSupplier.id
       )

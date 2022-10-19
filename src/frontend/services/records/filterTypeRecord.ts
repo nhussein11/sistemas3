@@ -1,13 +1,14 @@
-import { Record } from '@prisma/client'
+import { Record, RecordNameEnum } from '@prisma/client'
+import { resolveRecordName } from './resolveRecordName'
 
-export const filterTypeRecord = (records: Record[], type: string) => {
+export const filterTypeRecord = (records: Record[], type: string, recordTypesQuery: any) => {
   if (type === 'ing') {
     return records?.filter((record) => {
-      return record.recordTypeId.includes('cl8yuh53800825bpherclkqcq') || record.recordTypeId.includes('cl8yuh53800845bphnsy21uzl')
+      return resolveRecordName(record.recordTypeId, recordTypesQuery)?.includes(RecordNameEnum.FACTURA_DUPLICADO) || resolveRecordName(record.recordTypeId, recordTypesQuery)?.includes(RecordNameEnum.ORDEN_DE_COMPRA)
     })
   } else {
     return records?.filter((record) => {
-      return record.recordTypeId.includes('cl8yuh53800815bph5qvd49nj') || record.recordTypeId.includes('cl8yuh53800835bphf5rpzrng')
+      return resolveRecordName(record.recordTypeId, recordTypesQuery)?.includes(RecordNameEnum.FACTURA_ORIGINAL) || resolveRecordName(record.recordTypeId, recordTypesQuery)?.includes(RecordNameEnum.ORDEN_DE_PAGO)
     })
   }
 }
