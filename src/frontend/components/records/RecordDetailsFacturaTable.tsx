@@ -12,6 +12,7 @@ const RecordDetailsFacturaTable = ({ previousRecordQuery, recordsQuery, setDispl
     previousRecordQuery.data?.previousRecords?.filter(
       (d: PreviousRecord) => d.higherRecordId === selectedRecord.id
     )
+  console.log(filteredDetails)
   const arrayPaidFor = filteredDetails?.map((pr: PreviousRecord) => pr.paidForRecordId)
   // const filteredRecords: Record[] =
   // recordsQuery.data?.records?.filter(
