@@ -150,12 +150,12 @@ const createDefaultRecordTypes = async () => {
     {
       recordType: RecordTypeEnum.NEUTRAL,
       recordName: RecordNameEnum.ORDEN_DE_PAGO,
-      cause: 'Orden de Pago'
+      cause: 'Orden de Pago Proveedor'
     },
     {
       recordType: RecordTypeEnum.NEUTRAL,
-      recordName: RecordNameEnum.ORDEN_DE_COMPRA,
-      cause: 'Orden de Compra'
+      recordName: RecordNameEnum.ORDEN_DE_PAGO,
+      cause: 'Orden de Pago Cliente'
     }
   ]
 
@@ -179,7 +179,7 @@ const createDefaultRecords = async () => {
       paidFor: false,
       recordTypeId: recordTypes[0].id,
       customerId: customers[0].id,
-      supplierId: ''
+      supplierId: null
     },
     {
       observation: 'Factura original de prueba',
@@ -189,7 +189,7 @@ const createDefaultRecords = async () => {
       paidFor: false,
       recordTypeId: recordTypes[0].id,
       customerId: customers[1].id,
-      supplierId: ''
+      supplierId: null
     }
   ]
   const defaultRecordsofSuppliers: Omit<Record, 'id' | 'datetime'>[] = [
@@ -200,7 +200,7 @@ const createDefaultRecords = async () => {
       recordNumber: 3,
       paidFor: false,
       recordTypeId: recordTypes[1].id,
-      customerId: '',
+      customerId: null,
       supplierId: suppliers[0].id
     },
     {
@@ -210,7 +210,7 @@ const createDefaultRecords = async () => {
       recordNumber: 4,
       paidFor: false,
       recordTypeId: recordTypes[1].id,
-      customerId: '',
+      customerId: null,
       supplierId: suppliers[1].id
     }
   ]
