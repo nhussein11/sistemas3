@@ -82,8 +82,8 @@ model Record {
 
   Customer      Customer?       @relation(fields: [customerId], references: [id])
   customerId    String?
-  higherRecord  PreviousRecord? @relation("higherRecord")
-  paidForRecord PreviousRecord? @relation("paidForRecord")
+  higherRecord  PreviousRecord[] @relation("higherRecord")
+  paidForRecord PreviousRecord[] @relation("paidForRecord")
 
   @@map("record")
 }
@@ -91,9 +91,9 @@ model Record {
 model PreviousRecord {
   id              String @id @default(cuid())
   higherRecord    Record @relation("higherRecord", fields: [higherRecordId], references: [id])
-  higherRecordId  String @unique
+  higherRecordId  String 
   paidForRecord   Record @relation("paidForRecord", fields: [paidForRecordId], references: [id])
-  paidForRecordId String @unique
+  paidForRecordId String
 }
 
 model RecordType {
