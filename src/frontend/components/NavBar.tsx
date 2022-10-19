@@ -1,36 +1,42 @@
 import { Button } from 'primereact/button'
 import { Menubar } from 'primereact/menubar'
 import { useRouter } from 'next/router'
+import { useRecoilState } from 'recoil'
+import { isLoadState } from '../atoms/isLoadState'
 
 const NavBar = () => {
   const router = useRouter()
+  const [, setLoading] = useRecoilState(isLoadState)
   const items = [
     {
       label: 'Inicio',
       icon: 'pi pi-fw pi-home',
       command: () => {
-        router.push('/')
+        router.replace('/')
       }
     },
     {
       label: 'Productos',
       icon: 'pi pi-fw pi-box',
       command: () => {
-        router.push('/productos')
+        setLoading(true)
+        router.replace('/productos')
       }
     },
     {
       label: 'Stock',
       icon: 'pi pi-fw pi-table',
       command: () => {
-        router.push('/stock')
+        setLoading(true)
+        router.replace('/stock')
       }
     },
     {
       label: 'Depositos',
       icon: 'pi pi-fw pi-database',
       command: () => {
-        router.push('/stores')
+        setLoading(true)
+        router.replace('/stores')
       }
     },
     {
@@ -41,21 +47,24 @@ const NavBar = () => {
           label: 'Ingresos',
           icon: 'pi pi-fw pi-plus',
           command: () => {
-            router.push('/records?type=ing')
+            setLoading(true)
+            router.replace('/records?type=ing')
           }
         },
         {
           label: 'Egresos',
           icon: 'pi pi-fw pi-minus',
           command: () => {
-            router.push('/records?type=egr')
+            setLoading(true)
+            router.replace('/records?type=egr')
           }
         },
         {
           label: 'Nuevo',
           icon: 'pi pi-fw pi-file',
           command: () => {
-            router.push('/newRecord')
+            setLoading(true)
+            router.replace('/newRecord')
           }
         }
       ]
@@ -68,21 +77,24 @@ const NavBar = () => {
           label: 'Cursos',
           icon: 'pi pi-fw pi-book',
           command: () => {
-            router.push('/courses')
+            setLoading(true)
+            router.replace('/courses')
           }
         },
         {
           label: 'Alumnos',
           icon: 'pi pi-fw pi-users',
           command: () => {
-            router.push('/students')
+            setLoading(true)
+            router.replace('/students')
           }
         },
         {
           label: 'Inscripciones',
           icon: 'pi pi-fw pi-dollar',
           command: () => {
-            router.push('/enrollments')
+            setLoading(true)
+            router.replace('/enrollments')
           }
         }
       ]
@@ -92,7 +104,8 @@ const NavBar = () => {
       label: 'Ventas',
       icon: 'pi pi-fw pi-dollar',
       command: () => {
-        router.push('/newRecord')
+        setLoading(true)
+        router.replace('/newRecord')
       }
     }
   ]

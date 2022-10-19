@@ -11,6 +11,7 @@ import { StockTableProps } from '../../@types/frontend.types'
 import StockTableHeader from './StockTableHeader'
 import useProductsQuery from '../../hooks/products/useProductsQuery'
 import useStoresQuery from '../../hooks/stores/useStoresQuery'
+import { isLoadState } from '../../atoms/isLoadState'
 import {
   showUpdateDialogState,
   UPDATE_MODES_ENUM
@@ -23,12 +24,14 @@ const StockTable = ({ stocks }: StockTableProps) => {
   const storesQuery = useStoresQuery('stores')
   const [, setSelectedStock] = useRecoilState(selectedStockState)
   const [, setShowUpdateDialog] = useRecoilState(showUpdateDialogState)
+  const [loading] = useRecoilState(isLoadState)
   return (
     <div className="datatable-filter">
       <div className="card">
         <DataTable
           value={stocks}
           paginator
+          loading={loading}
           className="p-datatable-customers"
           showGridlines
           rows={5}

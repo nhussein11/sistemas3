@@ -15,18 +15,21 @@ import {
   showUpdateDialogState,
   UPDATE_MODES_ENUM
 } from '../../atoms/showUpdateDialogAtom'
+import { isLoadState } from '../../atoms/isLoadState'
 
 const ProductsTable = ({ products }: TableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
   const { handleDeleteProduct } = useDeleteProductMutation('products')
   const [, setSelectedProduct] = useRecoilState(selectedProductState)
   const [, setShowUpdateDialog] = useRecoilState(showUpdateDialogState)
+  const [loading] = useRecoilState(isLoadState)
   return (
     <div className="datatable-filter">
       <div className="card">
         <DataTable
           value={products}
           paginator
+          loading={loading}
           className="p-datatable-customers"
           showGridlines
           rows={4}

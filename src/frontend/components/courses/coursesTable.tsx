@@ -18,6 +18,7 @@ import useDeleteCourseMutation from '../../hooks/courses/useDeleteCourseMutation
 import { isCourseCheckedState } from '../../atoms/courses/isCourseCheckedAtom'
 import EnrollmentsDialog from './EnrollmentsDialog'
 import { showEnrollmentsDialogState } from '../../atoms/courses/showEnrollmentsDialog'
+import { isLoadState } from '../../atoms/isLoadState'
 const CoursesTable = ({ courses, isEnrollment }: CoursesTableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
   const { handleDeleteCourse } = useDeleteCourseMutation('course')
@@ -28,12 +29,14 @@ const CoursesTable = ({ courses, isEnrollment }: CoursesTableProps) => {
   const [, setShowEnrollmentsDialog] = useRecoilState(
     showEnrollmentsDialogState
   )
+  const [loading] = useRecoilState(isLoadState)
   return (
     <div className="datatable-filter">
       <div className="card">
         <DataTable
           value={courses}
           paginator
+          loading={loading}
           className="p-datatable-customers"
           showGridlines
           rows={10}

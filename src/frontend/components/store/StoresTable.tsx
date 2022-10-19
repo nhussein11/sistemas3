@@ -11,12 +11,14 @@ import StoreTableHeader from './StoreTableHeader'
 import { useRecoilState } from 'recoil'
 import { selectedStoreState } from '../../atoms/stores/selectedStoreAtom'
 import useDeleteStoreMutation from '../../hooks/stores/useDeleteStoreMutation'
+import { isLoadState } from '../../atoms/isLoadState'
 
 const StoresTable = ({ stores }:StoresTableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
   const [, setShowUpdateDialog] = useRecoilState(showUpdateDialogState)
   const [, setSelectedStore] = useRecoilState(selectedStoreState)
   const { handleDeleteStore } = useDeleteStoreMutation('stores')
+  const [loading] = useRecoilState(isLoadState)
 
   return (
     <div className="datatable-filter">
@@ -24,6 +26,7 @@ const StoresTable = ({ stores }:StoresTableProps) => {
         <DataTable
           value={stores}
           paginator
+          loading={loading}
           className="p-datatable-customers"
           showGridlines
           rows={5}

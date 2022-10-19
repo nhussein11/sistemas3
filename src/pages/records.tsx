@@ -16,6 +16,7 @@ const Home: NextPage = () => {
   const [selectedFilterSupplier] = useRecoilState(selectedFilterSupplierState)
   const [selectedFilterCustomer] = useRecoilState(selectedFilterCustomerState)
   let filteredRecords = filterRecords(query2?.data?.records, globalFilterValue)
+  console.log('RECORDS', filteredRecords)
   const { query } = useRouter()
   const type = query.type?.toString()
   if (type === 'ing') {
@@ -32,6 +33,7 @@ const Home: NextPage = () => {
         (record) => record.supplierId === selectedFilterSupplier.id
       )
   }
+  console.log('RECORDS', filteredRecords)
 
   return (
     <div>

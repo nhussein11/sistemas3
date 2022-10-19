@@ -16,6 +16,7 @@ import { selectedStudentState } from '../../atoms/students/selectedStudentAtom'
 import useDeleteStudentMutation from '../../hooks/students/useDeleteStudentMutation'
 import { parseDate } from '../../services/records/parseDate'
 import { selectedStudentsState } from '../../atoms/enrollments/selectedStudents'
+import { isLoadState } from '../../atoms/isLoadState'
 const StudentsTable = ({ students, isEnrollment }: StudentsTableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
   const { handleDeleteStudent } = useDeleteStudentMutation('students')
@@ -24,12 +25,14 @@ const StudentsTable = ({ students, isEnrollment }: StudentsTableProps) => {
   const [selectedStudents, setSelectedStudents] = useRecoilState(
     selectedStudentsState
   )
+  const [loading] = useRecoilState(isLoadState)
   return (
     <div className="datatable-filter">
       <div className="card">
         <DataTable
           value={students}
           paginator
+          loading={loading}
           className="p-datatable-customers"
           showGridlines
           rows={10}

@@ -12,16 +12,20 @@ import useCoursesQuery from '../../hooks/courses/useCoursesQuery'
 import useStudentsQuery from '../../hooks/students/useStudentsQuery'
 import { findStudentName } from '../../services/enrollments/findStudentName'
 import useDeleteEnrollmentMutation from '../../hooks/enrollments/useDeleteEnrollmentMutation'
+import { isLoadState } from '../../atoms/isLoadState'
+import { useRecoilState } from 'recoil'
 const EnrollmentsTable = ({ enrollments, isDialog }: EnrollmentsTableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
   const coursesQuery = useCoursesQuery('courses')
   const studentsQuery = useStudentsQuery('students')
   const { handleDeleteEnrollment } = useDeleteEnrollmentMutation('enrollments')
+  const [loading] = useRecoilState(isLoadState)
   return (
     <div className="datatable-filter">
       <div className="card">
         <DataTable
           value={enrollments}
+          loading={loading}
           paginator
           className="p-datatable-customers"
           showGridlines
