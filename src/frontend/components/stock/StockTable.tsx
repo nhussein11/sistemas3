@@ -11,6 +11,7 @@ import { StockTableProps } from '../../@types/frontend.types'
 import StockTableHeader from './StockTableHeader'
 import useProductsQuery from '../../hooks/products/useProductsQuery'
 import useStoresQuery from '../../hooks/stores/useStoresQuery'
+import { isLoadState } from '../../atoms/isLoadState'
 import {
   showUpdateDialogState,
   UPDATE_MODES_ENUM
@@ -23,15 +24,17 @@ const StockTable = ({ stocks }: StockTableProps) => {
   const storesQuery = useStoresQuery('stores')
   const [, setSelectedStock] = useRecoilState(selectedStockState)
   const [, setShowUpdateDialog] = useRecoilState(showUpdateDialogState)
+  const [loading] = useRecoilState(isLoadState)
   return (
     <div className="datatable-filter">
       <div className="card">
         <DataTable
           value={stocks}
           paginator
+          loading={loading}
           className="p-datatable-customers"
           showGridlines
-          rows={10}
+          rows={5}
           dataKey="id"
           responsiveLayout="scroll"
           header={<StockTableHeader setDisplayBasic={setDisplayBasic} />}
@@ -72,7 +75,6 @@ const StockTable = ({ stocks }: StockTableProps) => {
                   <Button
                     icon="pi pi-box"
                     iconPos="right"
-                    label="Mover Stock"
                     className="p-button-p-button-raised p-button-warning"
                     onClick={() => {
                       setSelectedStock(rowData)
@@ -85,7 +87,6 @@ const StockTable = ({ stocks }: StockTableProps) => {
                   <Button
                     icon="pi pi-pencil"
                     iconPos="right"
-                    label="Editar Stock"
                     className="p-button-p-button-raised p-button-danger"
                     onClick={() => {
                       setSelectedStock(rowData)

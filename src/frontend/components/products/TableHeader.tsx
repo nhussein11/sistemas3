@@ -24,7 +24,7 @@ const TableHeader = ({ setDisplayBasic }: TableHeaderProps) => {
       </div>
       <div className="actionsButtonsTable">
         <Button
-          label="Nuevo"
+          label="Nuevo Producto"
           className="p-button-raised p-button-success"
           onClick={() => setDisplayBasic(true)}
         />

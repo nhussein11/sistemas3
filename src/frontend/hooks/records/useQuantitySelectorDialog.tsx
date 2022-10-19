@@ -10,7 +10,7 @@ const useQuantitySelectorDialog = () => {
   const productsQuery = useProductsQuery('products')
   const [showQuantitySelectorDialog, setShowQuantitySelectorDialog] = useRecoilState(showQuantitySelectorDialogState)
   const [, setAmmount] = useRecoilState(ammountRecordAtomState)
-  const quantity = useField({ type: 'number', initialValue: 0 })
+  const quantity = useField({ type: 'number', initialValue: 1 })
   const [, setSelectedRecordDetails] = useRecoilState(selectedRecordDetailsState)
   const addDetail = () => {
     setSelectedRecordDetails((prev) => [

@@ -23,7 +23,7 @@ const StoreTableHeader = ({ setDisplayBasic }:TableHeaderProps) => {
       </div>
       <div className="actionsButtonsTable">
         <Button
-          label="Nuevo"
+          label="Nuevo Depósito"
           className="p-button-raised p-button-success"
           onClick={() => setDisplayBasic(true)}
         />

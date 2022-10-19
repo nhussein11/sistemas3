@@ -11,12 +11,14 @@ import StoreTableHeader from './StoreTableHeader'
 import { useRecoilState } from 'recoil'
 import { selectedStoreState } from '../../atoms/stores/selectedStoreAtom'
 import useDeleteStoreMutation from '../../hooks/stores/useDeleteStoreMutation'
+import { isLoadState } from '../../atoms/isLoadState'
 
 const StoresTable = ({ stores }:StoresTableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
   const [, setShowUpdateDialog] = useRecoilState(showUpdateDialogState)
   const [, setSelectedStore] = useRecoilState(selectedStoreState)
   const { handleDeleteStore } = useDeleteStoreMutation('stores')
+  const [loading] = useRecoilState(isLoadState)
 
   return (
     <div className="datatable-filter">
@@ -24,9 +26,10 @@ const StoresTable = ({ stores }:StoresTableProps) => {
         <DataTable
           value={stores}
           paginator
+          loading={loading}
           className="p-datatable-customers"
           showGridlines
-          rows={10}
+          rows={5}
           dataKey="id"
           responsiveLayout="scroll"
           header={<StoreTableHeader setDisplayBasic={setDisplayBasic} />}
@@ -53,7 +56,6 @@ const StoresTable = ({ stores }:StoresTableProps) => {
                   <Button
                   icon="pi pi-pencil"
                   iconPos="right"
-                  label="Editar"
                   className="p-button-p-button-raised p-button-warning"
                   onClick={() => {
                     setSelectedStore(rowData)
@@ -66,7 +68,6 @@ const StoresTable = ({ stores }:StoresTableProps) => {
                   <Button
                   icon="pi pi-trash"
                   iconPos="right"
-                  label="Borrar"
                   className="p-button-p-button-raised p-button-danger"
                   onClick={() => {
                     setSelectedStore(rowData)

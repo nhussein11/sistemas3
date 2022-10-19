@@ -24,6 +24,7 @@ import usePreviousRecordsQuery from '../../hooks/previous-records/usePreviousRec
 import RecordDetailsFacturaTable from './RecordDetailsFacturaTable'
 import useRecordsQuery from '../../hooks/records/useRecordsQuery'
 import { RecordNameEnum } from '@prisma/client'
+import { isLoadState } from '../../atoms/isLoadState'
 const RecordsTable = ({ records, type }: RecordsTableProps) => {
   const [, setDisplayBasic] = useState(false)
   const [displayRecordDetailsTable, setDisplayRecordDetailsTable] = useState(false)
@@ -36,11 +37,12 @@ const RecordsTable = ({ records, type }: RecordsTableProps) => {
   const detailsQuery = useDetailsQuery('details')
   const recordsQuery = useRecordsQuery('records')
   const previousRecordQuery = usePreviousRecordsQuery('previous-record')
+  const [loading] = useRecoilState(isLoadState)
 
   return (
     <div className="datatable-filter">
       <div className="card">
-        <DataTable value={records} paginator className="p-datatable-customers" showGridlines rows={5} dataKey="id" responsiveLayout="scroll"
+        <DataTable value={records} paginator loading={loading} className="p-datatable-customers" showGridlines rows={5} dataKey="id" responsiveLayout="scroll"
           emptyMessage="No se encontraron Comprobantes"
           header={<TableHeader type={type} setDisplayRecordDetailsTable={setDisplayRecordDetailsTable} setDisplayBasic={setDisplayBasic}/>}>
           <Column field="ID" header="Codigo" body={(rowData) => (rowData.recordNumber)} alignHeader={'center'} />

@@ -15,21 +15,24 @@ import {
   showUpdateDialogState,
   UPDATE_MODES_ENUM
 } from '../../atoms/showUpdateDialogAtom'
+import { isLoadState } from '../../atoms/isLoadState'
 
 const ProductsTable = ({ products }: TableProps) => {
   const [displayBasic, setDisplayBasic] = useState(false)
   const { handleDeleteProduct } = useDeleteProductMutation('products')
   const [, setSelectedProduct] = useRecoilState(selectedProductState)
   const [, setShowUpdateDialog] = useRecoilState(showUpdateDialogState)
+  const [loading] = useRecoilState(isLoadState)
   return (
     <div className="datatable-filter">
       <div className="card">
         <DataTable
           value={products}
           paginator
+          loading={loading}
           className="p-datatable-customers"
           showGridlines
-          rows={10}
+          rows={4}
           dataKey="id"
           responsiveLayout="scroll"
           header={<TableHeader setDisplayBasic={setDisplayBasic} />}
@@ -78,7 +81,6 @@ const ProductsTable = ({ products }: TableProps) => {
                   <Button
                     icon="pi pi-pencil"
                     iconPos="right"
-                    label="Editar"
                     className="p-button-p-button-raised p-button-warning"
                     onClick={() => {
                       setSelectedProduct(rowData)
@@ -91,7 +93,6 @@ const ProductsTable = ({ products }: TableProps) => {
                   <Button
                     icon="pi pi-trash"
                     iconPos="right"
-                    label="Borrar"
                     className="p-button-p-button-raised p-button-danger"
                     onClick={() => {
                       setSelectedProduct(rowData)

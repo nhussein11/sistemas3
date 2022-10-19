@@ -3,10 +3,12 @@ import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import { Button } from 'primereact/button'
 import NumberFormat from 'react-number-format'
-import { Product } from '@prisma/client'
 import { resolveRecordCustomerName } from '../../../services/records/resolveRecordCustomerName'
 import { resolveRecordSupplierName } from '../../../services/records/resolveRecordSupplierName'
 import getRecordTotal from '../../../services/records/getRecordTotal'
+import { selectedRecordsState } from '../../../atoms/records/selectedRecords'
+import { useRecoilState } from 'recoil'
+import { ammountRecordAtomState } from '../../../atoms/records/ammountRecordAtom'
 
 const TableAddedRecords = ({
   records,
@@ -19,13 +21,18 @@ const TableAddedRecords = ({
   supplierQuery: any
   detailsQuery: any
 }) => {
-  const actionBodyTemplateListProducts = (rowData: Product) => {
+  const [, setSelectedRecordDetails] = useRecoilState(selectedRecordsState)
+  const [, setAmmount] = useRecoilState(ammountRecordAtomState)
+  const actionBodyTemplateListProducts = (rowData: any) => {
     return (
       <React.Fragment>
         <Button
           icon="pi pi-trash"
           className="p-button p-button-danger "
-          onClick={() => {}}
+          onClick={() => {
+            setSelectedRecordDetails((details) => details.filter((d) => d.recordId !== rowData.recordId))
+            setAmmount((prev) => ({ ammount: prev.ammount - getRecordTotal(rowData.recordId, detailsQuery).totalAmmount }))
+          }}
         />
       </React.Fragment>
     )
