@@ -9,15 +9,18 @@ import { findStoreName } from '../../../services/stores/findStoreName'
 import { findProductPrice } from '../../../services/products/findProductPrice'
 import { useRecoilState } from 'recoil'
 import { selectedRecordDetailsState } from '../../../atoms/records/selectedRecordDetails'
+import { ammountRecordAtomState } from '../../../atoms/records/ammountRecordAtom'
 
 const TableAddedProducts = ({ products, productsQuery, storesQuery }: {products: Object[]; productsQuery: any; storesQuery: any }) => {
   const [, setSelectedRecordDetails] = useRecoilState(selectedRecordDetailsState)
+  const [, setAmmount] = useRecoilState(ammountRecordAtomState)
   const actionBodyTemplateListProducts = (rowData: Stock) => {
     return (
     <React.Fragment>
         <Button icon="pi pi-trash" className="p-button p-button-danger "
         onClick={() => {
           setSelectedRecordDetails((details) => details.filter((d) => d.productId !== rowData.productId))
+          setAmmount((prev) => ({ ammount: prev.ammount - (findProductPrice(rowData.productId, productsQuery) * parseFloat(rowData.quantity.toString() ? rowData.quantity.toString() : '0')) }))
         }} />
     </React.Fragment>
     )

@@ -8,6 +8,7 @@ import { resolveRecordSupplierName } from '../../../services/records/resolveReco
 import getRecordTotal from '../../../services/records/getRecordTotal'
 import { selectedRecordsState } from '../../../atoms/records/selectedRecords'
 import { useRecoilState } from 'recoil'
+import { ammountRecordAtomState } from '../../../atoms/records/ammountRecordAtom'
 
 const TableAddedRecords = ({
   records,
@@ -21,6 +22,7 @@ const TableAddedRecords = ({
   detailsQuery: any
 }) => {
   const [, setSelectedRecordDetails] = useRecoilState(selectedRecordsState)
+  const [, setAmmount] = useRecoilState(ammountRecordAtomState)
   const actionBodyTemplateListProducts = (rowData: any) => {
     return (
       <React.Fragment>
@@ -29,6 +31,7 @@ const TableAddedRecords = ({
           className="p-button p-button-danger "
           onClick={() => {
             setSelectedRecordDetails((details) => details.filter((d) => d.recordId !== rowData.recordId))
+            setAmmount((prev) => ({ ammount: prev.ammount - getRecordTotal(rowData.recordId, detailsQuery).totalAmmount }))
           }}
         />
       </React.Fragment>
