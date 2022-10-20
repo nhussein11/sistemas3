@@ -91,6 +91,14 @@ const NavBar = () => {
         },
         {
           label: 'Inscripciones',
+          icon: 'pi pi-fw pi-user-edit',
+          command: () => {
+            setLoading(true)
+            router.replace('/enrollments')
+          }
+        },
+        {
+          label: 'Cobros Cursos',
           icon: 'pi pi-fw pi-dollar',
           command: () => {
             setLoading(true)
@@ -99,10 +107,17 @@ const NavBar = () => {
         }
       ]
     },
-
     {
       label: 'Ventas',
       icon: 'pi pi-fw pi-dollar',
+      command: () => {
+        setLoading(true)
+        router.replace('/newRecord')
+      }
+    },
+    {
+      label: 'Compras',
+      icon: 'pi pi-fw pi-shopping-cart',
       command: () => {
         setLoading(true)
         router.replace('/newRecord')
