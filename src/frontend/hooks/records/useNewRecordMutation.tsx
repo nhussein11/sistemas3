@@ -17,9 +17,10 @@ import useRecordTypesQuery from './useRecordTypesQuery'
 import useStoresQuery from '../stores/useStoresQuery'
 import useDetailsQuery from '../details/useDetailsQuery'
 import { useRouter } from 'next/router'
+import { selectedRecordLetterState } from '../../atoms/records/selectedRecordLetter'
 // import { findStoreName } from '../../services/stores/findStoreName'
 
-const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdress: any, recordLetter: any, recordNumber: any, toast: any) => {
+const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdress: any, recordNumber: any, toast: any) => {
   const queryClient = useQueryClient()
   const router = useRouter()
   const recordTypesQuery = useRecordTypesQuery('record-type')
@@ -36,6 +37,7 @@ const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdr
   const [selectedCustomer, setSelectedCustomer] = useRecoilState(selectedCustomerState)
   const [selectedSupplier, setSelectedSupplier] = useRecoilState(selectedSupplierState)
   const [selectedRecordType, setSelectedRecordType] = useRecoilState(selectedRecordTypeState)
+  const [selectedRecordLetter, setSelectedRecordLetter] = useRecoilState(selectedRecordLetterState)
   const changeRecordType = (name: string) => {
     setSelectedRecordType(recordTypesQuery.data?.recordsTypes.find((recordType: RecordType) => recordType.recordName === name))
   }
@@ -47,6 +49,9 @@ const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdr
   }
   const changeCustomer = (name: string) => {
     setSelectedCustomer(customerQuery.data?.customers.find((customer: Customer) => customer.name === name))
+  }
+  const changeLetter = (name: string) => {
+    setSelectedRecordLetter(name)
   }
 
   const { mutate } = useMutation(createNewRecord, {
@@ -68,7 +73,7 @@ const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdr
     mutate({
       observation: recordObservation.value as string,
       address: recordAdress.value as string,
-      letter: recordLetter.value as string,
+      letter: selectedRecordLetter,
       recordNumber: recordNumber.value as number,
       paidFor: false,
       recordTypeId: selectedRecordType.id,
@@ -126,10 +131,12 @@ const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdr
     changeRecordType,
     changeSupplier,
     changeCustomer,
+    changeLetter,
     selectedRecordType,
     selectedStore,
     selectedCustomer,
     selectedSupplier,
+    selectedRecordLetter,
     recordTypesOptions,
     storesOptions,
     stockOptions,
@@ -138,7 +145,6 @@ const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdr
     recordsOptions,
     recordObservation,
     recordAdress,
-    recordLetter,
     recordNumber,
     productsQuery,
     storesQuery,

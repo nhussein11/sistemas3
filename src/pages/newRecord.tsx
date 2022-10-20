@@ -23,7 +23,6 @@ import useField from '../frontend/hooks/useField'
 const NewRecord: NextPage = () => {
   const recordObservation = useField({ initialValue: '', type: 'text' })
   const recordAdress = useField({ initialValue: '', type: 'text' })
-  const recordLetter = useField({ initialValue: '', type: 'text' })
   const recordNumber = useField({ initialValue: '', type: 'number' })
   const toast = useRef(null)
   const {
@@ -32,10 +31,12 @@ const NewRecord: NextPage = () => {
     changeRecordType,
     changeSupplier,
     changeCustomer,
+    changeLetter,
     selectedRecordType,
     selectedStore,
     selectedCustomer,
     selectedSupplier,
+    selectedRecordLetter,
     recordTypesOptions,
     storesOptions,
     stockOptions,
@@ -47,8 +48,8 @@ const NewRecord: NextPage = () => {
     customerQuery,
     supplierQuery,
     detailsQuery
-  } = useNewRecordMutation('records', recordObservation, recordAdress, recordLetter, recordNumber, toast)
-  const { handleCreateNewRecordForFacturas } = useNewRecordForFacturasMutation('previous-record', recordObservation, recordAdress, recordLetter, recordNumber, toast)
+  } = useNewRecordMutation('records', recordObservation, recordAdress, recordNumber, toast)
+  const { handleCreateNewRecordForFacturas } = useNewRecordForFacturasMutation('previous-record', recordObservation, recordAdress, recordNumber, toast)
   const [selectedRecordDetails] = useRecoilState(selectedRecordDetailsState)
   const [selectedRecords] = useRecoilState(selectedRecordsState)
   const [showTableProducts, setShowTableProducts] = useState(false)
@@ -67,7 +68,6 @@ const NewRecord: NextPage = () => {
   function refresh () {
     recordObservation.onChange('')
     recordAdress.onChange('')
-    recordLetter.onChange('')
     recordNumber.onChange('')
   }
   return (
@@ -85,9 +85,9 @@ const NewRecord: NextPage = () => {
         setVisibleSelectorQuantity={setVisibleSelectorQuantity} displayBasic={showTableRecords} closeDialog={() => setShowTableRecords(false)}></DialogTableRecords>
         <Panel>
             <SaleDataBar customers={customerOptions} suppliers={suppliersOptions} recordTypes={recordTypesOptions} stores={storesOptions}
-            selectedCustomer={selectedCustomer} selectedSupplier={selectedSupplier} selectedRecordType={selectedRecordType} selectedStore={selectedStore}
-            changeCustomer={changeCustomer} changeSupplier={changeSupplier} changeStore={changeStore} changeRecordType={changeRecordType}
-            recordLetter={recordLetter} recordNumber={recordNumber}/>
+            selectedCustomer={selectedCustomer} selectedSupplier={selectedSupplier} selectedRecordType={selectedRecordType} selectedStore={selectedStore} selectedLetter={selectedRecordLetter}
+            changeCustomer={changeCustomer} changeSupplier={changeSupplier} changeStore={changeStore} changeRecordType={changeRecordType} changeLetter={changeLetter}
+            recordNumber={recordNumber}/>
         </Panel>
         <Splitter style={{ height: '100%' }}>
             <SplitterPanel>
