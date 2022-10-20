@@ -19,6 +19,8 @@ import { useRecoilState } from 'recoil'
 import QuantitySelectorDialog from '../frontend/components/records/newRecord/QuantitySelectorDialog'
 import { RecordNameEnum } from '@prisma/client'
 import useField from '../frontend/hooks/useField'
+import { isPostState } from '../frontend/atoms/isPostState'
+import SpinnerDialog from '../frontend/components/SpinnerDialog'
 
 const NewRecord: NextPage = () => {
   const recordObservation = useField({ initialValue: '', type: 'text' })
@@ -52,6 +54,7 @@ const NewRecord: NextPage = () => {
   const { handleCreateNewRecordForFacturas } = useNewRecordForFacturasMutation('previous-record', recordObservation, recordAdress, recordNumber, toast)
   const [selectedRecordDetails] = useRecoilState(selectedRecordDetailsState)
   const [selectedRecords] = useRecoilState(selectedRecordsState)
+  const [posting] = useRecoilState(isPostState)
   const [showTableProducts, setShowTableProducts] = useState(false)
   const [showTableRecords, setShowTableRecords] = useState(false)
   const [, setVisibleSelectorQuantity] = useState(false)
@@ -88,6 +91,7 @@ const NewRecord: NextPage = () => {
             selectedCustomer={selectedCustomer} selectedSupplier={selectedSupplier} selectedRecordType={selectedRecordType} selectedStore={selectedStore} selectedLetter={selectedRecordLetter}
             changeCustomer={changeCustomer} changeSupplier={changeSupplier} changeStore={changeStore} changeRecordType={changeRecordType} changeLetter={changeLetter}
             recordNumber={recordNumber}/>
+            {posting ? <SpinnerDialog /> : ''}
         </Panel>
         <Splitter style={{ height: '100%' }}>
             <SplitterPanel>

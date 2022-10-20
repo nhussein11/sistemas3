@@ -8,12 +8,14 @@ import { createNewRecordFactura } from '../../services/records/createNewRecordFa
 import { useRouter } from 'next/router'
 import { defaultRecordLetter, selectedRecordLetterState } from '../../atoms/records/selectedRecordLetter'
 import { RecordNameEnum } from '@prisma/client'
+import { isPostState } from '../../atoms/isPostState'
 
 const useNewRecordForFacturasMutation = (queryId: string, recordObservation: any, recordAdress: any, recordNumber: any, toast: any) => {
   const queryClient = useQueryClient()
   const router = useRouter()
   // Queries
   // hooks
+  const [, setPosting] = useRecoilState(isPostState)
   const [selectedRecord, setSelectedRecords] = useRecoilState(selectedRecordsState)
   const [selectedCustomer, setSelectedCustomer] = useRecoilState(selectedCustomerState)
   const [selectedSupplier, setSelectedSupplier] = useRecoilState(selectedSupplierState)
@@ -28,15 +30,16 @@ const useNewRecordForFacturasMutation = (queryId: string, recordObservation: any
       setSelectedRecords(defaultRecords)
       setSelectedSupplier(defaultSupplier)
       setSelectedCustomer(defaultCustomer)
+      setPosting(false)
       toast.current.show({ severity: 'success', summary: 'Realizado', detail: 'Comprobante Generado', life: 3000 })
       setTimeout(() => {
         switch (selectedRecordType.recordName) {
           case RecordNameEnum.FACTURA_ORIGINAL:
-            router.replace('/records?type=ing')
+            router.replace('/records?type=egr')
             break
           case RecordNameEnum.FACTURA_DUPLICADO:
           case RecordNameEnum.ORDEN_DE_PAGO:
-            router.replace('/records?type=egr')
+            router.replace('/records?type=ing')
             break
         }
       }, 2000)

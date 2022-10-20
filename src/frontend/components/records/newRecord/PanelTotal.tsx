@@ -8,9 +8,11 @@ import { useRecoilState } from 'recoil'
 import NumberFormat from 'react-number-format'
 import { InputText } from 'primereact/inputtext'
 import { RecordNameEnum } from '@prisma/client'
+import { isPostState } from '../../../atoms/isPostState'
 
 const PanelTotal = ({ handleCreateNewRecord, handleCreateNewRecordForFacturas, recordObservation, recordAdress, recordName, refresh }: {handleCreateNewRecordForFacturas: any; handleCreateNewRecord: any; recordObservation: any; recordAdress: any; recordName: any; refresh: any}) => {
   const [ammount, setAmmount] = useRecoilState(ammountRecordAtomState)
+  const [, setPosting] = useRecoilState(isPostState)
   return (
     <div className='container-total'>
         <Panel>
@@ -28,6 +30,7 @@ const PanelTotal = ({ handleCreateNewRecord, handleCreateNewRecordForFacturas, r
                 <h1>TOTAL: <NumberFormat value={ammount.ammount} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'$'}></NumberFormat></h1>
             </Card>
             <Button style={{ width: '-webkit-fill-available', justifyContent: 'center' }} onClick={() => {
+              setPosting(true)
               switch (recordName) {
                 case RecordNameEnum.FACTURA_DUPLICADO:
                 case RecordNameEnum.FACTURA_ORIGINAL:
