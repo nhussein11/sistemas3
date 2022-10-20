@@ -7,7 +7,6 @@ import TableHeader from './TableHeader'
 import NumberFormat from 'react-number-format'
 import { newSaleTableProductProps } from '../../../@types/frontend.types'
 import { findProductName } from '../../../services/products/findProductName'
-import { findStoreName } from '../../../services/stores/findStoreName'
 import { findProductPrice } from '../../../services/products/findProductPrice'
 import { showQuantitySelectorDialogState } from '../../../atoms/records/showQuantitySelectorDialog'
 import { useRecoilState } from 'recoil'
@@ -30,7 +29,6 @@ export default function DialogTableProducts ({ products, displayBasic, closeDial
           <DataTable value={products} paginator className="p-datatable-customers" showGridlines rows={10} dataKey="id" responsiveLayout="scroll"
            header={<TableHeader/>} emptyMessage="No se encontraron Productos">
             <Column field="ProductName" header="Nombre" body={(rowData) => findProductName(rowData.productId, productsQuery)} style={{ minWidth: '2rem' }}></Column>
-            <Column field="StoreName" header="Depósito" body={(rowData) => findStoreName(rowData.storeId, storesQuery)} style={{ minWidth: '1rem' }}></Column>
             <Column field="Quantity" header="Cantidad en Stock" body={(rowData) => rowData.quantity} style={{ minWidth: '1rem' }}></Column>
             <Column field="Precio" header="Precio" alignHeader={'center'} body={(rowData) => {
               return (
