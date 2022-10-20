@@ -108,7 +108,7 @@ const NavBar = () => {
           command: () => {
             setLoading(true)
             setSelectedRecordType(recordTypesQuery.data?.recordsTypes.find((recordType: RecordType) => recordType.recordName === RecordNameEnum.FACTURA_DUPLICADO))
-            router.replace('/enrollments')
+            router.replace('/newRecord')
           }
         }
       ]
