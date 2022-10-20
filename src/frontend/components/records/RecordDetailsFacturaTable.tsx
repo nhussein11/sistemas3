@@ -12,15 +12,9 @@ const RecordDetailsFacturaTable = ({ previousRecordQuery, recordsQuery, setDispl
     previousRecordQuery.data?.previousRecords?.filter(
       (d: PreviousRecord) => d.higherRecordId === selectedRecord.id
     )
-  console.log(filteredDetails)
   const arrayPaidFor = filteredDetails?.map((pr: PreviousRecord) => pr.paidForRecordId)
-  // const filteredRecords: Record[] =
-  // recordsQuery.data?.records?.filter(
-  //   (r: Record) => filteredDetails?.map((fr: PreviousRecord) => r.id === fr.paidForRecordId)
-  // )
-  console.log(arrayPaidFor)
   const filteredRecords: Record[] = recordsQuery?.data?.records.filter((r: Record) =>
-    arrayPaidFor?.at(0) === r.id // TODO arreglar esto para que sean varias facturas que se puedan ver
+    arrayPaidFor?.includes(r.id)
   )
 
   if (displayRecordFacturasDetailsTable) {
