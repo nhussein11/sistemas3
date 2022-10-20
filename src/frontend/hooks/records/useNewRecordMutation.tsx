@@ -62,8 +62,18 @@ const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdr
       setSelectedStore(defaultStore)
       setSelectedSupplier(defaultSupplier)
       setSelectedCustomer(defaultCustomer)
-      toast.current.show({ severity: 'success', summary: 'Realizado', detail: 'Comprobante Generado', life: 3000 })
-      router.push('/records')
+      toast.current.show({ severity: 'success', summary: 'Realizado', detail: 'Comprobante Generado. Redirigiendo...', life: 3000 })
+      setTimeout(() => {
+        switch (selectedRecordType.recordName) {
+          case RecordNameEnum.FACTURA_ORIGINAL:
+            router.replace('/records?type=ing')
+            break
+          case RecordNameEnum.FACTURA_DUPLICADO:
+          case RecordNameEnum.ORDEN_DE_PAGO:
+            router.replace('/records?type=egr')
+            break
+        }
+      }, 2000)
     },
     onError: (error: any) => {
       console.log(error.message)

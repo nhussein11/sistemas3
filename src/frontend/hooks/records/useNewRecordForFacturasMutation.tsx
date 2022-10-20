@@ -7,6 +7,7 @@ import { defaultRecordType, selectedRecordTypeState } from '../../atoms/records/
 import { createNewRecordFactura } from '../../services/records/createNewRecordFactura'
 import { useRouter } from 'next/router'
 import { defaultRecordLetter, selectedRecordLetterState } from '../../atoms/records/selectedRecordLetter'
+import { RecordNameEnum } from '@prisma/client'
 
 const useNewRecordForFacturasMutation = (queryId: string, recordObservation: any, recordAdress: any, recordNumber: any, toast: any) => {
   const queryClient = useQueryClient()
@@ -28,7 +29,17 @@ const useNewRecordForFacturasMutation = (queryId: string, recordObservation: any
       setSelectedSupplier(defaultSupplier)
       setSelectedCustomer(defaultCustomer)
       toast.current.show({ severity: 'success', summary: 'Realizado', detail: 'Comprobante Generado', life: 3000 })
-      router.push('/records')
+      setTimeout(() => {
+        switch (selectedRecordType.recordName) {
+          case RecordNameEnum.FACTURA_ORIGINAL:
+            router.replace('/records?type=ing')
+            break
+          case RecordNameEnum.FACTURA_DUPLICADO:
+          case RecordNameEnum.ORDEN_DE_PAGO:
+            router.replace('/records?type=egr')
+            break
+        }
+      }, 2000)
     },
     onError: (error: any) => {
       console.log(error.message)
