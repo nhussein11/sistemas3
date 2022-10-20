@@ -8,7 +8,7 @@ const QuantitySelectorDialog = () => {
   return (
     <ConfirmDialog visible={showQuantitySelectorDialog.show} onHide={() => setShowQuantitySelectorDialog(showQuantitySelectorDialogDefaultState)}
       message={ <InputText {...quantity} name="quantity" placeholder="Ingresar Cantidad" />}
-      header="Cantidad" accept={() => addDetail()} reject={() => console.log('Cancelamos')}
+      header="Cantidad" accept={() => addDetail()}
     />
   )
 }

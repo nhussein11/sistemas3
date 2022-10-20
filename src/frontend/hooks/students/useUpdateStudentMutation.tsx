@@ -40,7 +40,6 @@ const useUpdateStudentMutation = (queryId: string) => {
   const studentPhone = useField({ initialValue: 0, type: 'number' })
   const studentBirthDate = useField({ initialValue: '', type: 'date' })
   const queryClient = useQueryClient()
-  console.log(parseDate(selectedStudent.birth.toString(), true))
   const updateQuery = ({
     id,
     name,
