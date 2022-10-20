@@ -88,22 +88,8 @@ const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdr
   const storesOptions = storesQuery?.data?.stores.map(
     (store: Store) => store.name
   )
-  // const stockOptions = stocksQuery?.data?.stocks.map(
-  //   (stock: Stock) => stock
-  // )
+
   const stockOptions = stocksQuery?.data?.stocks
-  // switch (selectedRecordType.recordName) {
-  //   case RecordNameEnum.FACTURA_DUPLICADO:
-  //     stockOptions = stocksQuery?.data?.stocks.filter((stock: Stock) => {
-  //       return findStoreName(stock.storeId, storesQuery) === 'Deposito Virtual'
-  //     })
-  //     break
-  //   case RecordNameEnum.FACTURA_ORIGINAL:
-  //     stockOptions = stocksQuery?.data?.stocks.filter((stock: Stock) => {
-  //       return findStoreName(stock.storeId, storesQuery) !== 'Deposito Virtual'
-  //     })
-  //     break
-  // }
 
   let recordsOptions = recordsQuery?.data?.records
   switch (selectedRecordType.recordName) {
