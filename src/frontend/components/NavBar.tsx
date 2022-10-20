@@ -3,10 +3,15 @@ import { Menubar } from 'primereact/menubar'
 import { useRouter } from 'next/router'
 import { useRecoilState } from 'recoil'
 import { isLoadState } from '../atoms/isLoadState'
+import { selectedRecordTypeState } from '../atoms/records/selectedRecordType'
+import { RecordNameEnum, RecordType } from '@prisma/client'
+import useRecordTypesQuery from '../hooks/records/useRecordTypesQuery'
 
 const NavBar = () => {
   const router = useRouter()
+  const recordTypesQuery = useRecordTypesQuery('record-type')
   const [, setLoading] = useRecoilState(isLoadState)
+  const [, setSelectedRecordType] = useRecoilState(selectedRecordTypeState)
   const items = [
     {
       label: 'Inicio',
@@ -102,6 +107,7 @@ const NavBar = () => {
           icon: 'pi pi-fw pi-dollar',
           command: () => {
             setLoading(true)
+            setSelectedRecordType(recordTypesQuery.data?.recordsTypes.find((recordType: RecordType) => recordType.recordName === RecordNameEnum.FACTURA_DUPLICADO))
             router.replace('/enrollments')
           }
         }
@@ -112,6 +118,7 @@ const NavBar = () => {
       icon: 'pi pi-fw pi-dollar',
       command: () => {
         setLoading(true)
+        setSelectedRecordType(recordTypesQuery.data?.recordsTypes.find((recordType: RecordType) => recordType.recordName === RecordNameEnum.FACTURA_DUPLICADO))
         router.replace('/newRecord')
       }
     },
@@ -120,6 +127,7 @@ const NavBar = () => {
       icon: 'pi pi-fw pi-shopping-cart',
       command: () => {
         setLoading(true)
+        setSelectedRecordType(recordTypesQuery.data?.recordsTypes.find((recordType: RecordType) => recordType.recordName === RecordNameEnum.FACTURA_ORIGINAL))
         router.replace('/newRecord')
       }
     }
