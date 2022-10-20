@@ -23,7 +23,7 @@ import NumberFormat from 'react-number-format'
 import usePreviousRecordsQuery from '../../hooks/previous-records/usePreviousRecordQuery'
 import RecordDetailsFacturaTable from './RecordDetailsFacturaTable'
 import useRecordsQuery from '../../hooks/records/useRecordsQuery'
-import { RecordNameEnum } from '@prisma/client'
+import { PreviousRecord, Record, RecordNameEnum } from '@prisma/client'
 import { isLoadState } from '../../atoms/isLoadState'
 const RecordsTable = ({ records, type }: RecordsTableProps) => {
   const [, setDisplayBasic] = useState(false)
@@ -39,6 +39,25 @@ const RecordsTable = ({ records, type }: RecordsTableProps) => {
   const previousRecordQuery = usePreviousRecordsQuery('previous-record')
   const [loading] = useRecoilState(isLoadState)
 
+  function resolveAmmountValue (recordName: string | undefined, recordID: string) {
+    const filteredDetails: PreviousRecord[] =
+    previousRecordQuery.data?.previousRecords?.filter(
+      (d: PreviousRecord) => d.higherRecordId === recordID
+    )
+    const arrayPaidFor = filteredDetails?.map((pr: PreviousRecord) => pr.paidForRecordId)
+    const filteredRecords: Record[] = recordsQuery?.data?.records.filter((r: Record) =>
+      arrayPaidFor?.includes(r.id)
+    )
+    switch (recordName) {
+      case RecordNameEnum.FACTURA_DUPLICADO:
+      case RecordNameEnum.FACTURA_ORIGINAL:
+        return getRecordTotal(recordID, detailsQuery).totalAmmount
+      case RecordNameEnum.ORDEN_DE_COMPRA:
+      case RecordNameEnum.ORDEN_DE_PAGO:
+        return filteredRecords.reduce((subTotal, record) => { return subTotal + getRecordTotal(record.id, detailsQuery).totalAmmount }, 0)
+    }
+  }
+
   return (
     <div className="datatable-filter">
       <div className="card">
@@ -51,13 +70,12 @@ const RecordsTable = ({ records, type }: RecordsTableProps) => {
           <Column field="NombreComprobante" header="Comprobante" body={(rowData) => resolveRecordName(rowData.recordTypeId, recordTypesQuery)} alignHeader={'center'}/>
           <Column field="pagado" header="Pagado" body={(rowData) => (rowData.paidFor ? 'PAGADO' : '-')} alignHeader={'center'} />
           <Column field="Ammount" header="Monto" alignHeader={'center'} body={(rowData) => {
-            return (<NumberFormat value={getRecordTotal(rowData.id, detailsQuery).totalAmmount} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'$'}></NumberFormat>)
+            return (<NumberFormat value={resolveAmmountValue(resolveRecordName(rowData.recordTypeId, recordTypesQuery), rowData.id)} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'$'}></NumberFormat>)
           }}/>
           {type === 'ing'
             ? <Column field="Nombre Cliente" header="Cliente" body={(rowData) => resolveRecordCustomerName(rowData.customerId, recordCustomerQuery)} alignHeader={'center'}/>
             : <Column field="Nombre Proveedor" header="Proveedor" body={(rowData) => resolveRecordSupplierName(rowData.supplierId, recordSupplierQuery)} alignHeader={'center'}/>
           }
-          {/* <Column field="recordAdress" header="Dirección" body={(rowData) => rowData.address} alignHeader={'center'} /> */}
           <Column field="tipo" header="Tipo" body={(rowData) => rowData.letter} alignHeader={'center'} />
           <Column field="options" header="Opciones" alignHeader={'center'}
             body={(rowData) => {
@@ -82,7 +100,6 @@ const RecordsTable = ({ records, type }: RecordsTableProps) => {
                   onClick={() => {
                     setSelectedRecord(rowData)
                     handleDeleteRecord()
-                    // setDisplayBasic(false)
                   }}
                   />
                 </div>
@@ -92,7 +109,7 @@ const RecordsTable = ({ records, type }: RecordsTableProps) => {
         </DataTable>
       </div>
       <RecordDetailsTable setDisplayRecordDetailsTable={setDisplayRecordDetailsTable} displayRecordDetailsTable={displayRecordDetailsTable}/>
-      <RecordDetailsFacturaTable previousRecordQuery={previousRecordQuery} recordsQuery={recordsQuery} setDisplayRecordFacturasDetailsTable={setDisplayRecordFacturasDetailsTable}
+      <RecordDetailsFacturaTable detailsQuery={detailsQuery} previousRecordQuery={previousRecordQuery} recordsQuery={recordsQuery} setDisplayRecordFacturasDetailsTable={setDisplayRecordFacturasDetailsTable}
       displayRecordFacturasDetailsTable={displayRecordFacturasDetailsTable}/>
       <DialogError></DialogError>
     </div>

@@ -34,8 +34,6 @@ const Home: NextPage = () => {
         (record) => record.supplierId === selectedFilterSupplier.id
       )
   }
-  console.log('RECORDS', filteredRecords)
-
   return (
     <div>
       <Head>

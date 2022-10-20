@@ -2,14 +2,14 @@
 import React from 'react'
 import { Dropdown } from 'primereact/dropdown'
 import { InputText } from 'primereact/inputtext'
-import { Customer, Supplier, Store, RecordNameEnum } from '@prisma/client'
+import { Customer, Supplier, Store, RecordNameEnum, LetterEnum } from '@prisma/client'
 
 const SaleDataBar = ({
-  customers, suppliers, recordTypes, stores, selectedCustomer, selectedSupplier, selectedStore, selectedRecordType, changeCustomer, changeSupplier, changeStore, changeRecordType,
-  recordLetter, recordNumber
+  customers, suppliers, recordTypes, stores, selectedCustomer, selectedSupplier, selectedStore, selectedLetter, selectedRecordType, changeCustomer, changeSupplier, changeStore, changeRecordType, changeLetter,
+  recordNumber
 }:
-  {customers: Object[]; suppliers: Object[]; recordTypes: Object[]; stores: Object[]; selectedCustomer: Customer; selectedSupplier: Supplier; selectedStore: Store; selectedRecordType: any;
-    changeCustomer: any; changeSupplier: any; changeStore: any; changeRecordType: any; recordLetter: any; recordNumber: any;}) => {
+  {customers: Object[]; suppliers: Object[]; recordTypes: Object[]; stores: Object[]; selectedCustomer: Customer; selectedSupplier: Supplier; selectedStore: Store; selectedRecordType: any; selectedLetter: any
+    changeCustomer: any; changeSupplier: any; changeStore: any; changeRecordType: any; changeLetter: any; recordNumber: any;}) => {
   function dropPerson () {
     switch (selectedRecordType.recordName) {
       case RecordNameEnum.FACTURA_ORIGINAL:
@@ -38,9 +38,8 @@ const SaleDataBar = ({
               <InputText {...recordNumber} id="recordNumber" />
               <label htmlFor="recordNumber">Número</label>
           </span>
-          <div className="p-float-label">
-              <InputText {...recordLetter} id="recordLetter" />
-              <label htmlFor="recordLetter">Tipo Factura</label>
+          <div className="field">
+            <Dropdown options={[LetterEnum.A, LetterEnum.B, LetterEnum.C]} value={selectedLetter} onChange={(e) => changeLetter(e.target.value)} placeholder="Seleccionar Tipo Comprobante"/>
           </div>
           <div className="field">
               {dropStore()}

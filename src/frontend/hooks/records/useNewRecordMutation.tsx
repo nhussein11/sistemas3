@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { RecordType, Store, Stock, Customer, Supplier, RecordNameEnum, Record } from '@prisma/client'
+import { RecordType, Store, Customer, Supplier, RecordNameEnum, Record } from '@prisma/client'
 import { useRecoilState } from 'recoil'
 import { createNewRecord } from '../../services/records/createNewRecord'
 import { defaultStore, selectedStoreState } from '../../atoms/stores/selectedStoreAtom'
@@ -17,9 +17,11 @@ import useRecordTypesQuery from './useRecordTypesQuery'
 import useStoresQuery from '../stores/useStoresQuery'
 import useDetailsQuery from '../details/useDetailsQuery'
 import { useRouter } from 'next/router'
-import { findStoreName } from '../../services/stores/findStoreName'
+import { selectedRecordLetterState } from '../../atoms/records/selectedRecordLetter'
+import { isPostState } from '../../atoms/isPostState'
+// import { findStoreName } from '../../services/stores/findStoreName'
 
-const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdress: any, recordLetter: any, recordNumber: any, toast: any) => {
+const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdress: any, recordNumber: any, toast: any) => {
   const queryClient = useQueryClient()
   const router = useRouter()
   const recordTypesQuery = useRecordTypesQuery('record-type')
@@ -31,11 +33,13 @@ const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdr
   const recordsQuery = useRecordsQuery('records')
   const detailsQuery = useDetailsQuery('details')
   // hooks
+  const [, setPosting] = useRecoilState(isPostState)
   const [selectedRecordDetails, setSelectedRecordDetails] = useRecoilState(selectedRecordDetailsState)
   const [selectedStore, setSelectedStore] = useRecoilState(selectedStoreState)
   const [selectedCustomer, setSelectedCustomer] = useRecoilState(selectedCustomerState)
   const [selectedSupplier, setSelectedSupplier] = useRecoilState(selectedSupplierState)
   const [selectedRecordType, setSelectedRecordType] = useRecoilState(selectedRecordTypeState)
+  const [selectedRecordLetter, setSelectedRecordLetter] = useRecoilState(selectedRecordLetterState)
   const changeRecordType = (name: string) => {
     setSelectedRecordType(recordTypesQuery.data?.recordsTypes.find((recordType: RecordType) => recordType.recordName === name))
   }
@@ -48,6 +52,9 @@ const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdr
   const changeCustomer = (name: string) => {
     setSelectedCustomer(customerQuery.data?.customers.find((customer: Customer) => customer.name === name))
   }
+  const changeLetter = (name: string) => {
+    setSelectedRecordLetter(name)
+  }
 
   const { mutate } = useMutation(createNewRecord, {
     onSuccess: (data) => {
@@ -57,8 +64,19 @@ const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdr
       setSelectedStore(defaultStore)
       setSelectedSupplier(defaultSupplier)
       setSelectedCustomer(defaultCustomer)
-      toast.current.show({ severity: 'success', summary: 'Realizado', detail: 'Comprobante Generado', life: 3000 })
-      router.push('/records')
+      setPosting(false)
+      toast.current.show({ severity: 'success', summary: 'Realizado', detail: 'Comprobante Generado. Redirigiendo...', life: 3000 })
+      setTimeout(() => {
+        switch (selectedRecordType.recordName) {
+          case RecordNameEnum.FACTURA_ORIGINAL:
+            router.replace('/records?type=egr')
+            break
+          case RecordNameEnum.FACTURA_DUPLICADO:
+          case RecordNameEnum.ORDEN_DE_PAGO:
+            router.replace('/records?type=ing')
+            break
+        }
+      }, 2000)
     },
     onError: (error: any) => {
       console.log(error.message)
@@ -68,7 +86,7 @@ const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdr
     mutate({
       observation: recordObservation.value as string,
       address: recordAdress.value as string,
-      letter: recordLetter.value as string,
+      letter: selectedRecordLetter,
       recordNumber: recordNumber.value as number,
       paidFor: false,
       recordTypeId: selectedRecordType.id,
@@ -83,22 +101,8 @@ const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdr
   const storesOptions = storesQuery?.data?.stores.map(
     (store: Store) => store.name
   )
-  // const stockOptions = stocksQuery?.data?.stocks.map(
-  //   (stock: Stock) => stock
-  // )
-  let stockOptions = stocksQuery?.data?.stocks
-  switch (selectedRecordType.recordName) {
-    case RecordNameEnum.FACTURA_DUPLICADO:
-      stockOptions = stocksQuery?.data?.stocks.filter((stock: Stock) => {
-        return findStoreName(stock.storeId, storesQuery) === 'Deposito Virtual'
-      })
-      break
-    case RecordNameEnum.FACTURA_ORIGINAL:
-      stockOptions = stocksQuery?.data?.stocks.filter((stock: Stock) => {
-        return findStoreName(stock.storeId, storesQuery) !== 'Deposito Virtual'
-      })
-      break
-  }
+
+  const stockOptions = stocksQuery?.data?.stocks
 
   let recordsOptions = recordsQuery?.data?.records
   switch (selectedRecordType.recordName) {
@@ -126,10 +130,12 @@ const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdr
     changeRecordType,
     changeSupplier,
     changeCustomer,
+    changeLetter,
     selectedRecordType,
     selectedStore,
     selectedCustomer,
     selectedSupplier,
+    selectedRecordLetter,
     recordTypesOptions,
     storesOptions,
     stockOptions,
@@ -138,7 +144,6 @@ const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdr
     recordsOptions,
     recordObservation,
     recordAdress,
-    recordLetter,
     recordNumber,
     productsQuery,
     storesQuery,

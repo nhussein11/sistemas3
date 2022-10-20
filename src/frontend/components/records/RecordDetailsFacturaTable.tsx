@@ -6,23 +6,18 @@ import { useRecoilState } from 'recoil'
 import { DialogRecordFacturaDetailsProps } from '../../@types/frontend.types'
 import { selectedRecordState } from '../../atoms/records/selectedRecordAtom'
 import { PreviousRecord, Record } from '@prisma/client'
-const RecordDetailsFacturaTable = ({ previousRecordQuery, recordsQuery, setDisplayRecordFacturasDetailsTable, displayRecordFacturasDetailsTable }: DialogRecordFacturaDetailsProps) => {
+import NumberFormat from 'react-number-format'
+import getRecordTotal from '../../services/records/getRecordTotal'
+const RecordDetailsFacturaTable = ({ previousRecordQuery, recordsQuery, detailsQuery, setDisplayRecordFacturasDetailsTable, displayRecordFacturasDetailsTable }: DialogRecordFacturaDetailsProps) => {
   const [selectedRecord] = useRecoilState(selectedRecordState)
   const filteredDetails: PreviousRecord[] =
     previousRecordQuery.data?.previousRecords?.filter(
       (d: PreviousRecord) => d.higherRecordId === selectedRecord.id
     )
-  console.log(filteredDetails)
   const arrayPaidFor = filteredDetails?.map((pr: PreviousRecord) => pr.paidForRecordId)
-  // const filteredRecords: Record[] =
-  // recordsQuery.data?.records?.filter(
-  //   (r: Record) => filteredDetails?.map((fr: PreviousRecord) => r.id === fr.paidForRecordId)
-  // )
-  console.log(arrayPaidFor)
   const filteredRecords: Record[] = recordsQuery?.data?.records.filter((r: Record) =>
-    arrayPaidFor?.at(0) === r.id // TODO arreglar esto para que sean varias facturas que se puedan ver
+    arrayPaidFor?.includes(r.id)
   )
-
   if (displayRecordFacturasDetailsTable) {
     return (
       <Dialog header="Detalles de Comprobante Fact" visible={displayRecordFacturasDetailsTable} style={{ width: '50vw' }} onHide={() => setDisplayRecordFacturasDetailsTable(false)}>
@@ -45,6 +40,9 @@ const RecordDetailsFacturaTable = ({ previousRecordQuery, recordsQuery, setDispl
           body={(rowData) => rowData.letter}
           style={{ minWidth: '2rem' }}
         ></Column>
+          <Column field="Ammount" header="Monto" alignHeader={'center'} body={(rowData) => {
+            return (<NumberFormat value={getRecordTotal(rowData.id, detailsQuery).totalAmmount} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'$'}></NumberFormat>)
+          }}/>
         </DataTable>
       </Dialog>
     )
