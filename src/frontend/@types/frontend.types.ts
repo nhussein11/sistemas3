@@ -164,4 +164,5 @@ export type DialogRecordFacturaDetailsProps = {
   displayRecordFacturasDetailsTable: boolean
   previousRecordQuery: any
   recordsQuery: any
+  detailsQuery: any
 }
