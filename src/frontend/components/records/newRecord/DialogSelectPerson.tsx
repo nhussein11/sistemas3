@@ -9,13 +9,17 @@ import { RecordNameEnum } from '@prisma/client'
 import { useRecoilState } from 'recoil'
 import { selectedRecordTypeState } from '../../../atoms/records/selectedRecordType'
 
-export default function DialogSelectPerson ({ supplierQuery, customerQuery, displayBasic, closeDialog }: { supplierQuery: any; customerQuery:any; displayBasic: boolean, closeDialog: any }) {
+export default function DialogSelectPerson ({ supplierQuery, customerQuery, displayBasic, closeDialog, changeSupplier, changeCustomer }: { supplierQuery: any; customerQuery:any; displayBasic: boolean; closeDialog: any; changeSupplier: any; changeCustomer: any }) {
   const [selectedRecordType] = useRecoilState(selectedRecordTypeState)
   const actionBodyTemplateListProducts = (rowData: any) => {
     return (
     <React.Fragment>
-        <Button icon="pi pi-plus" className="p-button p-button-success "
-        onClick={() => { console.log('asd') }} />
+        <Button icon="pi pi-check" className="p-button p-button-success "
+        onClick={() => {
+          changeSupplier(rowData.name)
+          changeCustomer(rowData.name)
+          closeDialog()
+        }} />
     </React.Fragment>
     )
   }

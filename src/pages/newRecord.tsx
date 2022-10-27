@@ -84,7 +84,7 @@ const NewRecord: NextPage = () => {
       <div style={{ marginTop: '5px' }}>
         <Toast ref={toast} />
         <QuantitySelectorDialog />
-        <DialogSelectPerson customerQuery={customerQuery} supplierQuery={supplierQuery} displayBasic={showPersonDialog} closeDialog={() => setShowPersonDialog(false)}/>
+        <DialogSelectPerson customerQuery={customerQuery} supplierQuery={supplierQuery} displayBasic={showPersonDialog} changeCustomer={changeCustomer} changeSupplier={changeSupplier} closeDialog={() => setShowPersonDialog(false)}/>
         <DialogTableProducts products={stockOptions} productsQuery={productsQuery} storesQuery={storesQuery}
         setVisibleSelectorQuantity={setVisibleSelectorQuantity} displayBasic={showTableProducts} closeDialog={() => setShowTableProducts(false)}></DialogTableProducts>
         <DialogTableRecords records={recordsOptions} supplierQuery={supplierQuery} customerQuery={customerQuery} detailsQuery={detailsQuery}
