@@ -5,11 +5,12 @@ import { Button } from 'primereact/button'
 import { Dialog } from 'primereact/dialog'
 import TableHeader from './TableHeader'
 import NumberFormat from 'react-number-format'
-import { resolveRecordSupplierName } from '../../../services/records/resolveRecordSupplierName'
-import { resolveRecordCustomerName } from '../../../services/records/resolveRecordCustomerName'
-import getRecordTotal from '../../../services/records/getRecordTotal'
+import { RecordNameEnum } from '@prisma/client'
+import { useRecoilState } from 'recoil'
+import { selectedRecordTypeState } from '../../../atoms/records/selectedRecordType'
 
-export default function DialogTableRecords ({ person, displayBasic }: { person: Object[]; displayBasic: boolean }) {
+export default function DialogSelectPerson ({ supplierQuery, customerQuery, displayBasic, closeDialog }: { supplierQuery: any; customerQuery:any; displayBasic: boolean, closeDialog: any }) {
+  const [selectedRecordType] = useRecoilState(selectedRecordTypeState)
   const actionBodyTemplateListProducts = (rowData: any) => {
     return (
     <React.Fragment>
@@ -18,19 +19,27 @@ export default function DialogTableRecords ({ person, displayBasic }: { person: 
     </React.Fragment>
     )
   }
+  let persons
+  switch (selectedRecordType.recordName) {
+    case RecordNameEnum.FACTURA_ORIGINAL:
+      persons = supplierQuery?.data?.suppliers
+      break
+    case RecordNameEnum.FACTURA_DUPLICADO:
+      persons = customerQuery?.data?.customers
+      break
+    case RecordNameEnum.ORDEN_DE_PAGO:
+      persons = supplierQuery?.data?.suppliers + customerQuery?.data?.customers
+      break
+  }
+
   return (
-    <Dialog header={'Tabla de Facturas'} visible={displayBasic} onHide={() => closeDialog()}>
-          <DataTable value={records} paginator className="p-datatable-customers" showGridlines rows={10} dataKey="id" responsiveLayout="scroll"
+    <Dialog header={'Tabla de Facturas'} visible={displayBasic} onHide={() => { closeDialog() }}>
+          <DataTable value={persons} paginator className="p-datatable-customers" showGridlines rows={10} dataKey="id" responsiveLayout="scroll"
            header={<TableHeader/>} emptyMessage="No se encontraron Facturas">
-            <Column field="RecordNumber" header="Numero" body={(rowData) => rowData.recordNumber} style={{ minWidth: '2rem' }}></Column>
-            <Column field="Observation" header="Observación" body={(rowData) => rowData.observation} style={{ minWidth: '2rem' }}></Column>
-            <Column field="letter" header="Tipo" body={(rowData) => rowData.letter} style={{ minWidth: '2rem' }}></Column>
-            <Column field="SupplierClient" header="Cliente/Prov" body={(rowData) => (
-              rowData.supplierId != null ? resolveRecordSupplierName(rowData.supplierId, supplierQuery) : resolveRecordCustomerName(rowData.customerId, customerQuery)
-            )} style={{ minWidth: '2rem' }}></Column>
-            <Column field="Ammount" header="Monto" alignHeader={'center'} body={(rowData) => {
+            <Column field="Nombre" header="Nombre" body={(rowData) => rowData.name} style={{ minWidth: '2rem' }}></Column>
+            <Column field="Saldo" header="Saldo" alignHeader={'center'} body={(rowData) => {
               return (
-                  <NumberFormat value={getRecordTotal(rowData.id, detailsQuery).totalAmmount} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'$'}></NumberFormat>
+                  <NumberFormat value={rowData.debt} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'$'}></NumberFormat>
               )
             }}/>
             <Column body={actionBodyTemplateListProducts} exportable={false} style={{ minWidth: '8rem' }}></Column>

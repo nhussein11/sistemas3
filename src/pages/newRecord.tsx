@@ -5,6 +5,7 @@ import { Toast } from 'primereact/toast'
 import { Panel } from 'primereact/panel'
 import DialogTableProducts from '../frontend/components/records/newRecord/DialogTableProducts'
 import DialogTableRecords from '../frontend/components/records/newRecord/DialogTableRecords'
+import DialogSelectPerson from '../frontend/components/records/newRecord/DialogSelectPerson'
 import ToolBarProducts from '../frontend/components/records/newRecord/ToolBarProducts'
 import SaleDataBar from '../frontend/components/records/newRecord/SaleDataBar'
 import TableAddedProducts from '../frontend/components/records/newRecord/TableAddedProducts'
@@ -57,6 +58,7 @@ const NewRecord: NextPage = () => {
   const [posting] = useRecoilState(isPostState)
   const [showTableProducts, setShowTableProducts] = useState(false)
   const [showTableRecords, setShowTableRecords] = useState(false)
+  const [showPersonDialog, setShowPersonDialog] = useState(true)
   const [, setVisibleSelectorQuantity] = useState(false)
   function tableRecord () {
     switch (selectedRecordType.recordName) {
@@ -82,6 +84,7 @@ const NewRecord: NextPage = () => {
       <div style={{ marginTop: '5px' }}>
         <Toast ref={toast} />
         <QuantitySelectorDialog />
+        <DialogSelectPerson customerQuery={customerQuery} supplierQuery={supplierQuery} displayBasic={showPersonDialog} closeDialog={() => setShowPersonDialog(false)}/>
         <DialogTableProducts products={stockOptions} productsQuery={productsQuery} storesQuery={storesQuery}
         setVisibleSelectorQuantity={setVisibleSelectorQuantity} displayBasic={showTableProducts} closeDialog={() => setShowTableProducts(false)}></DialogTableProducts>
         <DialogTableRecords records={recordsOptions} supplierQuery={supplierQuery} customerQuery={customerQuery} detailsQuery={detailsQuery}
