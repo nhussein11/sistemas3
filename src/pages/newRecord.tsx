@@ -93,7 +93,7 @@ const NewRecord: NextPage = () => {
             <SaleDataBar customers={customerOptions} suppliers={suppliersOptions} recordTypes={recordTypesOptions} stores={storesOptions}
             selectedCustomer={selectedCustomer} selectedSupplier={selectedSupplier} selectedRecordType={selectedRecordType} selectedStore={selectedStore} selectedLetter={selectedRecordLetter}
             changeCustomer={changeCustomer} changeSupplier={changeSupplier} changeStore={changeStore} changeRecordType={changeRecordType} changeLetter={changeLetter}
-            recordNumber={recordNumber}/>
+            recordNumber={recordNumber} setShowPersonDialog={setShowPersonDialog}/>
             {posting ? <SpinnerDialog /> : ''}
         </Panel>
         <Splitter style={{ height: '100%' }}>
