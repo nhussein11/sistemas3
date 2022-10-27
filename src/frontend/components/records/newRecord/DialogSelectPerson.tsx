@@ -41,7 +41,7 @@ export default function DialogSelectPerson ({ supplierQuery, customerQuery, disp
 
   return (
     <Dialog header={title} visible={displayBasic} onHide={() => { closeDialog() }}>
-          <DataTable value={persons} paginator className="p-datatable-customers" showGridlines rows={10} dataKey="id" responsiveLayout="scroll"
+          <DataTable value={persons} paginator className="p-datatable-customers" showGridlines rows={4} dataKey="id" responsiveLayout="scroll"
            header={<TableHeader/>} emptyMessage="No se encontraron Facturas">
             <Column field="Nombre" header="Nombre" body={(rowData) => rowData.name} style={{ minWidth: '2rem' }}></Column>
             <Column field="Saldo" header="Saldo" alignHeader={'center'} body={(rowData) => {
