@@ -35,7 +35,7 @@ export default function DialogSelectPerson ({ supplierQuery, customerQuery, disp
       title = 'Clientes'
       break
     case RecordNameEnum.ORDEN_DE_PAGO:
-      persons = supplierQuery?.data?.suppliers + customerQuery?.data?.customers
+      persons = supplierQuery?.data?.suppliers
       break
   }
 

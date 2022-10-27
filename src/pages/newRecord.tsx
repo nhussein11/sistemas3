@@ -58,7 +58,7 @@ const NewRecord: NextPage = () => {
   const [posting] = useRecoilState(isPostState)
   const [showTableProducts, setShowTableProducts] = useState(false)
   const [showTableRecords, setShowTableRecords] = useState(false)
-  const [showPersonDialog, setShowPersonDialog] = useState(true)
+  const [showPersonDialog, setShowPersonDialog] = useState(false)
   const [, setVisibleSelectorQuantity] = useState(false)
   function tableRecord () {
     switch (selectedRecordType.recordName) {
