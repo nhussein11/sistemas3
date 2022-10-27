@@ -15,10 +15,10 @@ const SaleDataBar = ({
     switch (selectedRecordType.recordName) {
       case RecordNameEnum.FACTURA_ORIGINAL:
       case RecordNameEnum.ORDEN_DE_PAGO:
-        return (<Dropdown options={suppliers} value={selectedSupplier?.name} onChange={(e) => changeSupplier(e.target.value)} placeholder="Selec. Proveedor"/>)
+        return (<Dropdown options={suppliers} value={selectedSupplier?.name} onChange={(e) => changeSupplier(e.target.value)} placeholder="Seleccionado"/>)
       case RecordNameEnum.FACTURA_DUPLICADO:
       case RecordNameEnum.ORDEN_DE_COMPRA:
-        return (<Dropdown options={customers} value={selectedCustomer?.name} onChange={(e) => changeCustomer(e.target.value)} placeholder="Selec. Cliente"/>)
+        return (<Dropdown options={customers} value={selectedCustomer?.name} onChange={(e) => changeCustomer(e.target.value)} placeholder="Seleccionado"/>)
       default:
     }
   }
