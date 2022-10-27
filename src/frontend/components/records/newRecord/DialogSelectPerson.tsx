@@ -24,12 +24,15 @@ export default function DialogSelectPerson ({ supplierQuery, customerQuery, disp
     )
   }
   let persons
+  let title
   switch (selectedRecordType.recordName) {
     case RecordNameEnum.FACTURA_ORIGINAL:
       persons = supplierQuery?.data?.suppliers
+      title = 'Proveedores'
       break
     case RecordNameEnum.FACTURA_DUPLICADO:
       persons = customerQuery?.data?.customers
+      title = 'Clientes'
       break
     case RecordNameEnum.ORDEN_DE_PAGO:
       persons = supplierQuery?.data?.suppliers + customerQuery?.data?.customers
@@ -37,7 +40,7 @@ export default function DialogSelectPerson ({ supplierQuery, customerQuery, disp
   }
 
   return (
-    <Dialog header={'Tabla de Facturas'} visible={displayBasic} onHide={() => { closeDialog() }}>
+    <Dialog header={title} visible={displayBasic} onHide={() => { closeDialog() }}>
           <DataTable value={persons} paginator className="p-datatable-customers" showGridlines rows={10} dataKey="id" responsiveLayout="scroll"
            header={<TableHeader/>} emptyMessage="No se encontraron Facturas">
             <Column field="Nombre" header="Nombre" body={(rowData) => rowData.name} style={{ minWidth: '2rem' }}></Column>
