@@ -7,7 +7,7 @@ import {
 } from '@prisma/client'
 import { prisma } from '../../../server/prisma-client/prisma-client'
 import { getRecordTypeById } from '../record-types/record-types.controller'
-import { getStockExisting, updateStockById } from '../stocks/stock.controller'
+import { getStockExisting } from '../stocks/stock.controller'
 
 const createRecordByStockMovement = async (
   recordTypeId: string,
