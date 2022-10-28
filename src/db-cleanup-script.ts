@@ -248,7 +248,8 @@ const createDefaultRecordDetails = async () => {
         stockId: stocks[randomStockId].id,
         recordId: record.id,
         quantity: 7,
-        subtotal: productPrice
+        subtotal: productPrice,
+        historicalPrice: productPrice
       }
     })
 
@@ -462,4 +463,4 @@ const main = async () => {
 }
 
 main()
-export {}
+export { }
