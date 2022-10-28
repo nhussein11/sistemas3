@@ -16,12 +16,13 @@ const createRecordDetails = async (
   stockId: string,
   recordId: string,
   quantity: number,
-  subtotal: number
+  subtotal: number,
+  historicalPrice: number
 ) => {
   try {
     const recordDetailCreated: RecordDetails =
       await prisma.recordDetails.create({
-        data: { stockId, recordId, quantity, subtotal }
+        data: { stockId, recordId, quantity, historicalPrice, subtotal }
       })
     return recordDetailCreated
   } catch (error) {
