@@ -246,23 +246,23 @@ const createDataOfRecord = async (
 ) => {
   return supplierId !== ''
     ? {
-      observation,
-      address,
-      letter,
-      recordNumber,
-      paidFor,
-      recordTypeId,
-      supplierId
-    }
+        observation,
+        address,
+        letter,
+        recordNumber,
+        paidFor,
+        recordTypeId,
+        supplierId
+      }
     : {
-      observation,
-      address,
-      letter,
-      recordNumber,
-      paidFor,
-      recordTypeId,
-      customerId
-    }
+        observation,
+        address,
+        letter,
+        recordNumber,
+        paidFor,
+        recordTypeId,
+        customerId
+      }
 }
 
 export {
