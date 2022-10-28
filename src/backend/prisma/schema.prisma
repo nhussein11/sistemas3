@@ -184,10 +184,13 @@ enum RecordNameEnum {
   FACTURA_DUPLICADO
   ORDEN_DE_COMPRA
   ORDEN_DE_PAGO
+  MOVIENTO_DE_STOCK_INGRESO
+  MOVIENTO_DE_STOCK_EGRESO
 }
 
 enum LetterEnum {
   A
   B
   C
+  X
 }

@@ -156,6 +156,16 @@ const createDefaultRecordTypes = async () => {
       recordType: RecordTypeEnum.NEUTRAL,
       recordName: RecordNameEnum.ORDEN_DE_PAGO,
       cause: 'Orden de Pago Cliente'
+    },
+    {
+      recordType: RecordTypeEnum.NEUTRAL,
+      recordName: RecordNameEnum.MOVIENTO_DE_STOCK_INGRESO,
+      cause: 'Movimiento de Stock de Ingreso'
+    },
+    {
+      recordType: RecordTypeEnum.NEUTRAL,
+      recordName: RecordNameEnum.MOVIENTO_DE_STOCK_EGRESO,
+      cause: 'Movimiento de Stock de Egreso'
     }
   ]
 
@@ -352,14 +362,14 @@ const createDefaultCourses = async () => {
       category: CategoryEnum.COURSE
     }
   })
-  
-  const virtualStore : Store = await prisma.store.findFirstOrThrow({
+
+  const virtualStore: Store = await prisma.store.findFirstOrThrow({
     where: {
       name: 'Deposito Virtual'
     }
   })
 
-  products.forEach(async (product:Product) => {
+  products.forEach(async (product: Product) => {
     await prisma.stock.create({
       data: {
         productId: product.id,
