@@ -6,12 +6,27 @@ import { isLoadState } from '../atoms/isLoadState'
 import { selectedRecordTypeState } from '../atoms/records/selectedRecordType'
 import { RecordNameEnum, RecordType } from '@prisma/client'
 import useRecordTypesQuery from '../hooks/records/useRecordTypesQuery'
+import { titleRecordState } from '../atoms/titleRecords'
 
 const NavBar = () => {
   const router = useRouter()
   const recordTypesQuery = useRecordTypesQuery('record-type')
   const [, setLoading] = useRecoilState(isLoadState)
   const [, setSelectedRecordType] = useRecoilState(selectedRecordTypeState)
+  const [, setTitle] = useRecoilState(titleRecordState)
+  function resolveRecordTitle (recordName: string) {
+    switch (recordName) {
+      case RecordNameEnum.FACTURA_ORIGINAL:
+        setTitle('COMPRA')
+        break
+      case RecordNameEnum.FACTURA_DUPLICADO:
+        setTitle('VENTA')
+        break
+      case RecordNameEnum.ORDEN_DE_PAGO:
+        setTitle('ORDEN PAGO')
+        break
+    }
+  }
   const items = [
     {
       label: 'Inicio',
@@ -108,6 +123,7 @@ const NavBar = () => {
           command: () => {
             setLoading(true)
             setSelectedRecordType(recordTypesQuery.data?.recordsTypes.find((recordType: RecordType) => recordType.recordName === RecordNameEnum.FACTURA_DUPLICADO))
+            resolveRecordTitle(RecordNameEnum.FACTURA_DUPLICADO)
             router.replace('/newRecord')
           }
         }
@@ -119,6 +135,7 @@ const NavBar = () => {
       command: () => {
         setLoading(true)
         setSelectedRecordType(recordTypesQuery.data?.recordsTypes.find((recordType: RecordType) => recordType.recordName === RecordNameEnum.FACTURA_DUPLICADO))
+        resolveRecordTitle(RecordNameEnum.FACTURA_DUPLICADO)
         router.replace('/newRecord')
       }
     },
@@ -128,6 +145,7 @@ const NavBar = () => {
       command: () => {
         setLoading(true)
         setSelectedRecordType(recordTypesQuery.data?.recordsTypes.find((recordType: RecordType) => recordType.recordName === RecordNameEnum.FACTURA_ORIGINAL))
+        resolveRecordTitle(RecordNameEnum.FACTURA_ORIGINAL)
         router.replace('/newRecord')
       }
     }

@@ -19,6 +19,7 @@ import useDetailsQuery from '../details/useDetailsQuery'
 import { useRouter } from 'next/router'
 import { selectedRecordLetterState } from '../../atoms/records/selectedRecordLetter'
 import { isPostState } from '../../atoms/isPostState'
+import { titleRecordState } from '../../atoms/titleRecords'
 // import { findStoreName } from '../../services/stores/findStoreName'
 
 const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdress: any, recordNumber: any, toast: any) => {
@@ -40,7 +41,19 @@ const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdr
   const [selectedSupplier, setSelectedSupplier] = useRecoilState(selectedSupplierState)
   const [selectedRecordType, setSelectedRecordType] = useRecoilState(selectedRecordTypeState)
   const [selectedRecordLetter, setSelectedRecordLetter] = useRecoilState(selectedRecordLetterState)
+  const [, setTitle] = useRecoilState(titleRecordState)
   const changeRecordType = (name: string) => {
+    switch (name) {
+      case RecordNameEnum.FACTURA_ORIGINAL:
+        setTitle('COMPRA')
+        break
+      case RecordNameEnum.FACTURA_DUPLICADO:
+        setTitle('VENTA')
+        break
+      case RecordNameEnum.ORDEN_DE_PAGO:
+        setTitle('ORDEN PAGO')
+        break
+    }
     setSelectedRecordType(recordTypesQuery.data?.recordsTypes.find((recordType: RecordType) => recordType.recordName === name))
   }
   const changeStore = (name: string) => {

@@ -43,7 +43,7 @@ const TableAddedRecords = ({
       paginator
       className="p-datatable-customers"
       showGridlines
-      rows={3}
+      rows={5}
       dataKey="id"
       responsiveLayout="scroll"
       emptyMessage="No se agregó ningun producto"
