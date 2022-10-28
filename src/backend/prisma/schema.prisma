@@ -58,6 +58,7 @@ model RecordDetails {
   recordId String
 
   quantity Int
+  historicalPrice Float @db.Real
   subtotal Float @db.Real
 
   @@map("record_details")
