@@ -145,8 +145,8 @@ const handleRecordDetailsCreation = async (
 
   const promiseArrayMovementsDetails = details.map(
     (stockIdQuantityAndSubtotal: any) => {
-      const { stockId, quantity, subtotal } = stockIdQuantityAndSubtotal
-      return createRecordDetails(stockId, recordCreated.id, quantity, subtotal)
+      const { stockId, quantity, subtotal, historicalPrice } = stockIdQuantityAndSubtotal
+      return createRecordDetails(stockId, recordCreated.id, quantity, subtotal, historicalPrice)
     }
   )
   const allPromisesMovementsDetails = Promise.all(promiseArrayMovementsDetails)

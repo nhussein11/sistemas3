@@ -22,12 +22,13 @@ export default async function recordsDetails (
 
     case 'POST':
       try {
-        const { productId, movementId, quantity, subtotal } = body
+        const { productId, movementId, quantity, subtotal, historicalPrice } = body
         const recordDetailsCreated = await createRecordDetails(
           productId,
           movementId,
           quantity,
-          subtotal
+          subtotal,
+          historicalPrice
         )
         return res.status(201).send({ recordDetailsCreated })
       } catch (error) {
