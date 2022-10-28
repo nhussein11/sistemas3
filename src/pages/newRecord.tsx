@@ -22,13 +22,13 @@ import { RecordNameEnum } from '@prisma/client'
 import useField from '../frontend/hooks/useField'
 import { isPostState } from '../frontend/atoms/isPostState'
 import SpinnerDialog from '../frontend/components/SpinnerDialog'
+import { titleRecordState } from '../frontend/atoms/titleRecords'
 
 const NewRecord: NextPage = () => {
   const recordObservation = useField({ initialValue: '', type: 'text' })
   const recordAdress = useField({ initialValue: '', type: 'text' })
   const recordNumber = useField({ initialValue: '', type: 'number' })
   const toast = useRef(null)
-  const [title, setTitle] = useState('COMPROBANTE')
   const {
     handleCreateNewRecord,
     changeStore,
@@ -52,10 +52,11 @@ const NewRecord: NextPage = () => {
     customerQuery,
     supplierQuery,
     detailsQuery
-  } = useNewRecordMutation('records', recordObservation, recordAdress, recordNumber, toast, setTitle)
+  } = useNewRecordMutation('records', recordObservation, recordAdress, recordNumber, toast)
   const { handleCreateNewRecordForFacturas } = useNewRecordForFacturasMutation('previous-record', recordObservation, recordAdress, recordNumber, toast)
   const [selectedRecordDetails] = useRecoilState(selectedRecordDetailsState)
   const [selectedRecords] = useRecoilState(selectedRecordsState)
+  const [title] = useRecoilState(titleRecordState)
   const [posting] = useRecoilState(isPostState)
   const [showTableProducts, setShowTableProducts] = useState(false)
   const [showTableRecords, setShowTableRecords] = useState(false)
