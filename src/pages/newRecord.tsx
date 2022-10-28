@@ -7,7 +7,7 @@ import DialogTableProducts from '../frontend/components/records/newRecord/Dialog
 import DialogTableRecords from '../frontend/components/records/newRecord/DialogTableRecords'
 import DialogSelectPerson from '../frontend/components/records/newRecord/DialogSelectPerson'
 import ToolBarProducts from '../frontend/components/records/newRecord/ToolBarProducts'
-import SaleDataBar from '../frontend/components/records/newRecord/SaleDataBar'
+// import SaleDataBar from '../frontend/components/records/newRecord/SaleDataBar'
 import TableAddedProducts from '../frontend/components/records/newRecord/TableAddedProducts'
 import TableAddedRecords from '../frontend/components/records/newRecord/TableAddedRecords'
 import PanelTotal from '../frontend/components/records/newRecord/PanelTotal'
@@ -28,6 +28,7 @@ const NewRecord: NextPage = () => {
   const recordAdress = useField({ initialValue: '', type: 'text' })
   const recordNumber = useField({ initialValue: '', type: 'number' })
   const toast = useRef(null)
+  const [title, setTitle] = useState('COMPROBANTE')
   const {
     handleCreateNewRecord,
     changeStore,
@@ -51,7 +52,7 @@ const NewRecord: NextPage = () => {
     customerQuery,
     supplierQuery,
     detailsQuery
-  } = useNewRecordMutation('records', recordObservation, recordAdress, recordNumber, toast)
+  } = useNewRecordMutation('records', recordObservation, recordAdress, recordNumber, toast, setTitle)
   const { handleCreateNewRecordForFacturas } = useNewRecordForFacturasMutation('previous-record', recordObservation, recordAdress, recordNumber, toast)
   const [selectedRecordDetails] = useRecoilState(selectedRecordDetailsState)
   const [selectedRecords] = useRecoilState(selectedRecordsState)
@@ -70,6 +71,7 @@ const NewRecord: NextPage = () => {
         return (<TableAddedRecords records={selectedRecords} customerQuery={customerQuery} supplierQuery={supplierQuery} detailsQuery={detailsQuery} ></TableAddedRecords>)
     }
   }
+
   function refresh () {
     recordObservation.onChange('')
     recordAdress.onChange('')
@@ -90,13 +92,18 @@ const NewRecord: NextPage = () => {
         <DialogTableRecords records={recordsOptions} supplierQuery={supplierQuery} customerQuery={customerQuery} detailsQuery={detailsQuery}
         setVisibleSelectorQuantity={setVisibleSelectorQuantity} displayBasic={showTableRecords} closeDialog={() => setShowTableRecords(false)}></DialogTableRecords>
         <Panel>
-            <SaleDataBar customers={customerOptions} suppliers={suppliersOptions} recordTypes={recordTypesOptions} stores={storesOptions}
-            selectedCustomer={selectedCustomer} selectedSupplier={selectedSupplier} selectedRecordType={selectedRecordType} selectedStore={selectedStore} selectedLetter={selectedRecordLetter}
-            changeCustomer={changeCustomer} changeSupplier={changeSupplier} changeStore={changeStore} changeRecordType={changeRecordType} changeLetter={changeLetter}
-            recordNumber={recordNumber} setShowPersonDialog={setShowPersonDialog}/>
-            {posting ? <SpinnerDialog /> : ''}
+          <h1 style={{ marginTop: '0', marginBottom: '0', marginLeft: '30px' }}>{title}</h1>
+          {posting ? <SpinnerDialog /> : ''}
         </Panel>
         <Splitter style={{ height: '100%' }}>
+            <SplitterPanel style={{ width: '90%' }}>
+                <PanelTotal
+                 customers={customerOptions} suppliers={suppliersOptions} recordTypes={recordTypesOptions} stores={storesOptions}
+                 selectedCustomer={selectedCustomer} selectedSupplier={selectedSupplier} selectedRecordType={selectedRecordType} selectedStore={selectedStore} selectedLetter={selectedRecordLetter}
+                 changeCustomer={changeCustomer} changeSupplier={changeSupplier} changeStore={changeStore} changeRecordType={changeRecordType} changeLetter={changeLetter}
+                 recordNumber={recordNumber} setShowPersonDialog={setShowPersonDialog}
+                 recordName={selectedRecordType.recordName} recordObservation={recordObservation} recordAdress={recordAdress} handleCreateNewRecord={handleCreateNewRecord} handleCreateNewRecordForFacturas={handleCreateNewRecordForFacturas} refresh={refresh}/>
+            </SplitterPanel>
             <SplitterPanel>
                 <div className="card">
                     <ToolBarProducts recordName={selectedRecordType?.recordName} setVisibleTableProducts={() => setShowTableProducts(true)} setVisibleTableRecords={() => setShowTableRecords(true)}></ToolBarProducts>
@@ -104,9 +111,6 @@ const NewRecord: NextPage = () => {
                 <div className='card'>
                     {tableRecord()}
                 </div>
-            </SplitterPanel>
-            <SplitterPanel style={{ width: '90%' }}>
-                <PanelTotal recordName={selectedRecordType.recordName} recordObservation={recordObservation} recordAdress={recordAdress} handleCreateNewRecord={handleCreateNewRecord} handleCreateNewRecordForFacturas={handleCreateNewRecordForFacturas} refresh={refresh}/>
             </SplitterPanel>
         </Splitter>
       </div>

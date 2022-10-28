@@ -21,7 +21,7 @@ import { selectedRecordLetterState } from '../../atoms/records/selectedRecordLet
 import { isPostState } from '../../atoms/isPostState'
 // import { findStoreName } from '../../services/stores/findStoreName'
 
-const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdress: any, recordNumber: any, toast: any) => {
+const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdress: any, recordNumber: any, toast: any, setTitle:any) => {
   const queryClient = useQueryClient()
   const router = useRouter()
   const recordTypesQuery = useRecordTypesQuery('record-type')
@@ -41,6 +41,18 @@ const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdr
   const [selectedRecordType, setSelectedRecordType] = useRecoilState(selectedRecordTypeState)
   const [selectedRecordLetter, setSelectedRecordLetter] = useRecoilState(selectedRecordLetterState)
   const changeRecordType = (name: string) => {
+    switch (selectedRecordType.recordName) {
+      case RecordNameEnum.FACTURA_ORIGINAL:
+        setTitle('COMPRA')
+        break
+      case RecordNameEnum.FACTURA_DUPLICADO:
+        setTitle('VENTA')
+        break
+      case RecordNameEnum.ORDEN_DE_PAGO:
+      case RecordNameEnum.ORDEN_DE_COMPRA:
+        setTitle('ORDEN DE PAGO')
+        break
+    }
     setSelectedRecordType(recordTypesQuery.data?.recordsTypes.find((recordType: RecordType) => recordType.recordName === name))
   }
   const changeStore = (name: string) => {

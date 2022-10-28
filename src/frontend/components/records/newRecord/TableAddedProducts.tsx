@@ -25,7 +25,7 @@ const TableAddedProducts = ({ products, productsQuery, storesQuery }: {products:
     )
   }
   return (
-    <DataTable value={products} paginator className="p-datatable-customers" showGridlines rows={3} dataKey="id" responsiveLayout="scroll" emptyMessage="No se agregó ningun producto">
+    <DataTable value={products} paginator className="p-datatable-customers" showGridlines rows={5} dataKey="id" responsiveLayout="scroll" emptyMessage="No se agregó ningun producto">
             <Column field="ProductName" header="Nombre" body={(rowData) => findProductName(rowData.productId, productsQuery)} style={{ minWidth: '2rem' }}></Column>
             <Column field="Quantity" header="Cantidad" body={(rowData) => rowData.quantity} style={{ minWidth: '4rem' }}></Column>
             <Column field="Precio" header="Precio" alignHeader={'center'} body={(rowData) => {
