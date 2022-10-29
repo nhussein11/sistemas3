@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import {
-  createRecordDetails,
-  getRecordsDetails
+  getRecordsDetails,
+  createRecordDetails
 } from '../../../backend/server/controllers/record-details/record-details.controller'
 import { errorHandler } from '../../../backend/server/controllers/errors/errorResponseHandler'
 
@@ -22,10 +22,10 @@ export default async function recordsDetails (
 
     case 'POST':
       try {
-        const { productId, movementId, quantity, subtotal, historicalPrice } = body
+        const { stockId, recordId, quantity, subtotal, historicalPrice } = body
         const recordDetailsCreated = await createRecordDetails(
-          productId,
-          movementId,
+          stockId,
+          recordId,
           quantity,
           subtotal,
           historicalPrice
