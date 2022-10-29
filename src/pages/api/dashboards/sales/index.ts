@@ -1,5 +1,6 @@
+import { RecordNameEnum } from '@prisma/client'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { getSales } from '../../../../backend/server/controllers/dashboards/dashboards.controller'
+import { getTransactionsDashboard } from '../../../../backend/server/controllers/dashboards/transactions.controller'
 import { errorHandler } from '../../../../backend/server/controllers/errors/errorResponseHandler'
 
 export default async function sales (
@@ -11,7 +12,7 @@ export default async function sales (
   switch (method) {
     case 'GET':
       try {
-        const sales = await getSales()
+        const sales = await getTransactionsDashboard(RecordNameEnum.FACTURA_DUPLICADO)
         return res.status(200).send({ sales })
       } catch (error) {
         return errorHandler(res, error)
