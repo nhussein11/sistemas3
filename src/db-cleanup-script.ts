@@ -182,7 +182,7 @@ const createDefaultRecords = async () => {
 
   const defaultRecordsofCustomers: Omit<Record, 'id' | 'datetime'>[] = [
     {
-      observation: 'Factura original de prueba',
+      observation: 'Factura duplicado de prueba',
       address: 'Zona Centro',
       letter: LetterEnum.A,
       recordNumber: 1,
@@ -192,7 +192,7 @@ const createDefaultRecords = async () => {
       supplierId: null
     },
     {
-      observation: 'Factura original de prueba',
+      observation: 'Factura duplicado de prueba',
       address: 'Zona Norte',
       letter: LetterEnum.A,
       recordNumber: 2,
