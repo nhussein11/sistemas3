@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { getSales } from '../../../../backend/server/controllers/dashboards/dashboards.controller'
 import { errorHandler } from '../../../../backend/server/controllers/errors/errorResponseHandler'
 
-export default async function dashboards (
+export default async function sales (
   req: NextApiRequest,
   res: NextApiResponse
 ) {
