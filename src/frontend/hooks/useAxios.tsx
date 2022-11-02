@@ -22,7 +22,7 @@ export const useAxios = (
           signal: abortController.signal
         })
         setIsLoading(false)
-        setFetchedData(response.data)
+        setFetchedData(response.data.data)
       } catch (error) {
         // @ts-ignore
         if (error.name === 'AbortError') {
