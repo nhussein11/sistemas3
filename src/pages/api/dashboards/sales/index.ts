@@ -13,7 +13,7 @@ export default async function sales (
     case 'GET':
       try {
         const sales = await getTransactionsDashboard(RecordNameEnum.FACTURA_DUPLICADO)
-        return res.status(200).send({ sales })
+        return res.status(200).send({ data: sales })
       } catch (error) {
         return errorHandler(res, error)
       }
