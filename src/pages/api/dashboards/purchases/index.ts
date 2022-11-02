@@ -12,7 +12,7 @@ export default async function purchases (
   switch (method) {
     case 'GET':
       try {
-        const purchases = getTransactionsDashboard(RecordNameEnum.FACTURA_ORIGINAL)
+        const purchases = await getTransactionsDashboard(RecordNameEnum.FACTURA_ORIGINAL)
         return res.status(200).send({ data: purchases })
       } catch (error) {
         return errorHandler(res, error)
