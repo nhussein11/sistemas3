@@ -1,7 +1,7 @@
 import React from 'react'
 import { Chart } from 'primereact/chart'
 import { useAxios } from '../../hooks/useAxios'
-
+import { ProgressSpinner } from 'primereact/progressspinner'
 const getLightTheme = () => {
   const basicOptions = {
     maintainAspectRatio: false,
@@ -160,16 +160,21 @@ const getLightTheme = () => {
     multiAxisOptions
   }
 }
+type props = {
+  label: string
+  color: string
+  endpoint: string
+}
 
-const BarChartDemo = ({ label, color, endpoint }:any) => {
+const BarChartDemo = ({ label, color, endpoint }:props) => {
   const { fetchedData, isLoading } = useAxios(endpoint)
   const { basicOptions } = getLightTheme()
-  console.log(fetchedData)
+  const data = Array.isArray(fetchedData) ? fetchedData.map(item => item.subtotal) : []
   return (
     <div>
       {isLoading
         ? (
-          <p>Loading...</p>
+          <ProgressSpinner/>
           )
         : (
         <div className="card">
@@ -187,7 +192,7 @@ const BarChartDemo = ({ label, color, endpoint }:any) => {
                 {
                   label,
                   backgroundColor: color,
-                  data: []
+                  data
                 }
               ]
             }}
