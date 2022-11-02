@@ -13,7 +13,7 @@ export default async function purchases (
     case 'GET':
       try {
         const purchases = getTransactionsDashboard(RecordNameEnum.FACTURA_ORIGINAL)
-        return res.status(200).send({ purchases })
+        return res.status(200).send({ data: purchases })
       } catch (error) {
         return errorHandler(res, error)
       }

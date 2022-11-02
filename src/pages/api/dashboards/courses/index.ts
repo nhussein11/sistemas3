@@ -12,7 +12,7 @@ export default async function coursesDashboard (
     case 'GET':
       try {
         const courses = await coursesDashboards()
-        return res.status(200).send({ courses })
+        return res.status(200).send({ date: courses })
       } catch (error) {
         return errorHandler(res, error)
       }
