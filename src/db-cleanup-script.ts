@@ -15,7 +15,8 @@ import {
   Enrollment,
   Customer,
   Supplier,
-  LetterEnum
+  LetterEnum,
+  Stock
 } from '@prisma/client'
 
 const deleteAllTables = async () => {
@@ -51,13 +52,13 @@ const createDefaultProducts = async () => {
     {
       name: 'Filamento Grilon Rosa',
       description: 'Color rosa Chicle',
-      price: 1500,
+      price: 1750,
       category: CategoryEnum.FILAMENTO
     },
     {
       name: 'Filamento Grilon Negro',
       description: 'Color Negro Carbon',
-      price: 1500,
+      price: 1420,
       category: CategoryEnum.FILAMENTO
     }
   ]
@@ -79,6 +80,49 @@ const createDefaultStores = async () => {
   console.log('inserting default stores...')
   await prisma.store.createMany({
     data: defaultStores
+  })
+}
+
+const createDefaultStocks = async () => {
+  const products = await prisma.product.findMany()
+  const stores = await prisma.store.findMany()
+
+  const defaultStocks: Omit<Stock, 'id'>[] = [
+    {
+      productId: products[0].id,
+      storeId: stores[1].id,
+      quantity: 7,
+      minQuantity: 5
+    },
+    {
+      productId: products[1].id,
+      storeId: stores[1].id,
+      quantity: 10,
+      minQuantity: 2
+    },
+    {
+      productId: products[2].id,
+      storeId: stores[2].id,
+      quantity: 8,
+      minQuantity: 1
+    },
+    {
+      productId: products[3].id,
+      storeId: stores[3].id,
+      quantity: 9,
+      minQuantity: 3
+    },
+    {
+      productId: products[3].id,
+      storeId: stores[3].id,
+      quantity: 9,
+      minQuantity: 3
+    }
+  ]
+
+  console.log('inserting default stocks...')
+  await prisma.stock.createMany({
+    data: defaultStocks
   })
 }
 
@@ -180,8 +224,20 @@ const createDefaultRecords = async () => {
   const customers = await prisma.customer.findMany()
   const suppliers = await prisma.supplier.findMany()
 
-  const defaultRecordsofCustomers: Omit<Record, 'id' | 'datetime'>[] = [
+  const defaultRecordsofCustomers: Omit<Record, 'id'>[] = [
     {
+      datetime: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30),
+      observation: 'Factura duplicado de prueba',
+      address: 'Zona Norte',
+      letter: LetterEnum.A,
+      recordNumber: 2,
+      paidFor: false,
+      recordTypeId: recordTypes[0].id,
+      customerId: customers[1].id,
+      supplierId: null
+    },
+    {
+      datetime: new Date(),
       observation: 'Factura duplicado de prueba',
       address: 'Zona Centro',
       letter: LetterEnum.A,
@@ -192,6 +248,29 @@ const createDefaultRecords = async () => {
       supplierId: null
     },
     {
+      datetime: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
+      observation: 'Factura duplicado de prueba',
+      address: 'Zona Norte',
+      letter: LetterEnum.A,
+      recordNumber: 2,
+      paidFor: false,
+      recordTypeId: recordTypes[0].id,
+      customerId: customers[1].id,
+      supplierId: null
+    },
+    {
+      datetime: new Date(Date.now() + 1000 * 60 * 60 * 24 * 60),
+      observation: 'Factura duplicado de prueba',
+      address: 'Zona Norte',
+      letter: LetterEnum.A,
+      recordNumber: 2,
+      paidFor: false,
+      recordTypeId: recordTypes[0].id,
+      customerId: customers[1].id,
+      supplierId: null
+    },
+    {
+      datetime: new Date(Date.now() + 1000 * 60 * 60 * 24 * 100),
       observation: 'Factura duplicado de prueba',
       address: 'Zona Norte',
       letter: LetterEnum.A,
@@ -202,8 +281,9 @@ const createDefaultRecords = async () => {
       supplierId: null
     }
   ]
-  const defaultRecordsofSuppliers: Omit<Record, 'id' | 'datetime'>[] = [
+  const defaultRecordsofSuppliers: Omit<Record, 'id'>[] = [
     {
+      datetime: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30),
       observation: 'Factura original de prueba',
       address: 'Zona Centro',
       letter: LetterEnum.A,
@@ -214,6 +294,51 @@ const createDefaultRecords = async () => {
       supplierId: suppliers[0].id
     },
     {
+      datetime: new Date(),
+      observation: 'Factura original de prueba',
+      address: 'Zona Norte',
+      letter: LetterEnum.A,
+      recordNumber: 4,
+      paidFor: false,
+      recordTypeId: recordTypes[1].id,
+      customerId: null,
+      supplierId: suppliers[1].id
+    },
+    {
+      datetime: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
+      observation: 'Factura original de prueba',
+      address: 'Zona Norte',
+      letter: LetterEnum.A,
+      recordNumber: 4,
+      paidFor: false,
+      recordTypeId: recordTypes[1].id,
+      customerId: null,
+      supplierId: suppliers[1].id
+    },
+    {
+      datetime: new Date(Date.now() + 1000 * 60 * 60 * 24 * 60),
+      observation: 'Factura original de prueba',
+      address: 'Zona Norte',
+      letter: LetterEnum.A,
+      recordNumber: 4,
+      paidFor: false,
+      recordTypeId: recordTypes[1].id,
+      customerId: null,
+      supplierId: suppliers[1].id
+    },
+    {
+      datetime: new Date(Date.now() + 1000 * 60 * 60 * 24 * 100),
+      observation: 'Factura original de prueba',
+      address: 'Zona Norte',
+      letter: LetterEnum.A,
+      recordNumber: 4,
+      paidFor: false,
+      recordTypeId: recordTypes[1].id,
+      customerId: null,
+      supplierId: suppliers[1].id
+    },
+    {
+      datetime: new Date(Date.now() + 1000 * 60 * 60 * 24 * 120),
       observation: 'Factura original de prueba',
       address: 'Zona Norte',
       letter: LetterEnum.A,
@@ -238,6 +363,7 @@ const createDefaultRecordDetails = async () => {
   const defaultRecordDetails: Promise<Omit<RecordDetails, 'id'>>[] =
     records.map(async (record) => {
       const randomStockId = Math.floor(Math.random() * stocks.length)
+
       const product = await prisma.product.findUnique({
         where: {
           id: stocks[randomStockId].productId
@@ -252,13 +378,12 @@ const createDefaultRecordDetails = async () => {
         historicalPrice: productPrice
       }
     })
-
   const results = await Promise.allSettled(defaultRecordDetails)
 
   const fulFilledResults = results.filter(
     (res) => res.status === 'fulfilled'
   ) as PromiseFulfilledResult<Omit<RecordDetails, 'id'>>[]
-
+  console.log(fulFilledResults)
   console.log('inserting default record details...')
   await prisma.recordDetails.createMany({
     data: fulFilledResults.map((res) => res.value)
@@ -439,6 +564,7 @@ const populateDatabase = async () => {
   try {
     await createDefaultProducts()
     await createDefaultStores()
+    await createDefaultStocks()
     await updateStocksQuantities()
     await createDefaultCustomers()
     await createDefaultSuppliers()
@@ -463,4 +589,4 @@ const main = async () => {
 }
 
 main()
-export { }
+export {}
