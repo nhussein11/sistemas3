@@ -2,12 +2,17 @@ import React from 'react'
 import { ConfirmDialog } from 'primereact/confirmdialog'
 import { InputText } from 'primereact/inputtext'
 import useQuantitySelectorDialog from '../../../hooks/records/useQuantitySelectorDialog'
+import { RecordNameEnum } from '@prisma/client'
 
-const QuantitySelectorDialog = () => {
-  const { showQuantitySelectorDialog, setShowQuantitySelectorDialog, showQuantitySelectorDialogDefaultState, quantity, addDetail } = useQuantitySelectorDialog()
+const QuantitySelectorDialog = (recordName: any) => {
+  const { showQuantitySelectorDialog, setShowQuantitySelectorDialog, showQuantitySelectorDialogDefaultState, quantity, historicalPrice, addDetail } = useQuantitySelectorDialog(recordName)
+  function showHistoricalPrice () {
+    if (recordName === RecordNameEnum.FACTURA_ORIGINAL) return true
+    else return false
+  }
   return (
     <ConfirmDialog visible={showQuantitySelectorDialog.show} onHide={() => setShowQuantitySelectorDialog(showQuantitySelectorDialogDefaultState)}
-      message={ <InputText {...quantity} name="quantity" placeholder="Ingresar Cantidad" />}
+      message={ <><InputText {...quantity} name="quantity" placeholder="Ingresar Cantidad" /><InputText {...historicalPrice} name="precio Compra" placeholder="Ingresar Cantidad" hidden={showHistoricalPrice()}/></>}
       header="Cantidad" accept={() => addDetail()}
     />
   )

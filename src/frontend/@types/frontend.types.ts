@@ -141,6 +141,7 @@ export type RecordDetailData = {
   productId: string
   storeId: string
   quantity: number
+  historicalPrice: number
 }
 export type RecordsDetailData = {
   recordId: string

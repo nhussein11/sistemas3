@@ -13,13 +13,14 @@ import { ammountRecordAtomState } from '../../../atoms/records/ammountRecordAtom
 const TableAddedProducts = ({ products, productsQuery, storesQuery }: {products: Object[]; productsQuery: any; storesQuery: any }) => {
   const [, setSelectedRecordDetails] = useRecoilState(selectedRecordDetailsState)
   const [, setAmmount] = useRecoilState(ammountRecordAtomState)
-  const actionBodyTemplateListProducts = (rowData: Stock) => {
+  const actionBodyTemplateListProducts = (rowData: any) => {
     return (
     <React.Fragment>
         <Button icon="pi pi-trash" className="p-button p-button-danger "
         onClick={() => {
           setSelectedRecordDetails((details) => details.filter((d) => d.productId !== rowData.productId))
-          setAmmount((prev) => ({ ammount: prev.ammount - (findProductPrice(rowData.productId, productsQuery) * parseFloat(rowData.quantity.toString() ? rowData.quantity.toString() : '0')) }))
+          // TODO RESTAR EL precio del dialog --> ACA CREO QUE LO MEJOR SERÍA ES YA NO FINDEAR EL PRODUCT PRICE SINO EL HISTORIPRICE Y LISTO
+          setAmmount((prev) => ({ ammount: prev.ammount - (rowData.historicalPrice * parseFloat(rowData.quantity.toString() ? rowData.quantity.toString() : '0')) }))
         }} />
     </React.Fragment>
     )
@@ -29,8 +30,8 @@ const TableAddedProducts = ({ products, productsQuery, storesQuery }: {products:
             <Column field="ProductName" header="Nombre" body={(rowData) => findProductName(rowData.productId, productsQuery)} style={{ minWidth: '2rem' }}></Column>
             <Column field="Quantity" header="Cantidad" body={(rowData) => rowData.quantity} style={{ minWidth: '4rem' }}></Column>
             <Column field="Precio" header="Precio" alignHeader={'center'} body={(rowData) => {
-              return (
-                  <NumberFormat value={findProductPrice(rowData.productId, productsQuery)} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'$'}></NumberFormat>
+              return (// TODO mostrar el precio que metimos en el dialog cuando COMPRAMOS
+                  <NumberFormat value={rowData.historicalPrice} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'$'}></NumberFormat>
               )
             }}/>
             <Column field="Subtotal" header="Subtotal" style={{ minWidth: '1rem' }}

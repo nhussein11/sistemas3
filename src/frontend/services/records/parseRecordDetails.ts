@@ -14,6 +14,7 @@ export const ParseRecordDetails = (
       stockId: record.stockId,
       productId: record.productId,
       quantity: record.quantity,
+      historicalPrice: record.historicalPrice,
       subtotal: productPrice ? productPrice * record.quantity : 0
     }
   })

@@ -13,6 +13,7 @@ type RecordData = {
     productId: string
     quantity: number
     subtotal: number
+    historicalPrice: number
   }[]
 }
 export const createNewRecord = async (record: RecordData) => {
