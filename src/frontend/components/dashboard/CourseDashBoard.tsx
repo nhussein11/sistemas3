@@ -164,19 +164,29 @@ type props = {
   label: string
   color: string
   endpoint: string
-  labels: string[]
+  isUnitValue?: boolean
 }
 
-const BarChartCourses = ({ label, color, endpoint, labels }:props) => {
+const BarChartCourses = ({ label, color, endpoint, isUnitValue }: props) => {
   const { fetchedData, isLoading } = useAxios(endpoint)
   const { basicOptions } = getLightTheme()
-  const data = Array.isArray(fetchedData) ? fetchedData.map(item => item?.totalPrice) : []
+  const data =
+    Array.isArray(fetchedData) && isUnitValue
+      ? fetchedData.map((item) => item?.coursePrice)
+      : Array.isArray(fetchedData)
+        ? fetchedData.map((item) => item?.totalPrice)
+        : []
+
+  const labels = Array.isArray(fetchedData)
+    ? fetchedData.map((item) => item?.course)
+    : []
   console.log(fetchedData)
+  console.log(labels)
   return (
     <div>
       {isLoading
         ? (
-          <ProgressSpinner/>
+        <ProgressSpinner />
           )
         : (
         <div className="card">

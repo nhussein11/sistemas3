@@ -7,9 +7,7 @@ interface IUseAxiosWithAbortResponse {
   error: Error | null
 }
 
-export const useAxios = (
-  endpoint: string
-): IUseAxiosWithAbortResponse => {
+export const useAxios = (endpoint: string): IUseAxiosWithAbortResponse => {
   const [fetchedData, setFetchedData] = useState()
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -20,10 +18,10 @@ export const useAxios = (
         const response = await publicAxiosInstance(endpoint, {
           signal: abortController.signal
         })
-        console.log(response.data)
-
         setIsLoading(false)
-        setFetchedData(response.data.data)
+        endpoint === '/courses'
+          ? setFetchedData(response.data.courses)
+          : setFetchedData(response.data.data)
       } catch (error) {
         // @ts-ignore
         if (error.name === 'AbortError') {

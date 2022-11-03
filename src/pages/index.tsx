@@ -3,12 +3,9 @@ import Head from 'next/head'
 import CardComponent from '../frontend/components/dashboard/Card'
 import BarChartDemo from '../frontend/components/dashboard/Graph'
 import { Card } from 'primereact/card'
-import { useAxios } from '../frontend/hooks/useAxios'
-import { Course } from '@prisma/client'
 import BarChartCourses from '../frontend/components/dashboard/CourseDashBoard'
 
 const Home: NextPage = () => {
-  const { fetchedData, isLoading } = useAxios('/courses')
   return (
     <div>
       <Head>
@@ -52,15 +49,24 @@ const Home: NextPage = () => {
             color={'#950A21'}
             labels={['October', 'November', 'December', 'January', 'February']}
           />
-          <BarChartCourses
-            endpoint={'/dashboards/courses'}
-            label={'courses'}
-            color={'#950A21'}
-            labels={
-              isLoading && fetchedData?.map((item: Course) => item?.name)
-            }
-          />
         </Card>
+      </div>
+      <div className="contenedor-grafico">
+      <Card className="card-graph">
+        <BarChartCourses
+          endpoint={'/dashboards/courses'}
+          label={'courses prices'}
+          color={'lightgreen'}
+        />
+      </Card>
+      <Card className="card-graph">
+      <BarChartCourses
+          endpoint={'/dashboards/courses'}
+          label={'Total Courses Earns'}
+          color={'green'}
+          isUnitValue={true}
+        />
+      </Card>
       </div>
     </div>
   )
