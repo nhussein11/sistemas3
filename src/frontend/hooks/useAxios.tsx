@@ -19,9 +19,7 @@ export const useAxios = (endpoint: string): IUseAxiosWithAbortResponse => {
           signal: abortController.signal
         })
         setIsLoading(false)
-        endpoint === '/courses'
-          ? setFetchedData(response.data.courses)
-          : setFetchedData(response.data.data)
+        setFetchedData(response.data.data)
       } catch (error) {
         // @ts-ignore
         if (error.name === 'AbortError') {
