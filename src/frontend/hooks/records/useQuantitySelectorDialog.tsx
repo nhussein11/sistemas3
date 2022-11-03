@@ -5,24 +5,23 @@ import useField from '../useField'
 import { ammountRecordAtomState } from '../../../frontend/atoms/records/ammountRecordAtom'
 import useProductsQuery from '../../hooks/products/useProductsQuery'
 import { findProductPrice } from '../../services/products/findProductPrice'
-// import { RecordNameEnum } from '@prisma/client'
-// import { selectedRecordTypeState } from '../../atoms/records/selectedRecordType'
+import { RecordNameEnum } from '@prisma/client'
+import { selectedRecordTypeState } from '../../atoms/records/selectedRecordType'
 
 const useQuantitySelectorDialog = () => {
   const productsQuery = useProductsQuery('products')
   const [showQuantitySelectorDialog, setShowQuantitySelectorDialog] = useRecoilState(showQuantitySelectorDialogState)
-  // const [selectedRecordType] = useRecoilState(selectedRecordTypeState)
+  const [selectedRecordType] = useRecoilState(selectedRecordTypeState)
   const [, setAmmount] = useRecoilState(ammountRecordAtomState)
   const quantity = useField({ type: 'number', initialValue: 1 })
-  const historicalPrice = useField({ type: 'number', initialValue: findProductPrice(showQuantitySelectorDialog.productId, productsQuery) })
+  const historicalPrice = useField({ type: 'number', initialValue: 0 })
   const [, setSelectedRecordDetails] = useRecoilState(selectedRecordDetailsState)
 
   // historicalPrice.value = findProductPrice(showQuantitySelectorDialog.productId, productsQuery)
   const addDetail = () => {
-    // if (selectedRecordType.recordName === RecordNameEnum.FACTURA_DUPLICADO) {
-    //   console.log('entra como fac duplicado')
-    //   historicalPrice.value = findProductPrice(showQuantitySelectorDialog.productId, productsQuery)
-    // }
+    if (selectedRecordType.recordName === RecordNameEnum.FACTURA_DUPLICADO) {
+      historicalPrice.value = findProductPrice(showQuantitySelectorDialog.productId, productsQuery)
+    }
     setSelectedRecordDetails((prev) => [
       ...prev,
       {

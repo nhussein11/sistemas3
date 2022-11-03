@@ -10,11 +10,13 @@ const QuantitySelectorDialog = (recordName: any, productsQuery: any) => {
     if (recordName === RecordNameEnum.FACTURA_ORIGINAL) return true
     else return false
   }
+  console.log(showHistoricalPrice())
   return (
     <ConfirmDialog visible={showQuantitySelectorDialog.show} onHide={() => setShowQuantitySelectorDialog(showQuantitySelectorDialogDefaultState)}
       message={ <>
       <InputText {...quantity} name="quantity" placeholder="Ingresar Cantidad" />
-      {showHistoricalPrice() ? <InputText {...historicalPrice} name="precio Compra" placeholder="Ingresar Precio"/> : null }
+      <InputText {...historicalPrice} name="precio Compra" placeholder="Ingresar Precio"/>
+      {/* {showHistoricalPrice() ? <InputText {...historicalPrice} name="precio Compra" placeholder="Ingresar Precio"/> : null } */}
       </>}
       header="Cantidad" accept={() => addDetail()}
     />
