@@ -46,10 +46,36 @@ const NavBar = () => {
     {
       label: 'Stock',
       icon: 'pi pi-fw pi-table',
-      command: () => {
-        setLoading(true)
-        router.replace('/stock')
-      }
+      items: [
+        {
+          label: 'Stock',
+          icon: 'pi pi-fw pi-table',
+          command: () => {
+            setLoading(true)
+            router.replace('/stock')
+          }
+        },
+        {
+          label: 'Movimiento Egreso',
+          icon: 'pi pi-fw pi-minus',
+          command: () => {
+            setLoading(true)
+            setSelectedRecordType(recordTypesQuery.data?.recordsTypes.find((recordType: RecordType) => recordType.recordName === RecordNameEnum.MOVIENTO_DE_STOCK_EGRESO))
+            resolveRecordTitle('MOVIMIENTO EGRESO')
+            router.replace('/newRecord')
+          }
+        },
+        {
+          label: 'Movimiento Ingreso',
+          icon: 'pi pi-fw pi-plus',
+          command: () => {
+            setLoading(true)
+            setSelectedRecordType(recordTypesQuery.data?.recordsTypes.find((recordType: RecordType) => recordType.recordName === RecordNameEnum.MOVIENTO_DE_STOCK_INGRESO))
+            resolveRecordTitle('MOVIMIENTO INGRESO')
+            router.replace('/newRecord')
+          }
+        }
+      ]
     },
     {
       label: 'Depositos',
