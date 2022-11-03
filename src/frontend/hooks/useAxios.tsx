@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import publicAxiosInstance from '../api/axios-api'
 
 interface IUseAxiosWithAbortResponse {
-  fetchedData: unknown
+  fetchedData: any
   isLoading: boolean
   error: Error | null
 }
@@ -13,7 +13,6 @@ export const useAxios = (
   const [fetchedData, setFetchedData] = useState()
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
-  console.log(fetchedData)
   useEffect(() => {
     const abortController = new AbortController()
     const fetchData = async () => {
@@ -21,6 +20,8 @@ export const useAxios = (
         const response = await publicAxiosInstance(endpoint, {
           signal: abortController.signal
         })
+        console.log(response.data)
+
         setIsLoading(false)
         setFetchedData(response.data.data)
       } catch (error) {

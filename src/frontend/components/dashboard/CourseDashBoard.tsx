@@ -167,10 +167,11 @@ type props = {
   labels: string[]
 }
 
-const BarChartDemo = ({ label, color, endpoint, labels }:props) => {
+const BarChartCourses = ({ label, color, endpoint, labels }:props) => {
   const { fetchedData, isLoading } = useAxios(endpoint)
   const { basicOptions } = getLightTheme()
-  const data = Array.isArray(fetchedData) ? fetchedData.map(item => item?.subtotal) : []
+  const data = Array.isArray(fetchedData) ? fetchedData.map(item => item?.totalPrice) : []
+  console.log(fetchedData)
   return (
     <div>
       {isLoading
@@ -200,4 +201,4 @@ const BarChartDemo = ({ label, color, endpoint, labels }:props) => {
     </div>
   )
 }
-export default BarChartDemo
+export default BarChartCourses
