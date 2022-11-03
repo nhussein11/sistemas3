@@ -180,8 +180,6 @@ const BarChartCourses = ({ label, color, endpoint, isUnitValue }: props) => {
   const labels = Array.isArray(fetchedData)
     ? fetchedData.map((item) => item?.course)
     : []
-  console.log(fetchedData)
-  console.log(labels)
   return (
     <div>
       {isLoading

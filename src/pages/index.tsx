@@ -57,6 +57,7 @@ const Home: NextPage = () => {
           endpoint={'/dashboards/courses'}
           label={'courses prices'}
           color={'lightgreen'}
+          isUnitValue={true}
         />
       </Card>
       <Card className="card-graph">
@@ -64,7 +65,6 @@ const Home: NextPage = () => {
           endpoint={'/dashboards/courses'}
           label={'Total Courses Earns'}
           color={'green'}
-          isUnitValue={true}
         />
       </Card>
       </div>
