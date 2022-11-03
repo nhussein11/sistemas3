@@ -9,7 +9,7 @@ export default function ToolBarProducts ({ setVisibleTableProducts, setVisibleTa
   const leftToolbarTemplate = () => {
     return (
     <React.Fragment>
-        {recordName.includes('FACTURA')
+        {recordName?.includes('FACTURA') || recordName?.includes('MOVIENTO')
           ? (<Button label={getSearchName()} icon="pi pi-search" className="p-button-success mr-2" onClick={() => setVisibleTableProducts()} />)
           : (<Button label={getSearchName()} icon="pi pi-search" className="p-button-success mr-2" onClick={() => setVisibleTableRecords()} />)}
     </React.Fragment>
@@ -19,6 +19,8 @@ export default function ToolBarProducts ({ setVisibleTableProducts, setVisibleTa
     switch (recordName) {
       case RecordNameEnum.FACTURA_DUPLICADO:
       case RecordNameEnum.FACTURA_ORIGINAL:
+      case RecordNameEnum.MOVIENTO_DE_STOCK_EGRESO:
+      case RecordNameEnum.MOVIENTO_DE_STOCK_INGRESO:
         return 'Productos'
       case RecordNameEnum.ORDEN_DE_COMPRA:
       case RecordNameEnum.ORDEN_DE_PAGO:

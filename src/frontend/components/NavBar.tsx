@@ -25,6 +25,12 @@ const NavBar = () => {
       case RecordNameEnum.ORDEN_DE_PAGO:
         setTitle('ORDEN PAGO')
         break
+      case RecordNameEnum.MOVIENTO_DE_STOCK_INGRESO:
+        setTitle('MOVIMIENTO INGRESO')
+        break
+      case RecordNameEnum.MOVIENTO_DE_STOCK_EGRESO:
+        setTitle('MOVIMIENTO EGRESO')
+        break
     }
   }
   const items = [
@@ -46,10 +52,36 @@ const NavBar = () => {
     {
       label: 'Stock',
       icon: 'pi pi-fw pi-table',
-      command: () => {
-        setLoading(true)
-        router.replace('/stock')
-      }
+      items: [
+        {
+          label: 'Stock',
+          icon: 'pi pi-fw pi-table',
+          command: () => {
+            setLoading(true)
+            router.replace('/stock')
+          }
+        },
+        {
+          label: 'Movimiento Egreso',
+          icon: 'pi pi-fw pi-minus',
+          command: () => {
+            setLoading(true)
+            setSelectedRecordType(recordTypesQuery.data?.recordsTypes.find((recordType: RecordType) => recordType.recordName === RecordNameEnum.MOVIENTO_DE_STOCK_EGRESO))
+            resolveRecordTitle(RecordNameEnum.MOVIENTO_DE_STOCK_EGRESO)
+            router.replace('/newRecord')
+          }
+        },
+        {
+          label: 'Movimiento Ingreso',
+          icon: 'pi pi-fw pi-plus',
+          command: () => {
+            setLoading(true)
+            setSelectedRecordType(recordTypesQuery.data?.recordsTypes.find((recordType: RecordType) => recordType.recordName === RecordNameEnum.MOVIENTO_DE_STOCK_INGRESO))
+            resolveRecordTitle(RecordNameEnum.MOVIENTO_DE_STOCK_INGRESO)
+            router.replace('/newRecord')
+          }
+        }
+      ]
     },
     {
       label: 'Depositos',

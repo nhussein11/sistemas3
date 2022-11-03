@@ -80,7 +80,7 @@ const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdr
       setPosting(false)
       toast.current.show({ severity: 'success', summary: 'Realizado', detail: 'Comprobante Generado. Redirigiendo...', life: 3000 })
       setTimeout(() => {
-        switch (selectedRecordType.recordName) {
+        switch (selectedRecordType?.recordName) {
           case RecordNameEnum.FACTURA_ORIGINAL:
             router.replace('/records?type=egr')
             break
@@ -103,8 +103,8 @@ const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdr
       recordNumber: recordNumber.value as number,
       paidFor: false,
       recordTypeId: selectedRecordType.id,
-      supplierId: selectedSupplier.id,
-      customerId: selectedCustomer.id,
+      supplierId: (selectedSupplier?.id ? selectedSupplier?.id : 'x'),
+      customerId: (selectedCustomer?.id ? selectedCustomer?.id : 'x'), // atadisimo con alambre
       details: ParseRecordDetails(selectedRecordDetails, productsQuery)
     })
   }
@@ -118,7 +118,7 @@ const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdr
   const stockOptions = stocksQuery?.data?.stocks
 
   let recordsOptions = recordsQuery?.data?.records
-  switch (selectedRecordType.recordName) {
+  switch (selectedRecordType?.recordName) {
     case RecordNameEnum.ORDEN_DE_PAGO:
       recordsOptions = recordsQuery?.data?.records.filter((record: Record) => {
         return record.supplierId === selectedSupplier.id
