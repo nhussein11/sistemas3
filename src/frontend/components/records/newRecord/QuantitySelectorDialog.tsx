@@ -12,7 +12,10 @@ const QuantitySelectorDialog = (recordName: any) => {
   }
   return (
     <ConfirmDialog visible={showQuantitySelectorDialog.show} onHide={() => setShowQuantitySelectorDialog(showQuantitySelectorDialogDefaultState)}
-      message={ <><InputText {...quantity} name="quantity" placeholder="Ingresar Cantidad" /><InputText {...historicalPrice} name="precio Compra" placeholder="Ingresar Cantidad" hidden={showHistoricalPrice()}/></>}
+      message={ <>
+      <InputText {...quantity} name="quantity" placeholder="Ingresar Cantidad" />
+      {showHistoricalPrice() ? <InputText {...historicalPrice} name="precio Compra" placeholder="Ingresar Cantidad" hidden={showHistoricalPrice()}/> : null }
+      </>}
       header="Cantidad" accept={() => addDetail()}
     />
   )
