@@ -23,6 +23,7 @@ import useField from '../frontend/hooks/useField'
 import { isPostState } from '../frontend/atoms/isPostState'
 import SpinnerDialog from '../frontend/components/SpinnerDialog'
 import { titleRecordState } from '../frontend/atoms/titleRecords'
+import useNewRecordMovement from '../frontend/hooks/records/useNewRecordMovement'
 
 const NewRecord: NextPage = () => {
   const recordObservation = useField({ initialValue: '', type: 'text' })
@@ -54,6 +55,7 @@ const NewRecord: NextPage = () => {
     detailsQuery
   } = useNewRecordMutation('records', recordObservation, recordAdress, recordNumber, toast)
   const { handleCreateNewRecordForFacturas } = useNewRecordForFacturasMutation('previous-record', recordObservation, recordAdress, recordNumber, toast)
+  const { handleCreateNewRecordMovement } = useNewRecordMovement('stock-movements', toast)
   const [selectedRecordDetails] = useRecoilState(selectedRecordDetailsState)
   const [selectedRecords] = useRecoilState(selectedRecordsState)
   const [title] = useRecoilState(titleRecordState)
@@ -63,9 +65,11 @@ const NewRecord: NextPage = () => {
   const [showPersonDialog, setShowPersonDialog] = useState(false)
   const [, setVisibleSelectorQuantity] = useState(false)
   function tableRecord () {
-    switch (selectedRecordType.recordName) {
+    switch (selectedRecordType?.recordName) {
       case RecordNameEnum.FACTURA_ORIGINAL:
       case RecordNameEnum.FACTURA_DUPLICADO:
+      case RecordNameEnum.MOVIENTO_DE_STOCK_EGRESO:
+      case RecordNameEnum.MOVIENTO_DE_STOCK_INGRESO:
         return (<TableAddedProducts products={selectedRecordDetails} productsQuery={productsQuery} storesQuery={storesQuery} ></TableAddedProducts>)
       case RecordNameEnum.ORDEN_DE_PAGO:
       case RecordNameEnum.ORDEN_DE_COMPRA:
@@ -103,7 +107,8 @@ const NewRecord: NextPage = () => {
                  selectedCustomer={selectedCustomer} selectedSupplier={selectedSupplier} selectedRecordType={selectedRecordType} selectedStore={selectedStore} selectedLetter={selectedRecordLetter}
                  changeCustomer={changeCustomer} changeSupplier={changeSupplier} changeStore={changeStore} changeRecordType={changeRecordType} changeLetter={changeLetter}
                  recordNumber={recordNumber} setShowPersonDialog={setShowPersonDialog}
-                 recordName={selectedRecordType.recordName} recordObservation={recordObservation} recordAdress={recordAdress} handleCreateNewRecord={handleCreateNewRecord} handleCreateNewRecordForFacturas={handleCreateNewRecordForFacturas} refresh={refresh}/>
+                 recordName={selectedRecordType?.recordName} recordObservation={recordObservation} recordAdress={recordAdress}
+                 handleCreateNewRecord={handleCreateNewRecord} handleCreateNewRecordForFacturas={handleCreateNewRecordForFacturas} handleCreateNewRecordMovement={handleCreateNewRecordMovement} refresh={refresh}/>
             </SplitterPanel>
             <SplitterPanel>
                 <div className="card">
