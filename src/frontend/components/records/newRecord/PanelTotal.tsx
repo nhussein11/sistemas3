@@ -12,11 +12,11 @@ import { isPostState } from '../../../atoms/isPostState'
 import { Dropdown } from 'primereact/dropdown'
 
 const PanelTotal = ({
-  handleCreateNewRecord, handleCreateNewRecordForFacturas, recordObservation, recordAdress, recordName, refresh,
+  handleCreateNewRecord, handleCreateNewRecordForFacturas, handleCreateNewRecordMovement, recordObservation, recordAdress, recordName, refresh,
   customers, suppliers, recordTypes, stores, selectedCustomer, selectedSupplier, selectedStore, selectedLetter, selectedRecordType,
   changeCustomer, changeSupplier, changeStore, changeRecordType, changeLetter, recordNumber, setShowPersonDialog
 }:
-  {handleCreateNewRecordForFacturas: any; handleCreateNewRecord: any; recordObservation: any; recordAdress: any; recordName: any; refresh: any;
+  {handleCreateNewRecordForFacturas: any; handleCreateNewRecord: any; handleCreateNewRecordMovement: any; recordObservation: any; recordAdress: any; recordName: any; refresh: any;
     customers: Object[]; suppliers: Object[]; recordTypes: Object[]; stores: Object[]; selectedCustomer: Customer; selectedSupplier: Supplier; selectedStore: Store; selectedRecordType: any; selectedLetter: any
     changeCustomer: any; changeSupplier: any; changeStore: any; changeRecordType: any; changeLetter: any; recordNumber: any; setShowPersonDialog: any}) => {
   const [ammount, setAmmount] = useRecoilState(ammountRecordAtomState)
@@ -33,16 +33,28 @@ const PanelTotal = ({
       default:
     }
   }
+  function storeDialog () {
+    if (checkRecordMovement()) {
+      return (<Dropdown options={stores} value={selectedStore?.name} onChange={(e) => changeStore(e.target.value)} placeholder="Seleccionar Depósito"/>)
+    }
+  }
+  function checkRecordMovement () {
+    if (selectedRecordType.recordName === RecordNameEnum.MOVIENTO_DE_STOCK_EGRESO || selectedRecordType.recordName === RecordNameEnum.MOVIENTO_DE_STOCK_INGRESO) return true
+    else return false
+  }
   return (
     <div className='container-total'>
         <Panel>
             <Card>
             <div style={{ display: 'grid', gridTemplateColumns: 'auto auto auto auto auto auto auto', justifyContent: 'left', columnGap: '10px' }}>
               <Dropdown options={recordTypes} value={selectedRecordType?.recordName} onChange={(e) => changeRecordType(e.target.value)} placeholder="Seleccionar Tipo Comp"/>
-              <Dropdown options={[LetterEnum.A, LetterEnum.B, LetterEnum.C]} value={selectedLetter} onChange={(e) => changeLetter(e.target.value)} placeholder="Seleccionar Tipo Comprobante"/>
+              {storeDialog()}
+              {!checkRecordMovement() ? <Dropdown options={[LetterEnum.A, LetterEnum.B, LetterEnum.C]} value={selectedLetter} onChange={(e) => changeLetter(e.target.value)} placeholder="Seleccionar Tipo Comprobante"/> : null}
               {dropPerson()}
-              <Button label={'Buscar'} icon="pi pi-search" className="p-button-waring mr-2" onClick={() => setShowPersonDialog(true)} />
+              {!checkRecordMovement() ? <Button label={'Buscar'} icon="pi pi-search" className="p-button-waring mr-2" onClick={() => setShowPersonDialog(true)} /> : null }
             </div>
+            {!checkRecordMovement()
+              ? (<>
             <span className="p-float-label" style={{ marginTop: '2rem' }}>
                 <InputText {...recordNumber} id="recordNumber" />
                 <label htmlFor="recordNumber">Número</label>
@@ -55,6 +67,8 @@ const PanelTotal = ({
                 <InputText style={{ width: '100%' }} {...recordAdress} id="adress" />
                 <label htmlFor="adress">Dirección</label>
             </span>
+            </>)
+              : null}
             </Card>
             <Card>
                 <h1 style={{ textAlign: 'end' }}>TOTAL: <NumberFormat value={ammount.ammount} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'$'}></NumberFormat></h1>
@@ -69,6 +83,10 @@ const PanelTotal = ({
                 case RecordNameEnum.ORDEN_DE_COMPRA:
                 case RecordNameEnum.ORDEN_DE_PAGO:
                   handleCreateNewRecordForFacturas()
+                  break
+                case RecordNameEnum.MOVIENTO_DE_STOCK_EGRESO:
+                case RecordNameEnum.MOVIENTO_DE_STOCK_INGRESO:
+                  handleCreateNewRecordMovement()
                   break
               }
               refresh()
