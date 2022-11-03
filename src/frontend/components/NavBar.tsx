@@ -25,6 +25,12 @@ const NavBar = () => {
       case RecordNameEnum.ORDEN_DE_PAGO:
         setTitle('ORDEN PAGO')
         break
+      case RecordNameEnum.MOVIENTO_DE_STOCK_INGRESO:
+        setTitle('MOVIMIENTO INGRESO')
+        break
+      case RecordNameEnum.MOVIENTO_DE_STOCK_EGRESO:
+        setTitle('MOVIMIENTO EGRESO')
+        break
     }
   }
   const items = [
@@ -61,7 +67,7 @@ const NavBar = () => {
           command: () => {
             setLoading(true)
             setSelectedRecordType(recordTypesQuery.data?.recordsTypes.find((recordType: RecordType) => recordType.recordName === RecordNameEnum.MOVIENTO_DE_STOCK_EGRESO))
-            resolveRecordTitle('MOVIMIENTO EGRESO')
+            resolveRecordTitle(RecordNameEnum.MOVIENTO_DE_STOCK_EGRESO)
             router.replace('/newRecord')
           }
         },
@@ -71,7 +77,7 @@ const NavBar = () => {
           command: () => {
             setLoading(true)
             setSelectedRecordType(recordTypesQuery.data?.recordsTypes.find((recordType: RecordType) => recordType.recordName === RecordNameEnum.MOVIENTO_DE_STOCK_INGRESO))
-            resolveRecordTitle('MOVIMIENTO INGRESO')
+            resolveRecordTitle(RecordNameEnum.MOVIENTO_DE_STOCK_INGRESO)
             router.replace('/newRecord')
           }
         }
