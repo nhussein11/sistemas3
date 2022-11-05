@@ -72,7 +72,7 @@ const RecordsTable = ({ records, type }: RecordsTableProps) => {
           <Column field="Ammount" header="Monto" alignHeader={'center'} body={(rowData) => {
             return (<NumberFormat value={resolveAmmountValue(resolveRecordName(rowData.recordTypeId, recordTypesQuery), rowData.id)} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'$'}></NumberFormat>)
           }}/>
-          {type === 'ing'
+          {type === 'ven'
             ? <Column field="Nombre Cliente" header="Cliente" body={(rowData) => resolveRecordCustomerName(rowData.customerId, recordCustomerQuery)} alignHeader={'center'}/>
             : <Column field="Nombre Proveedor" header="Proveedor" body={(rowData) => resolveRecordSupplierName(rowData.supplierId, recordSupplierQuery)} alignHeader={'center'}/>
           }
@@ -87,6 +87,8 @@ const RecordsTable = ({ records, type }: RecordsTableProps) => {
                     switch (resolveRecordName(rowData.recordTypeId, recordTypesQuery)) {
                       case RecordNameEnum.FACTURA_DUPLICADO:
                       case RecordNameEnum.FACTURA_ORIGINAL:
+                      case RecordNameEnum.MOVIENTO_DE_STOCK_EGRESO:
+                      case RecordNameEnum.MOVIENTO_DE_STOCK_INGRESO:
                         setDisplayRecordDetailsTable((prev: boolean) => !prev)
                         break
                       case RecordNameEnum.ORDEN_DE_COMPRA:

@@ -22,6 +22,18 @@ const TableHeader = ({
   const { parsedSuppliers, changeSupplier, selectedFilterSupplier } = useSuppliersFilter()
   const { parsedCustomers, changeCustomer, selectedFilterCustomer } = useCustomerFilter()
   const router = useRouter()
+  function selectTitle () {
+    switch (type) {
+      case 'ven':
+        return 'VENTAS'
+      case 'com':
+        return 'COMPRAS'
+      case 'op':
+        return 'ORDEN PAGO'
+      case 'mov':
+        return 'MOVIMIENTOS'
+    }
+  }
   return (
     <div className="header-table">
       <div className="flex justify-content-between">
@@ -33,7 +45,7 @@ const TableHeader = ({
             placeholder="Buscar"
           />
         </span>
-        {type === 'ing'
+        {type === 'ven'
           ? <Dropdown
         value={selectedFilterCustomer.name}
         options={parsedCustomers}
@@ -47,18 +59,9 @@ const TableHeader = ({
         placeholder="Selec Proveedor"
       />
         }
-         {/* <Dropdown
-          value={selectedFilterSupplier.name}
-          options={[RecordNameEnum.FACTURA_DUPLICADO, RecordNameEnum.FACTURA_ORIGINAL, RecordNameEnum.ORDEN_DE_COMPRA, RecordNameEnum.ORDEN_DE_PAGO]}
-          onChange={(e) => changeSupplier(e.target.value)}
-          placeholder="Tipo Factura"
-        /> */}
       </div>
       <div className="actionsButtonsTable" style={{ display: 'contents' }}>
-      {type === 'ing'
-        ? <ToggleButton offLabel="INGRESOS"/>
-
-        : <ToggleButton offLabel="EGRESOS"/>}
+      <ToggleButton offLabel={selectTitle()}/>
         <Button
           label="Nuevo Comprobante"
           className="p-button-raised p-button-success"

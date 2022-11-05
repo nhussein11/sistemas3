@@ -2,13 +2,24 @@ import { Record, RecordNameEnum } from '@prisma/client'
 import { resolveRecordName } from './resolveRecordName'
 
 export const filterTypeRecord = (records: Record[], type: string, recordTypesQuery: any) => {
-  if (type === 'ing') {
-    return records?.filter((record) => {
-      return resolveRecordName(record.recordTypeId, recordTypesQuery)?.includes(RecordNameEnum.FACTURA_DUPLICADO) || resolveRecordName(record.recordTypeId, recordTypesQuery)?.includes(RecordNameEnum.ORDEN_DE_COMPRA)
-    })
-  } else {
-    return records?.filter((record) => {
-      return resolveRecordName(record.recordTypeId, recordTypesQuery)?.includes(RecordNameEnum.FACTURA_ORIGINAL) || resolveRecordName(record.recordTypeId, recordTypesQuery)?.includes(RecordNameEnum.ORDEN_DE_PAGO)
-    })
+  switch (type) {
+    case 'mov':
+      return records?.filter((record) => {
+        return resolveRecordName(record.recordTypeId, recordTypesQuery) === (RecordNameEnum.MOVIENTO_DE_STOCK_EGRESO) || resolveRecordName(record.recordTypeId, recordTypesQuery) === (RecordNameEnum.MOVIENTO_DE_STOCK_INGRESO)
+      })
+    case 'ven':
+      return records?.filter((record) => {
+        return resolveRecordName(record.recordTypeId, recordTypesQuery) === (RecordNameEnum.FACTURA_DUPLICADO)
+      })
+    case 'com':
+      return records?.filter((record) => {
+        return resolveRecordName(record.recordTypeId, recordTypesQuery) === (RecordNameEnum.FACTURA_ORIGINAL)
+      })
+    case 'op':
+      return records?.filter((record) => {
+        return resolveRecordName(record.recordTypeId, recordTypesQuery) === (RecordNameEnum.ORDEN_DE_PAGO)
+      })
+    default:
+      return records
   }
 }
