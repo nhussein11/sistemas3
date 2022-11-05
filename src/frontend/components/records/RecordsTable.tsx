@@ -64,18 +64,22 @@ const RecordsTable = ({ records, type }: RecordsTableProps) => {
         <DataTable value={records} paginator loading={loading} className="p-datatable-customers" showGridlines rows={5} dataKey="id" responsiveLayout="scroll"
           emptyMessage="No se encontraron Comprobantes"
           header={<TableHeader type={type} setDisplayRecordDetailsTable={setDisplayRecordDetailsTable} setDisplayBasic={setDisplayBasic}/>}>
-          <Column field="ID" header="Codigo" body={(rowData) => (rowData.recordNumber)} alignHeader={'center'} />
+          {type === 'mov' ? null : <Column field="ID" header="Codigo" body={(rowData) => (rowData.recordNumber)} alignHeader={'center'} />}
           <Column field="Fecha" header="Fecha" body={(rowData) => parseDate(rowData?.datetime)} alignHeader={'center'} />
           <Column field="Observación" header="Observación" body={(rowData) => rowData.observation} alignHeader={'center'}/>
           <Column field="NombreComprobante" header="Comprobante" body={(rowData) => resolveRecordName(rowData.recordTypeId, recordTypesQuery)} alignHeader={'center'}/>
-          <Column field="pagado" header="Pagado" body={(rowData) => (rowData.paidFor ? 'PAGADO' : '-')} alignHeader={'center'} />
-          <Column field="Ammount" header="Monto" alignHeader={'center'} body={(rowData) => {
-            return (<NumberFormat value={resolveAmmountValue(resolveRecordName(rowData.recordTypeId, recordTypesQuery), rowData.id)} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'$'}></NumberFormat>)
-          }}/>
-          {type === 'ing'
-            ? <Column field="Nombre Cliente" header="Cliente" body={(rowData) => resolveRecordCustomerName(rowData.customerId, recordCustomerQuery)} alignHeader={'center'}/>
-            : <Column field="Nombre Proveedor" header="Proveedor" body={(rowData) => resolveRecordSupplierName(rowData.supplierId, recordSupplierQuery)} alignHeader={'center'}/>
-          }
+          {type === 'mov' ? null : <Column field="pagado" header="Pagado" body={(rowData) => (rowData.paidFor ? 'PAGADO' : '-')} alignHeader={'center'} />}
+          {type === 'mov'
+            ? null
+            : <Column field="Ammount" header="Monto" alignHeader={'center'} body={(rowData) => {
+              return (<NumberFormat value={resolveAmmountValue(resolveRecordName(rowData.recordTypeId, recordTypesQuery), rowData.id)} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'$'}></NumberFormat>)
+            }}/>}
+          {type === 'mov'
+            ? null
+            : (type === 'ven'
+                ? <Column field="Nombre Cliente" header="Cliente" body={(rowData) => resolveRecordCustomerName(rowData.customerId, recordCustomerQuery)} alignHeader={'center'}/>
+                : <Column field="Nombre Proveedor" header="Proveedor" body={(rowData) => resolveRecordSupplierName(rowData.supplierId, recordSupplierQuery)} alignHeader={'center'}/>
+              )}
           <Column field="tipo" header="Tipo" body={(rowData) => rowData.letter} alignHeader={'center'} />
           <Column field="options" header="Opciones" alignHeader={'center'}
             body={(rowData) => {
@@ -87,6 +91,8 @@ const RecordsTable = ({ records, type }: RecordsTableProps) => {
                     switch (resolveRecordName(rowData.recordTypeId, recordTypesQuery)) {
                       case RecordNameEnum.FACTURA_DUPLICADO:
                       case RecordNameEnum.FACTURA_ORIGINAL:
+                      case RecordNameEnum.MOVIENTO_DE_STOCK_EGRESO:
+                      case RecordNameEnum.MOVIENTO_DE_STOCK_INGRESO:
                         setDisplayRecordDetailsTable((prev: boolean) => !prev)
                         break
                       case RecordNameEnum.ORDEN_DE_COMPRA:
@@ -108,7 +114,7 @@ const RecordsTable = ({ records, type }: RecordsTableProps) => {
           />
         </DataTable>
       </div>
-      <RecordDetailsTable setDisplayRecordDetailsTable={setDisplayRecordDetailsTable} displayRecordDetailsTable={displayRecordDetailsTable}/>
+      <RecordDetailsTable setDisplayRecordDetailsTable={setDisplayRecordDetailsTable} displayRecordDetailsTable={displayRecordDetailsTable} type={type}/>
       <RecordDetailsFacturaTable detailsQuery={detailsQuery} previousRecordQuery={previousRecordQuery} recordsQuery={recordsQuery} setDisplayRecordFacturasDetailsTable={setDisplayRecordFacturasDetailsTable}
       displayRecordFacturasDetailsTable={displayRecordFacturasDetailsTable}/>
       <DialogError></DialogError>

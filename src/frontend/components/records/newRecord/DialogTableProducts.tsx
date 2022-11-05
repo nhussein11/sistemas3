@@ -10,9 +10,11 @@ import { findProductName } from '../../../services/products/findProductName'
 import { findProductPrice } from '../../../services/products/findProductPrice'
 import { showQuantitySelectorDialogState } from '../../../atoms/records/showQuantitySelectorDialog'
 import { useRecoilState } from 'recoil'
+import { selectedRecordTypeState } from '../../../atoms/records/selectedRecordType'
 
 export default function DialogTableProducts ({ products, displayBasic, closeDialog, setVisibleSelectorQuantity, productsQuery, storesQuery }: newSaleTableProductProps) {
   const [, setShowQuantitySelectorDialog] = useRecoilState(showQuantitySelectorDialogState)
+  const [selectedRecordType] = useRecoilState(selectedRecordTypeState)
   const actionBodyTemplateListProducts = (rowData: any) => {
     const stockId = rowData.id
     const productId = rowData.productId
@@ -30,11 +32,13 @@ export default function DialogTableProducts ({ products, displayBasic, closeDial
            header={<TableHeader/>} emptyMessage="No se encontraron Productos">
             <Column field="ProductName" header="Nombre" body={(rowData) => findProductName(rowData.productId, productsQuery)} style={{ minWidth: '2rem' }}></Column>
             <Column field="Quantity" header="Cantidad en Stock" body={(rowData) => rowData.quantity} style={{ minWidth: '1rem' }}></Column>
-            <Column field="Precio" header="Precio" alignHeader={'center'} body={(rowData) => {
-              return (
+            {selectedRecordType.recordName.includes('MOV')
+              ? null
+              : <Column field="Precio" header="Precio" alignHeader={'center'} body={(rowData) => {
+                return (
                   <NumberFormat value={findProductPrice(rowData.productId, productsQuery)} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'$'}></NumberFormat>
-              )
-            }}/>
+                )
+              }}/>}
             <Column body={actionBodyTemplateListProducts} exportable={false} style={{ minWidth: '8rem' }}></Column>
         </DataTable>
     </Dialog>

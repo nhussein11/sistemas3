@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { RecordType, Store, Customer, Supplier, RecordNameEnum, Record } from '@prisma/client'
+import { RecordType, Store, Customer, Supplier, RecordNameEnum, Record, Stock } from '@prisma/client'
 import { useRecoilState } from 'recoil'
 import { createNewRecord } from '../../services/records/createNewRecord'
 import { defaultStore, selectedStoreState } from '../../atoms/stores/selectedStoreAtom'
@@ -20,6 +20,7 @@ import { useRouter } from 'next/router'
 import { selectedRecordLetterState } from '../../atoms/records/selectedRecordLetter'
 import { isPostState } from '../../atoms/isPostState'
 import { titleRecordState } from '../../atoms/titleRecords'
+import { findStoreName } from '../../services/stores/findStoreName'
 // import { findStoreName } from '../../services/stores/findStoreName'
 
 const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdress: any, recordNumber: any, toast: any) => {
@@ -115,7 +116,12 @@ const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdr
     (store: Store) => store.name
   )
 
-  const stockOptions = stocksQuery?.data?.stocks
+  let stockOptions = stocksQuery?.data?.stocks
+  switch (selectedRecordType?.recordName) {
+    case RecordNameEnum.MOVIENTO_DE_STOCK_EGRESO:
+    case RecordNameEnum.MOVIENTO_DE_STOCK_INGRESO:
+      stockOptions = stocksQuery?.data?.stocks.filter((stock: Stock) => { return findStoreName(stock.storeId, storesQuery) === selectedStore.name })
+  }
 
   let recordsOptions = recordsQuery?.data?.records
   switch (selectedRecordType?.recordName) {
