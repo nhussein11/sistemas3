@@ -6,6 +6,7 @@ import {
   Stock
 } from '@prisma/client'
 import { prisma } from '../../../server/prisma-client/prisma-client'
+import { createRecordDetails } from '../record-details/record-details.controller'
 import { getRecordTypeById } from '../record-types/record-types.controller'
 import { getStockExisting } from '../stocks/stock.controller'
 
@@ -19,12 +20,11 @@ const createRecordByStockMovement = async (
   if (!recordType) {
     throw new Error('Record Type not found')
   }
-  await handleStockMovementByRecordType(
-    recordType,
-    quantity,
-    storeId,
-    productId
-  )
+  const stock: Stock | null = await getStockExisting(productId, storeId)
+  if (!stock) {
+    throw new Error('Stock not found')
+  }
+  await handleStockMovementByRecordType(recordType, quantity, stock)
 
   const recordCreated: Record = await prisma.record.create({
     data: {
@@ -36,6 +36,7 @@ const createRecordByStockMovement = async (
       recordTypeId
     }
   })
+  await createRecordDetails(stock.id, recordCreated.id, quantity, 0, 0)
 
   return recordCreated
 }
@@ -45,14 +46,8 @@ export { createRecordByStockMovement }
 const handleStockMovementByRecordType = async (
   recordType: RecordType,
   quantity: number,
-  storeId: string,
-  productId: string
+  stock: Stock
 ) => {
-  const stock: Stock | null = await getStockExisting(productId, storeId)
-  if (!stock) {
-    throw new Error('Stock not found')
-  }
-
   if (recordType.recordName === RecordNameEnum.MOVIENTO_DE_STOCK_INGRESO) {
     await prisma.stock.update({
       where: {
