@@ -204,6 +204,16 @@ const NavBar = () => {
         resolveRecordTitle(RecordNameEnum.FACTURA_ORIGINAL)
         router.replace('/newRecord')
       }
+    },
+    {
+      label: 'Orden Pago',
+      icon: 'pi pi-fw pi-book',
+      command: () => {
+        setLoading(true)
+        setSelectedRecordType(recordTypesQuery.data?.recordsTypes.find((recordType: RecordType) => recordType.recordName === RecordNameEnum.ORDEN_DE_PAGO))
+        resolveRecordTitle(RecordNameEnum.ORDEN_DE_PAGO)
+        router.replace('/newRecord')
+      }
     }
   ]
 
