@@ -525,31 +525,31 @@ const createDefaultCourses = async () => {
       name: 'Curso de Front-End',
       hoursQuantity: 3,
       productId: '',
-      datetime: new Date(Date.now())
+      datetime: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30)
     },
     {
       name: 'Curso de Back-End',
       hoursQuantity: 2,
       productId: '',
-      datetime: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30)
+      datetime: new Date(Date.now())
     },
     {
       name: 'Curso de Testing',
       hoursQuantity: 4,
       productId: '',
-      datetime: new Date(Date.now() + 1000 * 60 * 60 * 24 * 60)
+      datetime: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30)
     },
     {
       name: 'Curso de Bases de Datos',
       hoursQuantity: 1,
       productId: '',
-      datetime: new Date(Date.now() + 1000 * 60 * 60 * 24 * 110)
+      datetime: new Date(Date.now() + 1000 * 60 * 60 * 24 * 60)
     },
     {
       name: 'Curso de Arquitectura de Software',
       hoursQuantity: 1,
       productId: '',
-      datetime: new Date(Date.now() + 1000 * 60 * 60 * 24 * 120)
+      datetime: new Date(Date.now() + 1000 * 60 * 60 * 24 * 90)
     }
   ]
 
