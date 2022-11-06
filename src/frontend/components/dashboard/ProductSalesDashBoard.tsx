@@ -164,16 +164,18 @@ type props = {
   label: string
   color: string
   endpoint: string
-  isUnitValue?: boolean
 }
 
-const BarChartCourses = ({ label, color, endpoint, isUnitValue }: props) => {
+const ProductSalesDashBoard = ({
+  label,
+  color,
+  endpoint
+}: props) => {
   const { fetchedData, isLoading } = useAxios(endpoint)
   const { basicOptions } = getLightTheme()
-  const data =
-    Array.isArray(fetchedData)
-      ? fetchedData.map((item) => item?.totalPrice)
-      : []
+  const data = Array.isArray(fetchedData)
+    ? fetchedData.map((item) => item?.totalSales)
+    : []
 
   const labels = Array.isArray(fetchedData)
     ? fetchedData.map((item) => item?.month)
@@ -207,4 +209,4 @@ const BarChartCourses = ({ label, color, endpoint, isUnitValue }: props) => {
     </div>
   )
 }
-export default BarChartCourses
+export default ProductSalesDashBoard

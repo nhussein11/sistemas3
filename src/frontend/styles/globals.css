@@ -152,3 +152,6 @@ body{
 .dialog-movements{
   width: 80% !important
 }
+.title{
+    text-align: center;
+}

@@ -161,21 +161,35 @@ const getLightTheme = () => {
   }
 }
 type props = {
-  label: string
-  color: string
-  endpoint: string
+  salesColor: string
+  purchasesColor: string
+  salesEndpoint: string
+  purchasesEndpoint: string
   labels: string[]
 }
 
-const BarChartDemo = ({ label, color, endpoint, labels }:props) => {
-  const { fetchedData, isLoading } = useAxios(endpoint)
+const SalesPurchasesDashBoard = ({
+  salesColor,
+  purchasesColor,
+  salesEndpoint,
+  purchasesEndpoint,
+  labels
+}: props) => {
+  const { fetchedData: fetchedSalesData, isLoading } = useAxios(salesEndpoint)
+  const { fetchedData: fetchedPurchasesData, isLoading: isLoading2 } =
+    useAxios(purchasesEndpoint)
   const { basicOptions } = getLightTheme()
-  const data = Array.isArray(fetchedData) ? fetchedData.map(item => item?.subtotal) : []
+  const salesData = Array.isArray(fetchedSalesData)
+    ? fetchedSalesData.map((item) => item?.subtotal)
+    : []
+  const purchasesData = Array.isArray(fetchedPurchasesData)
+    ? fetchedPurchasesData.map((item) => item?.subtotal)
+    : []
   return (
     <div>
-      {isLoading
+      {isLoading || isLoading2
         ? (
-          <ProgressSpinner/>
+        <ProgressSpinner />
           )
         : (
         <div className="card">
@@ -185,9 +199,14 @@ const BarChartDemo = ({ label, color, endpoint, labels }:props) => {
               labels,
               datasets: [
                 {
-                  label,
-                  backgroundColor: color,
-                  data
+                  label: 'Sales',
+                  backgroundColor: salesColor,
+                  data: salesData
+                },
+                {
+                  label: 'Purchases',
+                  backgroundColor: purchasesColor,
+                  data: purchasesData
                 }
               ]
             }}
@@ -200,4 +219,4 @@ const BarChartDemo = ({ label, color, endpoint, labels }:props) => {
     </div>
   )
 }
-export default BarChartDemo
+export default SalesPurchasesDashBoard
