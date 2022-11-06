@@ -1,3 +1,4 @@
+import { Course } from '@prisma/client'
 import { prisma } from '../../prisma-client/prisma-client'
 
 const coursesDashboards = async () => {
@@ -8,7 +9,7 @@ const coursesDashboards = async () => {
       courseId: true
     }
   })
-  const coursesWithEnrollments = courses.map(async (course) => {
+  const coursesWithEnrollments = courses.map(async (course:Course) => {
     const enrollmentsByCourse = enrollments.filter(
       (enrollment) => enrollment.courseId === course.id
     )
