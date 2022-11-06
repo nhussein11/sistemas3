@@ -40,25 +40,25 @@ const createDefaultProducts = async () => {
     {
       name: 'Ender Pro 2',
       description: 'Impresora Ender Pro con 2 cabezales',
-      price: 1500,
+      price: 15000,
       category: CategoryEnum.IMPRESORA
     },
     {
       name: 'Hell Bot',
       description: 'Impresora Hell Bot',
-      price: 3000,
+      price: 30000,
       category: CategoryEnum.IMPRESORA
     },
     {
       name: 'Filamento Grilon Rosa',
       description: 'Color rosa Chicle',
-      price: 1750,
+      price: 17500,
       category: CategoryEnum.FILAMENTO
     },
     {
       name: 'Filamento Grilon Negro',
       description: 'Color Negro Carbon',
-      price: 1420,
+      price: 14200,
       category: CategoryEnum.FILAMENTO
     }
   ]
@@ -383,7 +383,7 @@ const createDefaultRecordDetails = async () => {
   const fulFilledResults = results.filter(
     (res) => res.status === 'fulfilled'
   ) as PromiseFulfilledResult<Omit<RecordDetails, 'id'>>[]
-  console.log(fulFilledResults)
+
   console.log('inserting default record details...')
   await prisma.recordDetails.createMany({
     data: fulFilledResults.map((res) => res.value)
@@ -423,6 +423,14 @@ const createDefaultStudents = async () => {
       birth: new Date(),
       phone: 321312321,
       email: 'nico@gmail.com'
+    },
+    {
+      name: 'Pablo',
+      surname: 'Perez',
+      identificationNumber: 4321345,
+      birth: new Date(),
+      phone: 38767890,
+      email: 'pablo@gmail.com'
     }
   ]
   const defaultStudentsWithCustomerId: Promise<Omit<Student, 'id'>>[] =
@@ -478,6 +486,12 @@ const createDefaultCourses = async () => {
       description: 'Curso de fundamentos de BDD',
       category: CategoryEnum.COURSE,
       price: 1500
+    },
+    {
+      name: 'Inscripcion - Curso de Arquitectura de Software',
+      description: 'Curso de fundamentos de Arquitectura de Software',
+      category: CategoryEnum.COURSE,
+      price: 3200
     }
   ]
 
@@ -510,22 +524,32 @@ const createDefaultCourses = async () => {
     {
       name: 'Curso de Front-End',
       hoursQuantity: 3,
-      productId: ''
+      productId: '',
+      datetime: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30)
     },
     {
       name: 'Curso de Back-End',
       hoursQuantity: 2,
-      productId: ''
+      productId: '',
+      datetime: new Date(Date.now())
     },
     {
       name: 'Curso de Testing',
       hoursQuantity: 4,
-      productId: ''
+      productId: '',
+      datetime: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30)
     },
     {
       name: 'Curso de Bases de Datos',
       hoursQuantity: 1,
-      productId: ''
+      productId: '',
+      datetime: new Date(Date.now() + 1000 * 60 * 60 * 24 * 60)
+    },
+    {
+      name: 'Curso de Arquitectura de Software',
+      hoursQuantity: 1,
+      productId: '',
+      datetime: new Date(Date.now() + 1000 * 60 * 60 * 24 * 90)
     }
   ]
 

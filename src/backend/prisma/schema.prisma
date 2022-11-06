@@ -110,6 +110,7 @@ model RecordType {
 
 model Course {
   id            String @id @default(cuid())
+  datetime     DateTime   @default(now())
   name          String
   hoursQuantity Int
 
