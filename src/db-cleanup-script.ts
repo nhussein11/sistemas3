@@ -40,25 +40,25 @@ const createDefaultProducts = async () => {
     {
       name: 'Ender Pro 2',
       description: 'Impresora Ender Pro con 2 cabezales',
-      price: 1500,
+      price: 15000,
       category: CategoryEnum.IMPRESORA
     },
     {
       name: 'Hell Bot',
       description: 'Impresora Hell Bot',
-      price: 3000,
+      price: 30000,
       category: CategoryEnum.IMPRESORA
     },
     {
       name: 'Filamento Grilon Rosa',
       description: 'Color rosa Chicle',
-      price: 1750,
+      price: 17500,
       category: CategoryEnum.FILAMENTO
     },
     {
       name: 'Filamento Grilon Negro',
       description: 'Color Negro Carbon',
-      price: 1420,
+      price: 14200,
       category: CategoryEnum.FILAMENTO
     }
   ]
