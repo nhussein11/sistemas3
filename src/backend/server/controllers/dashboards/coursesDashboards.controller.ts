@@ -20,6 +20,7 @@ const coursesDashboards = async () => {
     })
     return {
       course: course.name,
+      month: course.datetime.toLocaleString('default', { month: 'long' }),
       coursePrice: product?.price,
       totalPrice: (product?.price || 0) * enrollmentsByCourse.length,
       enrollments: enrollmentsByCourse.length
