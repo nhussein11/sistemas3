@@ -1,9 +1,10 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import CardComponent from '../frontend/components/dashboard/Card'
-import BarChartDemo from '../frontend/components/dashboard/Graph'
 import { Card } from 'primereact/card'
 import BarChartCourses from '../frontend/components/dashboard/CourseDashBoard'
+import SalesPurchasesDashBoard from '../frontend/components/dashboard/Graph'
+import ProductSalesDashBoard from '../frontend/components/dashboard/ProductSalesDashBoard'
 
 const Home: NextPage = () => {
   return (
@@ -33,37 +34,35 @@ const Home: NextPage = () => {
           color="green"
         />
       </div>
+      <div>
+        <h2 className='title'>Sales & purchases</h2>
+      </div>
       <div className="contenedor-grafico">
         <Card className="card-graph">
-          <BarChartDemo
-            endpoint={'/dashboards/sales'}
-            label={'sales'}
-            color={'#75AAE1'}
-            labels={['October', 'November', 'December', 'January', 'February']}
-          />
-        </Card>
-        <Card className="card-graph">
-          <BarChartDemo
-            endpoint={'/dashboards/purchases'}
-            label={'purchases'}
-            color={'#950A21'}
+          <SalesPurchasesDashBoard
+            salesEndpoint={'/dashboards/sales'}
+            purchasesEndpoint={'/dashboards/purchases'}
+            salesColor={'#42A5F5'}
+            purchasesColor={'#FFA726'}
             labels={['October', 'November', 'December', 'January', 'February']}
           />
         </Card>
       </div>
+      <div>
+        <h2 className='title'>Courses & Products Sales</h2>
+      </div>
       <div className="contenedor-grafico">
       <Card className="card-graph">
-        <BarChartCourses
-          endpoint={'/dashboards/courses'}
-          label={'courses prices'}
-          color={'lightgreen'}
-          isUnitValue={true}
-        />
-      </Card>
+          <ProductSalesDashBoard
+            endpoint={'/dashboards/products-sales'}
+            label={'Product Sales'}
+            color={'#950A21'}
+          />
+        </Card>
       <Card className="card-graph">
       <BarChartCourses
           endpoint={'/dashboards/courses'}
-          label={'Total Courses Earns'}
+          label={'Courses Sales'}
           color={'green'}
         />
       </Card>
