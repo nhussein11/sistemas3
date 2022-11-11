@@ -71,7 +71,7 @@ const PanelTotal = ({
               : null}
             </Card>
             <Card>
-                <h1 style={{ textAlign: 'end' }}>TOTAL: <NumberFormat value={ammount.ammount} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'$'}></NumberFormat></h1>
+                {recordName.includes('MOV') ? null : <h1 style={{ textAlign: 'end' }}>TOTAL: <NumberFormat value={ammount.ammount} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'$'}></NumberFormat></h1>}
             </Card>
             <Button style={{ width: '-webkit-fill-available', justifyContent: 'center' }} onClick={() => {
               setPosting(true)

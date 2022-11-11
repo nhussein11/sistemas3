@@ -20,19 +20,36 @@ const Home: NextPage = () => {
   let filteredRecords = filterRecords(query2?.data?.records, globalFilterValue)
   const { query } = useRouter()
   const type = query.type?.toString()
-  if (type === 'ing') {
-    filteredRecords = selectedFilterCustomer.id === ''
-      ? filterTypeRecord(query2?.data?.records, type, recordTypesQuery)
-      : filterRecords(query2?.data?.records, globalFilterValue)?.filter(
-        (record) => record.customerId === selectedFilterCustomer.id
-      )
-  } else {
-    filteredRecords =
-    selectedFilterSupplier.id === ''
-      ? filterTypeRecord(query2?.data?.records, 'egr', recordTypesQuery)
-      : filterRecords(query2?.data?.records, globalFilterValue)?.filter(
-        (record) => record.supplierId === selectedFilterSupplier.id
-      )
+
+  switch (type) {
+    case 'mov':
+      filteredRecords = filterTypeRecord(query2?.data?.records, type, recordTypesQuery)
+      break
+    case 'com':
+      filteredRecords = selectedFilterCustomer.id === ''
+        ? filterTypeRecord(query2?.data?.records, type, recordTypesQuery)
+        : filterRecords(query2?.data?.records, globalFilterValue)?.filter(
+          (record) => record.customerId === selectedFilterCustomer.id
+        )
+      break
+    case 'ven':
+      filteredRecords =
+        selectedFilterSupplier.id === ''
+          ? filterTypeRecord(query2?.data?.records, type, recordTypesQuery)
+          : filterRecords(query2?.data?.records, globalFilterValue)?.filter(
+            (record) => record.supplierId === selectedFilterSupplier.id
+          )
+      break
+    case 'op':
+      filteredRecords =
+          selectedFilterSupplier.id === ''
+            ? filterTypeRecord(query2?.data?.records, type, recordTypesQuery)
+            : filterRecords(query2?.data?.records, globalFilterValue)?.filter(
+              (record) => record.supplierId === selectedFilterSupplier.id
+            )
+      break
+    default:
+      break
   }
   return (
     <div>

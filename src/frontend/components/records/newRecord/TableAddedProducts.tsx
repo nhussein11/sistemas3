@@ -7,10 +7,12 @@ import { findProductName } from '../../../services/products/findProductName'
 import { useRecoilState } from 'recoil'
 import { selectedRecordDetailsState } from '../../../atoms/records/selectedRecordDetails'
 import { ammountRecordAtomState } from '../../../atoms/records/ammountRecordAtom'
+import { selectedRecordTypeState } from '../../../atoms/records/selectedRecordType'
 
 const TableAddedProducts = ({ products, productsQuery, storesQuery }: {products: Object[]; productsQuery: any; storesQuery: any }) => {
   const [, setSelectedRecordDetails] = useRecoilState(selectedRecordDetailsState)
   const [, setAmmount] = useRecoilState(ammountRecordAtomState)
+  const [selectedRecordType] = useRecoilState(selectedRecordTypeState)
   const actionBodyTemplateListProducts = (rowData: any) => {
     return (
     <React.Fragment>
@@ -26,17 +28,21 @@ const TableAddedProducts = ({ products, productsQuery, storesQuery }: {products:
     <DataTable value={products} paginator className="p-datatable-customers" showGridlines rows={5} dataKey="id" responsiveLayout="scroll" emptyMessage="No se agregó ningun producto">
             <Column field="ProductName" header="Nombre" body={(rowData) => findProductName(rowData.productId, productsQuery)} style={{ minWidth: '2rem' }}></Column>
             <Column field="Quantity" header="Cantidad" body={(rowData) => rowData.quantity} style={{ minWidth: '4rem' }}></Column>
-            <Column field="Precio" header="Precio" alignHeader={'center'} body={(rowData) => {
-              return (
+            {selectedRecordType.recordName.includes('MOV')
+              ? null
+              : <Column field="Precio" header="Precio" alignHeader={'center'} body={(rowData) => {
+                return (
                   <NumberFormat value={rowData.historicalPrice} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'$'}></NumberFormat>
-              )
-            }}/>
-            <Column field="Subtotal" header="Subtotal" style={{ minWidth: '1rem' }}
+                )
+              }}/>}
+             {selectedRecordType.recordName.includes('MOV')
+               ? null
+               : <Column field="Subtotal" header="Subtotal" style={{ minWidth: '1rem' }}
             body={(rowData) => {
               return (
                   <NumberFormat value={rowData.historicalPrice * rowData.quantity } displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'$'}></NumberFormat>
               )
-            }}/>
+            }}/>}
             <Column body={actionBodyTemplateListProducts} exportable={false} style={{ minWidth: '8rem' }}></Column>
     </DataTable>
   )

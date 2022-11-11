@@ -35,11 +35,13 @@ const useNewRecordForFacturasMutation = (queryId: string, recordObservation: any
       setTimeout(() => {
         switch (selectedRecordType.recordName) {
           case RecordNameEnum.FACTURA_ORIGINAL:
-            router.replace('/records?type=egr')
+            router.replace('/records?type=com')
             break
           case RecordNameEnum.FACTURA_DUPLICADO:
+            router.replace('/records?type=ven')
+            break
           case RecordNameEnum.ORDEN_DE_PAGO:
-            router.replace('/records?type=ing')
+            router.replace('/records?type=op')
             break
         }
       }, 2000)
@@ -56,8 +58,8 @@ const useNewRecordForFacturasMutation = (queryId: string, recordObservation: any
       recordNumber: recordNumber.value as number,
       paidFor: false,
       recordTypeId: selectedRecordType.id,
-      supplierId: selectedSupplier.id,
-      customerId: selectedCustomer.id,
+      supplierId: (selectedSupplier?.id ? selectedSupplier?.id : ''),
+      customerId: (selectedCustomer?.id ? selectedCustomer?.id : ''),
       paidForRecordIds: selectedRecord.map((element) => element.recordId)
     })
   }

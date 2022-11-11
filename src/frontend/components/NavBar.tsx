@@ -80,6 +80,14 @@ const NavBar = () => {
             resolveRecordTitle(RecordNameEnum.MOVIENTO_DE_STOCK_INGRESO)
             router.replace('/newRecord')
           }
+        },
+        {
+          label: 'Movimientos',
+          icon: 'pi pi-fw pi-file',
+          command: () => {
+            setLoading(true)
+            router.replace('/records?type=mov')
+          }
         }
       ]
     },
@@ -96,19 +104,35 @@ const NavBar = () => {
       icon: 'pi pi-fw pi-file',
       items: [
         {
-          label: 'Ingresos',
-          icon: 'pi pi-fw pi-plus',
+          label: 'Ventas',
+          icon: 'pi pi-fw pi-file',
           command: () => {
             setLoading(true)
-            router.replace('/records?type=ing')
+            router.replace('/records?type=ven')
           }
         },
         {
-          label: 'Egresos',
-          icon: 'pi pi-fw pi-minus',
+          label: 'Compras',
+          icon: 'pi pi-fw pi-file',
           command: () => {
             setLoading(true)
-            router.replace('/records?type=egr')
+            router.replace('/records?type=com')
+          }
+        },
+        {
+          label: 'OrdenPago',
+          icon: 'pi pi-fw pi-file',
+          command: () => {
+            setLoading(true)
+            router.replace('/records?type=op')
+          }
+        },
+        {
+          label: 'Movimientos',
+          icon: 'pi pi-fw pi-file',
+          command: () => {
+            setLoading(true)
+            router.replace('/records?type=mov')
           }
         },
         {
@@ -178,6 +202,16 @@ const NavBar = () => {
         setLoading(true)
         setSelectedRecordType(recordTypesQuery.data?.recordsTypes.find((recordType: RecordType) => recordType.recordName === RecordNameEnum.FACTURA_ORIGINAL))
         resolveRecordTitle(RecordNameEnum.FACTURA_ORIGINAL)
+        router.replace('/newRecord')
+      }
+    },
+    {
+      label: 'Orden Pago',
+      icon: 'pi pi-fw pi-book',
+      command: () => {
+        setLoading(true)
+        setSelectedRecordType(recordTypesQuery.data?.recordsTypes.find((recordType: RecordType) => recordType.recordName === RecordNameEnum.ORDEN_DE_PAGO))
+        resolveRecordTitle(RecordNameEnum.ORDEN_DE_PAGO)
         router.replace('/newRecord')
       }
     }

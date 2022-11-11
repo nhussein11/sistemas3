@@ -157,6 +157,7 @@ export type RecordsTableHeaderProps = {
   type: string | undefined
 }
 export type DialogRecordDetailsProps = {
+  type: string | undefined
   setDisplayRecordDetailsTable: Dispatch<boolean | ((prev: boolean) => boolean)>
   displayRecordDetailsTable: boolean
 }

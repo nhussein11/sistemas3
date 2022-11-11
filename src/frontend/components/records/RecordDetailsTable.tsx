@@ -4,7 +4,7 @@ import { Dialog } from 'primereact/dialog'
 import React from 'react'
 import { DialogRecordDetailsProps } from '../../@types/frontend.types'
 import useRecordDetailsTable from '../../hooks/records/useRecordDetailsTable'
-const RecordDetailsTable = ({ setDisplayRecordDetailsTable, displayRecordDetailsTable }: DialogRecordDetailsProps) => {
+const RecordDetailsTable = ({ setDisplayRecordDetailsTable, displayRecordDetailsTable, type }: DialogRecordDetailsProps) => {
   const { filteredDetailsTableData } = useRecordDetailsTable()
   if (displayRecordDetailsTable) {
     return (
@@ -13,8 +13,8 @@ const RecordDetailsTable = ({ setDisplayRecordDetailsTable, displayRecordDetails
           <Column field="Product" header="Producto" body={(rowData) => rowData.productName} alignHeader={'center'} />
           <Column field="Deposito" header="Deposito" body={(rowData) => rowData.storeName} alignHeader={'center'} />
           <Column field="Quantity" header="Cantidad" body={(rowData) => rowData.quantity} alignHeader={'center'} />
-          <Column field="Price" header="Precio" body={(rowData) => rowData.price} alignHeader={'center'} />
-          <Column field="Subtotal" header="Subtotal" body={(rowData) => rowData.subtotal} alignHeader={'center'} />
+          {type === 'mov' ? null : <Column field="Price" header="Precio" body={(rowData) => rowData.price} alignHeader={'center'} />}
+          {type === 'mov' ? null : <Column field="Subtotal" header="Subtotal" body={(rowData) => rowData.subtotal} alignHeader={'center'} />}
         </DataTable>
       </Dialog>
     )
