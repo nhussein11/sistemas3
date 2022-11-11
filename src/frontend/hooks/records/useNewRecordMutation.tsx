@@ -104,8 +104,8 @@ const useNewRecordMutation = (queryId: string, recordObservation: any, recordAdr
       recordNumber: recordNumber.value as number,
       paidFor: false,
       recordTypeId: selectedRecordType.id,
-      supplierId: (selectedSupplier?.id ? selectedSupplier?.id : 'x'),
-      customerId: (selectedCustomer?.id ? selectedCustomer?.id : 'x'), // atadisimo con alambre
+      supplierId: (selectedSupplier?.id ? selectedSupplier?.id : ''),
+      customerId: (selectedCustomer?.id ? selectedCustomer?.id : ''), // atadisimo con alambre
       details: ParseRecordDetails(selectedRecordDetails, productsQuery)
     })
   }
