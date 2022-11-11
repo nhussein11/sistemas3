@@ -44,13 +44,15 @@ const getTransactionsDashboard = async (recordNameEnum: RecordNameEnum) => {
   const salesMoths = salesFilteredByDateAndSubtotal.map((sale: any) => {
     return sale.value.month
   })
-  const salesMothsUnique = [...new Set(salesMoths)]
+
+  const salesMothsUnique = Array.from(new Set(salesMoths))
 
   const salesMothsUniquePromises = salesMothsUnique.map(async (month) => {
     const salesFilteredByMonth = salesFilteredByDateAndSubtotal.filter(
       (sale: any) => sale.value.month === month
     )
     const subtotal = salesFilteredByMonth.reduce((acc, sale) => {
+      // @ts-ignore
       return acc + sale.value.subtotal
     }, 0)
     return {
