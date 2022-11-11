@@ -41,8 +41,29 @@ const getTransactionsDashboard = async (recordNameEnum: RecordNameEnum) => {
   const salesFilteredByDateAndSubtotal = await Promise.allSettled(
     salesFilteredByDateAndSubtotalPromises
   )
+  const salesMoths = salesFilteredByDateAndSubtotal.map((sale: any) => {
+    return sale.value.month
+  })
+  const salesMothsUnique = [...new Set(salesMoths)]
 
-  return salesFilteredByDateAndSubtotal.map((sale: any) => sale.value)
+  const salesMothsUniquePromises = salesMothsUnique.map(async (month) => {
+    const salesFilteredByMonth = salesFilteredByDateAndSubtotal.filter(
+      (sale: any) => sale.value.month === month
+    )
+    const subtotal = salesFilteredByMonth.reduce((acc, sale) => {
+      return acc + sale.value.subtotal
+    }, 0)
+    return {
+      month,
+      subtotal
+    }
+  })
+  const salesMothsUniqueWithSubtotal = await Promise.allSettled(
+    salesMothsUniquePromises
+  )
+  return salesMothsUniqueWithSubtotal.map((sale: any) => {
+    return sale.value
+  })
 }
 
 export { getTransactionsDashboard }
