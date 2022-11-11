@@ -199,12 +199,12 @@ const SalesPurchasesDashBoard = ({
               labels,
               datasets: [
                 {
-                  label: 'Sales',
+                  label: 'Purchases',
                   backgroundColor: salesColor,
                   data: salesData
                 },
                 {
-                  label: 'Purchases',
+                  label: 'Sales',
                   backgroundColor: purchasesColor,
                   data: purchasesData
                 }
